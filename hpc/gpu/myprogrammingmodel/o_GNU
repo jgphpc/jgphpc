@@ -1,0 +1,17 @@
+cc -g myhello.c -fopenmp -o $PE_ENV && OMP_NUM_THREADS=1 srun -Cgpu -t1 -n12  ./$PE_ENV > o_$PE_ENV
+
+mpiv=MPI VERSION    : CRAY MPICH version 7.5.0 (ANL base 3.2rc1) / 3.1 
+ompv=40201307 
+oaccv=no 
+rank:0000/0012 nid=nid00001 cpuid=0
+rank:0002/0012 nid=nid00001 cpuid=2
+rank:0003/0012 nid=nid00001 cpuid=3
+rank:0004/0012 nid=nid00001 cpuid=4
+rank:0005/0012 nid=nid00001 cpuid=5
+rank:0006/0012 nid=nid00001 cpuid=6
+rank:0007/0012 nid=nid00001 cpuid=7
+rank:0009/0012 nid=nid00001 cpuid=9
+rank:0010/0012 nid=nid00001 cpuid=10
+rank:0011/0012 nid=nid00001 cpuid=11
+rank:0001/0012 nid=nid00001 cpuid=1
+rank:0008/0012 nid=nid00001 cpuid=8

@@ -1,0 +1,25 @@
+#!/bin/bash
+
+#SBATCH --nodes=3
+#SBATCH --ntasks-per-node=12
+#SBATCH --cpus-per-task=1   # -c
+#SBATCH --ntasks-per-core=1 # -j
+#SBATCH --constraint=gpu
+#SBATCH --time=00:01:00
+#SBATCH --exclusive
+#SBATCH --job-name=x
+#SBATCH --hint=nomultithread
+#SBATCH --output=o
+#SBATCH --error=o
+###SBATCH --gres=craynetwork:24
+###SBATCH --account=usup
+
+#module load daint-mc
+#module load slurm
+
+export OMP_NUM_THREADS=1
+
+srun -s -O -N1 -n12 -c1 --gres=craynetwork:1 --ntasks-per-node=12 --ntasks-per-core=1 --mem=10000 ./printme 2 > o_1 &
+srun -s -O -N1 -n12 -c1 --gres=craynetwork:1 --ntasks-per-node=12 --ntasks-per-core=1 --mem=10000 ./printme 2 > o_2 &
+srun -s -O -N1 -n12 -c1 --gres=craynetwork:1 --ntasks-per-node=12 --ntasks-per-core=1 --mem=10000 ./printme 2 > o_3 &
+wait

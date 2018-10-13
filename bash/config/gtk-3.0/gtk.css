@@ -1,0 +1,5 @@
+/* jg: ~/.config/gtk-3.0/gtk.css
+ * colored tab for gnome-terminal */ 
+TerminalWindow .notebook tab:active{
+  background-color: #FCBC8D;
+}

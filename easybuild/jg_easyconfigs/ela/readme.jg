@@ -1,0 +1,12 @@
+# mll Python/2.7.11  # -GCC-4.9.2
+# source /apps/common/easybuild/setup.sh
+
+module rm ela
+
+export MODULEPATH=/apps/common/UES/SLES11/easybuild/modules/all:/usr/share/Modules/default/modulefiles
+export PATH=/apps/ela/easybuild/software/Python/2.7.11/bin:$PATH
+export PATH=/apps/common/UES/SLES11/easybuild/software/git/2.7.2/bin:$PATH
+export LD_LIBRARY_PATH=/apps/ela/easybuild/software/Python/2.7.11/lib:$LD_LIBRARY_PATH
+
+source /apps/common/easybuild/setup.sh /apps/common/UES/SLES11
+

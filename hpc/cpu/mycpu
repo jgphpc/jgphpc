@@ -1,0 +1,11 @@
+RR='srun -C gpu -n1 -p debug -t1'
+
+$RR lstopo --of ascii --no-io
+$RR likwid-topology
+$RR papi_avail
+$RR grep 'model name' /proc/cpuinfo
+$RR head -1 /proc/meminfo
+scontrol show node nid06001
+
+scontrol show reservation open
+squeue --reservation open

@@ -1,0 +1,33 @@
+#!/bin/sh
+
+env |grep -i HOST
+h=`echo $HOST |cut -c1-4`
+if [ "$h" != "kesc" ] ; then
+#echo "CSCS A"
+icewm-session &
+xterm -r -fs 16 -fa "Monospace" -fg black -bg white &
+#echo "CSCS B"
+
+else
+
+gnome-wm &
+xterm -r -fs 16 -fa "Monospace" -fg black -bg white &
+
+fi
+
+# ------------
+#jf # ATT: Added for keybord key map:
+#jf export XKL_XMODMAP_DISABLE=1
+#jf 
+#jf unset SESSION_MANAGER
+#jf # ATT: Added mainly for gnome see:
+#jf # http://ubuntuforums.org/showthread.php?t=1480094
+#jf # https://www.starnet.com/xwin32kb/could-not-acquire-name-on-session-bus-when-launching-gnome
+#jf unset DBUS_SESSION_BUS_ADDRESS
+#jf /usr/bin/gnome &
+# ------------
+
+#xrdb $HOME/.Xresources
+#xsetroot -solid grey
+#xterm -geometry 80x24+10+10 -ls -title "$VNCDESKTOP Desktop" &
+#twm &

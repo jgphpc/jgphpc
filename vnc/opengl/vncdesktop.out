@@ -1,0 +1,32 @@
+VNC Server accepting connections on ela:10000
+On client machine:
+ssh -f -L 10000:nid00000.dom101:5901 piccinal@ela.cscs.ch sleep 3600
+/Applications/CSCS/TigerVNC Viewer 1.6.0.app/Contents/MacOS/TigerVNC Viewer => localhost:10000
+
+Desktop 'TurboVNC: nid00000:1 (piccinal)' started on display nid00000:1
+
+Starting applications specified in /users/piccinal/.vnc/xstartup.turbovnc
+(Enabling 3D window manager support)
+Log file is /users/piccinal/.vnc/nid00000:1.log
+
+slurmstepd: error: *** JOB 658958 ON nid00000 CANCELLED AT 2018-01-28T15:54:37 ***
+Killed by signal 15.
+ 
+Batch Job Summary Report for Job "vncdesktop" (658958) on dom
+-----------------------------------------------------------------------------------------------------
+             Submit            Eligible               Start                 End    Elapsed  Timelimit 
+------------------- ------------------- ------------------- ------------------- ---------- ---------- 
+2018-01-28T13:49:58 2018-01-28T13:49:58 2018-01-28T13:49:59 2018-01-28T15:54:37   02:04:38   02:10:00 
+-----------------------------------------------------------------------------------------------------
+Username    Account     Partition   NNodes   Energy
+----------  ----------  ----------  ------  --------------
+piccinal    csstaff     normal           1  552.66K joules
+ 
+This job did not utilize any GPUs
+ 
+----------------------------------------------------------
+Scratch File System        Files       Quota
+--------------------  ----------  ----------
+/scratch/snx1600tds            1     1000000
+/scratch/snx3000tds            1     1000000
+ 

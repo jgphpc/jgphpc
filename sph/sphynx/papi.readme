@@ -1,0 +1,56 @@
+#!/bin/sh
+
+# /users/piccinal/linux.git/sph/sphynx/extrae352_mpi+omp_sphynx.xml
+
+#sphflow: PAPI_TOT_INS PAPI_TOT_CYC PAPI_L1_DCM PAPI_L3_TCM RESOURCE_STALLS::SB
+#sphflow: PAPI_TOT_INS PAPI_TOT_CYC PAPI_BR_MSP PAPI_BR_INS RESOURCE_STALLS::ROB
+
+#testjg:
+        PAPI_TOT_INS,PAPI_TOT_CYC,PAPI_L2_DCM,PAPI_L3_TCM,RESOURCE_STALLS
+        PAPI_TOT_INS,PAPI_TOT_CYC,PAPI_LD_INS,PAPI_SR_INS
+
+                      Name        Code    Avail Deriv Description (Note)
+haswell.avail:80:PAPI_SR_INS  0x80000036  Yes   No   Store instructions
+haswell.avail:79:PAPI_LD_INS  0x80000035  Yes   No   Load instructions
+haswell.avail:72:PAPI_BR_MSP  0x8000002e  Yes   No   Conditional branch instructions mispredicted
+haswell.avail:81:PAPI_BR_INS  0x80000037  Yes   No   Branch instructions
+
+### ------------------------------------------------------------------------
+### Mare Nostrum 4:
+
+#    <cpu enabled="yes" starting-set-distribution="1">
+#      <set enabled="yes" domain="all" changeat-time="500000us">
+#        PAPI_TOT_INS,PAPI_TOT_CYC,PAPI_L1_DCM,PAPI_L2_DCM,PAPI_L3_TCM
+#      </set>
+#      <set enabled="yes" domain="all" changeat-time="500000us">
+#        PAPI_TOT_INS,PAPI_TOT_CYC,PAPI_LD_INS,PAPI_SR_INS,RESOURCE_STALLS,RESOURCE_STALLS:RS,RESOURCE_STALLS:ROB,RESOURCE_STALLS:SB
+#      </set>
+#      <set enabled="yes" domain="all" changeat-time="500000us">
+#        PAPI_TOT_INS,PAPI_TOT_CYC,PAPI_VEC_SP,PAPI_VEC_DP
+#      </set>
+#    </cpu>
+
+However, I do not know if these counter sets work for the CSCS machine. You can
+build your own counter sets with the help of Extrae:
+
+# OK:
+papi_best_set omnipresent PAPI_TOT_INS,PAPI_TOT_CYC \
+PAPI_VEC_DP,PAPI_L1_DCM,PAPI_L2_DCM,PAPI_L3_TCM,PAPI_LD_INS,PAPI_SR_INS, \
+PAPI_VEC_SP,RESOURCE_STALLS,RESOURCE_STALLS:ROB,RESOURCE_STALLS:RS, \
+RESOURCE_STALLS:SB,PAPI_BR_MSP,PAPI_BR_INS
+# OK:
+  PAPI_TOT_INS,PAPI_TOT_CYC,PAPI_L1_DCM,PAPI_L2_DCM,PAPI_L3_TCM,PAPI_LD_INS,PAPI_SR_INS,RESOURCE_STALLS
+  PAPI_TOT_INS,PAPI_TOT_CYC,RESOURCE_STALLS:ROB,RESOURCE_STALLS:RS,RESOURCE_STALLS:SB,PAPI_BR_MSP,PAPI_BR_INS
+
+grep PAPI_L3 haswell.avail |grep -v "No    No"
+PAPI_L3_TCM  0x80000008  Yes   No   Level 3 cache misses
+PAPI_L3_LDM  0x8000000e  Yes   No   Level 3 load misses
+PAPI_L3_DCA  0x80000042  Yes   Yes  Level 3 data cache accesses
+PAPI_L3_DCR  0x80000045  Yes   No   Level 3 data cache reads
+PAPI_L3_DCW  0x80000048  Yes   No   Level 3 data cache writes
+PAPI_L3_ICA  0x8000004e  Yes   No   Level 3 instruction cache accesses
+PAPI_L3_ICR  0x80000051  Yes   No   Level 3 instruction cache reads
+PAPI_L3_TCA  0x8000005a  Yes   No   Level 3 total cache accesses
+PAPI_L3_TCR  0x8000005d  Yes   Yes  Level 3 total cache reads
+PAPI_L3_TCW  0x80000060  Yes   No   Level 3 total cache writes
+

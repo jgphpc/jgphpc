@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# vncserver -kill :1 ;vncserver -geometry 1600x1024
+
+# xrdb $HOME/.Xresources
+xsetroot -solid grey
+# xterm -geometry 80x24+10+10 -ls -title "$VNCDESKTOP Desktop" &
+xterm &
+
+icewmbg & icewm-session & 
+# icewm &
+# twm &

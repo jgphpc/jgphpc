@@ -1,0 +1,4 @@
+echo .profile start HOST=$HOST PROFILEREAD=$PROFILEREAD HOSTNAME=$HOSTNAME
+# test -z "$PROFILEREAD" && . /etc/profile || true
+echo .profile   end HOST=$HOST PROFILEREAD=$PROFILEREAD HOSTNAME=$HOSTNAME
+

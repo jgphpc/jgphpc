@@ -1,0 +1,21 @@
+SCOREP_REGION_NAMES_BEGIN 
+EXCLUDE 
+muscl_limiter.minmod_
+kernel_mod.kernel_gradient_
+arrayreallocation_mod.reallocateifneeded_i_
+renormalization_matrix_mod.renormalization_matrix_
+kernel_mod.kernel_
+muscl_gradient_mod.muscl_gradient_
+equation_of_state.eos_sound_speed_
+muscl_linearreconstruction_mod.linearmuscl_
+interaction_tvr_fluid_modinteraction_tvr_fluid.tvr_fluid_fluid_
+godunov_solver_mod.exactriemannsolvertait_
+interactions_t_mod.updateinteractions_t_
+# INCLUDE
+# MAIN__
+# MPI_Test
+# MPI_Irecv
+# MPI_Isend
+# MPI_Allreduce
+# MPI_Wait
+SCOREP_REGION_NAMES_END

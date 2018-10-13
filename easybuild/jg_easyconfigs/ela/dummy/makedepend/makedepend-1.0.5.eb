@@ -1,0 +1,21 @@
+easyblock = 'ConfigureMake'
+
+name = 'makedepend'
+version = "1.0.5"
+
+homepage = "http://www.linuxfromscratch.org/blfs/view/svn/x/makedepend.html"
+description = "The makedepend package contains a C-preprocessor like utility to determine build-time dependencies." 
+toolchain = {'name': 'dummy', 'version': 'dummy'}
+# toolchainopts = {'optarch': True}
+
+sources = [SOURCE_TAR_GZ]
+source_urls = ['http://xorg.freedesktop.org/releases/individual/util']
+
+builddependencies = [('xproto', '7.0.28')]   # !!! : mll xproto
+
+sanity_check_paths = { 
+    'files': ['bin/makedepend'],
+    'dirs': [],
+}
+
+moduleclass = 'devel'

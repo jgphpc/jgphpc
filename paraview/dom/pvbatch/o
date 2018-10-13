@@ -1,0 +1,60 @@
+Currently Loaded Modulefiles:
+modules/3.2.10.6
+udreg/2.3.2-6.0.4.0_12.2__g2f9c3ee.ari
+ugni/6.0.14-6.0.4.0_14.1__ge7db4a2.ari
+dmapp/7.1.1-6.0.4.0_46.2__gb8abda2.ari
+gni-headers/5.0.11-6.0.4.0_7.2__g7136988.ari
+xpmem/2.2.2-6.0.4.1_18.1__g43b0535.ari
+job/2.2.2-6.0.4.0_8.2__g3c644b5.ari
+dvs/2.7_2.2.41-6.0.4.1_21.1__g1de14e9
+alps/6.4.3-6.0.4.1_2.1__g92a2fc0.ari
+cray-mpich/7.6.0
+slurm/17.11.7.cscs-1
+daint-gpu
+gcc/5.3.0
+craype-haswell
+craype-network-aries
+craype/2.5.12
+cray-libsci/17.06.1
+pmi/5.0.12
+atp/2.1.1
+rca/2.2.11-6.0.4.0_13.2__g84de67a.ari
+perftools-base/6.5.1
+PrgEnv-gnu/6.0.4
+CrayGNU/.17.08
+bzip2/.1.0.6-CrayGNU-17.08
+zlib/.1.2.11-CrayGNU-17.08
+cray-python/17.06.1
+Boost/1.65.0-CrayGNU-17.08-python3
+cray-python/3.6.1.1
+PyExtensions/3.6.1.1-CrayGNU-17.08
+cray-hdf5/1.10.0.3
+h5py/2.7.1-CrayGNU-17.08-python3-serial
+ospray/1.5.0-CrayGNU-17.08
+ParaView/5.5.1-CrayGNU-17.08-EGL
++ pwd
+/users/piccinal/linux.git/paraview/dom/pvbatch
+++ which pvbatch
++ srun /apps/daint/UES/jenkins/6.0.UP04/gpu/easybuild/software/ParaView/5.5.1-CrayGNU-17.08-EGL/bin/pvbatch /users/piccinal/linux.git/paraview/dom/pvbatch/0.py
++ set +x
+/users/piccinal/linux.git/paraview/dom/pvbatch
+the end
+ 
+Batch Job Summary Report for Job "pvjg" (759879) on dom
+-----------------------------------------------------------------------------------------------------
+             Submit            Eligible               Start                 End    Elapsed  Timelimit 
+------------------- ------------------- ------------------- ------------------- ---------- ---------- 
+2018-06-11T13:56:57 2018-06-11T13:56:57 2018-06-11T13:56:57 2018-06-11T13:57:13   00:00:16   00:10:00 
+-----------------------------------------------------------------------------------------------------
+Username    Account     Partition   NNodes   Energy
+----------  ----------  ----------  ------  --------------
+piccinal    csstaff     normal           1    1.34K joules
+ 
+This job did not utilize any GPUs
+ 
+----------------------------------------------------------
+Scratch File System        Files       Quota
+--------------------  ----------  ----------
+/scratch/snx1600tds         8674     1000000
+/scratch/snx3000tds         3152     1000000
+ 

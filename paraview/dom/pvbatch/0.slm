@@ -1,0 +1,26 @@
+#!/bin/bash
+#SBATCH --job-name=pvjg
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --ntasks=1
+#SBATCH --time=00:10:00
+#SBATCH --constraint=gpu
+#SBATCH --exclusive
+#SBATCH --output=o
+#SBATCH --error=o
+
+#export PV_PLUGIN_DEBUG=1"
+module load daint-gpu
+module unload ddt xalt
+module load ParaView/5.5.1-CrayGNU-17.08-EGL
+#module rm cray-python/17.06.1
+#module rm cray-python/3.6.1.1
+module list -t
+
+set -x ;pwd
+srun `which pvbatch` $HOME/linux.git/paraview/dom/pvbatch/0.py
+set +x ;pwd
+
+echo "the end"
+
+#srun --cpu_bind=sockets \`which pvserver\` -rc -sp=$myport -ch=$myhost

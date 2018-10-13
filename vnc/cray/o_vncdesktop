@@ -1,0 +1,10 @@
+# ---------------------------------------------
+# VNC Server accepting connections on ela:10156
+# On client machine, run:
+ssh -f -L 10156:localhost:10156 piccinal@ela.cscs.ch sleep 120
+vncviewer localhost:10156
+when done, run: scancel
+# ---------------------------------------------
+aprun.x: Apid 7375166: Caught signal Terminated, sending to application
+slurmstepd: error: *** JOB 1721759 CANCELLED AT 09:22:26 ***
+aprun.x: Apid 7375166: Caught signal Terminated, sending to application

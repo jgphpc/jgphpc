@@ -1,0 +1,4 @@
+#!/bin/sh
+#/opt/TurboVNC/bin/vncserver -nohttpd -fg -geometry $1 :1
+#/usr/bin/vncserver -fg -geometry $1 :1
+/opt/TurboVNC/bin/vncserver -3dwm -nocursor -nohttpd -fg -geometry $1 :1

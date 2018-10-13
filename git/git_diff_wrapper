@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+# http://stackoverflow.com/questions/7669963/how-can-i-get-a-side-by-side-diff-when-i-do-git-diff
+#
+# SDIFF:
+#ok echo sdiff -W -B -s "$2" "$5"
+#ok      sdiff -W -B -s "$2" "$5"
+#ok echo "-----------"
+#ok echo
+#
+# VIMDIFF:
+echo vimdiff -X -c 'set diffopt+=iwhite' "$2" "$5"
+vimdiff -X -c 'set diffopt+=iwhite' "$2" "$5"
+# vimdiff -c 'set diffopt+=iwhite' -c 'set diffopt-=filler' "$2" "$5"
+# ignore whitespace
+# ignore blankline

@@ -1,0 +1,45 @@
+#%Module#
+# ============================================================================
+set     url                "http://www.cscs.ch"
+set     url2               ""
+set     modulename         "visit"
+set     version            "2.8"
+set     LCcompiler         "."
+set     flags              "..."
+set     packageroot        "$env(APPS)/${modulename}/${version}"
+set     packageroot2       "$env(APPS)/${modulename}/${version}/current/linux-x86_64"
+# ============================================================================
+setenv         VISIT_DIR        "$packageroot"
+setenv         VISITHOME        "$packageroot"
+setenv         VISITARCHHOME    "$packageroot2"
+setenv         VISIT_MESA_LIB   "$packageroot2/lib/libOSMesa.so"
+setenv         PYTHONPATH       "$packageroot2/lib/site-packages"
+setenv         userenv_visit_28 "y"
+# setenv         VISITPLUGININSTPRI "/users/jfavre/.visit/current/linux-x86_64/plugins"
+prepend-path   PATH             "$packageroot/bin"
+prepend-path   PATH             "$packageroot2/bin"
+puts           stderr           "Loads $modulename/$version"
+# --- ENVE http://www.ceisoftware.com/download-viewers/ ---
+# vim cei_apex31_setup => setenv CEI_HOME /apps/movie/101
+prepend-path   PATH             "/apps/movie/101/bin"
+
+# ============================================================================
+proc ModulesHelp {} {
+  global url url2 modulename version packageroot LCcompiler flags 
+  puts stderr "
+        \tmodulefile : [module-info name] [module-info mode]
+        \t$modulename Version $version : 
+        \tCSCS Users Documentation : $url
+        \t$url2
+        \tSee : $packageroot
+        \t Expression=>name=procid + definition=procid(mesh1) + save THEN
+        \t visit -np 4 -o \$VISIT_DIR/data/multi_ucd3d.silo 
+        \t visit -o \$VISIT_DIR/noise.silo
+        \tThis version was compiled with ${LCcompiler} ${flags}"
+
+  return 0
+}
+# ============================================================================
+if { [ module-info mode whatis ] } {
+module-whatis "Set environment variables to enable the usage of the $modulename $version library."
+}

@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#SBATCH -C gpu
+##SBATCH -p debug
+#SBATCH --nodes=2              
+#SBATCH --ntasks=24                # -n
+#SBATCH --ntasks-per-node=12 
+#SBATCH --cpus-per-task=1         # -d/-c openmp
+#SBATCH --ntasks-per-core=1       # -j
+#SBATCH --hint=nomultithread
+
+#SBATCH --job-name="x"
+#SBATCH --output=j_%A_%a
+#SBATCH --error=j_%A_%a
+#SBATCH --array=1-4
+##SBATCH --mem-per-cpu=4000
+
+#SBATCH --time=00:01:00
+
+module rm xalt 
+
+# echo "outside SLURM_ARRAY_TASK_ID=$SLURM_ARRAY_TASK_ID"
+
+# echo T: `date +%Y/%m/%d-%H:%M:%S-%s.%N`
+srun ./sleep.sh $SLURM_ARRAY_TASK_ID 
+# echo T: `date +%Y/%m/%d-%H:%M:%S-%s.%N`
+
+echo done

@@ -1,0 +1,64 @@
+modulespath -> /apps/modules/3.2.10/gnu_482/Modules/3.2.10/init/.modules
+
+#
+# JAVA
+#        export JAVA_HOME=/home/piccinal/binjg/jre1.6.0_17
+#        export JRE_HOME=$JAVA_HOME
+#        export JAVA_BINDIR=$JAVA_HOME/bin
+#        export JAVA_ROOT=$JAVA_HOME
+#        export PATH=$JAVA_BINDIR:$PATH
+#        alias acroread='/scratch/jgp/Adobe/Reader9/bin/acroread'
+#
+#
+
+# JAVA
+# export JAVA_HOME=/apps/java/jre1.8.0_25
+# export JRE_HOME=$JAVA_HOME
+# export JAVA_BINDIR=$JAVA_HOME/bin
+# export JAVA_ROOT=$JAVA_HOME
+# export PATH=$JAVA_BINDIR:$PATH
+#
+
+# PERL => cpan ne marche pas si pas run as root
+        # si pas root, cpan ko, alors run cpan as root... (make install is ko)
+        # cd /usr/local/bin ; ln -s /apps/perl/5.14.2/gnu_452/usr/local/bin/perl
+        # cd /usr/local/lib ; ln -s /apps/perl/5.14.2/gnu_452/usr/local/lib/perl5/
+        #export PERL_HOME=/apps/perl/5.14.2/gnu_452/usr/local
+        #export PATH="$PERL_HOME/bin:$PATH"
+        # then run cpan (as root)
+        #export PERL_MB_OPT="--install_base $PERL_HOME"
+        #export PERL_MM_OPT="INSTALL_BASE=$PERL_HOME"
+        #export PERL5LIB="$PERL_HOME/lib/perl5/5.14.2/i686-linux:$PERL_HOME/lib/perl5/5.14.2:$PERL_HOME/lib/perl5"
+        #export PERL5LIB='/home/username/perl5/lib/perl5/i386-linux:/home/username/perl5/lib/perl5'    
+
+
+
+CUDA:
+
+
+
+# PERISCOPE
+# export PERISCOPE_ROOT=/apps/periscope/1.3.2/gnu_452
+# #export PERISCOPE_ARCH=.ia64
+# export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PERISCOPE_ROOT/lib:$PERISCOPE_ROOT/../../ace/6.1.0/gnu_452/lib:$PERISCOPE_ROOT/../../xerces-c/3.1.1/gnu_452/lib
+# # :$PERISCOPE_ROOT/mrimonitor
+# export PATH=$PATH:$PERISCOPE_ROOT/bin
+# # :$PERISCOPE_ROOT/registry:~/bin:$PERISCOPE_ROOT/mriclient                                                               
+# #Xercesc XML Parser Lib and libxml
+# #export LIBXML_ROOT=$PERISCOPE_ROOT
+# export PERISCOPE_DEBUG=1
+#
+# #periscope.sample 
+# #MACHINE         = localhost 
+# #SITE            = LiveDVD 
+# #REGSERVICE_HOST = localhost 
+# #REGSERVICE_PORT = 50001
+# #APPL_BASEPORT   = 51000
+# #AGENT_BASEPORT  = 50002
+#
+
+
+# TOTALVIEW MEMORYSCAPE
+# alias tvmem='export PE_PRODUCT_LIST="TVMEMDEBUG:$PE_PRODUCT_LIST";echo "-g -Wl,-zmuldefs"'
+# alias cleantv='ls -lrt ~/.totalview/lib_cache'
+#

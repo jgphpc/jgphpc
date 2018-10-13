@@ -1,0 +1,33 @@
+#!/bin/sh
+
+## php:
+
+export CRAYPE_LINK_TYPE=dynamic ; 
+./configure CC=gcc \
+--prefix=$HOME/jg/php/725 \
+--with-openssl \
+--with-libxml-dir=/apps/daint/UES/jenkins/6.0.UP04/gpu/easybuild/software/libxml2/2.9.4-CrayGNU-17.08
+mm -j install
+
+export PATH=$PWD:$PATH
+
+## composer
+
+mkdir composerjg
+cd composerjg
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php -r "if (hash_file('SHA384', 'composer-setup.php') === '544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+php composer-setup.php
+php -r "unlink('composer-setup.php');"
+
+## google-api-php-client.git
+
+git clone https://github.com/google/google-api-php-client.git google-api-php-client.git
+cd google-api-php-client.git/
+../../composerjg/composer.phar require google/apiclient:^2.0
+
+
+## google calendar:
+ln -s google-api-php-client.git/vendor/ # + client_secret.json credentials.json
+./php -f scs.php a=list
+

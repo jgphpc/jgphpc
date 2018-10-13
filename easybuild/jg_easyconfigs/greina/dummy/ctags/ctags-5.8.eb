@@ -1,0 +1,25 @@
+easyblock = 'ConfigureMake'
+
+name = "ctags"
+version = "5.8"
+
+homepage = 'http://ctags.sourceforge.net/'
+source_urls = ['http://prdownloads.sourceforge.net/ctags/']
+sources = ['ctags-5.8.tar.gz']
+#ok but vim requires http://ctags.sourceforge.net/
+#ok homepage = 'https://github.com/universal-ctags/ctags'
+#ok source_urls = ['https://github.com/universal-ctags/ctags/archive/']
+#ok sources = ['master.zip']
+#ok preconfigopts = "./autogen.sh &&"
+
+description = """ctags"""
+toolchain = {'name': 'dummy', 'version': 'dummy'}
+#old # builddependencies = [ ('zlib', '1.2.8'), ('binutils', '2.25'), ]
+# dependencies = [ ('zlib', '1.2.8'), ('binutils', '2.25'), ]
+
+sanity_check_paths = {
+    'files': ["bin/ctags"],
+    'dirs': []
+}
+
+moduleclass = 'devel'

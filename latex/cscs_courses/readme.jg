@@ -1,0 +1,1 @@
+awk '{printf "sed -e \"s-XXXX-course%02d-g\" -e \"s-YYYY-%s-g\" course.tex > %02d.tex \n",NR,$0,NR}' in 

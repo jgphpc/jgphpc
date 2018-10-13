@@ -1,0 +1,6 @@
+SCOREP_REGION_NAMES_BEGIN
+EXCLUDE
+wkernel*
+apply_pbc*
+calculate_norm*
+SCOREP_REGION_NAMES_END

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+stdbuf -oL /apps/common/UES/sandbox/jgp/affinity.git/HASWELL1S/GNU.haswell.test.mpi
+sleep $1
+

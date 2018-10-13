@@ -1,0 +1,57 @@
+183742
+
+Dear Nina,
+
+The attached code brings nodes down on dom and daint.
+
+ajocksch@dom101:/scratch/snx2000tds/ajocksch/27713/papi_test> cat ajocksch_batch.sh
+#!/bin/bash -l
+#
+#SBATCH --job-name="papi_test"
+#SBATCH --time=00:15:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=36
+#SBATCH --constraint=mc
+#SBATCH --output=papi_test.%j.o
+#SBATCH --error=papi_test.%j.e
+
+#======START=====
+#module swap PrgEnv-cray PrgEnv-gnu
+#export HTOR_PMPI_FILE_PREFIX="htor-pmpi-rank-"
+
+module load slurm
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/opt/cray-hss-devel/default/lib/x86_64:/opt/cray/pmi/default/lib64"
+
+#srun -n 1 papi_native_avail > papi_counters_pd.txt
+
+srun -n $SLURM_NTASKS ./papi_test
+
+#=====END====
+
+ajocksch@dom101:/scratch/snx2000tds/ajocksch/27713/papi_test> module list
+Currently Loaded Modulefiles:
+  1) modules/3.2.10.5                           7) cray-libsci/16.11.1                       13) xpmem/2.0.3_geb8008a-2.11                 19) cray-mpich/7.5.0
+  2) cge/2.5.1222_r9efe201_fe2.5.3_2017032306   8) udreg/2.3.2-4.14                          14) job/2.0.2_g98a4850-2.43                   20) craype-haswell
+  3) eswrap/2.0.11-2.2                          9) ugni/6.0.13-2.8                           15) dvs/2.7_2.0.72_gb37c41f-2.184             21) papi/5.5.0.1
+  4) cce/8.5.5                                 10) pmi/5.0.10-1.0000.11050.0.0.ari           16) rca/2.0.10_g66b76b7-2.51
+  5) craype-network-aries                      11) dmapp/7.1.0-16.18                         17) atp/2.0.4
+  6) craype/2.5.8                              12) gni-headers/5.0.7-4.11                    18) PrgEnv-cray/6.0.3
+
+ajocksch@dom101:/scratch/snx2000tds/ajocksch/27713/papi_test> cat Makefile
+CC      = cc
+CFLAGS  = -O3 $(INCDIRS)
+SYSLIBS = -lpapi -L/opt/cray-hss-devel/default/lib/x86_64 -L/opt/cray/pmi/default/lib64 -dynamic -lrsmsevent -lglib-2.0
+
+INCDIRS =
+LIBDIRS =
+LIBS =
+
+papi_test: papi_test.o
+    $(CC) $(CFLAGS) $(LIBDIRS) $^ -o $@ $(LIBS) $(SYSLIBS)
+
+clean:
+    rm -f *.o papi_test *~
+
+Regards
+
+Andreas

@@ -1,0 +1,62 @@
+<Servers>
+  <Server name="Reverse-Connect-Dom" configuration="" resource="csrc://">
+    <CommandStartup>
+      <Options>
+        <Option name="MACHINE" label="remote cluster" save="true">
+          <String default="dom.cscs.ch"/>
+        </Option>
+        <Option name="SSH_USER" label="SSH Username" save="true">
+          <String default="piccinal"/>
+        </Option>
+        <Option name="SSH_CMD" label="SSH command" save="true">
+          <File default="/usr/bin/ssh"/>
+        </Option>
+        <Option name="REMOTESCRIPT" label="The remote script (on dom) which generates the SLURM job" save="true">
+          <String default="/users/piccinal/linux.git/paraview/dom/rc-submit-pvserver.sh"/>
+        </Option>
+        <Option name="PVNodes" label="Number of cluster nodes" save="true">
+          <Range type="int" min="1" max="16" step="1" default="1"/>
+        </Option>
+        <Option name="PVTasks" label="Number of pvserver per node" save="true">
+          <Range type="int" min="1" max="12" step="1" default="8"/>
+        </Option>
+        <Option name="VERSION" label="VERSION ?" save="true">
+          <Enumeration default="5.4-EGL-CrayPython3">
+            <Entry value="5.4-XOGL-CrayPython3" label="5.4-XOGL-CrayPython3"/>
+            <Entry value="5.4-EGL-CrayPython3" label="5.4-EGL-CrayPython3"/>
+            <Entry value="dev-XOGL-CrayPython3" label="dev-XOGL-CrayPython3"/>
+            <Entry value="dev-EGL-CrayPython3" label="dev-EGL-CrayPython3"/>
+          </Enumeration>
+        </Option>
+        <Option name="PV_SERVER_PORT" label="pvserver port = uid on cscs cray systems" save="true">
+          <Range type="int" min="1024" max="65535" step="1" default="21099"/>
+        </Option>
+        <Option name="NUMMIN" label="job wall time" save="true">
+          <String default="00:29:00"/>
+        </Option>
+        <Option name="SESSIONID" label="Session id" save="true">
+          <String default="pvserver"/>
+        </Option>
+      </Options>
+      <Command exec="$SSH_CMD$" timeout="0" delay="5">
+        <Arguments>
+          <Argument value="-l"/>
+          <Argument value="$SSH_USER$"/>
+          <Argument value="-R"/>
+          <Argument value="$PV_SERVER_PORT$:localhost:$PV_SERVER_PORT$"/>
+          <Argument value="$MACHINE$"/>
+          <Argument value="$REMOTESCRIPT$"/>
+          <Argument value="$SESSIONID$"/>
+          <Argument value="$NUMMIN$"/>
+          <Argument value="$PVNodes$"/>
+          <Argument value="$PVTasks$"/>
+          <Argument value="$PV_SERVER_PORT$"/>
+          <Argument value="$MACHINE$"/>
+          <Argument value="$VERSION$;"/>
+          <Argument value="sleep"/>
+          <Argument value="900"/>
+        </Arguments>
+      </Command>
+    </CommandStartup>
+  </Server>
+</Servers>

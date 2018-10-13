@@ -1,0 +1,494 @@
+" ---- jgp's .vimrc ----
+" Coding ----------------------------------------------- @@@
+"set cursorline                  " horizontal line shows current line
+set comments=
+colorscheme default " fix for: E411: highlight group not found: Normal
+set background=dark " switch to color scheme for terminals with a dark background
+set ignorecase      " ignore case when searching (turn off by : set noignorecase)
+" set incsearch       " enable incremental search
+set ruler           " show cursor line at the bottom of the terminal
+" set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
+" set showmatch       " show bracket matches
+set showmode        " display current mode in the status line
+set nu
+" set showcmd       " Show partial commands in status line and
+                    " Selected characters/lines in visual mode
+
+
+" Colors ----------------------------------------------- @@@
+" let mysyntaxfile = "~/.vim/mysyntax.vim"
+set hlsearch
+syntax on
+" syntax enable
+let &colorcolumn=join(range(77,77),",")
+
+
+" Indentation ----------------------------------------------- @@@
+set expandtab       " insert spaces instead of tab
+set shiftwidth=4    " use indents of 4 spaces
+set tabstop=4    
+" set softtabstop=2               " Let backspace delete indent
+" set tw=78           " Maximum width of text line
+" INDENT HTML
+" "set ft=html
+" "set si
+" "gg=G<cr>
+
+
+
+" Taglist ----------------------------------------------- @@@
+" Ctags:
+if $HOSTNAME == 'banco'
+if filereadable( "/usr/bin/ctags" )
+let g:showfuncctagsbin = "/usr/bin/ctags"
+" = ctags/5.9
+endif
+endif
+
+" if $HOSTNAME == 'brisi01'
+if $APPS == '/apps/escha'
+if filereadable( "/users/piccinal/easybuild/rh7/software/ctags/5.8/bin/ctags" )
+let g:showfuncctagsbin = "/users/piccinal/easybuild/rh7/software/ctags/5.8/bin/ctags"
+endif
+endif
+
+if $HOSTNAME == 'greina-head'
+if filereadable( "/cm/shared/apps/easybuild/software/ctags/5.8/bin/ctags" )
+        let g:showfuncctagsbin = "/cm/shared/apps/easybuild/software/ctags/5.8/bin/ctags"
+endif
+endif
+
+" CUDA CTAGS
+" let Tlist_Ctags_Cmd='/opt/local/bin/ctags' 
+" ctags --langmap=c++:+.cu * : pas besoin
+
+
+" Syntax ----------------------------------------------- @@@
+"non: augroup filetypedetect 
+
+" GITHUB.md markdown:
+au BufNewFile,BufRead *.md set ft=sh
+" OCTAVE:
+" au! BufRead,BufNewFile *.m,*.oct set filetype=octave 
+" au BufRead,BufNewFile *.m  set filetype=matlab
+au BufRead,BufNewFile *.m  set filetype=octave
+au BufRead,BufNewFile .oct set filetype=octave 
+" EASYBUILD:
+au BufNewFile,BufRead *.eb set ft=sh
+au BufNewFile,BufRead *.log set ft=sh
+" C:
+au BufNewFile,BufRead *.c set ft=c
+" DOXYGEN:
+au BufNewFile,BufRead *.dox set ft=cpp.doxygen 
+"a essayer: au BufNewFile,BufRead *.dox set ft=cpp.doxygen 
+" CUDA:
+" .cu=cpp sinon Tlist vide ==> au BufNewFile,BufRead *.cu set ft=cpp mais - de
+" couleurs...
+" OU ALORS
+" :set ft=cpp ; Tlist   # OK
+au BufNewFile,BufRead *.CUF set ft=cuda
+au BufNewFile,BufRead *.cuf set ft=fortran
+au BufNewFile,BufRead *.nml set ft=fortran
+au BufNewFile,BufRead *.F03 set ft=fortran
+" CUDA:
+" http://www.darksmile.net/software/.vimrc.html
+" if filereadable( /usr/share/vim/current/syntax/cuda.vim )
+" au BufNewFile,BufRead *.cuf so /usr/share/vim/current/syntax/cuda.vim
+" au BufNewFile,BufRead *.cu  so /usr/share/vim/current/syntax/cuda.vim
+" endif
+" if filereadable( /usr/share/vim/vimcurrent/syntax/cuda.vim )
+" au BufNewFile,BufRead *.cuf so /usr/share/vim/vimcurrent/syntax/cuda.vim
+" au BufNewFile,BufRead *.cu  so /usr/share/vim/vimcurrent/syntax/cuda.vim
+" endif
+" if filereadable( /apps/ela/vim/72/gnu_444/share/vim/vim72/syntax/cuda.vim )
+" au BufNewFile,BufRead *.cuf so /apps/ela/vim/72/gnu_444/share/vim/vim72/syntax/cuda.vim
+" au BufNewFile,BufRead *.cu  so /apps/ela/vim/72/gnu_444/share/vim/vim72/syntax/cuda.vim
+" endif
+" SWAN: WAVE MODEL
+au BufNewFile,BufRead *.swn set ft=tcsh
+" NCL: http://www.ncl.ucar.edu/Applications/editor.shtml#vim
+au BufRead,BufNewFile *.ncl set filetype=fortran
+"au BufRead,BufNewFile *.ncl set filetype=ncl
+"au! Syntax newlang source /users/piccinal/.vim/syntax/ncl3.vim
+" PKGCONFIG:
+au BufNewFile,BufRead *.pc set ft=sh
+" Else:
+"if $HOST == 'gele1'
+"au Syntax F90   source         /apps/gele/tools/vim/72/gnu_432/share/vim/vim72/syntax/fortran.vim
+"au BufNewFile,BufRead *.F90 so /apps/gele/tools/vim/72/gnu_432/share/vim/vim72/syntax/fortran.vim
+"endif
+
+"non: augroup END " filetypedetect 
+
+
+
+" Folding ----------------------------------------------- @@@
+" folding (=hide lines), see https://www.linux.com/learn/tutorials/442438-vim-tips-folding-fun
+" type zf / zd / zE
+"au BufWinLeave * mkview
+"au BufWinEnter * silent loadview
+" https://github.com/gjeusel/myconfig :
+" #vim: set foldmarker={,} foldlevel=0 foldmethod=marker
+set foldmethod=marker
+set foldcolumn=0
+"setlocal foldnestmax=1
+nnoremap <Space> za
+vnoremap <Space> za
+
+
+" mac keyboard: ----------------------------------------- @@@
+map <F5> <C-]>
+"map <X> <C-]>
+" for mac iterm2
+set t_Co=256
+
+
+" Fortran ----------------------------------------------------- @@@
+let fortran_free_source=1
+" au Syntax F90   source         /usr/share/vim/vim72/syntax/fortran.vim
+" au BufNewFile,BufRead *.F90 so /usr/share/vim/vim72/syntax/fortran.vim
+
+
+" --------------------------------------------------------------- @@@
+" WEBRT@CSCS
+nmap x0 <ESC>:r ~/.vim/templates/rt0<CR>
+nmap x1 <ESC>:r ~/.vim/templates/rt1<CR>
+nmap x2 <ESC>:r ~/.vim/templates/rt2<CR>
+
+
+" paste buffer -------------------------------------------------- @@@
+" transfer/read and write one block of text between vim sessions
+" Usage:
+" `from' session:
+"     ma
+"     move to end-of-block
+"     xw
+"
+" `to' session:
+"     move to where I want block inserted
+"     xr
+"
+" ------
+"if has("unix")
+"  nmap xr   :r $HOME/.vimxfer<CR>
+"  vmap xr   c<esc>:r $HOME/.vimxfer<CR>
+"
+"  nmap xw   :'a,.w! $HOME/.vimxfer<CR>
+"  vmap xw   :w! $HOME/.vimxfer<CR>
+"else
+"  nmap xw   :'a,.w! /tmp/.vimxfer<CR>
+"OK:  nmap xw    ma<ESC>:'a,.w! /tmp/.vimxfer<CR>
+nmap xW    ma<ESC>:'a,.w! /tmp/.vimxfer<CR>
+"  vmap xw   :w! /tmp/.vimxfer<CR>
+"OK:  nmap xr   :r /tmp/.vimxfer<CR>
+nmap xR   :r /tmp/.vimxfer<CR>
+"  vmap xr   c<esc>:r /tmp/.vimxfer<cr>
+"endif
+" -------------------------------------------------------------------
+" http://vim.wikia.com/wiki/In_line_copy_and_paste_to_system_clipboard
+" The reason for the double-command on <C-c> is due to some weirdness with the 
+" X clipboard system.
+"vmap <C-c> y:call system("xclip -i -selection clipboard", " getreg("\""))<CR>:call system("xclip -i", getreg("\""))<CR>
+" http://sourceforge.net/projects/xclip/
+vmap <C-c> y: call system("xclip -i -selection clipboard", getreg("\""))<CR>
+" THEN CTRL-SHIFT-INSERT
+"pas besoin nmap <C-v> :call setreg("\"",system("xclip -o -selection clipboard"))<CR>p
+"
+
+
+
+" Python ----------------------------------------------- @@@
+" python omnicompletion
+" :echo &omnifunc Ctrlx-Ctrlo
+" :help new-omni-completion
+" :set omnifunc?
+filetype plugin on
+
+"set ofu=syntaxcomplete#Complete
+"autocmd FileType python set omnifunc=pythoncomplete#Complete
+"" pydoc shortcut : <Leader>pw = \pw
+let g:pydoc_cmd='pydoc'
+let python_highlight_all = 1
+
+
+
+
+" Git --------------------------------------------------- @@@
+" = fugitive
+
+
+
+" Buffer list ------------------------------------------- @@@
+" -MiniBufExplorer- Tab and Shift-Tab
+"let g:miniBufExplMapWindowNavVim = 1
+"let g:miniBufExplMapWindowNavArrows = 1
+"let g:miniBufExplMapCTabSwitchBufs = 1
+"let g:miniBufExplModSelTarget = 1
+
+
+" TERMINATOR ------------------------------- @@@
+" set title as shortcut key
+
+
+
+
+" Not used (yet) ----------------------------------------------- @@@
+":set scrollbind
+" vimdiff wrap : once lines reach the right margin they are continued on the line below
+" vimdiff -c 'windo set wrap' ../../ccc.*
+"if &diff
+"   set wrap
+"else
+"   setup for non-diff mode
+"endif
+" SCROLL*2 ------------
+"nmap <silent> <M-Down> :call ScrollOtherWindow("down")<CR>
+"nmap <silent> <M-Up> :call ScrollOtherWindow("up")<CR>
+" SCROOOOOOOOOOOOOL
+" fun! ScrollOtherWindow(dir)
+" if a:dir == "down"
+" let move = "\<C-E>"
+" elseif a:dir == "up"
+" let move = "\<C-Y>"
+" endif
+" endfunction
+
+
+" plugins ----------------------------------------------- @@@
+" PATHOGEN for PLUGINS = https://github.com/tpope/vim-pathogen
+" execute pathogen#infect()
+" " ===> /Users/jg/.vim/bundles/
+"
+" " TCOMMENT (depends on pathogen)
+" " http://www.vim.org/scripts/script.php?script_id=1173
+" " https://github.com/tomtom/tcomment_vim
+" "       /Users/jg/.vim/bundles/tcomment_vim ->
+" /a/vim/plugins/tcomment_vim.git
+
+
+
+" github.com/VundleVim/Vundle.vim ------------------------ @@@
+set nocompatible  " be iMproved, required
+filetype off      " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+"filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+
+
+" Linediff: ~/.vim/bundle/linediff.vim/plugin/linediff.vim
+Plugin 'linediff.vim'
+
+
+" http://spf13.com ===========================================================
+"statusline  if has('statusline')
+"statusline          set laststatus=2
+"statusline          " Broken down into easily includeable segments
+"statusline          set statusline=%<%f\                     " Filename
+"statusline          set statusline+=%w%h%m%r                 " Options
+"statusline          if !exists('g:override_spf13_bundles')
+"statusline                  set statusline+=%{fugitive#statusline()} " Git Hotness
+"statusline          endif
+"statusline          set statusline+=\ [%{&ff}/%Y]            " Filetype
+"statusline          set statusline+=\ [%{getcwd()}]          " Current dir
+"statusline          set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
+"statusline  endif
+
+"set backspace=indent,eol,start  " Backspace for dummies
+set bs=2                        " Backspace
+"set linespace=0                 " No extra spaces between rows
+"set number                      " Line numbers on
+"set incsearch                   " Find as you type search
+"set hlsearch                    " Highlight search terms
+"set winminheight=0              " Windows can be 0 line high
+"set ignorecase                  " Case insensitive search
+"set smartcase                   " Case sensitive when uc present
+"set wildmenu                    " Show list instead of just completing
+"set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
+"set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
+"set scrolljump=5                " Lines to scroll when cursor leaves screen
+"set scrolloff=3                 " Minimum lines to keep above and below cursor
+set foldenable                  " Auto fold code
+"set list
+" set listchars=tab:�~@�\ ,trail:�~@�,extends:#,nbsp:. " Highlight problematic whitespace
+
+" Formatting {
+"    set nowrap                      " Do not wrap long lines
+"    set autoindent                  " Indent at the same level of the previous line
+"    set shiftwidth=4                " Use indents of 4 spaces
+"    set expandtab                   " Tabs are spaces, not tabs
+"    set tabstop=4                   " An indentation every four columns
+"    set softtabstop=4               " Let backspace delete indent
+"    set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
+"    set splitright                  " Puts new vsplit windows to the right of the current
+"    set splitbelow                  " Puts new split windows to the bottom of the current
+"    set matchpairs+=<:>             " Match, to be used with %
+"    set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
+    "set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
+    " Remove trailing whitespaces and ^M chars
+    " To disable the stripping of whitespace, add the following to your
+    " .vimrc.before.local file:
+    "   let g:spf13_keep_trailing_whitespace = 1
+"    autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql autocmd BufWritePre <buffer> if !exists('g:spf13_keep_trailing_whitespace') | call StripTrailingWhitespace() | endif
+    "autocmd FileType go autocmd BufWritePre <buffer> Fmt
+"    autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
+"    autocmd FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
+    " preceding line best in a plugin but here for now.
+
+"    autocmd BufNewFile,BufRead *.coffee set filetype=coffee
+
+    " Workaround vim-commentary for Haskell
+"    autocmd FileType haskell setlocal commentstring=--\ %s
+    " Workaround broken colour highlighting in Haskell
+"    autocmd FileType haskell,rust setlocal nospell
+
+" }
+
+" Code folding options
+nmap <leader>f0 :set foldlevel=0<CR>
+nmap <leader>f1 :set foldlevel=1<CR>
+nmap <leader>f2 :set foldlevel=2<CR>
+nmap <leader>f3 :set foldlevel=3<CR>
+nmap <leader>f4 :set foldlevel=4<CR>
+nmap <leader>f5 :set foldlevel=5<CR>
+nmap <leader>f6 :set foldlevel=6<CR>
+nmap <leader>f7 :set foldlevel=7<CR>
+nmap <leader>f8 :set foldlevel=8<CR>
+nmap <leader>f9 :set foldlevel=9<CR>
+
+"UPPERCASE and lowsercase conversion
+"nnoremap g^ gUiW
+"nnoremap gv guiW
+
+" Change Working Directory to that of the current file
+cmap cwd lcd %:p:h
+cmap cd. lcd %:p:h
+
+" {{{ Plugins 
+
+    " https://github.com/mattn/emmet-vim {
+    Plugin 'mattn/emmet-vim'    
+    " }
+
+    " Ctags {
+    set tags=./tags;/,~/.vimtags
+    " Make tags placed in .git/tags file available in all levels of a repository
+    let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 'g')
+    if gitroot != ''
+            let &tags = &tags . ',' . gitroot . '/.git/tags'
+    endif
+    " }
+
+    " Tabularize {
+    " http://vimcasts.org/episodes/aligning-text-with-tabular-vim/
+        "if isdirectory(expand("~/.vim/bundle/tabular"))
+        if isdirectory(expand("~/.vim/bundle/Tabular"))
+            nmap <Leader>a& :Tabularize /&<CR>
+            vmap <Leader>a& :Tabularize /&<CR>
+            nmap <Leader>a= :Tabularize /^[^=]*\zs=<CR>
+            vmap <Leader>a= :Tabularize /^[^=]*\zs=<CR>
+            nmap <Leader>a=> :Tabularize /=><CR>
+            vmap <Leader>a=> :Tabularize /=><CR>
+            nmap <Leader>a: :Tabularize /:<CR>
+            vmap <Leader>a: :Tabularize /:<CR>
+            nmap <Leader>a:: :Tabularize /:\zs<CR>
+            vmap <Leader>a:: :Tabularize /:\zs<CR>
+            nmap <Leader>a, :Tabularize /,<CR>
+            vmap <Leader>a, :Tabularize /,<CR>
+            nmap <Leader>a,, :Tabularize /,\zs<CR>
+            vmap <Leader>a,, :Tabularize /,\zs<CR>
+            nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+            vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+        endif
+    " }
+
+    " Fugitive {
+        if isdirectory(expand("~/.vim/bundle/vim-fugitive/"))
+            nnoremap <silent> <leader>gs :Gstatus<CR>
+            nnoremap <silent> <leader>gd :Gdiff<CR>
+            nnoremap <silent> <leader>gc :Gcommit<CR>
+            nnoremap <silent> <leader>gb :Gblame<CR>
+            nnoremap <silent> <leader>gl :Glog<CR>
+            nnoremap <silent> <leader>gp :Git push<CR>
+            nnoremap <silent> <leader>gr :Gread<CR>
+            nnoremap <silent> <leader>gw :Gwrite<CR>
+            nnoremap <silent> <leader>ge :Gedit<CR>
+            " Mnemonic _i_nteractive
+            nnoremap <silent> <leader>gi :Git add -p %<CR>
+            nnoremap <silent> <leader>gg :SignifyToggle<CR>
+        endif
+    "}
+
+    " indent_guides {
+        if isdirectory(expand("~/.vim/bundle/vim-indent-guides/"))
+            let g:indent_guides_start_level = 2
+            let g:indent_guides_guide_size = 1
+            let g:indent_guides_enable_on_vim_startup = 1
+        endif
+    " }
+
+    " ~/.vim/bundle/jedi-vim/doc
+    Plugin 'davidhalter/jedi-vim'
+
+ " }}}
+
+" {{{ Key (re)Mappings
+       " {{{ redefine leader
+
+       " The default leader is '\', but many people prefer ',' as it's in a standard
+       " location. To override this behavior and set it back to '\' (or any other
+       " character) add the following to your .vimrc.before.local file:
+       "   let g:spf13_leader='\'
+       if !exists('g:spf13_leader')
+        let mapleader = ','
+       else
+        let mapleader=g:spf13_leader
+       endif
+       if !exists('g:spf13_localleader')
+        let maplocalleader = '_'
+       else
+        let maplocalleader=g:spf13_localleader
+       endif
+       " }}}
+
+" }}}
+
+" http://spf13.com ===========================================================
+
+" {{{ https://github.com/ggreer/the_silver_searcher
+" /users/piccinal/.vim/bundle/ag
+let g:ag_prg="/apps/common/UES/sandbox/jgp/the_silver_searcher/gnu_485/bin/ag --vimgrep"
+let g:ackprg = 'ag --nogroup --nocolor --column'
+" }}}
+"
+
+" TODO: ~/.vim/bundle/cscope.vim/plugin/cscope.vim +
+" http://ngressier.developpez.com/articles/vim/vim-plugin-taglist/
+
+
+" crontab {
+"autocmd filetype crontab setlocal nobackup nowritebackup
+" }
+
+
+" {{{ https://github.com/joonty/vdebug
+" => /users/piccinal/.vim/bundle/vdebug
+" Plugin 'joonty/vdebug'
+" }}}
+

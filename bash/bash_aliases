@@ -1,0 +1,820 @@
+# echo ".bash_aliases START"
+# https://github.com/jgphpc/linux
+# https://github.com/gjeusel/myconfig.git
+# source linux.git/bash/SECRET
+# --------------------------------
+
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+#----------------------------------------------------------------------
+# export PS1="\[\033[01;31m\]\h:\w $ \[\033[00m\]"
+export is_bash_aliases_set=1
+__git_branch='`git branch 2> /dev/null |grep ^* |cut -d\* -f2 |tr -d " "`'
+# export PS1="\[\e[0;32m\] \u@\h\[\e[m\]:\[\e[1;32m\]\w\[\e[m\]\[\e[1;32m\]\$$__git_branch \[\e[m\]\[\e[1;37m\]"
+export PS1="\[\e[0;32m\]# \u@\h\[\e[m\]:\[\e[1;32m\]\w\[\e[m\]\[\e[0;30m\]\$$__git_branch \[\e[m\]\[\e[1;37m\]\n"
+# PS1='\[\e[0;32m\] \h\[\e[m\]: '
+# export PS1='\[\e[0;32m\]\t \u@\h\[\e[m\]:\[\e[1;32m\]\w\[\e[m\] \[\e[1;32m\]\$ \[\e[m\]\[\e[1;37m\]'
+# echo PS1='\[\e[0;32m\]\t \u@\h\[\e[m\]:\[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$ \[\e[m\]\[\e[1;37m\]'
+#debug: PS4='$0:$LINENO '
+# PS4='(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]} -> $?]'
+# export PS4='(${LINENO}):'
+#----------------------------------------------------------------------
+alias rt='cd $SCRATCH/RT'
+alias sx='cd /apps/common/UES/sandbox/jgp'
+alias sxx='source ~/eff.ebgpu ;cd /apps/common/UES/sandbox/jgp/perfhackaton.git/reframe/lammps/'
+export LANG=C 
+export LC_ALL=C
+export LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH
+ulimit -c unlimited
+if [ `uname` != "Darwin" ] ; then
+    ulimit -s unlimited
+    export COLUMNS=112
+fi
+
+# alias ls='ls --color=auto'
+# complete -r ls
+# ls $SCRATCH/
+
+# date --rfc-3339=ns > eff_bash_debug_bash_aliases
+
+ ####    ####   #        ####   #####
+#    #  #    #  #       #    #  #    #
+#       #    #  #       #    #  #    #
+#       #    #  #       #    #  #####
+#    #  #    #  #       #    #  #   #
+ ####    ####   ######   ####   #    #
+# VERT="\\033[1;32m"
+# NORMAL="\\033[0;39m"
+# ROUGE="\\033[1;31m"
+# ROSE="\\033[1;35m"
+# BLEU="\\033[1;34m"
+# BLANC="\\033[0;02m"
+# BLANCLAIR="\\033[1;08m"
+# JAUNE="\\033[1;33m"
+# CYAN="\\033[1;36m"
+TXTBLK='\[\e[0;30m\]' # Black - Regular
+TXTRED='\[\e[0;31m\]' # Red
+TXTGRN='\[\e[0;32m\]' # Green
+TXTYLW='\[\e[0;33m\]' # Yellow
+TXTBLU='\[\e[0;34m\]' # Blue
+TXTPUR='\[\e[0;35m\]' # Purple
+TXTCYN='\[\e[0;36m\]' # Cyan
+TXTWHT='\[\e[0;37m\]' # White
+BLDBLK='\[\e[1;30m\]' # Black - Bold
+BLDRED='\[\e[1;31m\]' # Red
+BLDGRN='\[\e[1;32m\]' # Green
+BLDYLW='\[\e[1;33m\]' # Yellow
+BLDBLU='\[\e[1;34m\]' # Blue
+BLDPUR='\[\e[1;35m\]' # Purple
+BLDCYN='\[\e[1;36m\]' # Cyan
+BLDWHT='\[\e[1;37m\]' # White
+UNDBLK='\[\e[4;30m\]' # Black - Underline
+UNDRED='\[\e[4;31m\]' # Red
+UNDGRN='\[\e[4;32m\]' # Green
+UNDYLW='\[\e[4;33m\]' # Yellow
+UNDBLU='\[\e[4;34m\]' # Blue
+UNDPUR='\[\e[4;35m\]' # Purple
+UNDCYN='\[\e[4;36m\]' # Cyan
+UNDWHT='\[\e[4;37m\]' # White
+BAKBLK='\[\e[40m\]'   # Black - Background
+BAKRED='\[\e[41m\]'   # Red
+BAKGRN='\[\e[42m\]'   # Green
+BAKYLW='\[\e[43m\]'   # Yellow
+BAKBLU='\[\e[44m\]'   # Blue
+BAKPUR='\[\e[45m\]'   # Purple
+BAKCYN='\[\e[46m\]'   # Cyan
+BAKWHT='\[\e[47m\]'   # White
+TXTRST='\[\e[0m\]'    # Text Reset
+NOCOLOR='\[\033[0m\]'  # No color
+
+
+# echo B
+ #    #     #     ####      #     #####
+ #    #     #    #          #       #
+ #    #     #     ####      #       #
+ #    #     #         #     #       #
+  #  #      #    #    #     #       #
+   ##       #     ####      #       #
+# VISIT ----------------------------
+# export VISITJG=no
+# #export VISITJG=yes
+# if [ $VISITJG = yes ] ; then
+# #if [ `uname -n |tr -d [0-9]` = "daint" ] ; then
+# ## edit also ~/.bashrc => (-z "$PS1"), ~/.profile not needed
+#         #echo MODULESHOME = $MODULESHOME
+#         source $MODULESHOME/init/bash
+#         #module load /users/piccinal/modulefiles/linux/jg
+#         #source /opt/modules/default/init/bash
+#         module swap PrgEnv-cray PrgEnv-gnu
+#         #module load gcc
+#         module load visit
+#         #module list
+# 
+#         #verify with: ssh daint which mdserver
+#         #TODO: modify the modulefile of visit ? :
+#         #module load gcc
+#         #module load visit
+# #fi
+
+
+
+#    #   ####   #####   #    #  #       ######   ####   #    #  #####
+##  ##  #    #  #    #  #    #  #       #       #    #  ##  ##  #    #
+# ## #  #    #  #    #  #    #  #       #####   #       # ## #  #    #
+#    #  #    #  #    #  #    #  #       #       #       #    #  #    #
+#    #  #    #  #    #  #    #  #       #       #    #  #    #  #    #
+#    #   ####   #####    ####   ######  ######   ####   #    #  #####
+# modulecmd
+trap "" 1 2 3
+if [ `uname -n` = "banco" ] ; then
+        source /apps/modules/3.2.10/gnu_482/Modules/3.2.10/init/bash
+elif [ `uname` = "Darwin" ] ; then
+	unamen=`uname -n`
+        if [ "$unamen" = "jgmac.lan" ] ; then
+        source /efface/apps/modules/3.2.9/gnu_480/Modules/3.2.9/init/bash
+	fi
+
+	if [ "$unamen" != "mac-lilly.local" ] ; then
+        source /apps/module/3.2.10/gnu_421/Modules/3.2.10/init/bash
+        fi
+fi
+# A=`echo $APPS |cut -d/ -f3`
+# case $A in
+#         domnv) . $MODULESHOME/init/bash ; export CUDA_HOME=/usr/local/cuda-5.5 ;;
+#        dommic) . $MODULESHOME/init/bash ;;
+#           dom) . $MODULESHOME/init/bash ;;
+#        castor) . $MODULESHOME/init/bash ;;
+# esac
+# -----------------------------------
+#case "`/bin/ls -l /proc/$$/exe`" in
+#   *bash) . /apps/module/3.2.10/gnu_473/Modules/3.2.10/init/bash ;;
+#    *zsh) . /apps/module/3.2.10/gnu_473/Modules/3.2.10/init/zsh ;;
+#    *ksh) . /apps/module/3.2.10/gnu_473/Modules/3.2.10/init/ksh ;;
+#     *sh) . /apps/module/3.2.10/gnu_473/Modules/3.2.10/init/sh ;;
+#       *) . /apps/module/3.2.10/gnu_473/Modules/3.2.10/init/sh ;;  # default for scripts
+#esac
+# ko=`type module > /dev/null 2>&1`
+# if [ $? -eq 1 ] ; then
+# module () 
+# { 
+#     eval `/usr/bin/modulecmd bash $*`
+# }
+# fi
+trap 1 2 3
+# echo C
+# if [ -z $PE_ENV  ] ; then export PE_ENV=GNU
+# if [ -z  $TMDPIR ] ; then export  TMDPIR=/tmp ; fi
+# if [ -z $SCRATCH ] ; then export SCRATCH=/scratch/piccinal ; fi
+# export SCRATCH="${SCRATCH:-${TMPDIR:?}}"
+# module aliases
+alias dg='module load daint-gpu'
+alias dm='module load daint-mc'
+alias me='source /opt/cray/craype/default/bin/craype-pkgconfig enable'
+alias md='source /opt/cray/craype/default/bin/craype-pkgconfig disable'
+alias maa='module avail 2>&1 |grep -i'
+alias ma='module avail 2>&1'
+alias ml='module list 2>&1'
+alias mll='module load'
+alias ms='module swap'
+alias mss='module show'
+alias mh='module help'
+alias mw='module whatis'
+alias lll='module list'
+alias mmc='make clean'
+alias mm='make '
+alias m='more'
+alias M='sudo more'
+alias L='sudo ls -lrt'
+alias LDD='sudo -u '
+alias mn='make -n'
+alias cpp_='gcc -x c++ -E -dM /dev/null'
+alias cpp__='cpp -E -dM /dev/null'
+alias mo='module'
+# PrgEnv
+alias pgi='module load PrgEnv-pgi'
+alias gnu='module load PrgEnv-gnu'
+alias cce='module load PrgEnv-cray'
+alias cce_='module rm PrgEnv-cray;module list'
+alias int='module load PrgEnv-intel'
+# pgi
+alias pgc=' module swap PrgEnv-pgi PrgEnv-cray       ; mo list'
+alias pgg=' module swap PrgEnv-pgi PrgEnv-gnu        ; mo list'
+alias pgii='module swap PrgEnv-pgi PrgEnv-intel        ; mo list'
+# cray
+# TODO: module swap $(module list 2>&1 |grep --only-matching PrgEnv.*) PrgEnv-pgi
+alias cpg=' module swap PrgEnv-cray PrgEnv-pgi       ; mo list'
+alias cg='  module swap PrgEnv-cray PrgEnv-gnu       ; mo list'
+alias ci='  module swap PrgEnv-cray PrgEnv-intel       ; mo list'
+# gnu
+alias gpg=' module swap PrgEnv-gnu PrgEnv-pgi        ; mo list'
+alias gc='  module swap PrgEnv-gnu PrgEnv-cray       ; mo list'
+alias gi='  module swap PrgEnv-gnu PrgEnv-intel        ; mo list'
+# intel
+alias ic='  module swap PrgEnv-intel PrgEnv-cray       ; mo list'
+alias ipg=' module swap PrgEnv-intel PrgEnv-pgi        ; mo list'
+alias ig='  module swap PrgEnv-intel PrgEnv-gnu        ; mo list'
+alias accc='module load craype-accel-nvidia60'
+alias acc3='module load craype-accel-nvidia35'
+# latest mfiles defaults
+alias xmg='/apps/gele/scripts/cscs/modules/load_latest_mfiles_gele.sh ; grep -v \# /tmp/.efface.latest ;grep \# /tmp/.efface.latest; echo "doit ?"; read ; source /tmp/.efface.latest ; rm -f /tmp/.efface.latest'
+
+#function xmm() {
+#        /apps/sandbox/scripts/modules/load_latest_mfiles_rosa.sh $1
+#        cat /tmp/.efface.latest.$1
+#        echo "doit ?"
+#        read
+#        source /tmp/.efface.latest.$1
+#        rm -f /tmp/.efface.latest.$1
+#}
+
+# BANCO:
+if [ `hostname -s` =  "banco" ] ; then
+        export APPS=/apps
+        # module load linux       # or banco ?
+        # MODULEPATH
+        # echo > /dev/null
+fi
+#export MODULEPATH=$MODULEPATH:/users/piccinal/modulefiles:/apps/ela/modulefiles
+# case `hostname` in
+#        palu*) echo $MODULEPATH |tr : "\n" |grep palu &> /dev/null; if [ $? -eq 1 ] ;then export MODULEPATH=$MODULEPATH:/apps/palu/modulefiles ;fi
+# esac
+#alias moo='export MODULEPATH=$MODULEPATH:/users/piccinal/modulefiles'
+# export MODULEPATH=$MODULEPATH:~/modulefiles/
+#----------------------------------------------------------------------
+
+ ####    ####   #    #
+#       #       #    #
+ ####    ####   ######
+     #       #  #    #
+#    #  #    #  #    #
+ ####    ####   #    #
+alias elapdf='scp piccinal@ela.cscs.ch:eff.pdf .'
+alias elatar='scp piccinal@ela.cscs.ch:eff.tar .'
+alias elapng='scp piccinal@ela.cscs.ch:eff.png .'
+alias elajpg='scp piccinal@ela.cscs.ch:eff.jpg .'
+alias elahtm='scp piccinal@ela.cscs.ch:eff.html .'
+alias eladocx='scp piccinal@ela.cscs.ch:eff.docx .'
+alias elaxlsx='scp piccinal@ela.cscs.ch:eff.xlsx .'
+# alias uv='ssh -Y piccinal@rothorn.cscs.ch'
+# alias al='ssh -Y piccinal@albis.cscs.ch'
+# alias ca='ssh -Y piccinal@castor.cscs.ch'
+# alias cirra='ssh -Y piccinal@ela2.login.cscs.ch -t ssh -Y cirra'
+# alias cirra_='ssh -Y cirra'
+# alias dom='ssh -Y piccinal@dom.cscs.ch'
+# --- dom
+alias dom='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@dom'
+#alias dom='ssh -Y piccinal@ela.cscs.ch -t ssh -x piccinal@dom'
+# alias euler='ssh -Y jeanpi@euler.ethz.ch'
+# alias nv='ssh -Y piccinal@domnv.cscs.ch'
+
+# --- basel
+alias ba='ssh -Y piccinal@dmi-cl-login.dmi.unibas.ch'
+alias fish='ssh -Y piccinal@maia.urz.unibas.ch'
+
+# --- openstack
+alias vm='ssh -Y piccinal@148.187.96.150'
+# alias gfo='ssh piccinal@crana.intnet.cscs.ch'
+# alias lcg='ssh -Y jgp@wn59.lcg.cscs.ch'
+
+# --- ela
+alias ela0='ssh -Y piccinal@ela0.login.cscs.ch'
+alias ela1='ssh -Y piccinal@ela1.login.cscs.ch'
+alias ela2='ssh -Y piccinal@ela2.login.cscs.ch'
+alias ela3='ssh -Y piccinal@ela3.login.cscs.ch'
+alias  ela='ssh -Y piccinal@ela.cscs.ch'
+
+# --- greina
+alias g='ssh -Y piccinal@greina0.cscs.ch'
+# alias gg='ssh -Y piccinal@148.187.83.10' # new greina
+
+# --- leone
+alias le='ssh -Y piccinal@ela2.login.cscs.ch -t ssh -Y piccinal@leone'
+alias le_='ssh -Y piccinal@leone.cscs.ch'
+# alias mic='ssh -Y piccinal@dommic.cscs.ch'
+# alias ro='ssh -Y piccinal@rosa1.login.cscs.ch'
+# alias roo='ssh -Y piccinal@rosa101.login.cscs.ch'
+# alias xc='ssh -Y piccinal@brisi02.login.cscs.ch'
+# alias xcc='ssh -Y piccinal@daint101.login.cscs.ch'
+
+# --- santis
+alias  sa='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@santis'
+alias sa0='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@santis01'
+alias sa1='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@santis101'
+alias sa_='ssh -Y piccinal@santis.cscs.ch'
+
+# --- daint
+alias  da='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@daint'
+# alias da0='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@daint01'
+# alias da1='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@daint101'
+alias da_='ssh -Y piccinal@daint.cscs.ch'
+alias da1='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@daint101'
+alias da2='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@daint102'
+alias da3='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@daint103'
+
+# --- kescha
+# alias rt4-cscs='ssh -Y piccinal@tpc02'
+# alias pi='ssh -Y piccinal@ela2.login.cscs.ch -t ssh -Y piccinal@pilatus.cscs.ch'
+# alias pi_='ssh -Y piccinal@pilatus.cscs.ch'
+alias e1='~/linux.git/bash/escha.sh'
+#alias e1='ssh -Yt piccinal@ela.cscs.ch ssh -Y escha-login1.cscs.ch'
+#alias e2='ssh -Yt piccinal@ela.cscs.ch ssh -Y escha-login2.cscs.ch'
+#alias e3='ssh -Yt piccinal@ela.cscs.ch ssh -Y escha-login3.cscs.ch'
+alias k1='~/linux.git/bash/kesch.sh'
+#alias k1='ssh -Yt piccinal@ela.cscs.ch ssh -Y kesch-login1.cscs.ch'
+#alias k2='ssh -Yt piccinal@ela.cscs.ch ssh -Y kesch-login2.cscs.ch'
+#alias k3='ssh -Yt piccinal@ela.cscs.ch ssh -Y kesch-login3.cscs.ch'
+# alias mac='ssh piccinal@pazzallo.staff.cscs.ch'
+
+# --- tave
+alias ta='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@tave'
+alias ta_='ssh -Y piccinal@tave'
+
+# --- monch
+alias mon='ssh -Y piccinal@ela2.login.cscs.ch -t ssh -Y piccinal@monch.cscs.ch'
+alias mon_='ssh -Y piccinal@monch.cscs.ch'
+# alias to='ssh piccinal@todi.cscs.ch -Y'
+# alias sun='ssh jgp@wn59.lcg.cscs.ch'
+alias vnc='dom: vncserver -geometry 1920x1080 -xstartup ~/linux.git/vnc/cscs/xstartup.jg; client: "#donotuse:MACconnectCSCSbecauseInterruptsAfter60min; ssh -f -L 5901:dom101.cscs.ch:5901 -C ela.cscs.ch -l piccinal sleep 30 ;/Applications/*/TigerVNC*.app localhost:5901";teamviewer;collab.switch.ch'
+
+# --- ibm
+alias p1='ssh -Y piccinal@openpower01.cscs.ch'
+#alias bgp='ssh jzam1178@jugene.fz-juelich.de'
+#alias bgp='ssh prace013@jugene.fz-juelich.de'
+#alias p6='ssh huygens.sara.nl'
+
+# ---
+#alias bsc='ssh cscs01001@mc1.bsc.es'
+#alias ceai='ssh piccinali@inti.ocre.cea.fr'
+#alias ceau='ssh piccinali@uchu.ocre.cea.fr'
+#alias csc='ssh piccinal@louhi.csc.fi'
+#alias fr0='ssh piccinal@192.168.0.5'
+#alias free='ssh -v admin@82.224.36.243'
+alias kaust='ssh -Y x_piccinj@shaheen.hpc.kaust.edu.sa'
+alias kaust2='ssh -Y x_piccinj@cdl4.hpc.kaust.edu.sa'
+#alias idris='ssh idr001bc@ulam.idris.fr'
+#alias lap='ssh -Y jg@148.187.133.233'
+#alias lap2='ssh -Y jg@148.187.130.211'
+#alias lyon1='ssh piccinali@autrans2011-math.univ-lyon1.fr -Y'
+alias nersc='ssh -Y piccinal@cori.nersc.gov'
+alias edison='ssh -Y piccinal@edison.nersc.gov'
+alias cori='ssh -Y piccinal@cori.nersc.gov'
+#alias sb='ssh -p 2003 piccinal@stella.hpclab.net'
+#alias xt5='ssh louhi.csc.fi'
+
+# echo D
+  ##    #          #      ##     ####   ######   ####
+ #  #   #          #     #  #   #       #       #
+#    #  #          #    #    #   ####   #####    ####
+######  #          #    ######       #  #            #
+#    #  #          #    #    #  #    #  #       #    #
+#    #  ######     #    #    #   ####   ######   ####
+alias  8='expr  8 \*'
+alias 12='expr 12 \*'
+alias 16='expr 16 \*'
+alias 18='expr 18 \*'
+alias 24='expr 24 \*'
+alias 32='expr 32 \*'
+alias 36='expr 36 \*'
+alias 48='expr 48 \*'
+alias 40='expr 40 \*'
+alias 60='expr 60 \*'
+alias ag='/apps/common/UES/sandbox/jgp/the_silver_searcher/1.0.1/gnu_434/bin/ag'
+alias bc='bc -l'
+#alias beep='echo -en "\007"'
+alias cscscal='davmail & thunderbird'
+alias demangle='c++filt'
+alias e='echo'
+alias ee='echo $PE_ENV'
+alias EB='module load daint-gpu EasyBuild-custom/cscs'
+alias ebb='module use $APPS/easybuild/modules/all'
+alias fly="~/KEEP/crontab/flyspray/fly_alias.sh"
+alias ff='find . -name'
+alias fx='find . -type f -perm -0100'
+alias h=history
+alias interaa='qsub -I -V -l mppwidth=12 -l walltime=00:05:00'
+alias k='KONSOLE=`dcopclient $KONSOLE_DCOP` ; for A in `seq 10`; do NEWSESSION=`dcop $KONSOLE konsole newSession $A` ; dcop $KONSOLE $NEWSESSION renameSession "-" ; done '
+alias la='ls -la'
+alias lic='export LM_LICENSE_FILE=/users/piccinal/license.dat'
+alias ll='ls -lX'
+alias llqq='llq -u piccinal'
+alias llqqq='watch llq -u piccinal'
+alias l='ls -X'
+alias lt='ls -lrt'
+alias lstop='lstopo --of txt --no-io --no-bridges'
+alias memsgigb='grep MemFree /proc/meminfo |awk "{print (2115399824-\$2)/(1024**2)}"'
+#alias mplayer='~/jg/mplayer/mplayer -nolirc -nojoystick'
+alias nmm='nm --defined-only'
+alias ownc='owncloudcmd -u piccinal /home/piccinal/ownCloud/jgp/bigdft https://cloud.cscs.ch/owncloud/remote.php/webdav/jgp/bigdft'
+alias p='tput cup 0 0 ; tput ech `tput cols`'
+alias pa='echo "diff -Naur old new > my.patch"'
+alias pdflatexcscs='echo export PATH=/apps/common/UES/texlive/201703/bin/x86_64-linux:\$PATH'
+alias pulse='pulseaudio --check ; pulseaudio --kill ;pulseaudio --start --log-target=syslog'
+alias q='grep --color=always -in'
+alias qr='grep --color=always -inr'
+alias qq='grep --color=always -n'
+alias qs='qstat -u \*'
+alias Qs='\qstat -u piccinal'
+alias Qss='\qstat -a|sort -k10'
+alias qss='/apps/scripts/bin/cqstat'
+alias qssss='watch -n 2 qstat'
+alias qsss='watch -n 10 qstat'
+#alias rehash='hash -r'
+#alias recordjg=kazam
+alias recordjg='xwininfo; recordmydesktop --windowid 0x46355aa; handbrake;openshot; vlc # --no-sound --width=1920 --height=1200'
+alias sk='sort -k'
+alias snk='sort -nk'
+alias terminator='~/linux.git/bash/terminator.sh'
+# --- timetrap.git
+# export PATH=/apps/ela/easybuild/software/Ruby/2.2.2/bin:$PATH     # deps for timetrap !!! (conflict with deps of cdo)
+alias t='timetrap'
+alias tn='timetrap now'
+alias to='timetrap out'
+alias td='timetrap display'
+alias ts='timetrap sheet'
+#
+alias topu='top -u $USER'
+alias taum='echo $TAU_ROOT $TAUROOT $TAU_MAKEFILE'
+alias ti='/usr/bin/time -p'
+alias tt='tail -50'
+alias ttt='tail -f'
+alias tm='type module ; echo MODULESHOME = $MODULESHOME'
+alias u='cd ..'
+alias v='vim -X'
+alias vimdiff="vimdiff -X -c 'set diffopt+=iwhite' -c 'set wrap' -c 'wincmd w' -c 'set wrap'"
+alias wl='wc -l'
+alias wh=which
+alias ww='w3m'
+alias xterm='xterm -r -fs 16 -fa "Monospace" -fg black -bg white'
+alias xx=xtshowcabs
+alias x=xtnodestat
+alias xn='xtnodestat -m'
+alias xj='xtnodestat -j'
+alias yy='yod -VN -sz 2 /users/piccinal/a.out'
+
+
+# echo E
+ ####   #       #    #  #####   #    #
+#       #       #    #  #    #  ##  ##
+ ####   #       #    #  #    #  # ## #
+     #  #       #    #  #####   #    #
+#    #  #       #    #  #   #   #    #
+ ####   ######   ####   #    #  #    #
+# slurm
+if [ -z $SCRATCH ] ; then export SCRATCH=/scratch/daint/$USER ; fi
+#??? if [ -z  $TMDPIR ] ; then export  TMDPIR=/tmp ; fi
+# if [ -z  $TMPDIR ] ; then export TMPDIR=/tmp ; fi
+if [ `hostname |tr -d "[0-9]"` =  "albis" ] ; then export APPS=/apps/albis ; fi
+if [ `hostname |tr -d "[0-9]"` =  "lema"  ] ; then export APPS=/apps/albis ; fi
+# export APRUN_XFER_LIMITS=1 # To pass the value to the compute nodes
+alias scj='scontrol show job'
+alias scju='scontrol show job |grep $USER'
+alias scn='scontrol show nodes'
+alias sp='scontrol show partition'
+alias sr='scontrol show reservation'
+# export SQUEUE_FORMAT="%6i %8u %7a %.14j %.9P%.3t %.10r %.12S %.12e %.10L %.5D %.5C %.9Q"  # to have priorities too
+# sacct --format=jobid,jobname,partition,submit,start,end,nodelist,nnodes,ntasks,elapsed,state,exitcode -u dorisf
+alias sacc='SLURM_TIME_FORMAT=%Y/%m/%d-%H:%M:%S sacct --noconvert --format=jobid,jobname,submit,start,end,nnodes,ntasks,elapsedraw,state -j'
+alias sacc2='SLURM_TIME_FORMAT=%Y/%m/%d-%H:%M:%S sacct --noconvert --format=jobid,jobname,DerivedExitCode,ExitCode,nnodes,ntasks,elapsed,state -j'
+alias sacc_='SLURM_TIME_FORMAT=%Y/%m/%d-%H:%M:%S \sacct --format=jobid,jobname,submit,start,end,nnodes,ntasks,elapsed,state -j'
+alias sacct='SLURM_TIME_FORMAT=%Y/%m/%d-%H:%M:%S sacct --noconvert'
+#alias s='squeue -p day,usup'
+alias S='sinfo -sa ;echo; sinfo -a'
+alias SS='sinfo -o "%9P %.5a %.10l %.6D %.6t %N %f"'
+alias sqq='~/KEEP/squeue.sh'
+alias sqjg='~/KEEP/squeuejg.sh'
+alias sq='squeue -a -u $USER'
+alias s='squeue -a'
+alias scancelu='echo "scancel `squeue -a -u $USER -ho %A`"'
+alias scanceluu='scancel -u $USER'
+# sacctmgr show association user=piccinal
+# --- SLURM environment variables
+export SLURM_TIME_FORMAT="relative"
+export SINFO_FORMAT='%9P %5a %8s %.10l %.6c %.6z %.7D %10T %N'
+export SQUEUE_FORMAT='%8i %8u %7a %.14j %.9B%.3t %.10r %.12S %.12e %.10L %.5D %.10Q'
+export SQUEUE_SORT='t,-e,-p'
+export SQUEUE_ALL='yes'
+
+
+# echo F
+ ####      #     #####
+#    #     #       #
+#          #       #
+#  ###     #       #
+#    #     #       #
+ ####      #       #
+# GIT
+export GIT_PS1_SHOWDIRTYSTATE=1  # add * if the branchname has changed
+export EDITOR=vim
+export GIT_EDITOR=vim
+#
+alias ga='git add'  # -p
+alias gs='git status'
+#alias gS='git log -S '
+alias gb='git branch'
+alias gB='git show-branch |more'
+alias gf='git fetch origin'
+alias gp='git pull origin'
+alias gpm='git pull origin master'
+alias gpp='git push origin'
+alias gppm='git push origin master'
+alias gl='git log'
+alias gll='git log --stat'
+alias glll='git log --pretty=oneline'
+alias gL='git log --oneline --graph --decorate --left-right --boundary --date-order'
+alias gm='git commit -s -m '
+alias gr='git remote -v'
+alias gw='git whatchanged'
+export LESS="-F -X -R"
+alias git_diff='git diff --no-ext-diff -w "$@" | vim -R -'
+alias gitvim='vim -R -'
+        # --no-ext-diff : to prevent using vimdiff
+        # -w : to ignore whitespace
+        # -R : to start vim in read-only mode
+        # - : to make vim act as a pager
+# GITSTAT
+alias gomm=' git diff --stat origin/master master'
+# GITDIFF (vimdiff)
+alias gd=' git diff'
+#alias g=' git diff --stat'
+#alias gm='git diff --stat master'
+#alias go='git diff --stat origin/master'
+# GITDIFF (without vimdiff)
+alias gdd=' git diff --no-ext-diff -w'
+alias gddm='git diff --no-ext-diff -w master'
+alias gddo='git diff --no-ext-diff -w origin/master '
+alias gdn='git diff --name-only origin/master...HEAD'    # hashkey
+alias gdm='git diff master'
+alias gdo='git diff origin/master'
+alias gic='git checkout '
+alias gicm='git checkout master'
+alias gicd='git checkout develop'
+alias grebase='git rebase' # condense commits into 1 commit
+alias greset='git reset' # return to previous commit before merge
+#ok git diff -w origin/master MarchingCubes/MarchingCubes.F90
+#no alias g='git diff --no-ext-diff -w |grep ^diff'
+
+
+
+
+# echo G
+ ####   #    #  #    #
+#       #    #  ##   #
+ ####   #    #  # #  #
+     #  #    #  #  # #
+#    #   #  #   #   ##
+ ####     ##    #    #
+# SVN 
+alias wp6='svn ls https://trac.csc.fi/pracewp6/svn'
+alias wp4='echo svn ls https://trac.csc.fi/pracewp4/svn' # all ok (also banco)
+alias deisa='echo svn ls http://work.deisa.eu/svn/general/DCPE/DeisaTemplatesModules' # all ok except BANCO
+alias cscs='echo svn ls https://svn.cscs.ch/lm'
+alias c2sm='echo svn ls https://svn.iac.ethz.ch/external/echam-hammoz'
+# WEBSVN : https://svn.iac.ethz.ch/websvn/external/wsvn/echam-hammoz
+alias mch='echo svn ls https://cosmo.cscs.ch'
+alias ss='svn status'
+alias sd='svn diff'
+alias sl='svn ls'
+# -------------------------------------------------
+
+
+
+
+# echo H
+#          #    #    #  #    #  #    #
+#          #    ##   #  #    #   #  #
+#          #    # #  #  #    #    ##
+#          #    #  # #  #    #    ##
+#          #    #   ##  #    #   #  #
+######     #    #    #   ####   #    #
+# GREP_COLOR=always
+LS_COLORS=$LS_COLORS"*.f=00;31:*.F=00;31:*.c=00;34:*.o=00;33:*.a=00;35:*.F90=00;31:"
+LS_COLORS=$LS_COLORS"*.mod=04;31:*.f90=01;31:*.f=01;31:*.F=00;31:*.c=00;34:*.o=00;33:*.a=00;35:*.F90=00;31:*.cpp=01;31:*.h=00;35:"
+LS_COLORS=$LS_COLORS"*.cu=04;34:"
+LS_OPTIONS="$LS_OPTIONS --color=always"
+#cray: export XTPE_INFO_MESSAGE_OFF=off
+
+set-titlejg(){
+  ORIG=$PS1
+  TITLE="\e]2;$@\a"
+  PS1=${ORIG}${TITLE}
+}
+alias z=set-titlejg
+
+# TERMINATOR/TMUX
+# set_terminator_title() { printf '\e]2;%s\a' "$*"; }
+# alias z='set_terminator_title'
+# ==> USE TMUX !!!
+alias T='/apps/ela/sandbox/jgp/tmux/1.9a/gnu_434/bin/tmux'
+# -------------------------------------------------
+
+
+# echo I
+#    #  #    #   #####   #####
+##  ##  #    #     #       #
+# ## #  #    #     #       #
+#    #  #    #     #       #
+#    #  #    #     #       #
+#    #   ####      #       #
+# MUTT
+export EDITOR=vim
+# SECRET
+#----------------------------------------------------------------------
+
+
+
+#####   ######  #####   #    #   ####
+#    #  #       #    #  #    #  #    #
+#    #  #####   #####   #    #  #
+#    #  #       #    #  #    #  #  ###
+#    #  #       #    #  #    #  #    #
+#####   ######  #####    ####    ####
+alias tvmem='export PE_PRODUCT_LIST="TVMEMDEBUG:$PE_PRODUCT_LIST";echo "-g -Wl,-zmuldefs"'
+alias cleantv='ls -lrt ~/.totalview/lib_cache'
+
+
+# echo J
+#    #   ####   #    #           ####   #####     ##     #   #
+##   #  #    #  ##   #          #    #  #    #   #  #     # #
+# #  #  #    #  # #  #          #       #    #  #    #     #
+#  # #  #    #  #  # #          #       #####   ######     #
+#   ##  #    #  #   ##          #    #  #   #   #    #     #
+#    #   ####   #    #           ####   #    #  #    #     #
+if [ `hostname -s|cut -c1-3` = "dom" ] ; then
+        alias pgi='module load mvapich2/1.9a2-pgi-12.10 ; export PE_ENV=PGI ; mo list'
+        alias gnu='module load mvapich2/1.9a2-gcc-4.4.6; export PE_ENV=GNU ; mo list'
+        alias int='module load mvapich2/1.9a2-intel-2013; export PE_ENV=INTEL ; mo list'
+        #alias pgg=' module swap mvapich2/1.9a2-pgi-12.10 mvapich2/1.9a2-gcc-4.4.6        ; mo list; export PE_ENV=GNU'
+        #alias gpg=' module swap mvapich2/1.9a2-gcc-4.4.6 mvapich2/1.9a2-pgi-12.10        ; mo list; export PE_ENV=PGI'
+        #alias ipg=' module swap mvapich2/1.9a2-intel-2013 mvapich2/1.9a2-pgi-12.10        ; mo list; export PE_ENV=PGI'
+        #alias ig='  module swap mvapich2/1.9a2-intel-2013 mvapich2/1.9a2-gcc-4.4.6        ; mo list; export PE_ENV=GNU'
+        #alias pgii='module swap mvapich2/1.9a2-pgi-12.10 mvapich2/1.9a2-intel-2013        ; mo list; export PE_ENV=INTEL'
+        #alias gi='  module swap mvapich2/1.9a2-gcc-4.4.6 mvapich2/1.9a2-intel-2013        ; mo list; export PE_ENV=INTEL'
+        #module load dom
+        # ================================================
+        # echo "inside .profile on dom"
+        # DOMMIC
+        # export LD_LIBRARY_PATH=/tmp/LIBRARY_PATH/apps/dommic/intel/composer_xe_2013.2.146/compiler/lib/mic/:$LD_LIBRARY_PATH
+        #export DDT_LICENCE_FILE=/apps/dommic/ddt/licenses/Licence
+        #\cat $DDT_LICENCE_FILE 
+        #echo which ddt = `which ddt`
+        #echo done
+        # -------------------------------------
+        # DOMMIC (uncomment if running on mic)
+        # export I=/apps/dommic/intel/composer_xe_2013_sp1.2.144/
+        # source $I/bin/iccvars.sh intel64
+        # export LD_LIBRARY_PATH=$I/compiler/lib/mic:$LD_LIBRARY_PATH
+fi
+
+# #####  #    #
+# #    # ##  ##
+# #####  # ## #
+# #    # #    #
+# #    # #    #
+# #####  #    #
+# DD24G
+# if [ `hostname -s|cut -c1-4` = "grot" ] ; then
+#         export PATH=$PATH:/bgsys/drivers/ppcfloor/comm/xl/bin:/bgsys/drivers/ppcfloor/gnu-linux/bin:~bekas/BGQ/cmake-2.8.4/bin
+#         COMP=ibmcmp
+#         export PATH=/opt/$COMP/vac/bg/12.1/bin:$PATH
+#         export PATH=/opt/$COMP/vacpp/bg/11.1/bin:$PATH
+#         export PATH=/opt/$COMP/xlf/bg/14.1/bin:$PATH
+#         # User specific aliases and functions
+#         floor=ppcfloor
+#         
+#         # libs, toolchain
+#         export PATH=/bgsys/drivers/$floor/comm/gcc/bin:$PATH
+#         export PATH=/bgsys/drivers/$floor/gnu-linux/bin:$PATH
+#         export PATH=$PATH:/bgsys/drivers/$floor/scripts
+#         export PATH=$PATH:/bgsys/drivers/ppcfloor/hlcs/bin
+#         #
+#         export BGQ_INSTALL_DIR=/bgsys/drivers/$floor
+#         # Prompt ++
+#         PS1="$BLDBLU[$BLDGRN\u$NOCOLOR@$BLDPUR\h$BLDBLU]-[\T]$BLDBLU-[$NOCOLOR\w$BLDBLU]\`if [[ \$? -eq 0 ]]; then echo \"$BLDGRN:-)\"; else echo \"$BLDRED:-(\"; fi\`$NOCOLOR "
+#         PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"';
+# fi
+
+
+
+#####   ######  #####    ####    ####
+#    #  #       #    #  #       #    #
+#    #  #####   #    #   ####   #    #
+#####   #       #####        #  #    #
+#       #       #   #   #    #  #    #
+#       ######  #    #   ####    ####
+# Perso
+# alias lemouv='mplayer  -quiet http://mp3.live.tv-radio.com/lemouv/all/lemouvhautdebit.mp3'
+# alias finter='mplayer  -quiet http://mp3.live.tv-radio.com/franceinter/all/franceinterhautdebit.mp3' # = LIVE
+# alias finfo='mplayer  -quiet http://players.creacast.com/creacast/france_info/playlist.m3u'
+# alias fcul='mplayer  -quiet http://www.tv-radio.com/station/france_culture_mp3/france_culture_mp3-128k.m3u'
+# alias fmus='mplayer  -quiet http://www.tv-radio.com/station/france_musique_mp3/france_musique_mp3-128k.m3u'
+# alias nova='mplayer  -quiet http://www.novaplanet.com/radio-nova/player/radionova.m3u.php'
+# alias europe1='mplayer  -quiet http://vipicecast.yacast.net:80/europe1'
+# alias rmc='mplayer  -quiet http://vipicecast.yacast.net/rmc'
+# alias rtl='mplayer  -quiet http://streaming.radio.rtl.fr/rtl-1-44-96'
+# alias gradio='mplayer -ao alsa -quiet http://www.lagrosseradio.com/son/stream/192.m3u'
+# alias ruquier='echo mplayer -dumpstream'
+# alias fr3mop='mplayer  -af volume=-30 http://dl.francetelevisions.com.ipercast.net/sud/montpellier/HD_1850_montpellier_locale_040509.mp4'
+# alias fr3lyon='mplayer -af volume=-30 http://dl.francetelevisions.com.ipercast.net/raa/lyon/HD_1850_lyon_locale_040509.mp4'
+# alias fr3bdx='mplayer  -af volume=-30 http://dl.francetelevisions.com.ipercast.net/aquitaine/bordeaux/HD_1850_bordeaux_locale_060409.mp4'
+# alias fr3grenoble='mplayer -af volume=-30 http://dl.francetelevisions.com.ipercast.net/raa/grenoble/HD_1850_grenoble_locale_010509.mp4'
+# alias kris='ssh howardk@media' #/etc/hosts = 2001:0:53aa:64c:1486:4bd0:abb5:ac6c media
+# http://flux.radio.free.fr/
+# alias mcd='\mplayer -af volume=-3 -cache 5000 -ao alsa -cdrom-device /dev/sr0 cdda:// # -cdda speed=2'
+# -------------------------------------------------
+
+# echo K
+#    #    ##     ####
+##  ##   #  #   #    #
+# ## #  #    #  #
+#    #  ######  #
+#    #  #    #  #    #
+#    #  #    #   ####
+# == MAC ==
+# http://www.iterm2.com/#/section/faq
+#       Alt + Cmd: Make a rectangular selection.
+#       Shift: Extend an existing selection.
+#       Alt + Shift: Extend a rectangular selection.
+#       Cmd+drag a selection copies and pastes it.
+#       Cmd+click on a URL opens it.
+if [ `uname` = "Darwin" ] ; then
+	export PE_ENV=GNU
+	function sett { echo -e "\033]; $1 \007" ;  }
+        # see .Xdefaults
+        export CLICOLOR=TRUE
+        export LSCOLORS=Gxfxbxdxcxegedabagacad
+	alias ll='ls -l'
+	alias l='ls '
+	PS1="\[\e[0;32m\]\t \u@mac\[\e[m\]:\[\e[1;32m\]\w\[\e[m\] \[\e[1;32m\]\$ \[\e[m\]\[\e[1;37m\]"
+        # ps1_check_rc="\$(if [[ \$? == 0   ]]; then echo \" \[\033[0;32m\]\342\234\223\"; else echo \" \[\033[01;31m\]\342\234\227\"; fi)"
+	
+        # MAC PORTS
+        export PATH=/opt/local/bin:/opt/local/sbin:$PATH # Finished adapting your PATH environment variable for use with MacPorts.
+        # MAC HOMEBREW
+        export PATH=/usr/local/bin:$PATH
+
+        #module load linux/jg
+	# before sudo port install ctags : /usr/bin/ctags
+	# after                          : /opt/local/bin/ctags
+# === MAC NVIDIA/CUDA ===
+# http://docs.nvidia.com/cuda/cuda-getting-started-guide-for-mac-os-x/index.html
+#export PATH=/Developer/NVIDIA/CUDA-5.0/bin:$PATH
+#export DYLD_LIBRARY_PATH=/Developer/NVIDIA/CUDA-5.0/lib:$DYLD_LIBRARY_PATH
+#ok module load gcc cuda
+
+# === MAC XCODE ===
+# export PATH=/Applications/work/Xcode.app/Contents/Developer/usr/bin:$PATH
+
+# === OPENMPI ===
+# conflict with port : /opt/local/bin ?
+# export PATH=/usr/local/bin:$PATH
+
+# === MAC mfiles ===
+export MODULEPATH=$MODULEPATH:/keep/hpc/mfiles
+# export PATH=$PATH:/usr/local/bin
+# export SCRATCH=/scratch/rothorn/$USER
+export APPS=/efface/apps
+
+# defaults write com.apple.Preview PVPDFDisplayMode 1
+# MAIL : Move down when an email is deleted
+# http://secrets.blacktree.com/
+# defaults write com.apple.mail IgnoreSortOrderWhenSelectingAfterDelete 1
+
+#echo "end ~/.bashrcOK, see .bash_profile"
+#echo $PATH |tr : "\n"
+
+fi
+
+# Set the DISPLAY variable ONLY for OS X earlier than 10.5
+# Do not set it for 10.5, or it will create problems.
+#if [[ -z $DISPLAY && $(sw_vers -productVersion) < 10.5  && -z $SSH_CONNECTION ]]; then
+#        # -- works for Apple X11 with Fast User Switching
+#    disp_no=($( ps -awx | grep -F X11.app | awk '{print $NF}' | grep -e ":[0-9]"  ))
+#    if [[ -n $disp_no ]];then
+#        export DISPLAY=${disp_no}.0
+#    else
+#        export DISPLAY=:0.0
+#    fi
+#    echo "DISPLAY has been set to $DISPLAY"
+#fi
+# iTerm Tab and Title Customization and prompt customization
+# Put the string " [bash]   hostname::/full/directory/path"
+# in the title bar using the command sequence
+# \[\e]2;[bash]   \h::\]$PWD\[\a\]
+# Put the penultimate and current directory
+# in the iterm tab
+# \[\e]1;\]$(basename $(dirname $PWD))/\W\[\a\]
+#  PS1=$'\[\e]2;[bash]   \h::\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]bash-\$ '
+# iterm2
+# http://xanana.ucsc.edu/xtal/iterm_tab_customization.html
+# dos2unix: perl -pi -e 's/\r\n?/\n/g' myfile
+
+#####    #   #   #####  #    #   ####   #    #
+#    #    # #      #    #    #  #    #  ##   #
+#    #     #       #    ######  #    #  # #  #
+#####      #       #    #    #  #    #  #  # #
+#          #       #    #    #  #    #  #   ##
+#          #       #    #    #   ####   #    #
+alias ipython='LC_ALL="fr_FR.UTF-8" ipython'
+
+# echo ".bash_aliases END"
+

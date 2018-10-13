@@ -1,0 +1,104 @@
+[user]
+	email = jgp@cscs.ch
+	name = jgp
+
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+
+[color "status"]
+#  added = yellow
+changed = yellow
+untracked = cyan # reverse
+#  branch = magenta
+        # normal, black, red, green, yellow, blue, magenta, cyan, or white
+        # bold, dim, ul, blink, and reverse.
+
+[diff]
+        external = $HOME/linux.git/git/git_diff_wrapper
+
+[pager]
+        diff =
+
+[core]
+	excludesfile = $HOME/linux.git/git/gitignore
+
+[push]
+	default = current
+
+[alias]
+	vimdiff = difftool -y -t vimdiff -X
+# shortcut to show current status
+    st = status
+# show log, but also show file names changed
+    wc = whatchanged
+# show only the names of files that are different between two commits
+    dn = diff --name-only
+# show the diff in patch format
+    df = diff
+# show the diffs in GUI difftool (assumes difftool configured)
+    dt = difftool
+# show diff in patch format (same as df actually)
+    dp = diff --no-ext-diff
+# show diff stats, lines changed etc
+    ds = diff --stat -w
+# fetch from all remote repos
+    fa = fetch --all
+# list local branches 
+    br = branch
+# list all branches including remote ones
+    ba = "!git branch -a | sed 's/remotes\\///g'"
+# show status of all local branches (most recent commit etc)
+    bs = branch -v -v
+# show last commit date/time for all local branches and sort by most recently modified
+    bd = "!git for-each-ref --sort='-committerdate:iso8601' --format=' %(committerdate:iso8601)%09%(refname)' refs/heads"
+# list the remotes, or show full info for an individual remote
+    rs = remote show
+# shortcut for commit
+    ci = commit  
+# shortcut for cherry-pick
+    cp = cherry-pick
+# shortcut for checkout
+    co = checkout
+# commit with an empty message (do not use this normally)
+    ce = commit --allow-empty-message -m ''
+# shortcut for merge base between two commits
+    mb = merge-base
+# list all these aliases out in alphabetical order
+    la = "!git config -l | grep alias | cut -c 7- | sort"
+# show the last 5 commits
+    l5 = log -5
+# show a one line git log 
+    l1 = log --pretty=oneline
+# show a one line log with some author info 
+    ll = log --pretty=format:'%h %<(35)%an %s'
+# show a text form tree of the log in one line form
+    lx = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %<(65,trunc)%s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit
+# show the log, and also the patch for each commit
+    lp = log -p
+# show last commit author
+    who = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+# show last commit log
+    what = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+# add to commit, but do not add whitespace changes (awesome)
+    addnw = "!sh -c 'git diff -U1 --patch -w --no-color \"$@\" | git apply --cached --ignore-space-change --ignore-whitespace' -"
+# show patch ignoring whitespace
+    pnw = "!sh -c 'git diff -U1 --patch -w --no-color \"$@\"' "            
+# show the gitk graphical tool
+    k = !gitk
+# show the local branches and tags in gitk graphical tool
+    kl = !gitk --argscmd='git for-each-ref --format=\"%(refname)\" refs/heads refs/tags'
+# show only local branches in the gitk graphical tool
+    ko = !echo $(git branch | sed s/*//g) | gitk
+# show all branches, remote and local in gitk graphical tool
+    ka = !gitk --all
+# shortcut for continue rebase 
+    rebc = rebase --continue
+# shortcut for abort rebase 
+    reba = rebase --abort
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

@@ -1,0 +1,13 @@
+# ~/EB/pug.git/scorep/easybuild_easyconfigs/LEONE/GMVAPICH2-16.01/gdb
+diff -Naur gdb-7.10.1.orig/missing gdb-7.10.1/missing
+--- gdb-7.10.1.orig/missing	2016-01-28 16:17:01.144657270 +0100
++++ gdb-7.10.1/missing	2016-01-28 16:17:26.414385103 +0100
+@@ -204,7 +204,7 @@
+ 
+ # Propagate the correct exit status (expected to be 127 for a program
+ # not found, 63 for a program that failed due to version mismatch).
+-exit $st
++exit 0
+ 
+ # Local variables:
+ # eval: (add-hook 'write-file-hooks 'time-stamp)

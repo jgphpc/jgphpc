@@ -1,0 +1,8 @@
+# ignore objects and archives, anywhere in the tree.
+# git config --global core.excludesfile ~/.gitignore
+*.mod
+*.o
+exe*
+CMakeFiles
+cmake_install.cmake
+CMakeLists.txt.old

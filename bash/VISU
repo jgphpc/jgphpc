@@ -1,0 +1,45 @@
+#### 
+#export VISITJG=yes
+export VISITJG=no
+#export PARAVIEWJG=yes
+export PARAVIEWJG=no
+if [ $VISITJG = no ] && [ $PARAVIEWJG = no ] ; then
+[ -z "$PS1" ] && return   # comment if using visit remote
+fi
+
+
+if [ $PARAVIEWJG = no ] ; then
+        . ~/.bashrcOK
+        module load linux
+else
+        # source $MODULESHOME/init/bash
+        #daint/dora: 
+        module swap PrgEnv-cray PrgEnv-gnu
+        # module load PrgEnv-gnu
+        #pilatus: module load paraview/4.2-gallium
+        module load paraview/4.3-mesa
+        module unload ddt
+fi
+
+
+if [ $VISITJG = no ] ; then
+        . ~/.bashrcOK
+        module load linux
+else
+        module unload PrgEnv-cray
+        # module load PrgEnv-gnu
+        module load visit       # will load PrgEnv-gnu
+        module unload ddt       # conflict with libqt
+        export LD_LIBRARY_PATH=/apps/dora/ddt/4.3rc7/lib/64:$LD_LIBRARY_PATH
+        # module list
+        # !!! visit -style windows !!! 
+
+        #module swap PrgEnv-cray PrgEnv-gnu
+        #module rm ddt
+        #module load visit
+
+        # ps aux |q -E "python|mdserver"
+        # killall python
+        # killall mdserver
+fi
+

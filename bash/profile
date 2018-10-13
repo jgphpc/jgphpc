@@ -1,0 +1,85 @@
+#echo ".profile START"
+# Sample .profile for SuSE Linux
+# rewritten by Christian Steinruecken <cstein@suse.de>
+#
+# This file is read each time a login shell is started.
+# All other interactive shells will only read .bashrc; this is particularly
+# important for language settings, see below.
+
+# VISIT -----------------------------------
+#echo "/etc/profile START"
+test -z "$PROFILEREAD" && . /etc/profile
+#echo "/etc/profile END"
+# VISIT -----------------------------------
+
+#h=`uname -n |cut -c1-3`
+#echo "h=$h"
+
+#echo "=== PROFILE ==="
+#export PATH=/apps/todi/ddt/4.2.1-36484.mic0/bin:$PATH
+#which ddt-client
+#module load ddt/4.0
+#export DDT_LICENCE_FILE=/apps/dommic/ddt/licenses/Licence
+#export DDT_LICENSE_FILE=/apps/dommic/ddt/licenses/Licence
+
+
+# if [ `uname -n |cut -c1-3` != "dom" ] ; then
+#         test -z "$PROFILEREAD" && . /etc/profile
+#         if [ `echo $HOSTNAME |cut -d. -f1|tr -d "[0-9]"` = "dom" ] ; then
+#                 #echo "sourcing ~/.profile"
+#                 source "/users/piccinal/.bashrcOK"
+#         fi
+# 
+#         if [ `echo $HOSTNAME |tr -d "[0-9]"` = "castor" ] ; then
+#                 source "/users/piccinal/.bashrcOK"
+#                 export APPS=/apps/castor
+#         fi
+#         # echo "exiting .profile @ $HOST @ $SHELL"
+# else
+#         echo "inside .profile on dom"
+#         # DOMMIC
+#         # export LD_LIBRARY_PATH=/tmp/LIBRARY_PATH/apps/dommic/intel/composer_xe_2013.2.146/compiler/lib/mic/:$LD_LIBRARY_PATH
+#         export DDT_LICENCE_FILE=/apps/dommic/ddt/licenses/Licence
+#         cat $DDT_LICENCE_FILE 
+#         echo done
+# fi
+
+# Most applications support several languages for their output.
+# To make use of this feature, simply uncomment one of the lines below or
+# add your own one (see /usr/share/locale/locale.alias for more codes)
+#
+#export LANG=de_DE@euro     # uncomment this line for German output
+#export LANG=fr_FR@euro     # uncomment this line for French output
+#export LANG=es_ES@euro     # uncomment this line for Spanish output
+
+
+# Some people don't like fortune. If you uncomment the following lines,
+# you will have a fortune each time you log in ;-)
+
+#if [ -x /usr/bin/fortune ] ; then
+#    echo
+#    /usr/bin/fortune
+#    echo
+#fi
+
+# --- JG:
+if [ -f /etc/os-release ] ;then
+    osn=`grep ^CPE_NAME= /etc/os-release |cut -d\" -f2 |cut -d: -f3`
+    osv=`grep ^CPE_NAME= /etc/os-release |cut -d\" -f2 |cut -d: -f5`
+fi
+
+if [ "$osn" = "redhat" ] ;then
+    source .bashrc
+fi
+
+#if [ "$is_bash_aliases_set" != 1 ] ; then
+#    source ~/.bashrc
+#fi
+
+# if [ $0 = "tcsh" ] ; then
+#         source ~/.tcshrc
+# else
+#         source ~/.bashrc
+# fi
+
+#echo ".profile END"

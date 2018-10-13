@@ -1,0 +1,146 @@
+% CSCS course
+\documentclass[a4paper,pagesize,12pt]{scrbook}
+
+\usepackage{verbatim} % for comments
+\usepackage{listings} 
+\usepackage{xcolor}
+\definecolor{mycolor}{rgb}{0.86666,0.78431,0.78431}
+\usepackage{url}
+% \usepackage{blindtext}
+\newcommand{\q}[1]{>>\textit{#1}<<}
+%\title{A book title}   
+%\author{Author Name} 
+%\date{\today} 
+
+\begin{document}
+\section*{Programming Environment for Practicals}
+Your course account is: XXXX, your password is: YYYY
+
+\subsection*{Accessing CSCS systems }
+\subsubsection*{The front end node Ela}
+In order to access CSCS systems, you need to login first to the front-end machine Ela which is accessible with: \colorbox{mycolor}{ssh -Y XXXX@ela.cscs.ch}
+% \begin{itemize} \item \colorbox{mycolor}{ssh -Y XXXX@ela.cscs.ch} \end{itemize}
+
+\subsubsection*{Piz Daint}
+The supercomputer that we will use for all practicals is Piz Daint, a Cray XC30:\\
+\url{ http://user.cscs.ch/computing_resources/piz_daint/index.html}\\
+Piz Daint is accessible as: \colorbox{mycolor}{ssh -Y daint.cscs.ch}
+
+Piz Daint is the main GPU/CPU hybrid supercomputing system with high scalability at CSCS, designed to run data parallel and computationally intensive applications.
+Each compute node is equipped with an 8-core 64-bit Intel SandyBridge CPU (Intel Xeon E5-2670, 32 GB of memory) plus an NVIDIA Kepler K20X GPU with 6 GB GDDR5 memory. The nodes are connected by the "Aries" proprietary interconnect from Cray, with a dragonfly network topology. Piz Daint has 5272 compute nodes, corresponding to 42,176 CPU cores in total and 5272 GPUs. The peak performance is 7.8 Petaflops. 
+
+\subsection*{Programming Environment}
+After login into Piz Daint, the default programming environment is loaded. This environment provides convenient compilation wrappers based on the \emph{module} command to ensure that required include and libraries files are included and linked automatically. 
+{\footnotesize \begin{itemize} 
+        \item The command \colorbox{mycolor}{module list} will show your currently loaded modules.
+        \item The command \colorbox{mycolor}{module avail} will show all the available modules. 
+        \item To load a specific module, use \colorbox{mycolor}{module load mymodulename}, for example \emph{module load cray-hdf5}.
+        \item To swap modules, use \colorbox{mycolor}{module swap modulenamecurrent modulenamedesired}.
+        \item To see what the module command do, use \colorbox{mycolor}{module help modulename} or \colorbox{mycolor}{module show modulename}.
+\end{itemize} }
+
+\subsubsection*{Specific Compilation Environment}
+In order to compile your code, you will need to select a compiler for your programming environment. Available compilers on Piz Daint are the Cray (default), Intel, Pgi, and Gnu compilers and these are loaded using: 
+
+{\footnotesize \begin{itemize} 
+\item \colorbox{mycolor}{module load PrgEnv-cray} for the CRAY compiler,
+\item \colorbox{mycolor}{module swap PrgEnv-cray PrgEnv-intel} for the INTEL compiler,
+\item \colorbox{mycolor}{module swap PrgEnv-cray PrgEnv-pgi} for the PGI compiler,
+\item \colorbox{mycolor}{module swap PrgEnv-cray PrgEnv-gnu} for the GNU compiler.
+\end{itemize} }
+
+then use the wrapper scripts:
+{\footnotesize \begin{itemize} 
+\item \colorbox{mycolor}{ftn} for compiling Fortran code,
+\item \colorbox{mycolor}{cc} for compiling C code,
+\item \colorbox{mycolor}{CC} for compiling C++ code.
+\end{itemize} }
+
+
+\subsubsection*{Compiling a GPU code}
+{\footnotesize \begin{itemize} 
+\item \colorbox{mycolor}{module load craype-accel-nvidia35 } in addition to the Cray, Intel and Gnu compilers, 
+\item \colorbox{mycolor}{module load craype-accel-nvidia35 ; module rm [cray-]libsci\_acc} in addition to the Pgi compiler.
+\end{itemize} }
+
+% To compile CUDA code use nvcc.
+
+\subsection*{Launching jobs}
+A set of compute nodes has been reserved for this course. For simple practicals, 1 node will be sufficient. The following command will give you 1 node (8 cores and 1 K20x gpu) for up to 15 minutes using the \emph{course} reservation:
+{\footnotesize \begin{itemize} 
+\item \colorbox{mycolor}{salloc $--$res=course -N1 -t15}
+\end{itemize} }
+You are now able to launch your jobs on the compute nodes. During the practicals, you will also use \emph{sbatch}.
+
+\subsubsection*{Running MPI Jobs}
+After starting \emph{salloc}, you can launch your jobs on the compute node with the \emph{aprun} command and the \emph{-n} flag to specify the number of MPI tasks.
+This command executes 8 tasks of the mympiexe executable: \colorbox{mycolor}{aprun -n8 ./mympiexe}
+
+\subsubsection*{Running OpenMP jobs}
+Use the \emph{-d} aprun flag to specify the number of OpenMP threads. This command executes 8 threads of the myompexe executable:
+{\footnotesize \begin{itemize} 
+\item \colorbox{mycolor}{export OMP\_NUM\_THREADS=8}
+\item \colorbox{mycolor}{aprun -n1 -d\$OMP\_NUM\_THREADS ./myompexe}
+\end{itemize} }
+
+\subsubsection*{Running MPI/OpenMP jobs}
+This command executes a total of 8 processes (2 MPI tasks, each task running 4 threads) of the mympiompexe executable:
+\colorbox{mycolor}{aprun -n2 -d4 ./mympiompexe}.\\
+
+\subsubsection*{Exiting}
+When you are done, end your VNC session with: \colorbox{mycolor}{vncserver -kill :1}.
+When you are done, end your SSH session with: \colorbox{mycolor}{exit}.
+
+
+%\begin{tabular}{|l|}
+%   \hline
+%   \hline
+%\end{tabular}
+
+%=========================================
+% \begin{titlepage}
+% 		\centering{
+% 			{\fontsize{40}{48}\selectfont 
+% 			A book title}
+% 		}\\
+% 			
+% 		\vspace{10mm}
+% 		\centering{\Large{Author Name}}\\
+% 		\vspace{\fill}
+% 		\centering \large{2011}
+% \end{titlepage}
+
+
+%=========================================
+% \newpage{}
+% \thispagestyle {empty}
+% 
+% \vspace*{2cm}
+% 
+% \begin{center}
+% 	\Large{\parbox{10cm}{
+% 		\begin{raggedright}
+% 		{\Large 
+% 			\textit{Do what you think is interesting, 
+% 			do something that you think is fun and worthwhile, 
+% 			because otherwise you won’t do it well anyway.}
+% 		}
+% 	
+% 		\vspace{.5cm}\hfill{---Brian W. Kernighan}
+% 		\end{raggedright}
+% 	}
+% }
+% \end{center}
+
+\newpage
+%=========================================
+%\blinddocument
+
+
+%=========================================
+%\begin{comment}
+%Just some notes, not visible in pdf.
+%\end{comment}
+
+
+\end{document}

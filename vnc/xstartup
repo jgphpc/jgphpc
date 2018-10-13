@@ -1,0 +1,12 @@
+#!/bin/sh
+xrdb $HOME/.Xresources
+icewm-session &
+xterm -r -fs 16 -fa "Monospace" -fg black -bg white &
+
+# xsetroot -solid grey
+# xterm -geometry 80x24+10+10 -ls -title "$VNCDESKTOP Desktop" &
+# twm &
+
+# https://github.com/eth-cscs/SummerSchool2015/blob/master/slides/jg.pdf
+## ssh -f -L 10009:localhost:10009 gjeusel@ela.cscs.ch sleep 120
+## vncviewer localhost:10009

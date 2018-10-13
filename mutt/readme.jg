@@ -1,0 +1,57 @@
+#!/bin/sh
+
+http://www.mutt.org/download.html
+
+
+http://dev.mutt.org/trac/wiki
+
+hg clone http://dev.mutt.org/hg/mutt#HEAD
+
+This will clone only the HEAD branch (where mainline development happens. You
+can omit the #HEAD to clone the entire repository, but then you will need to
+use another command to check out the latest version into your working directory
+after the clone:
+
+hg update -C HEAD
+
+/apps/pilatus/sandbox/jgp/mutt/src/mutt-1.5.21
+
+cd /apps/common/UES/sandbox/jgp/mutt/
+./configure --enable-imap --with-ssl=/usr/lib64 CFLAGS=-g LDFLAGS=-g --enable-hcache --enable-debug
+
+./mutt -f imaps://jeanpi@mail.ethz.ch:993/Inbox/testmutt2016
+
+mo use /apps/ela/easybuild/modules/all
+mll gperftools
+relink with:
+`pkg-config --libs libprofiler`
+
+export CPUPROFILE=effjg 
+mutt -f ...
+
+pprof --text ./mutt ./effjg
+
+08.el6.x86_64 openssl-1.0.1e-30.el6.x86_64 sssd-client-1.11.6-30.el6.x86_64
+(gdb) bt
+#0  __strncpy_ssse3 () at ../sysdeps/x86_64/multiarch/strcpy.S:94
+#1  0x0000000000468974 in mutt_pattern_func_cscs (op=17, prompt=0x4c39cc "Limit to messages matching: ", cscs_menu_current=2) at pattern.c:1310
+#2  0x000000000042441c in mutt_index_menu () at curs_main.c:918
+#3  0x0000000000448cfd in main (argc=1, argv=0x7fffffffde18) at main.c:1061
+
+
+#0  0x000000344e6e1433 in __select_nocancel () at ../sysdeps/unix/syscall-template.S:82
+#1  0x00000034602139c7 in _nc_timed_wait () from /lib64/libtinfo.so.5
+#2  0x000000345be1072a in _nc_wgetch () from /lib64/libncursesw.so.5
+#3  0x000000345be10837 in wgetch () from /lib64/libncursesw.so.5
+#4  0x000000000041feb9 in mutt_getch () at curs_lib.c:97
+#5  0x0000000000445b3d in km_dokey (menu=6) at keymap.c:452
+#6  0x000000000042395f in mutt_index_menu () at curs_main.c:681
+#7  0x0000000000448cfd in main (argc=1, argv=0x7fffb1d12168) at main.c:1061
+
+
+
+
+
+
+# http://wiki.mutt.org/?ConfigTricks
+Add "source ~/.mutt/sort-threads.rc" (or -date) to your main muttrc

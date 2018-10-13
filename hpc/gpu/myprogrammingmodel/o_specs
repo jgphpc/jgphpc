@@ -1,0 +1,33 @@
+# --- http://www.openacc.org/specification
+OpenACC/1.0 >= 201111
+OpenACC/2.0 >= 201306
+OpenACC/2.5 >= 201510
+
+# --- http://www.openmp.org/specifications/
+# --- http://www.openmp.org/resources/openmp-compilers/
+OpenMP/2.5 >= 200505
+OpenMP/3.0 >= 200805
+OpenMP/3.1 >= 201107
+OpenMP/4.0 >= 201307
+OpenMP/4.5 >= 201511
+
+# --- pgi:
+# CC -DPGI -mp -acc -ta=tesla:cuda8.0,cc60 -std=c++11 axpy_openacc.cpp
+pgi/16.4 OPENACC/201306=2.0     OPENMP/200805=3.0
+pgi/16.9 OPENACC/201306=2.0     OPENMP/200805=3.0
+pgi/17.4 OPENACC/201510=2.5     OPENMP/200805=3.0
+
+# --- cce:
+# CC -homp -hacc -hstd=c++11 axpy_openacc.cpp
+cce/85x OPENACC/201306=2.0      OPENMP/201307=4.0
+cce/86x OPENACC/201306=2.0      OPENMP/201307=4.0
+
+# --- gnu:
+gcc/4.9.x OPENACC/na            OPENMP/201307=4.0
+gcc/5.3.x OPENACC/na            OPENMP/201307=4.0
+gcc/6.3.x OPENACC/coming        OPENMP/201511=4.5
+
+# --- intel:
+intel/15.0 OPENACC/na           OPENMP/201307=4.0
+intel/16.0 OPENACC/na           OPENMP/201307=4.0
+intel/17.0 OPENACC/na           OPENMP/201511=4.5

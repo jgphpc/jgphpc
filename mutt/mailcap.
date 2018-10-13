@@ -1,0 +1,7 @@
+# HTML
+#text/html; lynx -dump %s; copiousoutput; nametemplate=%s.html
+#text/html; w3m -dump %s; copiousoutput; nametemplate=%s.html
+#text/html; LD_LIBRARY_PATH=/apps/ela/links2/2.1pre37/lib /apps/ela/links2/2.1pre37/bin/links2 -dump %s; copiousoutput; nametemplate=%s.html
+text/html; /apps/common/UES/sandbox/jgp/easyconfigs.fork/e/ELinks/elinks-0.11.7/src/elinks -dump %s; copiousoutput; nametemplate=%s.html
+image/*; /usr/bin/xdg-open %s
+

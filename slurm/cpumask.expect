@@ -1,0 +1,24 @@
+#!/usr/bin/env expect
+
+# full_mask: 65535
+# fwd_map:  0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
+# fwd_mask: 00000001,00000002,00000004,00000008,00000010,00000020,00000040,00000080,00000100,00000200,00000400,00000800,00001000,00002000,00004000,00008000
+
+source ./globals
+set fwd_map  ""
+set fwd_mask ""
+# set task_cnt 48
+# set task_cnt 8
+set task_cnt 16
+set cpu_cnt 0
+while {$cpu_cnt < $task_cnt} {
+        set mask_sum 0
+        set mask [ expr 1 << $cpu_cnt ]
+        set mstr [ uint2hex  $mask ]
+        set fwd_mask "$fwd_mask,$mstr"
+        set fwd_map  "$fwd_map,$cpu_cnt"
+	incr cpu_cnt 1
+}
+
+send_user "fwd_map:  $fwd_map\n"
+send_user "fwd_mask: $fwd_mask\n"

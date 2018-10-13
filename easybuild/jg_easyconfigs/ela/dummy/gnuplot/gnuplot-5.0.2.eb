@@ -1,0 +1,27 @@
+# jgp@cscs
+easyblock = 'ConfigureMake'
+
+name = 'gnuplot'
+version = '5.0.2'
+
+homepage = 'http://gnuplot.sourceforge.net/'
+description = """Portable interactive, function plotting utility"""
+
+toolchain = {'name': 'dummy', 'version': 'dummy'}
+source_urls = [('http://sourceforge.net/projects/gnuplot/files', 'download')]
+sources = [SOURCE_TAR_GZ]
+
+#inutile dependencies = [
+#inutile     ('cairo', '1.14.4'),
+#inutile     ('libjpeg-turbo', '1.4.2'),
+#inutile     ('libpng', '1.6.19'),
+#inutile     ('libgd', '2.1.1'),
+#inutile     ('Pango', '1.38.1'),
+#inutile ]
+
+sanity_check_paths = {
+    'files': ['bin/gnuplot'],
+    'dirs': []
+}
+
+moduleclass = 'vis'

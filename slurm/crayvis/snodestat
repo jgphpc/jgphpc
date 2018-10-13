@@ -1,0 +1,426 @@
+#!/usr/bin/python
+# Login: kjt                  Name: Kevin Thomas Office:  CRAY
+
+snodestat_usage = """snodestat - node status for SLURM - version 1.7
+
+THE SOFTWARE IS PROVIDED "AS IS", WITH ALL FAULTS AND WITHOUT WARRANTY
+OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, AND FITNESS FOR A PARTICULAR PURPOSE.
+THIS SOFTWARE MAY NOT BE REDISTRIBUTED OR SUBLICENSED WITHOUT WRITTEN
+PERMISSION FROM CRAY INC.
+
+Usage: snodestat
+
+snodestat collects information from SLURM using scontrol and CLE using
+xtprocadmin, then prints a report showing the physical node layout in
+cabinets and current node usage.
+"""
+
+import subprocess
+import string
+import sys
+import os
+import re
+from operator import attrgetter
+
+job_list = dict()	# list of running jobs
+nid_list = dict()	# list of nid physical location
+cabinets = []
+term_cols = 79		# display columns
+
+# Read SLURM jobs into job_list.
+def ReadJobs():
+  global job_list
+  job_list = dict()
+  cmd = subprocess.Popen(["scontrol","-o","-d","show","job"],stdout=subprocess.PIPE)
+  for line in cmd.stdout:
+    for pair in string.split(line," "):
+      l = string.split(pair,"=")
+      if len(l) == 2:
+        (name,value) = (l[0],l[1])
+        if name == 'JobId':
+          job = value
+          job_list[job] = dict()
+        job_list[job][name] = value
+#     else:
+#       print "Unknown pair " + pair
+  cmd.wait()
+
+
+# Read SLURM nodes into nid_list.
+def ReadNodes():
+  global nid_list
+  cmd = subprocess.Popen(["scontrol","-o","-d","show","nodes"],stdout=subprocess.PIPE)
+  for line in cmd.stdout:
+    for pair in string.split(line," "):
+      l = string.split(pair,"=")
+      if len(l) == 2:
+        (name,value) = (l[0],l[1])
+        if name == 'NodeName':
+          node = value
+          nid_list[node] = dict()
+        nid_list[node][name] = value
+#     else:
+#       print "Unknown pair " + pair
+  cmd.wait()
+
+
+def ReadCnames():
+  global nid_list
+  global cabinets
+  try :
+    # Assume xtprocadmin or eswrap-xtprocadmin is in $PATH.
+    cmd = subprocess.Popen(["xtprocadmin"],stdout=subprocess.PIPE)
+  except:
+    try:
+      # Special hack for Cori.
+      cmd = subprocess.Popen(["ssh","-q","-t","cmom01","/opt/cray/sdb/default/bin/xtprocadmin"],stdout=subprocess.PIPE)
+    except:
+      print >> sys.stderr, "snodestat: Unable to execute xtprocadmin. Try \"module load sdb\" or \"module load eswrap\"."
+      exit(1)
+  count = 0
+  for line in cmd.stdout:
+    list = re.findall(r"(\S+)",line)
+    if(list[0] != "NID"):
+      count += 1
+      (nid,hex,cname,type,status,mode) = (list)
+      node = "nid%05d" % int(nid)
+      if node not in nid_list:
+        nid_list[node] = dict()
+      nid_list[node]["Nid"]    = nid
+      nid_list[node]["Cname"]  = cname
+      nid_list[node]["Type"]   = type
+      nid_list[node]["Status"] = status
+      nid_list[node]["Mode"]   = mode
+      (x0,cab,row,chas,slot,num,x6) = re.split("c(\d+)-(\d+)c(\d+)s(\d+)n(\d+)",cname)
+      nid_list[node]["Cab"]   = cab
+      nid_list[node]["Row"]   = row
+      nid_list[node]["Chas"]  = chas
+      nid_list[node]["Slot"]  = slot
+      nid_list[node]["Node"]  = num
+      icab  = int(cab)
+      irow  = int(row)
+      ichas = int(chas)
+      islot = int(slot)
+      inum  = int(num)
+      if len(cabinets) < irow+1:
+        cabinets.extend([] for x in range(len(cabinets),irow+1))
+      if len(cabinets[irow]) < icab+1:
+        cabinets[irow].extend([] for x in range(len(cabinets[irow]),icab+1))
+      if len(cabinets[irow][icab]) < 1:
+        cabinets[irow][icab].extend([[[[""] for s in range(16)] for n in range(4)] for c in range(3) ])
+#     print >> sys.stderr, "irow=%d, icab=%d, ichas=%d, islot=%d, inum=%d, node=%s" % (irow,icab,ichas,islot, inum, node)
+      cabinets[irow][icab][ichas][inum][islot] = node
+  cmd.wait()
+  if count < 4:
+      print >> sys.stderr, "snodestat: xtprocadmin did not return any nodes."
+      exit(1)
+
+
+#  Expand a string like prod-0[001-048,061-064] into a full list.
+def SlurmExpand(node_str):
+  list = []
+  for p in re.split(r"([A-Za-z0-9-]+(?:\[[0-9,-]+\])?)",node_str):
+    if len(p) == 0:
+      continue
+    l = re.split(r"([A-Za-z0-9-]+)(\[)([0-9,-]+)(\])",p)
+    if len(l) == 1:
+      n = l[0]
+      if len(n) != 0 and n != ",":
+        list.append(n)
+    else:
+      # Break into a prefix and a list of items.
+      m = re.match(r"([A-Za-z0-9-]+)\[([0-9,-]+)\]",p)
+      (prefix,list_str) = m.group(1,2)
+      # If item is range, expand it, else is a single value.
+      for item in string.split(list_str,","):
+        i = item.find("-")
+        if i > 0:
+          start = item[:i]
+          end   = item[i+1:]
+          for n in range(int(start),int(end)+1):
+            fmt = prefix + "%0" + str(len(start)) + "d"
+            list.append(fmt % n)
+        else:
+          list.append(prefix + item)
+
+  return list
+
+
+# Assign letters to the "Mark" attribute of running jobs.
+def NameJobs():
+  global job_list
+  running = 0
+  allocated = 0
+  for job in job_list:
+    if job_list[job]["JobState"] == "RUNNING":
+      if "Command" in job_list[job]:
+        cmd = job_list[job]["Command"]
+      else:
+        cmd == "(null)"
+      if cmd == "(null)":
+        # Nodes allocated for a job.
+        allocated += 1
+        job_list[job]["Mark"]  = "A"
+        job_list[job]["State"] = "idle"
+      else:
+        # Nodes running a job.
+        running += 1
+        mark_str = ""
+        m = running
+        while m > 0:
+          b = (m-1) % 26 + 97		# get last character
+          m = int((m-1) / 26)		# trim last character
+          bc = "%c" % b		# convert to character
+          mark_str = bc + mark_str	# add last character
+        job_list[job]["Mark"]  = mark_str
+        job_list[job]["State"] = "run"
+  return running + allocated
+
+
+# Associate each active node with its job.
+def MarkNodes():
+  # Mark nodes by type.
+  for node in nid_list:
+    mark = "~"
+    if "Type" in nid_list[node]:
+      if nid_list[node]["Type"] == "service":
+        mark = "S"
+        if nid_list[node]["Status"] == "down":
+          mark = "Y"
+        elif nid_list[node]["Status"] == "admindown":
+          mark = "Y"
+      elif nid_list[node]["Type"] == "compute":
+        mark = "-"
+        if nid_list[node]["Status"] == "down":
+          mark = "X"
+        elif nid_list[node]["Status"] == "admindown":
+          mark = "Z"
+      nid_list[node]["Mark"] = mark
+  # Mark nodes by job.
+  for job in job_list:
+    if "Mark" in job_list[job]:
+      mark     = job_list[job]["Mark"]
+      node_str = job_list[job]["NodeList"]
+      if node_str == "(null)":
+        continue # job has no nodes
+      list     = SlurmExpand(node_str)
+      for node in list:
+        if node in nid_list:
+          if "Mark" in nid_list[node] and nid_list[node]["Mark"] != "-":
+            nid_list[node]["Mark"] = "M" # multiple jobs
+          else:
+            nid_list[node]["Mark"] = mark
+        else:
+          print "MarkNodes: node from SlurmExpand not known " + node
+
+
+# Print the cabinet view of system status.
+def PrintNodeStat(num_running):
+  mark_width = 1
+  nr = int(num_running/26)
+  while nr > 0:
+    nr = int(nr / 26)
+    mark_width += 1
+  mark_fmt = "%s%ds" % ("%",mark_width)
+  # Create the formatted data in cab_buf.
+  cabinet_count = 0
+  for row in cabinets:
+    cabinet_count += len(row)
+  clabel = ["" for i in range(cabinet_count)]
+  nrows = len(cabinets)
+  if nrows > 1:
+    print "%d cabinets in %d rows, %d cabinets per row" % (cabinet_count,nrows,cabinet_count/nrows)
+  else:
+    print "cabinets = " + str(cabinet_count)
+  cab_buf = [[["" for i in range(4)] for i in range(3)] for i in range(cabinet_count)]
+  icab = 0
+  ir = 0
+  for row in cabinets:
+    ic = 0
+    for cab in row:
+      clabel[icab] = "c%d-%d" % (ic,ir)
+      for ichas in range(0,3):
+        chas = str(2-ichas)
+        for inum in range(0,4):
+          # Add cabinet line at tht top of each cabinet.
+          num = str(inum)
+          s = ""
+          for islot in range(0,16):
+            slot = str(islot)
+            try:
+              node = cab[ichas][inum][islot]
+              if "Mark" in nid_list[node]:
+                ns = mark_fmt % nid_list[node]["Mark"]
+              else:
+                ns = mark_fmt % "-"
+            except:
+              ns = mark_fmt % " "
+            s = s + ns
+          if num == "3":
+            l = "c%sn%s %s" % (chas,num,s)
+          else:
+            l = "  n%s %s" % (num,s)
+          cab_buf[icab][ichas][inum] = l
+      ic += 1
+      icab += 1
+    ir += 1
+  nblanks = 2 # spaces between cabinets in a page row
+  nslots = 16 # slots per chassis in a page row
+  # Add nblanks to term_cols to allow for stripping of the trailing nblanks.
+  nper_line = (term_cols+nblanks) / (5 + nslots*mark_width + nblanks)
+  if nper_line < 1:
+    nper_line = 1
+  # Print the formatted data.
+  icab = 0
+  for ic in range(0,cabinet_count):
+    line = ""
+    for iv in range(0,nper_line):
+      if icab+iv < cabinet_count:
+        spaces = nslots * mark_width + nblanks - len(clabel[icab+iv])
+        line += "     " + clabel[icab+iv] + " " * spaces
+    print line.rstrip()
+    for ichas in range(0,3):
+      for inum in range(0,4):
+        line = ""
+        for iv in range(0,nper_line):
+          if icab+iv < cabinet_count:
+            line +=  cab_buf[icab+iv][ichas][inum] + " " * nblanks
+        print line.rstrip()
+    line = ""
+    for iv in range(0,nper_line):
+      if icab+iv < cabinet_count:
+        # Only handles cases mark_width = 1, 2 and 3.
+        if mark_width == 1:
+          line += "     0123456789abcdef" + " " * nblanks
+        elif mark_width == 2:
+          line += "      0 1 2 3 4 5 6 7 8 9 a b c d e f" + " " * nblanks
+        else:
+          line += "       0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f" + " " * nblanks
+    print line.rstrip()
+    print
+    icab += nper_line
+    if icab >= cabinet_count:
+      break
+
+def PrintLegend():
+  print """Legend:
+   nonexistent node                      S  service node
+;  free interactive compute node         -  free batch compute node
+A  allocated (idle) compute or ccm node  ?  suspect compute node
+W  waiting or non-running job            X  down compute node
+Y  down or admindown service node        Z  admindown compute node
+M  multiple jobs on node
+"""
+
+
+def PrintNodeSummary():
+  type_list = ["service", "compute"]
+  mode_list = ["batch", "interactive", "other"]
+  status_list = ["up", "down", "used", "free"]
+  count = dict()
+  for type in type_list:
+    count[type] = dict()
+    for mode in mode_list:
+      count[type][mode] = dict()
+      for status in status_list:
+        count[type][mode][status] = 0
+  for node in nid_list:
+    if "Type" not in nid_list[node]:
+      continue
+    type   = nid_list[node]["Type"]
+    status = nid_list[node]["Status"]
+    mode   = nid_list[node]["Mode"]
+    mark   = nid_list[node]["Mark"]
+    if status != "up":
+      status = "down"
+#   print " type " + type + " mode " + mode + " status " + status
+    count[type][mode][status] += 1
+    if status == "up" and type == "compute":
+       if mark == "-":
+         count[type][mode]["free"] += 1
+       else:
+         count[type][mode]["used"] += 1
+  for type in type_list:
+    for mode in mode_list:
+      c = count[type][mode]
+      total = c["up"] + c["down"]
+      if total > 0:
+        label = mode.capitalize() + " " +  type.capitalize() + " nodes"
+        if type == "compute":
+          print "%-26s up %5d, down %5d, total %5d, used %5d, free %5d" % (label,c["up"],c["down"],total,c["used"],c["free"])
+        else:
+          print "%-26s up %5d, down %5d, total %5d" % (label,c["up"],c["down"],total)
+
+def PrintJobs():
+  print "\nJob ID      User     Size     Age      State      command line"
+  print   "--- ------- -------- -------- -------- ------- ------------------------------"
+  for job in job_list:
+    if "Mark" not in job_list[job]:
+      continue # Not running
+    mark   = job_list[job]["Mark"]
+    jobid  = job_list[job]["JobId"]
+    userid = job_list[job]["UserId"]
+    size   = job_list[job]["NumNodes"]
+    nodes  = job_list[job]["NodeList"]
+    used   = TimeFormat(job_list[job]["RunTime"])
+    state  = job_list[job]["State"]
+    if "Command" in job_list[job]:
+      cmd  = job_list[job]["Command"]
+    else:
+      cmd  = "(null)"
+    i = userid.find("(")
+    if i > 0:
+      userid = userid[:i]
+    cmd = os.path.basename(cmd)
+    if cmd == "(null)":
+      cmd  = ""
+#   max_cmd = term_cols - 48
+#   if len(cmd) > max_cmd:
+#     cmd = cmd[len(cmd)-max_cmd:len(cmd)]
+    if size == "1":
+      size = nodes # print nid if only 1
+    print "%-3s %7s %-8s %8s %8s %-7s %s" % (mark,jobid[:7],userid[:8],size,used,state,cmd)
+
+
+def TimeFormat( time_str ):
+  i = time_str.find('-')
+  if i > 0:
+    # Abbreviate if time is given in days.
+    days = int(time_str[:i])
+    if days < 4:
+      hours = days * 24 + int(time_str[i+1:i+2])
+      mmss = time_str[i+4:]
+      return "%02d:%s" % (hours,mmss) # days as hours
+    elif time_str[i+1:] == "00:00:00":
+      return "%d days" % days # integer number of days
+    else:
+      return time_str # give up
+  else:
+    return time_str
+
+
+# Get the number of columns in this terminal display.
+def TermCols():
+  cols = 0
+  cmd = subprocess.Popen(["tput","cols"],stdout=subprocess.PIPE) #,stderr=subprocess.STDOUT)
+  for line in cmd.stdout:
+    cols = int(line)
+  status = cmd.wait()
+  if cols == 0 or status != 0:
+     cols = 80
+  return cols
+
+
+term_cols = TermCols()
+ReadNodes()
+ReadCnames()
+ReadJobs()
+running = NameJobs()
+MarkNodes()
+
+PrintNodeStat(running)
+PrintLegend()
+PrintNodeSummary()
+if running > 0:
+  PrintJobs()

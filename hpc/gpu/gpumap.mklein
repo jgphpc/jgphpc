@@ -1,0 +1,391 @@
+#!/bin/sh
+# GPUMAP
+# GPU Socket Affinity wrapper for Slurm
+# Written for CSCS by Mark Klein (klein@cscs.ch)
+# For the MeteoSwiss System
+# 1st of June 2015
+
+echo "export LOCAL_RANK=${SLURM_LOCALID}"
+
+#only run on computes
+
+if [[ ! $(hostname) =~ "cn-" ]];then
+	echo "export MV2_USE_CUDA=0"
+	echo "export MV2_USE_GPUDIRECT=0"
+	echo "export MV2_IBA_HCA=mlx4_0"
+	echo "export MV2_ENABLE_AFFINITY=0"
+	exit
+fi
+#env >> /tmp/dbgmeenvs
+#if [[ $OMPI_COMM_WORLD_LOCAL_RANK -gt 0 ]]
+#then
+#	SLURM_LOCALID=$OMPI_COMM_WORLD_LOCAL_RANK
+#	echo "export SLURM_LOCALID=$SLURM_LOCALID"
+#	echo "export ODBG=1"
+#else
+#	echo "export ODBG=2"
+#fi
+
+#K80 valid GPU clocks
+
+GPUCLOCKS="c562c575c588c601c614c627c640c653c666c679c692c705c719c732c745c758c719c732c745c758c771c784c797c810c823c836c849c862c875c"
+MYCORE=$(taskset -pc $$|awk '{print $6}'|awk -F, '{print $1}')
+MYSOCKET=$(hwloc-calc $(hwloc-bind --get) -I socket)
+
+#Hardcoding mappings, hwloc-calc is slow
+#Do not use this version outside Kesch/Escha
+IBA[0]=mlx5_0
+IBA[1]=mlx5_1
+SOCKMASK[0x000001]=0
+SOCKMASK[0x001000]=1
+SOCKMASK[0x000002]=0
+SOCKMASK[0x002000]=1
+SOCKMASK[0x000004]=0
+SOCKMASK[0x004000]=1
+SOCKMASK[0x000008]=0
+SOCKMASK[0x008000]=1
+SOCKMASK[0x000010]=0
+SOCKMASK[0x010000]=1
+SOCKMASK[0x000020]=0
+SOCKMASK[0x020000]=1
+SOCKMASK[0x000040]=0
+SOCKMASK[0x040000]=1
+SOCKMASK[0x000080]=0
+SOCKMASK[0x080000]=1
+SOCKMASK[0x000100]=0
+SOCKMASK[0x100000]=1
+SOCKMASK[0x000200]=0
+SOCKMASK[0x200000]=1
+SOCKMASK[0x000400]=0
+SOCKMASK[0x400000]=1
+SOCKMASK[0x000800]=0
+SOCKMASK[0x800000]=1
+COREMASK[0x000001]=0
+COREMASK[0x001000]=12
+COREMASK[0x000002]=1
+COREMASK[0x002000]=13
+COREMASK[0x000004]=2
+COREMASK[0x004000]=14
+COREMASK[0x000008]=3
+COREMASK[0x008000]=15
+COREMASK[0x000010]=4
+COREMASK[0x010000]=16
+COREMASK[0x000020]=5
+COREMASK[0x020000]=17
+COREMASK[0x000040]=6
+COREMASK[0x040000]=18
+COREMASK[0x000080]=7
+COREMASK[0x080000]=19
+COREMASK[0x000100]=8
+COREMASK[0x100000]=20
+COREMASK[0x000200]=9
+COREMASK[0x200000]=21
+COREMASK[0x000400]=10
+COREMASK[0x400000]=22
+COREMASK[0x000800]=11
+COREMASK[0x800000]=23
+
+assignmv2()
+{ 
+	echo "export MV2_ENABLE_AFFINITY=${MV2_ENABLE_AFFINITY-0}"
+
+	if [[ ! -z $GENMV2MAP ]]
+	then
+#		echo "export DBGKLEIN=$CPULIST"
+		for i in $CPULIST
+		do
+			#Don't look up the easy ones
+			if [[ -z ${COREMASK[${i}]} ]]
+			then
+				CPUMAPLIST=${CPUMAPLIST}:$(hwloc-calc -I PU $i) #|awk -F, '{print $1}')
+			else
+				CPUMAPLIST=${CPUMAPLIST}:${COREMASK[${i}]}
+			fi
+			CURSOCK=${SOCKMASK[${i}]}
+			HCAMAPLIST=${HCAMAPLIST}:${IBA[${CURSOCK}]}
+		done
+		echo "export MV2_CPU_MAPPING=${CPUMAPLIST#?}"
+		echo "export MV2_PROCESS_TO_RAIL_MAPPING=${HCAMAPLIST#?}"
+		echo "export MV2_ENABLE_AFFINITY=1"
+	fi
+	#echo ""
+}
+assigngpu() {
+	#All GPUs assigned to this job
+	IFS="," read -a GPUS <<< "$GPU_DEVICE_ORDINAL"
+	IFS="," read -a CPUS <<< "$JOBCORES"
+	#Populate a map of assigned CPUs for job on node
+	CPUSOCK1=()
+	CPUSOCK2=()
+	for i in ${CPUS[@]}
+	do
+		if [[ $i -lt 12 ]]
+		then
+			CPUSOCK1+=($i)
+		else
+			CPUSOCK2+=($i)
+		fi
+	done
+	#Populate a map of assigned GPUs for job on node
+	GPUSOCK1=()
+	GPUSOCK2=()
+	for i in "${GPUS[@]}"
+        do
+                if [[ $i -lt 8 ]]
+                then
+                        GPUSOCK1+=($i)
+                else
+                        GPUSOCK2+=($i)
+                fi
+	done
+                # Rebalance the GPUS
+	        if [[ ${#GPUSOCK1[@]} -gt ${#CPUSOCK1[@]} ]]
+	        then
+			NEEDED2=$(( ${#CPUSOCK2[@]} - ${#GPUSOCK2[@]}))
+			if [[ $NEEDED2 -lt 0 ]]
+			then
+				NEEDED2=0
+			fi
+			GPUSOCK2+=(${GPUSOCK1[@]:0:$NEEDED2})
+                        GPUSOCK1=(${GPUSOCK1[@]:$NEEDED2})
+                fi
+		if [[ ${#GPUSOCK2[@]} -gt ${#CPUSOCK2[@]} ]]
+		then
+                        NEEDED1=$(( ${#CPUSOCK1[@]} - ${#GPUSOCK1[@]}))
+			if [[ $NEEDED1 -lt 0 ]]
+			then
+				NEEDED1=0
+			fi
+
+			GPUSOCK1+=(${GPUSOCK2[@]:0:$NEEDED1})	
+			GPUSOCK2=(${GPUSOCK2[@]:$NEEDED1})
+		fi
+#		echo "export MDKDBC1=${CPUSOCK1[@]}"
+#		echo "export MDKDBC2=${CPUSOCK2[@]}"
+#	 	echo "export MDKDBG1=${GPUSOCK1[@]}"
+#		echo "export MDKDBG2=${GPUSOCK2[@]}"
+
+	#Task needs to know which set it belongs to
+	if [[ $MYSOCKET -eq 0 ]]
+	then
+		CPUSOCK=(${CPUSOCK1[@]})
+		GPUSOCK=(${GPUSOCK1[@]})
+	else
+		CPUSOCK=(${CPUSOCK2[@]})
+		GPUSOCK=(${GPUSOCK2[@]})
+	fi
+
+	#Which Core Index am I?
+	CI=0
+	for n in "${CPUSOCK[@]}"; do
+		if [[ $n -ne $MYCORE ]]
+		then
+			((CI++))
+		else
+			break
+		fi
+	done
+
+	#We assign the GPUs in core order per socket
+	#Leftovers get noDevFile (slurm gres spec)
+	CUDADEV=${GPUSOCK[$CI]:-"NoDevFile"}
+	CUDA=1
+	echo "export MV2_USE_CUDA=${MV2_USE_CUDA-1}"
+	echo "export MV2_CUDA_IPC=${MV2_CUDA_IPC-0}"
+	echo "export MV2_USE_GPUDIRECT=${MV2_USE_GPUDIRECT-1}" 
+	echo "export MV2_COMM_WORLD_LOCAL_RANK=${SLURM_LOCALID}"
+	echo "export LOCAL_RANK=${SLURM_LOCALID}"
+	echo "export MV2_GPUDIRECT_GDRCOPY_LIB=${MV2_GPUDIRECT_GDRCOPY_LIB-/apps/escha/gdrcopy/default/lib64/libgdrapi.so}"
+	echo "export CUDA_VISIBLE_DEVICES=${CUDA_FORCE_DEVICES-$CUDADEV}"
+	CI1=0
+	CI2=0
+	if [[ $COSMOMODE -eq 1 ]]
+	then
+		if [[ $CUDADEV != "NoDevFile" ]]
+		then
+			if [[ $(( $SLURM_LOCALID % 2 )) -eq 0 ]]
+			then
+				NEWRANK=$(($SLURM_LOCALID/2))
+			else
+				NEWRANK=$(($SLURM_LOCALID/2+8))
+			fi	
+			echo "export SLURM_PROCID=$((SLURM_NODEID*16+$NEWRANK))"
+                        echo "export PMI_RANK=$((SLURM_NODEID*16+$NEWRANK))"
+			echo "export LOCAL_RANK=$NEWRANK"
+			echo "export MV2_COMM_WORLD_LOCAL_RANK=$NEWRANK"
+			NODEVRANK=0
+		else
+			echo "export DBGCOSMOMDK=$SLURM_LOCALID"
+			echo "export SLURM_PROCID=$(( $SLURM_NTASKS-$SLURM_NODEID-1 ))"
+			NODEVRANK=1
+			echo "export PMI_RANK=$(( $SLURM_NTASKS-$SLURM_NODEID-1 ))"
+			echo "export LOCAL_RANK=16"
+			echo "export MV2_COMM_WORLD_LOCAL_RANK=16"
+		fi
+	fi
+
+	if [ $G2G -eq 2 ]
+	then
+		echo "export MV2_CUDA_IPC=${MV2_CUDA_IPC-1}"
+		# build C_V_D order
+		IFS="," read -a COREORDER <<< "$SLURM_CPU_BIND_LIST"
+		for i in ${COREORDER[@]}
+		do
+			SOCK=${SOCKMASK[${i}]}
+			#SOCK=$(hwloc-calc -I socket $i)
+			if [[ $SOCK -eq 0 ]]
+			then
+				GPULIST=$GPULIST,${GPUSOCK1[$CI1]}
+				#			GPULIST=$GPULIST,${GPUSOCK1[$CI1]:-"NoDevFile"}
+				CI1=$((CI1+1))
+			else
+				GPULIST=$GPULIST,${GPUSOCK2[$CI2]}
+				#                        GPULIST=$GPULIST,${GPUSOCK2[$CI2]:-"NoDevFile"}
+				CI2=$((CI2+1))	
+			fi
+		done
+
+
+		if [[ $CI1 -lt ${#GPUSOCK1[@]} ]]
+		then
+			for ((i=${CI1};i<${#GPUSOCK1[@]};i++))
+			do
+				GPULIST=$GPULIST,${GPUSOCK1[$i]}
+			done
+		fi
+		if [[ $CI2 -lt ${#GPUSOCK2[@]} ]]
+		then
+			for ((i=${CI2};i<${#GPUSOCK2[@]};i++))
+			do
+				GPULIST=$GPULIST,${GPUSOCK2[$i]}
+			done
+		fi
+
+				
+#		echo "export DBGK1=${COREORDER[@]}"
+#		echo "export DBGK2=${GPUSOCK1[@]}" 
+#		echo "export DBGK3=${GPUSOCK2[@]}"
+#		echo "export DBGK4=$CI1"
+#		echo "export DBGK5=$CI2"
+#		echo "export DBGK6=$CI"
+#		echo "export DBGK7=$GPULIST"
+#		echo "export DBGK8=${GPUSOCK[$CI]}"
+		if [[ -z ${SETACCDEV} ]]
+		then
+			echo "export OMP_DEFAULT_DEVICE=$((${SLURM_LOCALID} % ${#GPUS[@]}))"
+		fi
+
+#		echo "export CRAY_ACC_DEVICE=$((${SLURM_LOCALID} % ${#GPUS[@]}))"
+		if [[ ${GPUSOCK[$CI]} ]] 
+		then
+			echo "export CUDA_VISIBLE_DEVICES=${CUDA_FORCE_DEVICES-${GPULIST#?}}"
+		else
+		#	echo "export CUDA_VISIBLE_DEVICES=NoDevFile"
+
+			echo "export CUDA_VISIBLE_DEVICES=${GPU_DEVICE_ORDINAL}"
+		fi
+                if [[ ${SETACCDEV} -eq 1 ]]
+		then
+			if [[ -z $COSMOMODE ]]
+			then
+				echo "export CRAY_ACC_DEVICE=$((${SLURM_LOCALID} % ${#GPUS[@]}))"
+			else
+				echo "export OMP_DEFAULT_DEVICE=$NEWRANK"
+				echo "export CRAY_ACC_DEVICE=$((NEWRANK-0))"
+				echo "export ACC_DEVICE_NUM=$((NEWRANK-0))"
+#				echo "export CRAY_ACC_DEVICE=0"
+#				echo "export ACC_DEVICE_NUM=0"
+				if [[ $NODEVRANK -eq 1 ]]
+				then
+                                echo "export CUDA_VISIBLE_DEVICES=NoDevFile"
+                                CUDA_FORCE_DEVICES="NoDevFile"	
+				echo "export ACC_DEVICE_TYPE=host"			
+				echo "export ACC_DEVICE_NUM=0"
+				else
+					if [[ $NEWRANK -eq 15 ]]
+					then
+						REMAINDER=$(echo $GPU_DEVICE_ORDINAL|sed "s/,${NEWRANK}//")
+					else
+						REMAINDER=$(echo $GPU_DEVICE_ORDINAL|sed "s/${NEWRANK},//")
+					fi					
+# 					echo "export CUDA_VISIBLE_DEVICES=${NEWRANK},${REMAINDER}"							
+#					CUDA_FORCE_DEVICES=${NEWRANK},${REMAINDER}
+					echo "export CUDA_VISIBLE_DEVICES=${GPU_DEVICE_ORDINAL}"
+					echo "export MV2_COMM_WORLD_RANK=$NEWRANK"
+					CUDA_FORCE_DEVICES=$GPU_DEVICE_ORDINAL
+					echo "export MV2_COMM_WORLD_LOCAL_RANK=0"	
+				fi
+			fi
+
+		fi
+	fi
+	if [[ $G2G -eq 3 ]]
+	then
+                echo "export MV2_CUDA_IPC=${MV2_CUDA_IPC-1}"
+                echo "export OMP_DEFAULT_DEVICE=$((${SLURM_LOCALID} % ${#GPUS[@]}))"
+                echo "export CRAY_ACC_DEVICE=$((${SLURM_LOCALID} % ${#GPUS[@]}))"
+		echo "export CUDA_VISIBLE_DEVICES=${GPU_DEVICE_ORDINAL}"
+		echo "export ACC_DEVICE_NUM=$((${SLURM_LOCALID} % ${#GPUS[@]}))"
+	fi
+}
+assigngpuclock() {
+#	echo "export KDBG=0"
+	if [[ -z $GCLOCK ]]
+	then
+		if [[ $SLURM_LOCALID -eq 0 ]]
+		then
+#			echo "export KDBG=reset"
+			nvidia-smi -i $GPU_DEVICE_ORDINAL -rac
+		fi
+	else
+		if [[ $GPUCLOCKS == *"c${GCLOCK}c"* ]]
+		then
+			if [ $SLURM_LOCALID = 0 ]
+			then
+				nvidia-smi -i $GPU_DEVICE_ORDINAL -ac 2505,$GCLOCK
+#				echo "export KDBG=${GPU_DEVICE_ORDINAL},${GCLOCK}"
+			fi
+		else 
+			echo "export KDBG=$GCLOCK"
+		fi
+	fi
+
+}
+assigniba() {
+	#for i in `ibstat -l`
+	#	do
+		#		IBA[$(hwloc-calc -I socket os=$i)]=$i
+		#	done
+
+	#echo "export MV2_IBA_HCA=${MV2_IBA_HCA-${IBA[$MYSOCKET]}}"
+	#for some reason the above is broken, forcing IBA socket
+#	MYSOCKET=$(hwloc-calc $(hwloc-bind --get) -I socket)
+
+#	echo "export DBGSOCK=$MYSOCKET"
+
+	echo "export MV2_IBA_HCA=${IBA[$MYSOCKET]}"
+	echo "export OMPI_MCA_btl_openib_if_include=${IBA[$MYSOCKET]}"
+}
+if [[ ! -z $G2G ]]
+then
+	CPULIST=$(echo $SLURM_CPU_BIND_LIST|tr "," " ")
+	echo "export CPULIST=$CPULIST"
+	if [[ ! -z $CPULIST ]]
+	then
+		JOBCORES=$(hwloc-calc -I PU $CPULIST)
+		JOBSOCKETS=$(hwloc-calc -I socket $CPULIST)
+	else
+		JOBCORES=0
+		JOBSOCKETS=0
+	fi
+	echo "export JOBCORES=$JOBCORES"
+	assigngpu
+fi
+if [[ $NOSETHCA -ne 1 ]]
+then
+	assigniba
+	#export test=1
+fi
+assignmv2
+assigngpuclock
+exit

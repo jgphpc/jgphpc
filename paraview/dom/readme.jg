@@ -1,0 +1,44 @@
+#!/bin/sh
+
+ #####     ##    #    #   ####    ####
+ #    #   #  #   ##   #  #    #  #    #
+ #####   #    #  # #  #  #       #    #
+ #    #  ######  #  # #  #       #    #
+ #    #  #    #  #   ##  #    #  #    #
+ #####   #    #  #    #   ####    ####
+
+# Issue1:
+/apps/paraview/ParaView-5.5.1-Qt5-MPI-Linux-64bit/bin/paraview
+Aborted (core dumped)
+
+Solution:
+/apps/paraview/ParaView-5.5.1-Qt5-MPI-Linux-64bit/bin/paraview --mesa
+
+# Issue2:
+
+# paraview_01.png : click on connect
+# paraview_02.png : check remote slurm script on dom
+# paraview_03.png : connected!
+# paraview_04.png : open xmf file (sphflow: hdf2xmf)...
+# paraview_05.png : using the xdmf reader then Apply (segfaults)
+
+Solution: use h5 files with h5py instead of xmf
+
+1/ connect
+2/ menu: sources / programmable sources / paste ~/linux.git/paraview/dom/sphflow_readh5.py / apply
+
+# paraview_06.png : ok
+
+TODO: extract
+TODO: planesph
+
+Can also try with pvbatch
+
+ #####    ####   #    #
+ #    #  #    #  ##  ##
+ #    #  #    #  # ## #
+ #    #  #    #  #    #
+ #    #  #    #  #    #
+ #####    ####   #    #
+
+~/linux.git/paraview/dom

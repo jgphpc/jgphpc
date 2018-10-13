@@ -1,0 +1,42 @@
+# -----------------------
+# https://webrt.cscs.ch/Ticket/Display.html?id=21949 timeout
+# https://webrt.cscs.ch/Ticket/Display.html?id=23423
+Host *
+  ServerAliveInterval 60
+# -----------------------
+
+# -----------------------
+ForwardX11 yes
+# ForwardAgent yes
+# StrictHostKeyChecking no
+# -----------------------
+
+# ----------------------- on your local desktop:
+# http://user.cscs.ch/computing_resources/data_analysis_and_visualization/visualization_resources/direct_connection_from_a_remote_desktop/paraview/index.html
+
+# paraview:
+Host dom*.cscs.ch
+      ForwardAgent yes
+      Port 22
+      ProxyCommand ssh -q -Y <username>@ela.cscs.ch netcat %h %p -w 10
+#
+# Host daint*.cscs.ch
+# ForwardAgent yes
+# Port 22
+# Hostname daint.cscs.ch
+# ProxyCommand ssh piccinal@ela.cscs.ch netcat %h %p
+#
+# Host daint
+# HostName daint.cscs.ch
+# User piccinal
+# ProxyCommand ssh -q -Y piccinal@ela.cscs.ch -W %h:%p
+#
+# -----------------------
+
+# -----------------------
+# EASYBUILD
+host github.com
+HostName github.com
+IdentityFile ~/.ssh/id_dsa
+User git
+# -----------------------

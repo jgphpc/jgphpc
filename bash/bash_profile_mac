@@ -1,0 +1,11 @@
+# MacPorts:
+export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
+
+# before sudo port install ctags : /usr/bin/ctags
+# after                          : /opt/local/bin/ctags
+
+source ~/.bashrc
+
+# ftp:
+# alias ftpmacon='sudo -s launchctl load -w /System/Library/LaunchDaemons/ftp.plist'
+# alias ftpmacoff='sudo -s launchctl unload -w /System/Library/LaunchDaemons/ftp.plist'
