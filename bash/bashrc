@@ -9,14 +9,14 @@
 # date >> ~/A
 # echo "dummy0"
 [ -z "$PS1" ] && return  # comment if using visit remote
-# echo ".bashrc START"
+#echo ".bashrc START"
 # echo "dummy1"
 
 # date --rfc-3339=ns > eff_bash_debug_profile
 # date >> ~/B
 ### if [ ! -n $is_bash_aliases_set ] ; then 
-   if [ -s "$HOME/linux.git/bash/bash_aliases" ] ; then
-       source ~/linux.git/bash/bash_aliases
+   if [ -s "$HOME/jgphpc.git/bash/bash_aliases" ] ; then
+       source ~/jgphpc.git/bash/bash_aliases
        # date --rfc-3339=ns > ~/eff_bash_debug_B1
    # else
        # echo "bashrc: bash_aliases not found"
@@ -25,15 +25,15 @@
 ### fi
 
 # date >> ~/C
-# test -s ~/linux.git/bash/SECRET && source ~/linux.git/bash/SECRET || true
-if [ -s "$HOME/linux.git/bash/SECRET" ] ; then
-    source $HOME/linux.git/bash/SECRET
+# test -s ~/jgphpc.git/bash/SECRET && source ~/jgphpc.git/bash/SECRET || true
+if [ -s "$HOME/jgphpc.git/bash/SECRET" ] ; then
+    source $HOME/jgphpc.git/bash/SECRET
 fi
 
 # --- hostname:
 # h=${HOSTNAME//[0-9]/}
 h=`uname -n |tr -d [0-9]`
-export MODULEPATH=$HOME/linux.git/modulefiles:$MODULEPATH
+export MODULEPATH=$HOME/jgphpc.git/modulefiles:$MODULEPATH
 
 # # --- suse:
 # if [ -f /etc/os-release ] ;then
@@ -198,7 +198,7 @@ test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shel
 #  ###  #####   #          #    #  # #  ######
 #    #  #   #   #          #    #   ##  #    #
  ####   #    #  ######     #    #    #  #    #
-# --- greina: ~/.profile -> linux.git/bash/bashrc
+# --- greina: ~/.profile -> jgphpc.git/bash/bashrc
 if [ "$h" == "greina-head" ] || [ "$h" == "node" ] || [ "$h" == "greina" ]; then
         # date --rfc-3339=ns > ~/eff_bash_debug_greina1
 
@@ -247,7 +247,7 @@ else
 
     # .python-eggs
     for ddd in local config pip cache;do
-        rm -f $HOME/.$ddd
+        rm -fr $HOME/.$ddd
         mkdir -p $HOME/efface/$hpyt/$ddd
         ln -fs $HOME/efface/$hpyt/$ddd $HOME/.$ddd
     done

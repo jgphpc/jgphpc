@@ -1,6 +1,7 @@
 #
 # set imap_pass=
-set imap_pass=`grep MUTTPWD linux.git/bash/SECRET |cut -d= -f2`
+set imap_pass=`grep MUTTPWD ./jgphpc.git/SECRET/SECRET |cut -d= -f2`
+
 set record = "~/.sent"
 set mailcap_path = ~/.mutt/mailcap.
 auto_view text/html
