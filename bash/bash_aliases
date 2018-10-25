@@ -818,3 +818,15 @@ alias ipython='LC_ALL="fr_FR.UTF-8" ipython'
 
 # echo ".bash_aliases END"
 
+ ####    ####    ####    ####   #       ######
+#    #  #    #  #    #  #    #  #       #
+#       #    #  #    #  #       #       #####
+#  ###  #    #  #    #  #  ###  #       #
+#    #  #    #  #    #  #    #  #       #
+ ####    ####    ####    ####   ######  ######
+# https://github.com/odeke-em/drive#installing
+if [ `uname -n` = 'banco' ] ; then
+    export GOPATH=$HOME/gopath
+    export PATH=$GOPATH:$GOPATH/bin:$PATH
+fi
+
