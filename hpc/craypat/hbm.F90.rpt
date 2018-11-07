@@ -1,0 +1,87 @@
+
+#################################################################
+#                                                               #
+#            CrayPat-lite Performance Statistics                #
+#                                                               #
+#################################################################
+
+CrayPat/X:  Version 7.0.2 Revision a975333  05/16/18 15:54:03
+Experiment:                  lite  lite/hbm
+Number of PEs (MPI ranks):      1
+Numbers of PEs per Node:        1
+Numbers of Threads per PE:      1
+Number of Cores per Socket:    12
+Execution start time:  Wed Nov  7 14:20:35 2018
+System name and speed:  nid00001  2.601 GHz (nominal)
+Intel Haswell    CPU  Family:  6  Model: 63  Stepping:  2
+DRAM:  64 GiB DDR4-2400 on 2.6 GHz nodes
+
+
+    The input data file came from a program instrumented for sampling,
+    but no samples were recorded, and so no profile or .apa can be
+    generated. (This typically happens if execution time is very short.)
+
+
+
+Avg Process Time: 0.03 secs         
+High Memory:      19.6 MiBytes 19.6 MiBytes per PE
+
+Sampling overflow event and threshold:
+   MEM_LOAD_UOPS_RETIRED:HIT_LFB:precise=2   400,009    
+
+Table 1:  HBM Objects Sorted by Weighted Sample
+
+  Object | Object |    Object | Object Location
+  Sample |    Max |  Max Size | 
+ Weight% | Active | (MiBytes) | 
+        
+  100.0% |    5.0 |     0.000 | Total
+|-----------------------------------------------------------------------------
+|   20.0% |    1.0 |     0.000 | mpi_status_ignore@common@COMMON /mpipriv1_/@line.0
+|   20.0% |    1.0 |     0.000 | mpi_statuses_ignore@common@COMMON /mpipriv2_/@line.0
+|   20.0% |    1.0 |     0.000 | mpi_errcodes_ignore@common@COMMON /mpipriv2_/@line.0
+|   20.0% |    1.0 |     0.000 | mpi_argv_null@common@COMMON /mpiprivc_/@line.0
+|   20.0% |    1.0 |     0.000 | mpi_argvs_null@common@COMMON /mpiprivc_/@line.0
+|=============================================================================
+
+Table 2:  HBM Objects Sorted by Sample Count
+
+  Object | Object |    Object | Object Location
+  Sample |    Max |  Max Size | 
+ Weight% | Active | (MiBytes) | 
+        
+  100.0% |    5.0 |     0.000 | Total
+|-----------------------------------------------------------------------------
+|   20.0% |    1.0 |     0.000 | mpi_status_ignore@common@COMMON /mpipriv1_/@line.0
+|   20.0% |    1.0 |     0.000 | mpi_statuses_ignore@common@COMMON /mpipriv2_/@line.0
+|   20.0% |    1.0 |     0.000 | mpi_errcodes_ignore@common@COMMON /mpipriv2_/@line.0
+|   20.0% |    1.0 |     0.000 | mpi_argv_null@common@COMMON /mpiprivc_/@line.0
+|   20.0% |    1.0 |     0.000 | mpi_argvs_null@common@COMMON /mpiprivc_/@line.0
+|=============================================================================
+
+Table 3:  Program HW Performance Counter Data
+
+Total
+
+  
+==============================================================================
+  Total
+------------------------------------------------------------------------------
+  Thread Time                                 0.005953 secs
+  MEM_LOAD_UOPS_RETIRED:HIT_LFB:precise=2        2,031 
+  RESOURCE_STALLS:ANY                           23,425 
+==============================================================================
+Program invocation:  /users/piccinal/jgphpc.git/hpc/craypat/./a.out
+
+For a complete report with expanded tables and notes, run:
+  pat_report /users/piccinal/jgphpc.git/hpc/craypat/a.out+4677-1s
+
+For help identifying callers of particular functions:
+  pat_report -O callers+src /users/piccinal/jgphpc.git/hpc/craypat/a.out+4677-1s
+To see the entire call tree:
+  pat_report -O calltree+src /users/piccinal/jgphpc.git/hpc/craypat/a.out+4677-1s
+
+For interactive, graphical performance analysis, run:
+  app2 /users/piccinal/jgphpc.git/hpc/craypat/a.out+4677-1s
+
+================  End of CrayPat-lite output  ==========================
