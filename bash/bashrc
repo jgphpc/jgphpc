@@ -10,6 +10,7 @@
 # echo "dummy0"
 [ -z "$PS1" ] && return  # comment if using visit remote
 #echo ".bashrc START"
+#set -x
 # echo "dummy1"
 
 # date --rfc-3339=ns > eff_bash_debug_profile
@@ -99,8 +100,12 @@ export MODULEPATH=$HOME/jgphpc.git/modulefiles:$MODULEPATH
 #    # export EBCFGPJG='/apps/common/easybuild/software/EasyBuild/2.2.0/lib64/python2.6/site-packages/easybuild_easyconfigs-2.2.0-py2.6.egg/easybuild/easyconfigs'
 # fi
 
-module unuse /apps/escha/modulefiles
-module unuse /apps/common/UES/modulefiles
+if [ `uname -s` != "Darwin" ] ;then
+    module unuse /apps/escha/modulefiles
+    module unuse /apps/common/UES/modulefiles
+    # --- XALT:
+    module rm xalt
+fi
 
 if [ -f /etc/os-release ] ;then
     osid=`grep ^ID= /etc/os-release |cut -d\" -f2`
@@ -273,9 +278,6 @@ export ALLINEA_CONFIG_DIR=$configdir
 export MAP_LIBRARIES_DIRECTORY=$configdir
 # ------------------------------
 
-# --- XALT:
-module rm xalt
-
  ####   #####   #    #   #   #  #    #  #    #
 #       #    #  #    #    # #   ##   #   #  #
  ####   #    #  ######     #    # #  #    ##
@@ -283,6 +285,6 @@ module rm xalt
 #    #  #       #    #     #    #   ##   #  #
  ####   #       #    #     #    #    #  #    #
 # ulimit -s 2048000
-
+#set +x
 #echo ".bashrc END"
 # export LANG=en_US.UTF-8

@@ -126,18 +126,16 @@ NOCOLOR='\[\033[0m\]'  # No color
 #    #   ####   #####    ####   ######  ######   ####   #    #  #####
 # modulecmd
 trap "" 1 2 3
-if [ `uname -n` = "banco" ] ; then
-        source /apps/modules/3.2.10/gnu_482/Modules/3.2.10/init/bash
-elif [ `uname` = "Darwin" ] ; then
-	unamen=`uname -n`
-        if [ "$unamen" = "jgmac.lan" ] ; then
-        source /efface/apps/modules/3.2.9/gnu_480/Modules/3.2.9/init/bash
-	fi
+unamen=`uname -n`
 
-	if [ "$unamen" != "mac-lilly.local" ] ; then
-        source /apps/module/3.2.10/gnu_421/Modules/3.2.10/init/bash
-        fi
+if [ "$unamen" = "banco" ] ; then
+        source /apps/modules/3.2.10/gnu_482/Modules/3.2.10/init/bash
+elif [ "$unamen" = "jgmac.lan" ] ; then
+    source /efface/apps/modules/3.2.9/gnu_480/Modules/3.2.9/init/bash
+#elif [ "$unamen" != "mac-lilly.local" ] ; then
+#    source /apps/module/3.2.10/gnu_421/Modules/3.2.10/init/bash
 fi
+
 # A=`echo $APPS |cut -d/ -f3`
 # case $A in
 #         domnv) . $MODULESHOME/init/bash ; export CUDA_HOME=/usr/local/cuda-5.5 ;;
