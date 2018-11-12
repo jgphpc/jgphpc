@@ -55,3 +55,8 @@ pprof --text ./mutt ./effjg
 
 # http://wiki.mutt.org/?ConfigTricks
 Add "source ~/.mutt/sort-threads.rc" (or -date) to your main muttrc
+
+send fichier joint : https://packages.debian.org/sid/biabam
+
+http://palcal.sourceforge.net/
+
