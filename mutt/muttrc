@@ -181,7 +181,7 @@ set header_cache=/project/csstaff/piccinal/scripts/mutt/cache/headers
 # http://us.generation-nt.com/answer/gentoo-user-mutt-index-format-syntax-help-202863622.html
 # Default: "%4C %Z %{%b %d} %-15.15L (%4l) %s"
 set index_format="%4C %Z %-80.80s %-15.15L %{%D}"
-source ~/linux.git/mutt/mutt_contacts
+source ~/jgphpc.git/SECRET/mutt_contacts
 # MACROS
 # source ~/.mutt/tickets-all.rc
 # source ~/.mutt/sort-threads.rc

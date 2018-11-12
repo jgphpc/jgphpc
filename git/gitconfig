@@ -16,13 +16,13 @@ untracked = cyan # reverse
         # bold, dim, ul, blink, and reverse.
 
 [diff]
-        external = $HOME/linux.git/git/git_diff_wrapper
+        external = $HOME/jgphpc.git/git/git_diff_wrapper
 
 [pager]
         diff =
 
 [core]
-	excludesfile = $HOME/linux.git/git/gitignore
+	excludesfile = $HOME/jgphpc.git/git/gitignore
 
 [push]
 	default = current
