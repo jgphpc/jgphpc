@@ -1,0 +1,45 @@
+# @author: jg (CSCS)
+easyblock = 'PythonPackage'
+
+name = 'PySPH'
+version = '1.0a6'
+py_maj_ver = '3'
+py_min_ver = '6'
+py_rev_ver = '5.1'
+req_py_majver = int(py_maj_ver)
+req_py_minver = int(py_min_ver)
+pyver = '%s.%s.%s' % (py_maj_ver, py_min_ver, py_rev_ver)
+pyshortver = '%s.%s' % (py_maj_ver, py_min_ver)
+versionsuffix = '-python%s' % (py_maj_ver)
+
+homepage = 'https://pypi.python.org/PySPH'
+description = """A general purpose Smoothed Particle Hydrodynamics framework"""
+toolchain = {'name': 'CrayGNU', 'version': '18.08'}
+toolchainopts = {'pic': True, 'verbose': False}
+
+source_urls = ['https://github.com/pypr/pysph/archive']
+sources = ['%(version)s.tar.gz']
+checksums = ['1a063dea3ad892408eb90739ddcfba46']
+# diff -Naur pysph-1.0a6.ori pysph-1.0a6 > patch
+patches = ['%(name)s-%(version)s.patch']
+
+dependencies = [
+    ('PySPH-deps', 'latest', versionsuffix),
+    ('PyZoltan', '1.0.1', versionsuffix),
+]
+
+prebuildopts  = 'ZOLTAN=$CRAY_TRILINOS_PREFIX_DIR CC=cc CXX=cc'
+preinstallopts = 'ZOLTAN=$CRAY_TRILINOS_PREFIX_DIR CC=cc CXX=cc'
+
+# specify that Bundle easyblock should run a full sanity check, rather than just trying to load the module
+# full_sanity_check = True
+
+pythonpath = 'lib/python%s/site-packages' % pyshortver
+sanity_check_paths = {
+    'files': [],
+    'dirs': [pythonpath]
+}
+
+modextrapaths = {'PYTHONPATH': pythonpath}
+
+moduleclass = 'tools'
