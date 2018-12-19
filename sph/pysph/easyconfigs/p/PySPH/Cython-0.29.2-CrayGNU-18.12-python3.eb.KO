@@ -1,0 +1,52 @@
+# @author: jg (CSCS)
+easyblock = 'Bundle'
+
+name = 'Cython'
+version = '0.29.2'
+py_maj_ver = '3'
+py_min_ver = '6'
+py_rev_ver = '5.3'
+req_py_majver = int(py_maj_ver)
+req_py_minver = int(py_min_ver)
+pyver = '%s.%s.%s' % (py_maj_ver, py_min_ver, py_rev_ver)
+pyshortver = '%s.%s' % (py_maj_ver, py_min_ver)
+versionsuffix = '-python%s' % (py_maj_ver)
+
+homepage = 'https://pypi.python.org/'
+description = """Cython + cyarray"""
+toolchain = {'name': 'CrayGNU', 'version': '18.12'}
+toolchainopts = {'pic': True, 'verbose': False}
+
+dependencies = [
+    ('cray-python/%s' % pyver, EXTERNAL_MODULE),
+]
+
+# bundle of Python packages
+exts_defaultclass = 'PythonPackage'
+
+exts_list = [
+# cyarray (1.0)   - A fast, typed, resizable, Cython array.
+    ('cyarray', '1.0', {
+        'req_py_majver': '3',
+        'req_py_minver': '6',
+        'source_urls': ['https://pypi.python.org/packages/source/c/cyarray/'],
+    }),
+    (name, version, {
+        'req_py_majver': '3',
+        'req_py_minver': '6',
+        'source_urls': ['https://pypi.python.org/packages/source/c/Cython'],
+    }),
+]
+
+# specify that Bundle easyblock should run a full sanity check, rather than just trying to load the module
+# full_sanity_check = True
+
+pythonpath = 'lib/python%s/site-packages' % pyshortver
+sanity_check_paths = {
+    'files': [],
+    'dirs': [pythonpath]
+}
+
+modextrapaths = {'PYTHONPATH': pythonpath}
+
+moduleclass = 'devel'

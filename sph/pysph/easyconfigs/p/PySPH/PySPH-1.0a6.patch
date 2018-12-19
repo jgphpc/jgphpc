@@ -1,3 +1,327 @@
+diff -Naur pysph-1.0a6.ori/pysph/base/box_sort_nnps.pxd pysph-1.0a6/pysph/base/box_sort_nnps.pxd
+--- pysph-1.0a6.ori/pysph/base/box_sort_nnps.pxd	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/box_sort_nnps.pxd	2018-12-19 22:19:12.962284000 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ from libcpp.map cimport map
+ 
+ from nnps_base cimport *
+diff -Naur pysph-1.0a6.ori/pysph/base/box_sort_nnps.pyx pysph-1.0a6/pysph/base/box_sort_nnps.pyx
+--- pysph-1.0a6.ori/pysph/base/box_sort_nnps.pyx	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/box_sort_nnps.pyx	2018-12-19 22:17:50.861453595 +0100
+@@ -1,4 +1,5 @@
+ #cython: embedsignature=True
++# distutils: language=c++
+ # Library imports.
+ import numpy as np
+ cimport numpy as np
+diff -Naur pysph-1.0a6.ori/pysph/base/c_kernels.pyx pysph-1.0a6/pysph/base/c_kernels.pyx
+--- pysph-1.0a6.ori/pysph/base/c_kernels.pyx	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/c_kernels.pyx	2018-12-19 22:17:59.832437291 +0100
+@@ -1,4 +1,5 @@
+ #cython: embedsignature=True
++# distutils: language=c++
+ 
+ 
+ from libc.math cimport *
+diff -Naur pysph-1.0a6.ori/pysph/base/cell_indexing_nnps.pxd pysph-1.0a6/pysph/base/cell_indexing_nnps.pxd
+--- pysph-1.0a6.ori/pysph/base/cell_indexing_nnps.pxd	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/cell_indexing_nnps.pxd	2018-12-19 22:19:04.771398000 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ # cython: embedsignature=True
+ from libcpp.map cimport map
+ from libcpp.pair cimport pair
+diff -Naur pysph-1.0a6.ori/pysph/base/cell_indexing_nnps.pyx pysph-1.0a6/pysph/base/cell_indexing_nnps.pyx
+--- pysph-1.0a6.ori/pysph/base/cell_indexing_nnps.pyx	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/cell_indexing_nnps.pyx	2018-12-19 22:17:45.501727893 +0100
+@@ -1,4 +1,5 @@
+ #cython: embedsignature=True
++# distutils: language=c++
+ 
+ # malloc and friends
+ from libc.stdlib cimport malloc, free
+diff -Naur pysph-1.0a6.ori/pysph/base/gpu_nnps_base.pxd pysph-1.0a6/pysph/base/gpu_nnps_base.pxd
+--- pysph-1.0a6.ori/pysph/base/gpu_nnps_base.pxd	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/gpu_nnps_base.pxd	2018-12-19 22:19:19.169645000 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ # numpy
+ cimport numpy as np
+ cimport cython
+diff -Naur pysph-1.0a6.ori/pysph/base/gpu_nnps_base.pyx pysph-1.0a6/pysph/base/gpu_nnps_base.pyx
+--- pysph-1.0a6.ori/pysph/base/gpu_nnps_base.pyx	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/gpu_nnps_base.pyx	2018-12-19 22:17:22.334594462 +0100
+@@ -1,4 +1,5 @@
+ #cython: embedsignature=True
++# distutils: language=c++
+ # Library imports.
+ import numpy as np
+ cimport numpy as np
+diff -Naur pysph-1.0a6.ori/pysph/base/linalg3.pxd pysph-1.0a6/pysph/base/linalg3.pxd
+--- pysph-1.0a6.ori/pysph/base/linalg3.pxd	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/linalg3.pxd	2018-12-19 22:19:01.706365000 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ """Routines for eigen decomposition of symmetric 3x3 matrices.
+ """
+ cdef double det(double a[3][3]) nogil
+diff -Naur pysph-1.0a6.ori/pysph/base/linalg3.pyx pysph-1.0a6/pysph/base/linalg3.pyx
+--- pysph-1.0a6.ori/pysph/base/linalg3.pyx	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/linalg3.pyx	2018-12-19 22:18:02.085543496 +0100
+@@ -1,4 +1,5 @@
+ #cython: boundscheck=False
++# distutils: language=c++
+ 
+ #
+ # Eigen decomposition code for symmetric 3x3 matrices, some code taken
+diff -Naur pysph-1.0a6.ori/pysph/base/linked_list_nnps.pxd pysph-1.0a6/pysph/base/linked_list_nnps.pxd
+--- pysph-1.0a6.ori/pysph/base/linked_list_nnps.pxd	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/linked_list_nnps.pxd	2018-12-19 22:19:06.914231000 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ from libcpp.map cimport map
+ from libcpp.vector cimport vector
+ 
+diff -Naur pysph-1.0a6.ori/pysph/base/linked_list_nnps.pyx pysph-1.0a6/pysph/base/linked_list_nnps.pyx
+--- pysph-1.0a6.ori/pysph/base/linked_list_nnps.pyx	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/linked_list_nnps.pyx	2018-12-19 22:18:08.101218613 +0100
+@@ -1,4 +1,5 @@
+ #cython: embedsignature=True
++# distutils: language=c++
+ # Library imports.
+ import numpy as np
+ cimport numpy as np
+diff -Naur pysph-1.0a6.ori/pysph/base/nnps_base.pxd pysph-1.0a6/pysph/base/nnps_base.pxd
+--- pysph-1.0a6.ori/pysph/base/nnps_base.pxd	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/nnps_base.pxd	2018-12-19 22:19:21.969523344 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ # numpy
+ cimport numpy as np
+ cimport cython
+diff -Naur pysph-1.0a6.ori/pysph/base/nnps_base.pyx pysph-1.0a6/pysph/base/nnps_base.pyx
+--- pysph-1.0a6.ori/pysph/base/nnps_base.pyx	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/nnps_base.pyx	2018-12-19 22:17:41.945420155 +0100
+@@ -1,4 +1,5 @@
+ #cython: embedsignature=True
++# distutils: language=c++
+ # Library imports.
+ import numpy as np
+ cimport numpy as np
+diff -Naur pysph-1.0a6.ori/pysph/base/octree.pxd pysph-1.0a6/pysph/base/octree.pxd
+--- pysph-1.0a6.ori/pysph/base/octree.pxd	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/octree.pxd	2018-12-19 22:19:08.851284000 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ #cython: embedsignature=True
+ 
+ from nnps_base cimport *
+diff -Naur pysph-1.0a6.ori/pysph/base/octree.pyx pysph-1.0a6/pysph/base/octree.pyx
+--- pysph-1.0a6.ori/pysph/base/octree.pyx	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/octree.pyx	2018-12-19 22:17:57.940939590 +0100
+@@ -1,4 +1,5 @@
+ #cython: embedsignature=True
++# distutils: language=c++
+ 
+ from nnps_base cimport *
+ 
+diff -Naur pysph-1.0a6.ori/pysph/base/octree_gpu_nnps.pxd pysph-1.0a6/pysph/base/octree_gpu_nnps.pxd
+--- pysph-1.0a6.ori/pysph/base/octree_gpu_nnps.pxd	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/octree_gpu_nnps.pxd	2018-12-19 22:19:23.812581000 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ from pysph.base.gpu_nnps_base cimport *
+ 
+ 
+diff -Naur pysph-1.0a6.ori/pysph/base/octree_gpu_nnps.pyx pysph-1.0a6/pysph/base/octree_gpu_nnps.pyx
+--- pysph-1.0a6.ori/pysph/base/octree_gpu_nnps.pyx	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/octree_gpu_nnps.pyx	2018-12-19 22:18:06.068936000 +0100
+@@ -1,4 +1,5 @@
+ #cython: embedsignature=True
++# distutils: language=c++
+ import numpy as np
+ cimport numpy as np
+ from pysph.base.tree.point_tree import PointTree
+diff -Naur pysph-1.0a6.ori/pysph/base/octree_nnps.pxd pysph-1.0a6/pysph/base/octree_nnps.pxd
+--- pysph-1.0a6.ori/pysph/base/octree_nnps.pxd	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/octree_nnps.pxd	2018-12-19 22:19:27.906081000 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ #cython: embedsignature=True
+ 
+ from nnps_base cimport *
+diff -Naur pysph-1.0a6.ori/pysph/base/octree_nnps.pyx pysph-1.0a6/pysph/base/octree_nnps.pyx
+--- pysph-1.0a6.ori/pysph/base/octree_nnps.pyx	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/octree_nnps.pyx	2018-12-19 22:17:48.462201959 +0100
+@@ -1,4 +1,5 @@
+ #cython: embedsignature=True
++# distutils: language=c++
+ 
+ from nnps_base cimport *
+ from octree cimport Octree, CompressedOctree, cOctreeNode
+diff -Naur pysph-1.0a6.ori/pysph/base/particle_array.pxd pysph-1.0a6/pysph/base/particle_array.pxd
+--- pysph-1.0a6.ori/pysph/base/particle_array.pxd	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/particle_array.pxd	2018-12-19 22:18:54.738242000 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ cimport numpy as np
+ 
+ from pyzoltan.core.carray cimport BaseArray, UIntArray, IntArray, LongArray
+diff -Naur pysph-1.0a6.ori/pysph/base/particle_array.pyx pysph-1.0a6/pysph/base/particle_array.pyx
+--- pysph-1.0a6.ori/pysph/base/particle_array.pyx	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/particle_array.pyx	2018-12-19 22:17:30.033262109 +0100
+@@ -1,4 +1,5 @@
+ #cython: embedsignature=True
++# distutils: language=c++
+ """
+ A `ParticleArray` represents a collection of particles.
+ 
+diff -Naur pysph-1.0a6.ori/pysph/base/point.pxd pysph-1.0a6/pysph/base/point.pxd
+--- pysph-1.0a6.ori/pysph/base/point.pxd	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/point.pxd	2018-12-19 22:19:17.011152000 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ cimport numpy
+ 
+ cdef extern from "math.h":
+diff -Naur pysph-1.0a6.ori/pysph/base/point.pyx pysph-1.0a6/pysph/base/point.pyx
+--- pysph-1.0a6.ori/pysph/base/point.pyx	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/point.pyx	2018-12-19 22:17:35.048511779 +0100
+@@ -1,4 +1,5 @@
+ #cython: embedsignature=True
++# distutils: language=c++
+ 
+ """A handy set of classes/functions for 3D points.
+ """
+diff -Naur pysph-1.0a6.ori/pysph/base/spatial_hash_nnps.pxd pysph-1.0a6/pysph/base/spatial_hash_nnps.pxd
+--- pysph-1.0a6.ori/pysph/base/spatial_hash_nnps.pxd	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/spatial_hash_nnps.pxd	2018-12-19 22:19:10.995335000 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ from libcpp.vector cimport vector
+ 
+ from nnps_base cimport *
+diff -Naur pysph-1.0a6.ori/pysph/base/spatial_hash_nnps.pyx pysph-1.0a6/pysph/base/spatial_hash_nnps.pyx
+--- pysph-1.0a6.ori/pysph/base/spatial_hash_nnps.pyx	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/spatial_hash_nnps.pyx	2018-12-19 22:17:54.068049089 +0100
+@@ -1,4 +1,5 @@
+ #cython: embedsignature=True
++# distutils: language=c++
+ 
+ # malloc and friends
+ from libc.stdlib cimport malloc, free
+diff -Naur pysph-1.0a6.ori/pysph/base/stratified_hash_nnps.pxd pysph-1.0a6/pysph/base/stratified_hash_nnps.pxd
+--- pysph-1.0a6.ori/pysph/base/stratified_hash_nnps.pxd	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/stratified_hash_nnps.pxd	2018-12-19 22:19:25.917051000 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ from libcpp.vector cimport vector
+ 
+ from nnps_base cimport *
+diff -Naur pysph-1.0a6.ori/pysph/base/stratified_hash_nnps.pyx pysph-1.0a6/pysph/base/stratified_hash_nnps.pyx
+--- pysph-1.0a6.ori/pysph/base/stratified_hash_nnps.pyx	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/stratified_hash_nnps.pyx	2018-12-19 22:18:04.189075848 +0100
+@@ -1,4 +1,5 @@
+ #cython: embedsignature=True
++# distutils: language=c++
+ 
+ # malloc and friends
+ from libc.stdlib cimport malloc, free
+diff -Naur pysph-1.0a6.ori/pysph/base/stratified_sfc_gpu_nnps.pxd pysph-1.0a6/pysph/base/stratified_sfc_gpu_nnps.pxd
+--- pysph-1.0a6.ori/pysph/base/stratified_sfc_gpu_nnps.pxd	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/stratified_sfc_gpu_nnps.pxd	2018-12-19 22:19:32.572321000 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ from libcpp.vector cimport vector
+ from libcpp.map cimport map
+ from libcpp.pair cimport pair
+diff -Naur pysph-1.0a6.ori/pysph/base/stratified_sfc_gpu_nnps.pyx pysph-1.0a6/pysph/base/stratified_sfc_gpu_nnps.pyx
+--- pysph-1.0a6.ori/pysph/base/stratified_sfc_gpu_nnps.pyx	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/stratified_sfc_gpu_nnps.pyx	2018-12-19 22:17:16.703222000 +0100
+@@ -1,4 +1,5 @@
+ #cython: embedsignature=True
++# distutils: language=c++
+ 
+ # malloc and friends
+ from libc.stdlib cimport malloc, free
+diff -Naur pysph-1.0a6.ori/pysph/base/stratified_sfc_nnps.pxd pysph-1.0a6/pysph/base/stratified_sfc_nnps.pxd
+--- pysph-1.0a6.ori/pysph/base/stratified_sfc_nnps.pxd	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/stratified_sfc_nnps.pxd	2018-12-19 22:19:30.602280000 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ from libcpp.vector cimport vector
+ from libcpp.map cimport map
+ from libcpp.pair cimport pair
+diff -Naur pysph-1.0a6.ori/pysph/base/stratified_sfc_nnps.pyx pysph-1.0a6/pysph/base/stratified_sfc_nnps.pyx
+--- pysph-1.0a6.ori/pysph/base/stratified_sfc_nnps.pyx	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/stratified_sfc_nnps.pyx	2018-12-19 22:17:56.053749321 +0100
+@@ -1,4 +1,5 @@
+ #cython: embedsignature=True
++# distutils: language=c++
+ 
+ # malloc and friends
+ from libc.stdlib cimport malloc, free
+diff -Naur pysph-1.0a6.ori/pysph/base/z_order_gpu_nnps.pxd pysph-1.0a6/pysph/base/z_order_gpu_nnps.pxd
+--- pysph-1.0a6.ori/pysph/base/z_order_gpu_nnps.pxd	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/z_order_gpu_nnps.pxd	2018-12-19 22:19:15.020022000 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ # cython: embedsignature=True
+ from libcpp.map cimport map
+ from libcpp.pair cimport pair
+diff -Naur pysph-1.0a6.ori/pysph/base/z_order_gpu_nnps.pyx pysph-1.0a6/pysph/base/z_order_gpu_nnps.pyx
+--- pysph-1.0a6.ori/pysph/base/z_order_gpu_nnps.pyx	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/z_order_gpu_nnps.pyx	2018-12-19 22:18:09.973043722 +0100
+@@ -1,4 +1,5 @@
+ #cython: embedsignature=True
++# distutils: language=c++
+ 
+ # malloc and friends
+ from libc.stdlib cimport malloc, free
+diff -Naur pysph-1.0a6.ori/pysph/base/z_order_nnps.pxd pysph-1.0a6/pysph/base/z_order_nnps.pxd
+--- pysph-1.0a6.ori/pysph/base/z_order_nnps.pxd	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/z_order_nnps.pxd	2018-12-19 22:18:58.877007000 +0100
+@@ -1,4 +1,5 @@
+ # cython: embedsignature=True
++# distutils: language=c++
+ from libcpp.map cimport map
+ from libcpp.pair cimport pair
+ 
+diff -Naur pysph-1.0a6.ori/pysph/base/z_order_nnps.pyx pysph-1.0a6/pysph/base/z_order_nnps.pyx
+--- pysph-1.0a6.ori/pysph/base/z_order_nnps.pyx	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/base/z_order_nnps.pyx	2018-12-19 22:17:38.942092372 +0100
+@@ -1,4 +1,5 @@
+ #cython: embedsignature=True
++# distutils: language=c++
+ 
+ # malloc and friends
+ from libc.stdlib cimport malloc, free
+diff -Naur pysph-1.0a6.ori/pysph/parallel/parallel_manager.pxd pysph-1.0a6/pysph/parallel/parallel_manager.pxd
+--- pysph-1.0a6.ori/pysph/parallel/parallel_manager.pxd	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/parallel/parallel_manager.pxd	2018-12-19 22:18:52.052693000 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ # Numpy
+ cimport numpy as np
+ 
+diff -Naur pysph-1.0a6.ori/pysph/parallel/parallel_manager.pyx pysph-1.0a6/pysph/parallel/parallel_manager.pyx
+--- pysph-1.0a6.ori/pysph/parallel/parallel_manager.pyx	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/parallel/parallel_manager.pyx	2018-12-19 22:17:10.532981165 +0100
+@@ -1,4 +1,5 @@
+ #cython: embedsignature=True
++# distutils: language=c++
+ 
+ # Numpy
+ import numpy as np
+diff -Naur pysph-1.0a6.ori/pysph/tools/geometry_stl.pyx pysph-1.0a6/pysph/tools/geometry_stl.pyx
+--- pysph-1.0a6.ori/pysph/tools/geometry_stl.pyx	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pysph/tools/geometry_stl.pyx	2018-12-19 22:17:00.050932000 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ from pysph.base.particle_array import ParticleArray
+ from pysph.base import nnps
+ import numpy as np
 diff -Naur pysph-1.0a6.ori/pysph/tools/run_parallel_script.py pysph-1.0a6/pysph/tools/run_parallel_script.py
 --- pysph-1.0a6.ori/pysph/tools/run_parallel_script.py	2018-11-27 04:43:59.000000000 +0100
 +++ pysph-1.0a6/pysph/tools/run_parallel_script.py	2018-12-19 17:43:03.237344000 +0100
@@ -10,16 +334,114 @@ diff -Naur pysph-1.0a6.ori/pysph/tools/run_parallel_script.py pysph-1.0a6/pysph/
  
      print('running test:', cmd)
  
+diff -Naur pysph-1.0a6.ori/pyzoltan/core/zoltan.pxd pysph-1.0a6/pyzoltan/core/zoltan.pxd
+--- pysph-1.0a6.ori/pyzoltan/core/zoltan.pxd	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pyzoltan/core/zoltan.pxd	2018-12-19 22:19:37.617744000 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ cimport mpi4py.MPI as mpi
+ if MPI4PY_V2:
+    from mpi4py cimport libmpi as mpic
+diff -Naur pysph-1.0a6.ori/pyzoltan/core/zoltan.pyx pysph-1.0a6/pyzoltan/core/zoltan.pyx
+--- pysph-1.0a6.ori/pyzoltan/core/zoltan.pyx	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pyzoltan/core/zoltan.pyx	2018-12-19 22:18:34.493178715 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ """Definitions for the Zoltan wrapper
+ 
+ This module defines the main wrapper for the Zoltan library. Users can
+diff -Naur pysph-1.0a6.ori/pyzoltan/core/zoltan_comm.pxd pysph-1.0a6/pyzoltan/core/zoltan_comm.pxd
+--- pysph-1.0a6.ori/pyzoltan/core/zoltan_comm.pxd	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pyzoltan/core/zoltan_comm.pxd	2018-12-19 22:19:54.073276000 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ import numpy as np
+ cimport numpy as np
+ 
+diff -Naur pysph-1.0a6.ori/pyzoltan/core/zoltan_comm.pyx pysph-1.0a6/pyzoltan/core/zoltan_comm.pyx
+--- pysph-1.0a6.ori/pyzoltan/core/zoltan_comm.pyx	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pyzoltan/core/zoltan_comm.pyx	2018-12-19 22:18:17.909124411 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ """Wrapper for the Zoltan Unstructured Communication Package
+ 
+ The Unstructured Communication utilities simplifies some common
+diff -Naur pysph-1.0a6.ori/pyzoltan/core/zoltan_dd.pxd pysph-1.0a6/pyzoltan/core/zoltan_dd.pxd
+--- pysph-1.0a6.ori/pyzoltan/core/zoltan_dd.pxd	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pyzoltan/core/zoltan_dd.pxd	2018-12-19 22:19:35.106712000 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ """Wrapper for the Zoltan Distributed Directory and routines"""
+ cimport mpi4py.MPI as mpi
+ if MPI4PY_V2:
+diff -Naur pysph-1.0a6.ori/pyzoltan/core/zoltan_dd.pyx pysph-1.0a6/pyzoltan/core/zoltan_dd.pyx
+--- pysph-1.0a6.ori/pyzoltan/core/zoltan_dd.pyx	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pyzoltan/core/zoltan_dd.pyx	2018-12-19 22:18:21.109485000 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ """Example for the Zoltan Distributed data directory"""
+ from zoltan cimport _check_error
+ 
+diff -Naur pysph-1.0a6.ori/pyzoltan/czoltan/czoltan.pxd pysph-1.0a6/pyzoltan/czoltan/czoltan.pxd
+--- pysph-1.0a6.ori/pyzoltan/czoltan/czoltan.pxd	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pyzoltan/czoltan/czoltan.pxd	2018-12-19 22:19:56.297535422 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ """Cython Wrapper for Zoltan. """
+ 
+ if MPI4PY_V2:
+diff -Naur pysph-1.0a6.ori/pyzoltan/czoltan/czoltan_comm.pxd pysph-1.0a6/pyzoltan/czoltan/czoltan_comm.pxd
+--- pysph-1.0a6.ori/pyzoltan/czoltan/czoltan_comm.pxd	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pyzoltan/czoltan/czoltan_comm.pxd	2018-12-19 22:19:58.112439000 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ """Cython wrapper for the Zoltan unstructured communication package"""
+ 
+ if MPI4PY_V2:
+diff -Naur pysph-1.0a6.ori/pyzoltan/czoltan/czoltan_config.pxd pysph-1.0a6/pyzoltan/czoltan/czoltan_config.pxd
+--- pysph-1.0a6.ori/pyzoltan/czoltan/czoltan_config.pxd	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pyzoltan/czoltan/czoltan_config.pxd	2018-12-19 22:20:00.353594000 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ cdef extern from "Zoltan_config.h":
+ 
+     # package string
+diff -Naur pysph-1.0a6.ori/pyzoltan/czoltan/czoltan_dd.pxd pysph-1.0a6/pyzoltan/czoltan/czoltan_dd.pxd
+--- pysph-1.0a6.ori/pyzoltan/czoltan/czoltan_dd.pxd	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pyzoltan/czoltan/czoltan_dd.pxd	2018-12-19 22:20:05.625718000 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ """Cython wrapper for the Zoltan Distributed Directory"""
+ 
+ if MPI4PY_V2:
+diff -Naur pysph-1.0a6.ori/pyzoltan/czoltan/czoltan_types.pxd pysph-1.0a6/pyzoltan/czoltan/czoltan_types.pxd
+--- pysph-1.0a6.ori/pyzoltan/czoltan/czoltan_types.pxd	2018-11-27 04:43:59.000000000 +0100
++++ pysph-1.0a6/pyzoltan/czoltan/czoltan_types.pxd	2018-12-19 22:20:03.394177000 +0100
+@@ -1,3 +1,4 @@
++# distutils: language=c++
+ cdef extern from "zoltan_types.h":
+ 
+     # basic type used by all of Zoltan
 diff -Naur pysph-1.0a6.ori/setup.py pysph-1.0a6/setup.py
 --- pysph-1.0a6.ori/setup.py	2018-11-27 04:43:59.000000000 +0100
-+++ pysph-1.0a6/setup.py	2018-12-19 17:49:05.503020014 +0100
++++ pysph-1.0a6/setup.py	2018-12-19 22:30:57.518411336 +0100
+@@ -59,7 +59,7 @@
+ if compiler == 'intel':
+     extra_compile_args = ['-O3']
+ else:
+-    extra_compile_args = []
++    extra_compile_args = ['-std=c++11']
+ 
+ 
+ def get_deps(*args):
 @@ -162,39 +162,41 @@
      """Returns mpi_inc_dirs, mpi_compile_args, mpi_link_args.
      """
      global HAVE_MPI
 -    mpi_inc_dirs = []
+-    mpi_compile_args = []
 +    mpi_inc_dirs = ['/opt/python/3.6.5.1/lib/python3.6/site-packages/mpi4py/include/']
-     mpi_compile_args = []
++    mpi_compile_args = ['-std=c++11']
      mpi_link_args = []
      if not HAVE_MPI:
          return mpi_inc_dirs, mpi_compile_args, mpi_link_args
@@ -97,39 +519,43 @@ diff -Naur pysph-1.0a6.ori/setup.py pysph-1.0a6/setup.py
              inc = lib = ''
  
      # try with the older ZOLTAN include directories
-@@ -560,7 +562,7 @@
+@@ -560,7 +562,8 @@
              ),
              include_dirs=include_dirs + zoltan_include_dirs + mpi_inc_dirs,
              library_dirs=zoltan_library_dirs,
 -            libraries=[zoltan_lib, 'mpi'],
 +            libraries=[zoltan_lib],
++            #libraries=[zoltan_lib, 'stdc++', 'c', 'gcc_s'],
              extra_link_args=mpi_link_args,
              extra_compile_args=mpi_compile_args + extra_compile_args,
              cython_compile_time_env=cython_compile_time_env,
-@@ -578,7 +580,7 @@
+@@ -578,7 +581,8 @@
              ),
              include_dirs=include_dirs + zoltan_include_dirs + mpi_inc_dirs,
              library_dirs=zoltan_library_dirs,
 -            libraries=[zoltan_lib, 'mpi'],
 +            libraries=[zoltan_lib],
++            #libraries=[zoltan_lib, 'stdc++', 'c', 'gcc_s'],
              extra_link_args=mpi_link_args,
              extra_compile_args=mpi_compile_args + extra_compile_args,
              cython_compile_time_env=cython_compile_time_env,
-@@ -595,7 +597,7 @@
+@@ -595,7 +599,8 @@
              ),
              include_dirs=include_dirs + zoltan_include_dirs + mpi_inc_dirs,
              library_dirs=zoltan_library_dirs,
 -            libraries=[zoltan_lib, 'mpi'],
 +            libraries=[zoltan_lib],
++            #libraries=[zoltan_lib, 'stdc++', 'c', 'gcc_s'],
              extra_link_args=mpi_link_args,
              extra_compile_args=mpi_compile_args + extra_compile_args,
              cython_compile_time_env=cython_compile_time_env,
-@@ -617,7 +619,7 @@
+@@ -617,7 +622,8 @@
              ),
              include_dirs=include_dirs + mpi_inc_dirs + zoltan_include_dirs,
              library_dirs=zoltan_library_dirs,
 -            libraries=[zoltan_lib, 'mpi'],
 +            libraries=[zoltan_lib],
++            #libraries=[zoltan_lib, 'stdc++', 'c', 'gcc_s'],
              extra_link_args=mpi_link_args,
              extra_compile_args=mpi_compile_args + extra_compile_args,
              cython_compile_time_env=cython_compile_time_env,

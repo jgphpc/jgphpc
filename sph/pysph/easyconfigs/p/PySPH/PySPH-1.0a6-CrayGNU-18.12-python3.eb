@@ -14,7 +14,7 @@ versionsuffix = '-python%s' % (py_maj_ver)
 
 homepage = 'https://pypi.org/project/PySPH'
 description = """A general purpose Smoothed Particle Hydrodynamics framework"""
-toolchain = {'name': 'CrayGNU', 'version': '18.08'}
+toolchain = {'name': 'CrayGNU', 'version': '18.12'}
 toolchainopts = {'pic': True, 'verbose': False}
 
 source_urls = ['https://github.com/pypr/pysph/archive']
@@ -23,15 +23,27 @@ checksums = ['1a063dea3ad892408eb90739ddcfba46']
 # diff -Naur pysph-1.0a6.ori pysph-1.0a6 > patch
 patches = ['%(name)s-%(version)s.patch']
 
-dependencies = [
-    ('PySPH-deps', 'latest', versionsuffix),
+# must use builddep to avoid modulefile not found
+builddependencies = [
+    ('Beaker','1.10.0', versionsuffix),
+    ('Cython','0.29.2', versionsuffix),
+    ('Mako','1.0.7', versionsuffix),    # hidden
+    ('compyle','0.5', versionsuffix),
+    ('cyarray','1.0', versionsuffix),
+    ('six','1.12.0', versionsuffix),
+    ('numpy-stl','2.9.0', versionsuffix),
+    ('pytools','2018.5.2', versionsuffix),
+    #('PySPH-deps', 'latest', versionsuffix),
     # PySPH/1.0a6 comes with pyzoltan
     #('PyZoltan', '1.0.1', versionsuffix),    
+]
+
+dependencies = [
     ('cray-trilinos/12.12.1.1', EXTERNAL_MODULE),
 ]
 
-prebuildopts  = 'ZOLTAN=$CRAY_TRILINOS_PREFIX_DIR CC=cc CXX=cc'
-preinstallopts = 'ZOLTAN=$CRAY_TRILINOS_PREFIX_DIR CC=cc CXX=cc'
+prebuildopts  = 'ZOLTAN=$CRAY_TRILINOS_PREFIX_DIR CC=cc CXX=CC'
+preinstallopts = 'ZOLTAN=$CRAY_TRILINOS_PREFIX_DIR CC=cc CXX=CC'
 
 # specify that Bundle easyblock should run a full sanity check, rather than just trying to load the module
 # full_sanity_check = True
