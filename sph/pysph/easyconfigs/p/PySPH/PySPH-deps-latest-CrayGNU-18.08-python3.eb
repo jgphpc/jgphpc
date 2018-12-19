@@ -1,0 +1,94 @@
+# @author: jg (CSCS)
+easyblock = 'Bundle'
+
+name = 'PySPH-deps'
+version = 'latest'
+py_maj_ver = '3'
+py_min_ver = '6'
+py_rev_ver = '5.1'
+pyver = '%s.%s.%s' % (py_maj_ver, py_min_ver, py_rev_ver)
+pyshortver = '%s.%s' % (py_maj_ver, py_min_ver)
+versionsuffix = '-python%s' % (py_maj_ver)
+
+homepage = 'https://pypi.python.org/PySPH'
+description = """A general purpose Smoothed Particle Hydrodynamics framework (dependencies)"""
+toolchain = {'name': 'CrayGNU', 'version': '18.08'}
+toolchainopts = {'pic': True, 'verbose': False}
+
+dependencies = [
+    ('PyExtensions', pyver),
+    # PyExtensions/3.6.5.1-CrayGNU-18.08
+    # ('cray-python/%s' % version, EXTERNAL_MODULE),
+]
+
+# bundle of Python packages
+exts_defaultclass = 'PythonPackage'
+
+exts_list = [
+# cyarray (1.0)   - A fast, typed, resizable, Cython array.
+# compyle (0.5)   - Execute a subset of Python on HPC platforms
+# Mako (1.0.7)    - A super-fast templating language that borrows the  best ideas from the existing templating languages.
+# pytools (2018.5.2) - A collection of tools for Python
+# Beaker (1.10.0) - A Session and Caching library with WSGI Middleware
+# numpy-stl (2.9.0)  - Library to make reading, writing and modifying both binary and ascii STL files easy.
+    ('cyarray', '1.0', {
+        'req_py_majver': '3',
+        'req_py_minver': '6',
+        'source_urls': ['https://pypi.python.org/packages/source/c/cyarray/'],
+    }),
+    ('compyle', '0.5', {
+        'req_py_majver': '3',
+        'req_py_minver': '6',
+        'source_urls': ['https://pypi.python.org/packages/source/c/compyle/'],
+    }),
+    ('Mako', '1.0.7', {
+        'req_py_majver': '3',
+        'req_py_minver': '6',
+        'source_urls': ['https://pypi.python.org/packages/source/m/Mako/'],
+    }),
+    ('pytools', '2018.5.2', {
+        'req_py_majver': '3',
+        'req_py_minver': '6',
+        'source_urls': ['https://pypi.python.org/packages/source/p/pytools/'],
+    }),
+    ('Beaker', '1.10.0', {
+        'req_py_majver': '3',
+        'req_py_minver': '6',
+        'source_urls': ['https://pypi.python.org/packages/source/b/Beaker/'],
+    }),
+    ('numpy-stl', '2.9.0', {
+        'req_py_majver': '3',
+        'req_py_minver': '6',
+        'source_urls': ['https://pypi.python.org/packages/source/n/numpy-stl/'],
+        'modulename': 'stl',
+    }),
+#    (name, version, {
+#        'req_py_majver': '3',
+#        'req_py_minver': '6',
+#        'source_urls': ['https://pypi.python.org/packages/source/p/PySPH/'],
+#    }),
+]
+
+# mll daint-gpu PyExtensions/3.6.5.1-CrayGNU-18.08  # ==> gcc/6.2.0
+############no: ms gcc gcc/7.1.0
+# mll cray-trilinos/12.12.1.1   # ! CC --version
+# export ZOLTAN=$CRAY_TRILINOS_PREFIX_DIR
+## export PATH=/apps/dom/UES/jenkins/6.0.UP07/gpu/easybuild/software/PyExtensions/3.6.5.1-CrayGNU-18.08/bin:$PATH    # cython
+## /opt/python/3.6.5.1/lib/python3.6/site-packages/mpi4py/include/mpi4py
+#no CC=cc CXX=CC python setup.py build
+# CC=cc CXX=cc python setup.py build
+# CC=cc CXX=CC python setup.py test
+# export PKG_CONFIG_PATH=/opt/cray/pe/mpt/7.7.2/gni/mpich-gnu/7.1/lib/pkgconfig:$PKG_CONFIG_PATH
+
+# specify that Bundle easyblock should run a full sanity check, rather than just trying to load the module
+# full_sanity_check = True
+
+pythonpath = 'lib/python%s/site-packages' % pyshortver
+sanity_check_paths = {
+    'files': [],
+    'dirs': [pythonpath]
+}
+
+modextrapaths = {'PYTHONPATH': pythonpath}
+
+moduleclass = 'tools'

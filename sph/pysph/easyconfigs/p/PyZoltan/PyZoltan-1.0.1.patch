@@ -1,0 +1,113 @@
+diff -Naur pyzoltan-1.0.1.ori/pyzoltan/tools/run_parallel_script.py pyzoltan-1.0.1/pyzoltan/tools/run_parallel_script.py
+--- pyzoltan-1.0.1.ori/pyzoltan/tools/run_parallel_script.py	2018-12-02 04:21:31.000000000 +0100
++++ pyzoltan-1.0.1/pyzoltan/tools/run_parallel_script.py	2018-12-19 16:35:19.830512000 +0100
+@@ -34,7 +34,7 @@
+     file_path = abspath(join(path, filename))
+     cmd = [sys.executable, file_path] + args
+     if nprocs > 1:
+-        cmd = ['mpiexec', '-n', str(nprocs)] + cmd
++        cmd = ['srun', '-Cgpu', '-n', str(nprocs)] + cmd
+ 
+     print('running test:', cmd)
+ 
+diff -Naur pyzoltan-1.0.1.ori/setup.py pyzoltan-1.0.1/setup.py
+--- pyzoltan-1.0.1.ori/setup.py	2018-12-02 04:21:31.000000000 +0100
++++ pyzoltan-1.0.1/setup.py	2018-12-19 17:05:30.796812708 +0100
+@@ -68,39 +68,42 @@
+     """Returns mpi_inc_dirs, mpi_compile_args, mpi_link_args.
+     """
+     global HAVE_MPI
+-    mpi_inc_dirs = []
++    mpi_inc_dirs = ['/opt/python/3.6.5.1/lib/python3.6/site-packages/mpi4py/include/']
++    #mpi_inc_dirs = []
+     mpi_compile_args = []
+     mpi_link_args = []
+     if not HAVE_MPI:
+         return mpi_inc_dirs, mpi_compile_args, mpi_link_args
+-    try:
+-        mpic = 'mpic++'
+-        if compiler == 'intel':
+-            link_args = check_output(
+-                [mpic, '-cc=icc', '-link_info'], universal_newlines=True
+-            ).strip()
+-            link_args = link_args[3:]
+-            compile_args = check_output(
+-                [mpic, '-cc=icc', '-compile_info'], universal_newlines=True
+-            ).strip()
+-            compile_args = compile_args[3:]
+-        else:
+-            link_args = check_output(
+-                [mpic, '--showme:link'], universal_newlines=True
+-            ).strip()
+-            compile_args = check_output(
+-                [mpic, '--showme:compile'], universal_newlines=True
+-            ).strip()
+-    except:  # noqa: E722
+-        print('-' * 80)
+-        print("Unable to run mpic++ correctly, skipping parallel build")
+-        print('-' * 80)
+-        HAVE_MPI = False
+-    else:
+-        mpi_link_args.extend(link_args.split())
+-        mpi_compile_args.extend(compile_args.split())
+-        mpi_inc_dirs.append(mpi4py.get_include())
++#     try:
++#         mpic = 'mpic++'
++#         if compiler == 'intel':
++#             link_args = check_output(
++#                 [mpic, '-cc=icc', '-link_info'], universal_newlines=True
++#             ).strip()
++#             link_args = link_args[3:]
++#             compile_args = check_output(
++#                 [mpic, '-cc=icc', '-compile_info'], universal_newlines=True
++#             ).strip()
++#             compile_args = compile_args[3:]
++#         else:
++#             link_args = check_output(
++#                 [mpic, '--showme:link'], universal_newlines=True
++#             ).strip()
++#             compile_args = check_output(
++#                 [mpic, '--showme:compile'], universal_newlines=True
++#             ).strip()
++#     except:  # noqa: E722
++#         print('-' * 80)
++#         print("Unable to run mpic++ correctly, skipping parallel build")
++#         print('-' * 80)
++#         HAVE_MPI = False
++#     else:
++#         mpi_link_args.extend(link_args.split())
++#         mpi_compile_args.extend(compile_args.split())
++#         mpi_inc_dirs.append(mpi4py.get_include())
+ 
++    print("CSCS cray-mpi...")
++    mpic = 'CC'
+     return mpi_inc_dirs, mpi_compile_args, mpi_link_args
+ 
+ 
+@@ -195,7 +198,7 @@
+             ),
+             include_dirs=include_dirs + zoltan_include_dirs + mpi_inc_dirs,
+             library_dirs=zoltan_library_dirs,
+-            libraries=[zoltan_lib, 'mpi'],
++            libraries=[zoltan_lib],
+             extra_link_args=mpi_link_args,
+             extra_compile_args=mpi_compile_args + extra_compile_args,
+             cython_compile_time_env=cython_compile_time_env,
+@@ -213,7 +216,7 @@
+             ),
+             include_dirs=include_dirs + zoltan_include_dirs + mpi_inc_dirs,
+             library_dirs=zoltan_library_dirs,
+-            libraries=[zoltan_lib, 'mpi'],
++            libraries=[zoltan_lib],
+             extra_link_args=mpi_link_args,
+             extra_compile_args=mpi_compile_args + extra_compile_args,
+             cython_compile_time_env=cython_compile_time_env,
+@@ -230,7 +233,7 @@
+             ),
+             include_dirs=include_dirs + zoltan_include_dirs + mpi_inc_dirs,
+             library_dirs=zoltan_library_dirs,
+-            libraries=[zoltan_lib, 'mpi'],
++            libraries=[zoltan_lib],
+             extra_link_args=mpi_link_args,
+             extra_compile_args=mpi_compile_args + extra_compile_args,
+             cython_compile_time_env=cython_compile_time_env,

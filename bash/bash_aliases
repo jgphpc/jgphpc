@@ -21,7 +21,8 @@ export PS1="\[\e[0;32m\]# \u@\h\[\e[m\]:\[\e[1;32m\]\w\[\e[m\]\[\e[0;30m\]\$$__g
 #----------------------------------------------------------------------
 alias rt='cd $SCRATCH/RT'
 alias sx='cd /apps/common/UES/sandbox/jgp'
-alias sxx='source ~/eff.ebgpu ;cd /apps/common/UES/sandbox/jgp/perfhackaton.git/reframe/lammps/'
+#alias sxx='source ~/eff.ebgpu ;cd /apps/common/UES/sandbox/jgp/perfhackaton.git/reframe/lammps/'
+alias rrr='module use /apps/common/UES/modulefiles ;module load reframe'
 export LANG=C 
 export LC_ALL=C
 export LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH
@@ -165,8 +166,8 @@ trap 1 2 3
 # if [ -z $SCRATCH ] ; then export SCRATCH=/scratch/piccinal ; fi
 # export SCRATCH="${SCRATCH:-${TMPDIR:?}}"
 # module aliases
-alias dg='module load daint-gpu'
-alias dm='module load daint-mc'
+alias dg='module load daint-gpu ;source ~/eff.ebgpu'
+alias dm='module load daint-mc  ;source ~/eff.ebmc '
 alias me='source /opt/cray/craype/default/bin/craype-pkgconfig enable'
 alias md='source /opt/cray/craype/default/bin/craype-pkgconfig disable'
 alias maa='module avail 2>&1 |grep -i'
@@ -478,6 +479,7 @@ alias sacct='SLURM_TIME_FORMAT=%Y/%m/%d-%H:%M:%S sacct --noconvert'
 #alias s='squeue -p day,usup'
 alias S='sinfo -sa ;echo; sinfo -a'
 alias SS='sinfo -o "%9P %.5a %.10l %.6D %.6t %N %f"'
+#TODO:  sinfo -Nle -o "%.20n %.15C %.8O %.7t" | uniq
 alias sqq='~/KEEP/squeue.sh'
 alias sqjg='~/KEEP/squeuejg.sh'
 alias sq='squeue -a -u $USER'
@@ -519,7 +521,8 @@ alias gl='git log'
 alias gll='git log --stat'
 alias glll='git log --pretty=oneline'
 alias gL='git log --oneline --graph --decorate --left-right --boundary --date-order'
-alias gm='git commit -s -m '
+alias gm='git commit -m '
+#alias gm='git commit -s -m '
 alias gr='git remote -v'
 alias gw='git whatchanged'
 export LESS="-F -X -R"
