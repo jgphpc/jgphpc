@@ -5,7 +5,7 @@ name = 'PySPH'
 version = '1.0a6'
 py_maj_ver = '3'
 py_min_ver = '6'
-py_rev_ver = '5.1'
+py_rev_ver = '5.3'
 req_py_majver = int(py_maj_ver)
 req_py_minver = int(py_min_ver)
 pyver = '%s.%s.%s' % (py_maj_ver, py_min_ver, py_rev_ver)
@@ -54,6 +54,7 @@ sanity_check_paths = {
     'dirs': [pythonpath]
 }
 
+# TODO: PYSPHEXAMPLES: installdir/lib/python3.6/site-packages/PySPH-1.0a6-py3.6-linux-x86_64.egg/pysph/examples/dam_break_2d.py
 modextrapaths = {'PYTHONPATH': pythonpath}
 
 moduleclass = 'tools'

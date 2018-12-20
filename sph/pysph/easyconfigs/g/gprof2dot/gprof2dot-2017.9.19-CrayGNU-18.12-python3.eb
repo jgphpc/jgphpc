@@ -1,0 +1,40 @@
+# author: jg (CSCS)
+easyblock = 'PythonPackage'
+
+name = 'gprof2dot'
+version = '2017.9.19'
+py_maj_ver = '3'
+py_min_ver = '6'
+py_rev_ver = '5.3'
+req_py_majver = int(py_maj_ver)
+req_py_minver = int(py_min_ver)
+pyver = '%s.%s.%s' % (py_maj_ver, py_min_ver, py_rev_ver)
+pyshortver = '%s.%s' % (py_maj_ver, py_min_ver)
+versionsuffix = '-python%s' % (py_maj_ver)
+
+homepage = 'https://pypi.org/project/gprof2dot'
+description = """Generate a dot graph from the output of several profilers."""
+
+toolchain = {'name': 'CrayGNU', 'version': '18.12'}
+toolchainopts = {'pic': True, 'verbose': False}
+
+source_urls = [PYPI_SOURCE]
+sources = [SOURCE_TAR_GZ]
+# use_pip = True
+# specify that Bundle easyblock should run a full sanity check, rather than just trying to load the module
+# full_sanity_check = True
+
+dependencies = [
+    ('cray-python/%s' % pyver, EXTERNAL_MODULE), 
+    ('graphviz', '2.40.1', '', True)
+]
+
+pythonpath = 'lib/python%s/site-packages' % pyshortver
+sanity_check_paths = {
+    'files': [],
+    'dirs': [pythonpath]
+}
+
+modextrapaths = {'PYTHONPATH': pythonpath}
+
+moduleclass = 'perf'
