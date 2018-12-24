@@ -1,0 +1,51 @@
+# @author: jg (CSCS)
+easyblock = 'PythonPackage'
+
+name = 'scorep_binding_python'
+version = 'fcec457'
+py_maj_ver = '3'
+py_min_ver = '6'
+py_rev_ver = '5.3'
+req_py_majver = int(py_maj_ver)
+req_py_minver = int(py_min_ver)
+pyver = '%s.%s.%s' % (py_maj_ver, py_min_ver, py_rev_ver)
+pyshortver = '%s.%s' % (py_maj_ver, py_min_ver)
+versionsuffix = '-python%s' % py_maj_ver
+
+homepage = 'https://github.com/score-p/scorep_binding_python'
+description = """Allows tracing of python code using Score-P"""
+
+toolchain = {'name': 'CrayGNU', 'version': '18.12'}
+toolchainopts = {'pic': True, 'verbose': False}
+
+# https://github.com/score-p/scorep_binding_python/wiki
+# https://github.com/score-p/scorep_binding_python.git
+#source_urls = ['https://github.com/score-p/%(name)s/archive']
+sources = ['%(version)s.tar.gz']
+#patches = ['%(name)s-%(version)s.patch']
+#ASK: PYPI_SOURCE
+
+# specify that Bundle easyblock should run a full sanity check, rather than just trying to load the module
+# full_sanity_check = True
+
+builddependencies = [
+    ('CMake', '3.12.0', '', True),
+    ('Score-P', '5.0-rc1'),
+    #no: ('Score-P', '5.0-rc1', '-cuda-9.1'),
+    #ok: ('Score-P','r14063'),
+    #('PyExtensions', '%s' % pyver),
+]
+
+dependencies = [ ('cray-python/%s' % pyver, EXTERNAL_MODULE), ]
+options = {'modulename': 'scorep'}
+#skip = ['sanity']
+pythonpath = 'lib/python%s/site-packages' % pyshortver
+
+sanity_check_paths = {
+    'files': [],
+    'dirs': [pythonpath]
+}
+
+modextrapaths = {'PYTHONPATH': pythonpath}
+
+moduleclass = 'lib'
