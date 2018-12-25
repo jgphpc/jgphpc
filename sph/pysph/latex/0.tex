@@ -1,0 +1,710 @@
+% performance tools 2018-2019
+\documentclass[a4paper,pagesize,12pt]{scrbook}
+
+\usepackage{verbatim} % for comments
+\usepackage{listings} 
+\usepackage{xcolor}
+\definecolor{mycolor}{rgb}{0.86666,0.78431,0.78431}
+\usepackage{url}
+\usepackage{hyperref}
+% \usepackage{blindtext}
+\newcommand{\q}[1]{>>\textit{#1}<<}
+%\title{A book title}   
+%\author{Author Name} 
+%\date{\today} 
+\usepackage{mwe} 
+\usepackage{subfig}
+
+%      #    #    #   ####
+%      #    ##  ##  #    #
+%      #    # ## #  #
+%      #    #    #  #  ###
+%      #    #    #  #    #
+%      #    #    #   ####
+\usepackage{graphicx}
+\usepackage[font=small,labelfont=bf]{caption}
+% ----- basic figure frame:
+\newcommand{\cscsfigure}[4]{
+\begin{figure}
+\centering
+\includegraphics[width=#1\textwidth]{#2}
+\captionof{figure}{#3}
+\label{#4}
+\end{figure}
+}
+
+%   #          #     ####    #####     #    #    #   ####
+%   #          #    #          #       #    ##   #  #    #
+%   #          #     ####      #       #    # #  #  #
+%   #          #         #     #       #    #  # #  #  ###
+%   #          #    #    #     #       #    #   ##  #    #
+%   ######     #     ####      #       #    #    #   ####
+\usepackage{listings}
+% CSCS color definition
+\definecolor{cscsred}{RGB}{172,27,38}
+\definecolor{cscsgrey}{RGB}{64,64,64}
+\definecolor{cscslgrey}{RGB}{224,224,224}
+\definecolor{cscsgreen}{RGB}{114,121,28}
+\definecolor{cscsblue}{RGB}{0,122,150}
+\definecolor{cscsbrown}{RGB}{151,72,6}
+\definecolor{cscspurple}{RGB}{128,0,128}
+\definecolor{cscsyellow}{RGB}{167,135,32}
+\definecolor{snow}{RGB}{255,250,250}
+\definecolor{mintcream}{RGB}{245,255,250}
+\definecolor{cscsblack}{RGB}{0,0,0}
+\definecolor{cscswhite}{RGB}{255,255,255}
+% --------------------------------------------------------------------------
+% https://tex.stackexchange.com/questions/83882/how-to-highlight-python-syntax-in-latex-listings-lstinputlistings-command
+% --------------------------------------------------------------------------
+% Default fixed font does not support bold face
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{12} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{12}  % for normal
+
+% Custom colors
+\usepackage{color}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+
+\usepackage{listings}
+
+%   #####    #   #   #####  #    #   ####   #    #
+%   #    #    # #      #    #    #  #    #  ##   #
+%   #    #     #       #    ######  #    #  # #  #
+%   #####      #       #    #    #  #    #  #  # #
+%   #          #       #    #    #  #    #  #   ##
+%   #          #       #    #    #   ####   #    #
+% Python style for highlighting
+\newcommand\pythonstyle{\lstset{
+language=Python,
+basicstyle=\ttm,
+otherkeywords={self},             % Add keywords here
+keywordstyle=\ttb\color{deepblue},
+emph={MyClass,__init__},          % Custom highlighting
+emphstyle=\ttb\color{deepred},    % Custom highlighting style
+stringstyle=\color{deepgreen},
+frame=tb,                         % Any extra options here
+showstringspaces=false,
+backgroundcolor=\color{mintcream}
+%backgroundcolor=\color{cscslgrey}
+}}
+
+
+% Python environment
+\lstnewenvironment{python}[1][]
+{
+\pythonstyle
+\lstset{#1}
+}
+{}
+% --------------------------------------------------------------------------
+%   #####      #    #####
+%   #    #     #    #    #
+%   #####      #    #####
+%   #    #     #    #    #
+%   #    #     #    #    #
+%   #####      #    #####
+% \usepackage[style=ieee,backend=bibtex,minnames=2,maxnames=3]{biblatex}
+% HOWTO: pdflatex 0.tex;biber 0;pdflatex 0.tex # pdfTeX 3.14159265-2.6-1.40.19 (TeX Live 2018)
+\usepackage[backend=biber]{biblatex}
+\addbibresource{0.bib}
+
+\begin{document}
+
+\tableofcontents
+
+\chapter*{Python performance tools}
+
+%{{{ Intro
+\section{Introduction}
+
+This document gives an overview of the performance tools able to collect
+performance data of parallel Python applications.
+
+For testing purpose, the \href{https://pysph.readthedocs.io/en/latest/}{PySPH}
+scientific code will be used. PySPH is an open source framework for Smoothed Particle
+Hydrodynamics (SPH) simulations. It is implemented in Python/Cython for
+high-performance and can be run in parallel using OpenMP and/or MPI (mpi4py)
+together with Trilinos/Zoltan.
+
+A simple test case has been used to benchmark PySPH and the performance tools
+on Piz Daint.  This test case creates a cube shaped block of water falling in
+free-space under the influence of gravity while solving the incompressible,
+inviscid flow equations of motion. The performance data used in this document
+is archived in \underline{/apps/daint/UES/6.0.UP07/python/}. Strong scaling
+results will be described in the next section. 
+
+%}}}
+
+%{{{ Results
+\section{Scaling results}
+%\section*{Scaling results}
+
+The (cpu only) simulation of the cube with PySPH shows good strong scaling up
+to 6 nodes on daint-gpu with a total number of $10^7$ particles (Fig.
+\ref{strongxnodes}). The best timings are reached with 12 mpi tasks and 1
+openmp thread per compute node ((Fig. \ref{strong1node})).
+
+\cscsfigure{0.5}{img/scaling/strong_xnodes.png}{Strong scaling results of the PySPH
+cube simulation between 1 and 6 daint-gpu (cpu only) compute nodes
+(\texttt{-{}-}max-steps 1000 \texttt{-{}-}disable-output \texttt{-{}-}np
+$10^7$) running with 12 mpi tasks per node. The Haswell cpu holds a maximum of
+12 cores per compute node). Parallel efficiency drops below 50\% above 6 compute
+nodes.}{strongxnodes}
+
+\cscsfigure{0.4}{img/scaling/strong_1node.png}{Strong scaling results of the PySPH cube
+simulation on 1 daint-gpu (cpu only) compute node (\texttt{-{}-}max-steps 1000
+\texttt{-{}-}disable-output \texttt{-{}-}np $10^7$). The fastest runtime (in
+seconds) is reached with 12 mpi tasks times 1 openmp thread.}{strong1node}
+
+% \cscsfigure{1}{img/particles_per_core.png}{Number of particles per core
+% relative to the total number of processes (i.e $n_{mpi\_tasks} *
+% n_{openmp\_threads}$), for a total number of $10^7$ particles, where the
+% Haswell cpu on daint-gpu holds a maximum of 12 cores per compute
+% node.}{ptpercore}
+
+%}}} 
+
+\newpage
+%{{{ cProfile
+%    ####   #####   #####    ####   ###### # #       ######
+%   #    #  #    #  #    #  #    #  #      # #       #
+%   #       #    #  #    #  #    #  #####  # #       #####
+%   #       #####   #####   #    #  #      # #       #
+%   #    #  #       #   #   #    #  #      # #       #
+%    ####   #       #    #   ####   #      # ######  ######
+% \section*{cProfile}
+\section{cProfile}
+
+Python's built-in profiler \href{https://docs.python.org/3/library/profile.html}{cProfile}
+can be used to collect performance data for single process or multi processes
+Python codes (using mpi4py for example). 
+While it is possible to collect performance data from a serial program without
+modifying the python code (via \textit{srun -n1 python -m cProfile -o
+output.prof mycode.py}), it is required to manually instrument a parallel code
+with cProfile calls:
+
+%ok: \begin{python}[backgroundcolor=\color{cscslgrey}]
+{\footnotesize
+\begin{python}
+!#/usr/bin/env python3
+import cProfile, sys                               # cProfile
+from mpi4py import MPI
+...
+
+if __name__ == '__main__':    
+    cscs_rank = MPI.COMM_WORLD.Get_rank()
+    pr = cProfile.Profile()                        # cProfile
+    pr.enable()                                    # cProfile
+
+    app = Cube()                         # main function call
+    app.run()                            # main function call
+
+    pr.disable()                                   # cProfile
+
+    # binary dump the performance data for each rank with:
+    pr.dump_stats('cpu_%d.cprofile' % cscs_rank)   # cProfile
+\end{python}
+}
+
+You can now run your python code as usual with:
+\begin{itemize}
+%\scriptsize
+%    \item[*] {reframe: lammps\_sph\_strong\_scaling\_100000wp+scalasca\_profiling.py}
+%    \item[] i.e \tiny{\textbf{scalasca -analyze} srun lmp\_mpi ...}
+    \item[$>$] \textbf{srun -n12 python mycode.py}
+%    \item[]
+%    \scriptsize
+%    \item[*] {\textbf{cube} ./scorep\_lmp\_mpi\_12\_sum/summary.cubex \&}
+\end{itemize}
+
+This will generate several performance output files (one for each MPI rank): 
+\textbf{cpu\_N.cprofile}. These files can be visualized with
+%gprof2dot$^\textrm{\ref{sec:gprof2dot}}$ and or
+\hyperref[sec:gprof2dot]{gprof2dot} and or
+\hyperref[sec:SnakeViz]{SnakeViz}.
+These postprocessing tools will be described in the next section.
+
+% --------------------------------------------------------------------------
+\subsection{gprof2dot}
+\label{sec:gprof2dot}
+
+\href{https://pypi.org/project/gprof2dot}{gprof2dot} is a Python script to
+convert the output from many profilers (including cProfile) into a dot graph.
+To generate an image file from the \textbf{cpu\_N.cprofile} file(s), you may run:
+%\begin{itemize}
+%    \item[$>$] \textbf{gprof2dot -f pstats} cpu\_0.cprofile > cpu\_0.cprofile.dot
+%    \item[$>$] \textbf{dot -Tpng} cpu\_0.cprofile.dot -o cpu\_0.cprofile.dot.png
+%\end{itemize}
+\begin{python}
+    module load daint-gpu # or daint-mc
+    module load gprof2dot
+    gprof2dot -f pstats cpu_0.cprofile > cpu_0.cprofile.dot
+    dot -Tpng cpu_0.cprofile.dot -o cpu_0.cprofile.dot.png
+\end{python}
+
+and open the resulting png image file with your favorite png editor. Refer to
+the \href{https://github.com/jrfonseca/gprof2dot#output}{\textbf{documentation}} for
+more details.
+
+\cscsfigure{0.7}{img/cprofile/01cn_cpu_0-cprofile-dot.png}
+{cProfile callgraph of the PySPH cube simulation on 1 node (12 cores)}{cprofile01}
+
+\cscsfigure{0.7}{img/cprofile/02cn_cpu_0-cprofile-dot.png}
+{cProfile callgraph of the PySPH cube simulation on 2 nodes (24 cores)}{cprofile02}
+
+\cscsfigure{0.7}{img/cprofile/04cn_cpu_0-cprofile-dot.png}
+{cProfile callgraph of the PySPH cube simulation on 4 nodes (48 cores)}{cprofile04}
+
+\cscsfigure{0.7}{img/cprofile/06cn_cpu_0-cprofile-dot.png}
+{cProfile callgraph of the PySPH cube simulation on 6 nodes (72 cores)}{cprofile06}
+
+% --------------------------------------------------------------------------
+\newpage
+\subsection{SnakeViz}
+\label{sec:SnakeViz}
+
+\href{https://pypi.org/project/snakeviz/}{SnakeViz} is a graphical viewer that
+can convert the output from cProfile into an interactive webpage. To generate
+the report from the \textbf{cpu\_N.cprofile} file(s), you may run:
+\begin{python}
+    snakeviz cpu_0.cprofile
+\end{python}
+
+This should open an interactive window in your default web browser that
+displays the performance data from your .cprofile file. The top functions are 
+listed at the bottom of the report (Fig.~\ref{snaketop3}).
+
+\begin{itemize}
+\itemsep0em 
+\scriptsize
+	\item \textbf{ncalls}: Total number of calls to the function.
+	\item \textbf{tottime}: Total (exclusive) time spent in the function, not including time spent in calls to sub-functions
+	\item \textbf{percall}: tottime divided by ncalls
+	\item \textbf{cumtime}: Cumulative (inclusive) time spent in this function and all sub-functions
+	\item \textbf{percall}: cumtime divided by ncalls
+	\item \textbf{filename}:lineno(function): File name and line number were the function is defined
+\end{itemize}
+
+% --------------------------------------------------------------------------
+\begin{figure}[ht]
+\centering
+\caption{SnakeViz view of the top 3 function calls}
+\label{snaketop3}
+\begin{minipage}[c]{\textwidth}
+\captionsetup{labelformat=empty} \centering
+    \includegraphics[width=\textwidth]{img/cprofile/snakeviz/01top3.png}
+    \captionof{figure}{1 node (12 cores)}
+    %\label{snake1cntop3}
+\end{minipage}
+\noindent
+\begin{minipage}[c]{\textwidth}
+\captionsetup{labelformat=empty} \centering
+    \includegraphics[width=\textwidth]{img/cprofile/snakeviz/02top3.png}
+    \captionof{figure}{2 nodes (24 cores)}
+    %\label{snake2cntop3}
+\end{minipage}
+\noindent
+\begin{minipage}[c]{\textwidth}
+\captionsetup{labelformat=empty} \centering
+    \includegraphics[width=\textwidth]{img/cprofile/snakeviz/04top3.png}
+    \captionof{figure}{4 nodes (48 cores)}
+    %\label{snake4cntop3}
+\end{minipage}
+\noindent
+\begin{minipage}[c]{\textwidth}
+\captionsetup{labelformat=empty} \centering
+    \includegraphics[width=\textwidth]{img/cprofile/snakeviz/06top3.png}
+    \captionof{figure}{6 nodes (72 cores)}
+    %\label{snake6cntop3}
+\end{minipage}
+\end{figure}
+
+Data can be displayed in a \textbf{sunburst} plot (Fig. \ref{snake6cnsunburst}):
+SnakeViz displays profiles as a sunburst in which functions are represented as
+arcs. A root function is a circle at the middle, with functions it calls
+around, then the functions those functions call, and so on. The amount of time
+spent inside a function is represented by the angular width of the arc. An arc
+that wraps most of the way around the circle represents a function that is
+taking up most of the time of its calling function, while a skinny arc
+represents a function that is using hardly any time at all.
+Clicking on a particular function which will generate a new plot with the
+selected function now at the center.
+
+% --------------------------------------------------------------------------
+\cscsfigure{0.7}{img/cprofile/snakeviz/06sunburst.png}
+{SnakeViz sunburst view}{snake6cnsunburst}
+
+Data can also be displayed in an \textbf{icicle} plot (Fig.~\ref{snake}):
+SnakeViz displays profiles in which functions are represented as
+squares. A root function is a square at the top, with functions it calls
+below, then the functions those functions call, and so on. The amount of time
+spent inside a function is represented by the size of the square.
+
+Refer to
+the \href{https://jiffyclub.github.io/snakeviz/#interpreting-results}{\textbf{documentation}} for
+more details.
+
+% --------------------------------------------------------------------------
+\begin{figure}[ht]
+\centering
+    \caption{SnakeViz view of the calltree}
+    \label{snake}
+\begin{minipage}[c]{\textwidth}
+\captionsetup{labelformat=empty} \centering
+    \includegraphics[width=.5\textwidth]{img/cprofile/snakeviz/01.png}
+    \captionof{figure}{1 node (12 cores)}
+    %\label{snake1cn}
+\end{minipage}
+\noindent
+\begin{minipage}[c]{\textwidth}
+\captionsetup{labelformat=empty} \centering
+    \includegraphics[width=.5\textwidth]{img/cprofile/snakeviz/02.png}
+    \captionof{figure}{2 nodes (24 cores)}
+    %\label{snake2cn}
+\end{minipage}
+\noindent
+\begin{minipage}[c]{\textwidth}
+\captionsetup{labelformat=empty} \centering
+    \includegraphics[width=.5\textwidth]{img/cprofile/snakeviz/04.png}
+    \captionof{figure}{4 nodes (48 cores)}
+    %\label{snake4cn}
+\end{minipage}
+\noindent
+\begin{minipage}[c]{\textwidth}
+\captionsetup{labelformat=empty} \centering
+    \includegraphics[width=.7\textwidth]{img/cprofile/snakeviz/06.png}
+    \captionof{figure}{6 nodes (72 cores)}
+    %\label{snake6cn}
+\end{minipage}
+\end{figure}
+
+
+%}}} 
+
+%{{{ scorep
+
+%   ####    ####    ####   #####   ######  #####
+%  #       #    #  #    #  #    #  #       #    #
+%   ####   #       #    #  #    #  #####   #    #
+%       #  #       #    #  #####   #       #####
+%  #    #  #    #  #    #  #   #   #       #
+%   ####    ####    ####   #    #  ######  #
+%\subsection*{http://www.score-p.org}
+% --------------------------------------------------------------------------
+\newpage
+\section{Score-P}
+Score-P (Scalable Performance Measurement Infrastructure for Parallel Codes) is
+an highly scalable tool suite for profiling, event tracing, and online
+analysis of HPC applications developed by \url{https://www.vi-hps.org} institute.
+The \href{https://github.com/score-p/scorep_binding_python}{scorep\_binding\_python}
+allows the profiling and tracing of Python code:
+
+\begin{python}
+    module load daint-gpu # or daint-mc
+    module load scorep_binding_python Score-P
+    export SCOREP_ENABLE_PROFILING=true          # for profiling
+    export SCOREP_ENABLE_TRACING=false           # for profiling
+#   export SCOREP_ENABLE_PROFILING=true          # for tracing
+#   export SCOREP_ENABLE_TRACING=false           # for tracing
+    export SCOREP_PROFILING_MAX_CALLPATH_DEPTH=6
+\end{python}
+
+You can run your python code as usual with:
+\begin{itemize}
+    \item[$>$] srun -n12 python \textbf{-m scorep --mpi} mycode.py
+\end{itemize}
+
+\subsection{CubeGUI}
+\href{http://apps.fz-juelich.de/scalasca/releases/cube/4.4/docs/guide/html/}{Cube}
+is a graphical viewer that can be used to visualize the output from a Score-P
+profiling job. The \textbf{.cubex} file(s) can be opened with:
+\begin{python}
+    cube scorep-20181224_1116_10115260531853858/profile.cubex
+\end{python}
+
+The profiling report for the cube testcase is listed on
+figures~\ref{scorepP}-\ref{scorepPCube}.
+
+% --------------------------------------------------------------------------
+\begin{figure}[!ht]
+\captionsetup[subfigure]{labelformat=empty}
+\caption{Score-P profiling of the PySPH cube simulation (summary)}
+\label{scorepP}
+  \subfloat[1 node (12 cores)\label{scorepP01cn}]{%
+  \includegraphics[width=0.3\textwidth]{img/scorep/p/01cn_.png}
+  }
+  \hfill
+  \subfloat[2 nodes (24 cores)\label{scorepP02cn}]{%
+  \includegraphics[width=0.3\textwidth]{img/scorep/p/02cn_.png}
+  }
+\end{figure}%
+\vspace{-1cm}
+\begin{figure}[!ht]
+\captionsetup{labelformat=empty}
+\captionsetup[subfigure]{labelformat=empty}
+% \caption{}
+% \label{scorepPCube}
+  \subfloat[4 nodes (48 cores)\label{scorepP04cn}]{%
+  \includegraphics[width=0.3\textwidth]{img/scorep/p/04cn_.png}
+  }
+  \hfill
+  \subfloat[6 nodes (72 cores)\label{scorepP06cn}]{%
+  \includegraphics[width=0.3\textwidth]{img/scorep/p/06cn_.png}
+  }
+\end{figure}
+
+% --------------------------------------------------------------------------
+\begin{figure}[!ht]
+\captionsetup[subfigure]{labelformat=empty}
+\caption{Score-P profiling of the PySPH cube simulation (CubeGUI)}
+\label{scorepPCube}
+  \subfloat[1 node (12 cores)\label{scorepP01cnCube}]{%
+  \includegraphics[width=0.48\textwidth]{img/scorep/p/01cn.png}
+  }
+  \hfill
+  \subfloat[2 nodes (24 cores)\label{scorepP02cnCube}]{%
+  \includegraphics[width=0.48\textwidth]{img/scorep/p/02cn.png}
+  }
+\end{figure}%
+\vspace{-1cm}
+\begin{figure}[!ht]
+\captionsetup{labelformat=empty}
+\captionsetup[subfigure]{labelformat=empty}
+% \caption{}
+% \label{scorepPCube}
+  \subfloat[4 nodes (48 cores)\label{scorepP04cnCube}]{%
+  \includegraphics[width=0.48\textwidth]{img/scorep/p/04cn.png}
+  }
+  \hfill
+  \subfloat[6 nodes (72 cores)\label{scorepP06cnCube}]{%
+  \includegraphics[width=0.48\textwidth]{img/scorep/p/06cn.png}
+  }
+\end{figure}
+
+\vspace{2cm}
+\subsection{Vampir}
+\href{https://www.vi-hps.org/tools/vampir.html}{Vampir}
+is a graphical viewer that can be used to visualize the output from a Score-P
+tracing job. The \textbf{.otf2} file(s) can be opened with:
+\begin{python}
+    vampir scorep-20181224_1139_10118768546329892/traces.otf2
+\end{python}
+
+The tracing report for the cube testcase can be seen in figure~\ref{scorepTV}.
+
+% --------------------------------------------------------------------------
+\begin{figure}[ht]
+\centering
+\caption{Score-P tracing of the PySPH cube simulation (Vampir)}
+\label{scorepTV}
+\begin{minipage}[c]{\textwidth}
+\captionsetup{labelformat=empty} \centering
+    \includegraphics[width=.6\textwidth]{img/scorep/t/01cn.png}
+    \captionof{figure}{1 node (12 cores)}
+    %\label{scorepTV1cn}
+\end{minipage}
+\noindent
+\begin{minipage}[c]{\textwidth}
+\captionsetup{labelformat=empty} \centering
+    \includegraphics[width=.6\textwidth]{img/scorep/t/02cn.png}
+    \captionof{figure}{2 nodes (24 cores)}
+    %\label{scorepTV2cn}
+\end{minipage}
+\noindent
+\begin{minipage}[c]{\textwidth}
+\captionsetup{labelformat=empty} \centering
+    \includegraphics[width=.6\textwidth]{img/scorep/t/04cn.png}
+    \captionof{figure}{4 nodes (48 cores)}
+    %\label{scorepTV4cn}
+\end{minipage}
+\noindent
+\begin{minipage}[c]{\textwidth}
+\captionsetup{labelformat=empty} \centering
+    \includegraphics[width=.6\textwidth]{img/scorep/t/06cn.png}
+    \captionof{figure}{6 nodes (72 cores)}
+    %\label{scorepTV6cn}
+\end{minipage}
+\end{figure}
+
+%Refer to
+%the \href{}{\textbf{documentation}} for
+%more details.
+
+% \begin{itemize}
+% \setlength\itemsep{0.1em}
+%     \item Cube GUI and plugins by Juelich Supercomputing Centre
+%     \item Vampir by Technische Universitat Dresden
+% \end{itemize}
+
+%}}}
+
+%{{{ intel vtune
+
+%  #    #   #####  #    #  #    #  ######
+%  #    #     #    #    #  ##   #  #
+%  #    #     #    #    #  # #  #  #####
+%  #    #     #    #    #  #  # #  #
+%   #  #      #    #    #  #   ##  #
+%    ##       #     ####   #    #  ######
+% --------------------------------------------------------------------------
+\newpage
+\section{Intel Vtune Amplifier}
+
+\href{https://software.intel.com/en-us/vtune-amplifier-help-introduction}{Vtune
+Amplifier} is one of Intel performance analysis tool. It can collect
+performance data of Python code:
+
+\begin{python}
+    module load daint-gpu # or daint-mc
+    module swap PrgEnv-cray PrgEnv-intel
+    XX=/apps/common/UES/intel/2019
+    VV=$XX/vtune_amplifier
+    source $VV/amplxe-vars.sh
+    amplxe-cl -V
+\end{python}
+
+You can run your python code as usual with:
+\begin{itemize}
+    \item[$>$] chmod u+x mycode.py
+    \item[$>$] VVV='amplxe-cl -collect hotspots -trace-mpi -data-limit=0 -r hotspots -search-dir bin:=mysrc'
+    \item[$>$] srun -n12 \textbf{\$VVV} mycode.py
+\end{itemize}
+
+Some further explanation for why we use these arguments:
+
+\begin{itemize}
+\itemsep0em 
+\scriptsize
+	\item \textbf{-collect hotspots}: use hotspots as collection mode (amplxe-cl -help collect).
+	\item \textbf{-trace-mpi}: asks to collect MPI data. If you don't have an MPI application, don't add this flag.
+    \item \textbf{-r hotspots}: write results to the specified directory (which doesn't have to exist).
+    \item \textbf{-search-dir}: where to look for the Python scripts or binary (call-stack information).
+    \item \textbf{-finalization-mode=none}: instructs Vtune to skip the finalization step (not needed on daint).
+\end{itemize}
+
+The performance data can be visualized with \textbf{amplxe-gui}:
+\begin{python}
+    amplxe-gui hotspots.nid00000
+\end{python}
+
+%The profiling report for the cube testcase is listed on
+%figures~\ref{scorepP}-\ref{scorepPCube}.
+
+The overview tab (Fig.~\ref{vtune_summary}) will display some high level results.
+\cscsfigure{0.7}{img/vtune/01cn_summary.png}{Vtune amplifier: summary view (1 node, 12 cores)}{vtune_summary}
+
+For more specific information, try selecting the Bottom-up tab (Fig.~\ref{vtune_bottomup}).
+\cscsfigure{0.7}{img/vtune/01cn_bottomup.png}{Vtune amplifier: bottom-up view (1 node, 12 cores)}{vtune_bottomup}
+
+You may have to specify the path to your src code to get detailled information
+about your application (Fig.~\ref{vtune_src}).
+\cscsfigure{0.7}{img/vtune/01cn_cpp.png}{Vtune amplifier: src path configuration}{vtune_src}
+
+% --------------------------------------------------------------------------
+% Vtune has limited functionality for Python applications: only 3 types of
+% collection modes are currently supported:
+%     hotspots (general performance overview)
+%     memory-consumption (memory-specific information)
+%     locksandwaits (threading analysis)
+% --------------------------------------------------------------------------
+
+%}}}
+
+%{{{ conclusion
+\newpage
+\section{Conclusion}
+Collecting and visualizing performance data of parallel scientific Python codes on Piz Daint is possible.
+
+%}}}
+
+%{{{ cray perftools
+%   ####   #####     ##     #   #
+%  #    #  #    #   #  #     # #
+%  #       #    #  #    #     #
+%  #       #####   ######     #
+%  #    #  #   #   #    #     #
+%   ####   #    #  #    #     #
+%% \section{Cray perftools}
+%% 
+%% CrayPAT (Cray Performance Measurement and Analysis toolset) is the recommended
+%% performance analysis tool from Cray. CrayPAT consists of the following main
+%% components:
+%% 
+%% \begin{itemize}
+%% \setlength\itemsep{0.1em}
+%% 	\item pat\_run - a simplified, easy-to-use version of CrayPAT for dynamically-linked executables,
+%% 	\item perftools-lite - an easy-to-use version of CrayPAT,
+%% 	\item perftools and PAT\_RT\_PERFCTR - CrayPAT and counters, for advanced users:
+%%     \begin{itemize}
+%%     \setlength\itemsep{0em}
+%% 	\item pat\_build - used to instrument the program to be analyzed,
+%% 	\item pat\_report - a standalone text report generator that can be use to further explore the data generated by instrumented program execution,
+%%     \end{itemize}
+%% 	\item Apprentice2 and pat\_view - graphical analysis tools that can be used, in addition to pat\_report to further explore and visualize the data generated by instrumented program execution.
+%% 	\item Reveal and perftools-lite-loops - help to identify top time consuming loops, with compiler feedback on vectorization and recommendation for inserting OpenMP directives.
+%% \end{itemize}
+%% 
+%% Better reframe checks and documentation would be required.
+%% Memory analysis (perftools-lite-hbm) needs testing.
+%% The support of CrayPAT in \colorbox{mycolor}{SHASTA} is unclear and should be verified.
+%}}}
+
+%{{{ blabla
+
+%\begin{tabular}{|l|}
+%   \hline
+%   \hline
+%\end{tabular}
+
+%=========================================
+% \begin{titlepage}
+% 		\centering{
+% 			{\fontsize{40}{48}\selectfont 
+% 			A book title}
+% 		}\\
+% 			
+% 		\vspace{10mm}
+% 		\centering{\Large{Author Name}}\\
+% 		\vspace{\fill}
+% 		\centering \large{2011}
+% \end{titlepage}
+
+
+%=========================================
+% \newpage{}
+% \thispagestyle {empty}
+% 
+% \vspace*{2cm}
+% 
+% \begin{center}
+% 	\Large{\parbox{10cm}{
+% 		\begin{raggedright}
+% 		{\Large 
+% 			\textit{Do what you think is interesting, 
+% 			do something that you think is fun and worthwhile, 
+% 			because otherwise you won’t do it well anyway.}
+% 		}
+% 	
+% 		\vspace{.5cm}\hfill{---Brian W. Kernighan}
+% 		\end{raggedright}
+% 	}
+% }
+% \end{center}
+% }}}
+
+\newpage
+%=========================================
+%\blinddocument
+
+%=========================================
+\nocite{*}
+\printbibliography
+
+%=========================================
+%\begin{comment}
+%Just some notes, not visible in pdf.
+%\end{comment}
+
+
+\end{document}
