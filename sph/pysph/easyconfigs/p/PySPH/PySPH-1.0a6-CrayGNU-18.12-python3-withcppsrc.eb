@@ -1,0 +1,60 @@
+# @author: jg (CSCS)
+easyblock = 'PythonPackage'
+
+name = 'PySPH'
+version = '1.0a6'
+py_maj_ver = '3'
+py_min_ver = '6'
+py_rev_ver = '5.3'
+req_py_majver = int(py_maj_ver)
+req_py_minver = int(py_min_ver)
+pyver = '%s.%s.%s' % (py_maj_ver, py_min_ver, py_rev_ver)
+pyshortver = '%s.%s' % (py_maj_ver, py_min_ver)
+versionsuffix = '-python%s-withcppsrc' % (py_maj_ver)
+
+homepage = 'https://pypi.org/project/PySPH'
+description = """A general purpose Smoothed Particle Hydrodynamics framework"""
+toolchain = {'name': 'CrayGNU', 'version': '18.12'}
+toolchainopts = {'pic': True, 'verbose': False}
+
+source_urls = ['https://github.com/pypr/pysph/archive']
+sources = ['%(version)s.tar.gz']
+checksums = ['1a063dea3ad892408eb90739ddcfba46']
+# diff -Naur pysph-1.0a6.ori pysph-1.0a6 > patch
+patches = ['%(name)s-%(version)s.patch']
+
+# must use builddep to avoid modulefile not found
+builddependencies = [
+    ('Beaker','1.10.0', '-python%s' % (py_maj_ver)),
+    ('Cython','0.29.2', '-python%s' % (py_maj_ver)),
+    ('Mako','1.0.7', '-python%s' % (py_maj_ver)),    # hidden
+    ('compyle','0.5', '-python%s' % (py_maj_ver)),
+    ('cyarray','1.0', '-python%s' % (py_maj_ver)),
+    ('six','1.12.0', '-python%s' % (py_maj_ver)),
+    ('numpy-stl','2.9.0', '-python%s' % (py_maj_ver)),
+    ('pytools','2018.5.2', '-python%s' % (py_maj_ver)),
+    #('PySPH-deps', 'latest', versionsuffix),
+    # PySPH/1.0a6 comes with pyzoltan
+    #('PyZoltan', '1.0.1', versionsuffix),    
+]
+
+dependencies = [
+    ('cray-trilinos/12.12.1.1', EXTERNAL_MODULE),
+]
+
+prebuildopts  = 'ZOLTAN=$CRAY_TRILINOS_PREFIX_DIR CC=cc CXX=CC'
+preinstallopts = 'ZOLTAN=$CRAY_TRILINOS_PREFIX_DIR CC=cc CXX=CC'
+
+# specify that Bundle easyblock should run a full sanity check, rather than just trying to load the module
+# full_sanity_check = True
+
+pythonpath = 'lib/python%s/site-packages' % pyshortver
+sanity_check_paths = {
+    'files': ['xxx'],
+    'dirs': [pythonpath]
+}
+
+# TODO: PYSPHEXAMPLES: installdir/lib/python3.6/site-packages/PySPH-1.0a6-py3.6-linux-x86_64.egg/pysph/examples/dam_break_2d.py
+modextrapaths = {'PYTHONPATH': pythonpath}
+
+moduleclass = 'tools'

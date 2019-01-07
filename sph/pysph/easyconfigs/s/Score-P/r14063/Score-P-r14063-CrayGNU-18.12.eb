@@ -2,8 +2,7 @@
 # for daint-mc (no cuda)
 easyblock = 'ConfigureMake'
 name = 'Score-P'
-version = '4.0'
-
+version = 'r14063'
 
 homepage = 'http://www.score-p.org'
 description = """The Score-P measurement infrastructure is a highly scalable and
@@ -14,7 +13,7 @@ toolchain = {'name': 'CrayGNU', 'version': '18.12'}
 toolchainopts = {'pic': True}
 source_urls = ['http://www.vi-hps.org/upload/packages/scorep/']
 sources = ['scorep-%(version)s.tar.gz']
-checksums = [ 'f04478e0407d67eeb8c49c3c51d91e12' ]
+# checksums = [ 'f04478e0407d67eeb8c49c3c51d91e12' ]
 patches = [ '%(name)s-%(version)s-Cray.patch' ]
 
 builddependencies = [
