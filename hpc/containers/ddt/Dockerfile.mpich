@@ -1,0 +1,34 @@
+# https://user.cscs.ch/tools/containers/advanced_shifter/
+# https://docs.docker.com/engine/reference/commandline/build/
+# docker build --help
+# docker build -f ./Dockerfile.cuda92 -t jgphpc/ddt:cscs .
+FROM ethcscs/dockerfiles:osu5.3.2-mpich3.1.4
+
+# https://packages.ubuntu.com
+RUN apt-get -y update && \
+    apt-get install -y \
+    apt-utils       \
+    libice6         \
+    libsm6          \
+    libx11-6        \
+    libxext6        \
+    libxrender1     \
+    libfontconfig1  \
+    libfreetype6    \
+    libxpm4         \
+    wget vim-nox
+
+RUN wget --no-check-certificate \
+    https://raw.githubusercontent.com/eth-cscs/reframe/master/cscs-checks/prgenv/src/hello_world_mpi.cpp \
+    && mpicxx -g hello_world_mpi.cpp
+
+RUN wget http://content.allinea.com/downloads/arm-forge-latest-Ubuntu-16.04-x86_64.tar && \
+    tar xf arm-forge-latest-Ubuntu-16.04-x86_64.tar && \
+    cd arm-forge-18.3-Ubuntu-16.04-x86_64/ && \
+    ./textinstall.sh --accept-licence /opt/ddt/18.3
+
+ENV PATH /opt/ddt/18.3/bin:$PATH
+ENV ALLINEA_LICENCE_DIR /apps/daint/UES/jenkins/6.0.UP07/gpu/easybuild/tools/software/ddt/18.2.1-Suse-12/licences
+# WORKDIR /usr/local/libexec/osu-micro-benchmarks/mpi/pt2pt
+
+#ENV EBROOTDDT /apps/dom/UES/jenscscs/6.0.UP07/gpu/easybuild/tools/software/ddt/18.3-Ubuntu-16.04/
