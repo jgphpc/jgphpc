@@ -1,0 +1,24 @@
+# https://user.cscs.ch/tools/containers/advanced_shifter/
+# https://docs.docker.com/engine/reference/commandline/build/
+# docker build --help
+# docker build -f ./Dockerfile.cuda92 -t jgphpc/ddt:cscs .
+FROM nvidia/cuda:9.2-devel-ubuntu18.04
+
+# https://packages.ubuntu.com
+RUN apt-get -y update && \
+    apt-get install -y \
+    apt-utils       \
+    libice6         \
+    libsm6          \
+    libx11-6        \
+    libxext6        \
+    libxrender1     \
+    libfontconfig1  \
+    libfreetype6    \
+    libxpm4
+
+# Define environment variable
+# ENV DDTPATH /scratch/snx3000/piccinal/RT/shifter/ddt/18.3/bin
+
+# Run app.py when the container launches
+#CMD ["python", "app.py"]
