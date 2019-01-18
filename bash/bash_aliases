@@ -541,11 +541,12 @@ alias gd=' git diff'
 #alias go='git diff --stat origin/master'
 # GITDIFF (without vimdiff)
 alias gdd=' git diff --no-ext-diff -w'
-alias gddm='git diff --no-ext-diff -w master'
-alias gddo='git diff --no-ext-diff -w origin/master '
-alias gdn='git diff --name-only origin/master...HEAD'    # hashkey
-alias gdm='git diff master'
-alias gdo='git diff origin/master'
+#alias gddm='git diff --no-ext-diff -w master'
+#alias gddo='git diff --no-ext-diff -w origin/master '
+alias gdn='git diff --name-only' # no: origin/master...HEAD'    # hashkey
+alias gds='git diff --stat'
+#alias gdm='git diff master'
+#alias gdo='git diff origin/master'
 alias gic='git checkout '
 alias gicm='git checkout master'
 alias gicd='git checkout develop'

@@ -3,15 +3,24 @@
 #---------------------------------------------------------------------------
 # BATCH Scheduler
 #---------------------------------------------------------------------------
-SLURM_COMMAND = srun -t1 -n1 -CP100 -pworkq
+SLURM_COMMAND = srun -t1 -n1 -Cgpu
+# -CP100 -pworkq
 BATCH_SCHEDULER = $(SLURM_COMMAND)
 
 CUDA_MODULE = cudatoolkit
 #---------------------------------------------------------------------------
 # compilers
 #---------------------------------------------------------------------------
-CCOMPILERS?="cc, gcc"
-CXXCOMPILERS?="CC, clang++, g++, xlc++"
+CC=cc 
+CXX=CC
+FC=#
+
+CCOMPILERS?="cc"
+CXXCOMPILERS?="CC"
+# CCOMPILERS?="cc, gcc"
+# CXXCOMPILERS?="CC, clang++, g++, xlc++"
+
+# C_VERSION = cc -V 2>&1 | grep --color -o "Version [.0-9a-zA-Z]* " | sed "s/Version //g"
 # --------------
 # PGI compilers
 ifeq ($(PE_ENV), PGI)
@@ -29,6 +38,13 @@ ifeq ($(PE_ENV), CRAY)
 #	C_VERSION = echo cce/$(CRAY_CC_VERSION)
 #	CXX_VERSION = echo cce/$(CRAY_CC_VERSION)
 #	#C_COMPILER_MODULE = PrgEnv-cray cce/8.7.7 craype-accel-nvidia60 craype/2.5.17.1 cray-mpich/7.7.4.5
+endif
+
+# --------------
+# GNU compilers
+ifeq ($(PE_ENV), GNU)
+  C_VERSION = echo gcc/$(GNU_VERSION)
+  CXX_VERSION = echo gcc/$(GNU_VERSION)
 endif
 
 # --------------
