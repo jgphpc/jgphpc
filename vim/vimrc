@@ -478,6 +478,24 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 " }}}
 "
 
+" https://www.vim.org/scripts/script.php?script_id=2332
+" pep8/reframe: :SyntasticCheck <lang> / :SyntasticInfo
+" uncomment line below:
+" execute pathogen#infect() 
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_python_checkers = ['pep8']
+let g:syntastic_python_exec = '/users/piccinal/.local/bin/pep8'
+let g:syntastic_cpp_checkers = ['cppcheck', 'gcc']
+"let g:syntastic_cpp_exec = '/users/piccinal/.local/bin/pep8'
+let g:syntastic_debug = 1
+au BufRead,BufNewFile *.eb set ft=python
+
 " TODO: ~/.vim/bundle/cscope.vim/plugin/cscope.vim +
 " http://ngressier.developpez.com/articles/vim/vim-plugin-taglist/
 
