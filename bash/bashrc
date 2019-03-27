@@ -276,7 +276,11 @@ export configdir=$HOME/.allinea/${ost}${osv}/$CRAY_CPU_TARGET/$PE_ENV
 mkdir -p $configdir
 export ALLINEA_CONFIG_DIR=$configdir
 export MAP_LIBRARIES_DIRECTORY=$configdir
+if [ `uname -s` == 'Darwin' ] ;then
+    export PATH=/Users/piccinal/miniconda3/bin:$PATH
+fi
 # ------------------------------
+
 
  ####   #####   #    #   #   #  #    #  #    #
 #       #    #  #    #    # #   ##   #   #  #

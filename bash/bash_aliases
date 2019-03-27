@@ -247,6 +247,7 @@ fi
      #       #  #    #
 #    #  #    #  #    #
  ####    ####   #    #
+alias elacsv='scp piccinal@ela.cscs.ch:eff.csv .'
 alias elapdf='scp piccinal@ela.cscs.ch:eff.pdf .'
 alias elatar='scp piccinal@ela.cscs.ch:eff.tar .'
 alias elapng='scp piccinal@ela.cscs.ch:eff.png .'

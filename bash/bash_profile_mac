@@ -9,3 +9,5 @@ source ~/.bashrc
 # ftp:
 # alias ftpmacon='sudo -s launchctl load -w /System/Library/LaunchDaemons/ftp.plist'
 # alias ftpmacoff='sudo -s launchctl unload -w /System/Library/LaunchDaemons/ftp.plist'
+
+export PATH="/usr/local/opt/nss/bin:$PATH"

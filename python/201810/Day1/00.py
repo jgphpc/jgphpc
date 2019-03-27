@@ -6,7 +6,7 @@
 import numpy
 
 # uncomment the following line for line-by-line profiling with kernprof
-@profile 
+#@profile 
 def dot(a, b):
     """Multiply the matrix a with the matrix b."""
     c = numpy.zeros((a.shape[0], b.shape[1]))
