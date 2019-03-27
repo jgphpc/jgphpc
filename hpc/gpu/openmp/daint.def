@@ -1,3 +1,11 @@
+# export CRAYPE_LINK_TYPE=dynamic
+# make SYSTEM=daint VERBOSE=1 ADD_BATCH_SCHED=1 LOG_ALL=1 SOURCES=*.c compile
+# make SYSTEM=daint VERBOSE=1 ADD_BATCH_SCHED=1 LOG_ALL=1 SOURCES=test_target_device.c compile
+# grep END logs/*.log|grep -v PASS
+# ---
+# mkdir logs; salloc -Cgpu -N1 -t20; 
+# make SYSTEM=daint VERBOSE=1 ADD_BATCH_SCHED=1 LOG_ALL=1 run
+# grep END test_target_map_global_arrays.c.log
 # Definitions for www.cscs.ch Piz Daint system
 
 #---------------------------------------------------------------------------

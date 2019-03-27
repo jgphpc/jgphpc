@@ -20,7 +20,7 @@ set nu
 set hlsearch
 syntax on
 " syntax enable
-let &colorcolumn=join(range(77,77),",")
+let &colorcolumn=join(range(80,80),",")
 
 
 " Indentation ----------------------------------------------- @@@
@@ -38,10 +38,18 @@ set tabstop=4
 
 " Taglist ----------------------------------------------- @@@
 " Ctags:
-if $HOSTNAME == 'banco'
+"if ($HOSTNAME == 'banco') || ($HOSTNAME == 'dom101')
+if ($HOSTNAME == 'banco')
 if filereadable( "/usr/bin/ctags" )
-let g:showfuncctagsbin = "/usr/bin/ctags"
-" = ctags/5.9
+let g:showfuncctagsbin="/usr/bin/ctags"
+endif
+endif
+
+if ($HOSTNAME == 'dom101')
+if filereadable( '/apps/dom/UES/sandbox/piccinal/6.0.UP07/gpu/easybuild/software/ctags/5.8/bin/ctags' )
+let g:showfuncctagsbin='/apps/dom/UES/sandbox/piccinal/6.0.UP07/gpu/easybuild/software/ctags/5.8/bin/ctags'
+else
+echo "ctags not found on dom101"
 endif
 endif
 
@@ -52,11 +60,11 @@ let g:showfuncctagsbin = "/users/piccinal/easybuild/rh7/software/ctags/5.8/bin/c
 endif
 endif
 
-if $HOSTNAME == 'greina-head'
-if filereadable( "/cm/shared/apps/easybuild/software/ctags/5.8/bin/ctags" )
-        let g:showfuncctagsbin = "/cm/shared/apps/easybuild/software/ctags/5.8/bin/ctags"
-endif
-endif
+"if $HOSTNAME == 'greina-head'
+"if filereadable( "/cm/shared/apps/easybuild/software/ctags/5.8/bin/ctags" )
+"        let g:showfuncctagsbin = "/cm/shared/apps/easybuild/software/ctags/5.8/bin/ctags"
+"endif
+"endif
 
 " CUDA CTAGS
 " let Tlist_Ctags_Cmd='/opt/local/bin/ctags' 
@@ -481,7 +489,7 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 " https://www.vim.org/scripts/script.php?script_id=2332
 " pep8/reframe: :SyntasticCheck <lang> / :SyntasticInfo
 " uncomment line below:
-" execute pathogen#infect() 
+execute pathogen#infect() 
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -489,11 +497,22 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-let g:syntastic_python_checkers = ['pep8']
-let g:syntastic_python_exec = '/users/piccinal/.local/bin/pep8'
-let g:syntastic_cpp_checkers = ['cppcheck', 'gcc']
-"let g:syntastic_cpp_exec = '/users/piccinal/.local/bin/pep8'
-let g:syntastic_debug = 1
+"  " --- python:
+"  export PATH=~/.local/bin:$PATH
+"let g:syntastic_python_checkers = ['flake8']
+"let g:syntastic_python_exec = '/users/piccinal/.local/bin/flake8'
+"let g:syntastic_python_checkers = ['pycodestyle']
+"let g:syntastic_python_exec = '/users/piccinal/.local/bin/pycodestyle'
+"let g:syntastic_python_checkers = ['pep8']
+"let g:syntastic_python_exec = '/users/piccinal/.local/bin/pep8'
+"  " --- c++:
+"let g:syntastic_cpp_checkers = ['cppcheck', 'gcc', 'clang_tidy']
+let g:syntastic_cpp_checkers = ['clang_tidy']
+let g:syntastic_cpp_check_header = 1
+let g:syntastic_cpp_auto_refresh_includes = 1
+let g:syntastic_cpp_clang_tidy_args = '-checks=*'
+"let g:syntastic_cpp_exec = ''
+"  let g:syntastic_debug = 1
 au BufRead,BufNewFile *.eb set ft=python
 
 " TODO: ~/.vim/bundle/cscope.vim/plugin/cscope.vim +

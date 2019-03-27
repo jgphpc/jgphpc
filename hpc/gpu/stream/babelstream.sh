@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Google sheet: OpenACC_Validation_Testsuite_SCS
+
 in=$1
 single_array_size=`grep ARRAY_SIZE= $in |cut -d= -f2`
 copy_MBytes_sec=`grep ^Copy $in |awk '{print $2}'`
