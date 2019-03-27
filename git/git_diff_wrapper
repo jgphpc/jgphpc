@@ -9,8 +9,13 @@
 #ok echo
 #
 # VIMDIFF:
-echo vimdiff -X -c 'set diffopt+=iwhite' "$2" "$5"
-vimdiff -X -c 'set diffopt+=iwhite' "$2" "$5"
+echo vimdiff -X "$2" "$5"
+vimdiff -X "$2" "$5"
+
+#ignore whitespace:
+#echo vimdiff -X -c 'set diffopt+=iwhite' "$2" "$5"
+#vimdiff -X -c 'set diffopt+=iwhite' "$2" "$5"
+
 # vimdiff -c 'set diffopt+=iwhite' -c 'set diffopt-=filler' "$2" "$5"
 # ignore whitespace
 # ignore blankline

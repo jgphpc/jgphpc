@@ -441,6 +441,7 @@ alias tm='type module ; echo MODULESHOME = $MODULESHOME'
 alias u='cd ..'
 alias v='vim -X'
 alias vimdiff="vimdiff -X -c 'set diffopt+=iwhite' -c 'set wrap' -c 'wincmd w' -c 'set wrap'"
+alias pep='$HOME/.local/bin/pycodestyle --show-source '
 alias wl='wc -l'
 alias wh=which
 alias ww='w3m'
