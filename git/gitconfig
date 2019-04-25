@@ -28,7 +28,7 @@ untracked = cyan # reverse
 	default = current
 
 [alias]
-	vimdiff = difftool -y -t vimdiff -X
+	vimdiff = difftool -y -t vimdiff -X --noplugin
 # shortcut to show current status
     st = status
 # show log, but also show file names changed
