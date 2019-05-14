@@ -18,7 +18,7 @@ source ~/.bashrc
 
 export PATH="/usr/local/opt/nss/bin:$PATH"
 
-# lmod:
-source /usr/local/opt/lmod/init/profile
-source /Users/piccinal/jgphpc.git/easybuild/mac-jg.sh
+# easybuild+lmod:
+alias sx='cd /Users/piccinal/git/production.git/easybuild/easyconfigs'
+alias eb_='source /usr/local/opt/lmod/init/profile; export PATH=/Users/piccinal/bin:$PATH ;source /Users/piccinal/jgphpc.git/easybuild/mac-jg.sh'
 # echo .bash_profile end

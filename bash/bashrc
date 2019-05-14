@@ -1,267 +1,103 @@
-# PARAVIEW ----------------------------
-# # type module
-# source $MODULESHOME/init/bash
-# # type module
-# module swap PrgEnv-cray PrgEnv-gnu
-# module swap gcc/4.8.2 gcc/4.9.1
-# module load paraview
-### export HOME=/tmp/JG
-# date >> ~/A
-# echo "dummy0"
-# return
 [ -z "$PS1" ] && return  # comment if using visit remote
-# echo ".bashrc START"
-#set -x
-# echo "dummy1"
 
-# date --rfc-3339=ns > eff_bash_debug_profile
-# date >> ~/B
-### if [ ! -n $is_bash_aliases_set ] ; then 
-   if [ -s "$HOME/jgphpc.git/bash/bash_aliases" ] ; then
-       # echo bashrc
-       source ~/jgphpc.git/bash/bash_aliases
-       # date --rfc-3339=ns > ~/eff_bash_debug_B1
-   # else
-       # echo "bashrc: bash_aliases not found"
-       # date --rfc-3339=ns > ~/eff_bash_debug_B2
-   fi
-### fi
-
-# date >> ~/C
-# test -s ~/jgphpc.git/bash/SECRET && source ~/jgphpc.git/bash/SECRET || true
-if [ -s "$HOME/jgphpc.git/SECRET/SECRET" ] ; then
-    source $HOME/jgphpc.git/SECRET/SECRET
+# --- bash_aliases:
+# {{{
+# debug: date --rfc-3339=ns > eff_bash_debug_profile
+myfile="$HOME/jgphpc.git/bash/bash_aliases"
+if [ -s "$myfile" ] ; then
+    source $myfile
 fi
+# }}}
 
-# --- hostname:
-# h=${HOSTNAME//[0-9]/}
-h=`uname -n |tr -d [0-9]`
-export MODULEPATH=$HOME/jgphpc.git/modulefiles:$MODULEPATH
+# --- secret:
+# {{{
+myfile="$HOME/jgphpc.git/SECRET/SECRET"
+if [ -s "$myfile" ] ; then
+    source $myfile
+fi
+# }}}
 
-# # --- suse:
-# if [ -f /etc/os-release ] ;then
-#     grep "CPE_NAME=" /etc/os-release |grep -q 11 ;rc11=$?  # --- suse/11
-#     grep "CPE_NAME=" /etc/os-release |grep -q 12 ;rc12=$?  # --- suse/12
-#     # echo A / $rc11 / $rc12 /
-# 
-#     mpela=/apps/common/UES/sandbox/jgp/easybuild.eff/ela/modules/all
-#     if [ "$rc11" = "0" ] && [ -d $mpela ] ;then
-#         module use $mpela
-#         module load texlive/3.141592 # ela
-#         module use /apps/common/UES/sandbox/jgp/easybuild.ela/modules/all
-#         module load git/2.11.0    # ela
-#         module load Vim/8.0       # ela
-#         module load hwloc/1.11.5  # ela
-#         module load Ruby/2.2.2    # ela (timetrap)
-#         module load gnuplot/5.0.6 # ela 
-#         # if [ -d /usr/share/Modules/default/modulefiles ] ;then 
-#         #    module use /usr/share/Modules/default/modulefiles
-#         #    module load gpfs
-#         # fi
-#     fi
-# 
-#     #old: if [ "$rc12" = "0" ] && [ -d /apps/common/UES/SLES12/easybuild/modules/all ] ;then
-#     if [ "$rc12" = "0" ] && [ -d /apps/common/UES/jenkins/SLES12/easybuild/modules/all ] ;then
-#         module load eswrap # xtprocadmin
-#         module load git/2.11.0   # 
-#         module load Vim/8.0      #
-#         module load hwloc/1.11.5 #
-#         module load likwid/4.1.2 #
-#         module use $mpela
-#         module load gnuplot/5.0.6 #
-#         # module load Ruby/2.2.2   #
-#         # module load ctags/5.8
-#         # module use /apps/common/UES/SLES12/easybuild/modules/all
-#         # module load ctags # must also be set in vimrc
-# ###        module use /apps/common/UES/jenkins/SLES12/easybuild/modules/all
-# ###        # module use /apps/common/UES/sandbox/jgp/easybuild.daint/sles12/modules/all
-#     fi
-# fi
-# 
-# # --- redhat:
-# if [ -f /etc/issue ] ;then
-#     grep -qi "Red Hat" /etc/issue;rc=$?
-#     if [ "$rc" = "0" ] && [ -d /apps/common/UES/RHAT6/easybuild/modules/all ]; then
-#         module use /apps/common/UES/RHAT6/easybuild/modules/all
-#         module load Vim
-#     fi
-# fi
-# 
-# # --- MCH:
-# if [[ "$h" == "eschaln-" || "$h" == "keschln-" ]] ; then
-#    export APPS=/apps/escha
-#    #export SCRATCH=/lus/scratch/$USER
-#    export SCRATCH=/scratch-shared/mch/scratch/$USER
-#    export HOST=$HOSTNAME
-#    # module load craype-haswell
-#    # module load craype-accel-nvidia35
-#    # module use /apps/escha/easybuild/modules/all
-#    alias ls='ls --color=always'
-#    # alias ebs='eb --search='
-#    function ebs { eb --search=$1 ; }
-#    # export EBCFGPJG='/apps/common/easybuild/software/EasyBuild/2.2.0/lib64/python2.6/site-packages/easybuild_easyconfigs-2.2.0-py2.6.egg/easybuild/easyconfigs'
-# fi
-
-if [ `uname -s` != "Darwin" ] ;then
+# --- modules:
+# {{{
+# export MODULEPATH=$HOME/jgphpc.git/modulefiles:$MODULEPATH
+if [ -d $MODULEPATH ] ;then
     module unuse /apps/escha/modulefiles
     module unuse /apps/common/UES/modulefiles
-    # --- XALT:
     module rm xalt
 fi
+# }}}
 
-if [ -f /etc/os-release ] ;then
-    osid=`grep ^ID= /etc/os-release |cut -d\" -f2`
-    osv=`grep ^CPE_NAME= /etc/os-release |cut -d\" -f2 |cut -d: -f5`
-
-elif [ -f /etc/system-release-cpe ] ;then
-    osid=`cut -d: -f3 /etc/system-release-cpe`
-    osv=`cut -d: -f5 /etc/system-release-cpe|cut -c1`
-
-elif [ `uname -s` == "Darwin" ] ;then
-    # added by Anaconda3 4.4.0 installer
-    export PATH="/usr/local/Cellar/ANACONDA3/bin:$PATH"
-
-fi
-# echo $osid / $osv
-
-if [ "$osid" = "sles" ] ;then
-
-    if [ "$osv" = "11" ] ;then
-        export EASYBUILD_PREFIX=~/easybuild/sles11
-        module use $EASYBUILD_PREFIX/modules/all
-        module load Vim/8.0
-        module load git/2.14.1
-    else
-        export EASYBUILD_PREFIX=~/easybuild/sles12
-        module use $EASYBUILD_PREFIX/modules/all
-        #module load Vim/8.0
-        #module load git/2.14.1
-		#module load Ruby
-		#module load htop
-		#module load hwloc
-		#module load likwid
-		#module load lynx
-		#module load tmux
-		#module load vampir
-    fi
-
-elif [ "$osid" = "redhat" ] || [ "$osid" = "rhel" ] ;then
-    if [ "$osv" = "6" ] ;then
-        export EASYBUILD_PREFIX=~/easybuild/rh6
-        module use $EASYBUILD_PREFIX/modules/all
-        module load vim/8.0 # extrae/3.5.2-gmvapich2-15.11
-    else
-        export EASYBUILD_PREFIX=~/easybuild/rh7
-        #TODO: module use $EASYBUILD_PREFIX/modules/all
-        #TODO: module load git/2.17.1 ncurses/6.1 Vim/8.1 #ctags/5.8 vim/8.0
-    fi
-
-fi
-
-# --- BASEL:
-if [ "$h" == "dmi-cl-login.dmi.p.unibas.ch" ] ;then
-    module purge
-    export MODULEPATH=
-    module use   /storage/shared/projects/sph-exa/easybuild/modules/all
-    #module load git likwid Vim CMake
-    #module load EasyBuild/3.3.1
-    #module use /users/staff/dmi-dmi/piccinal/.local/easybuild/modules/all
-	module use /opt/apps/easybuild/modules/toolchain
-	module use /opt/apps/easybuild/modules/mpi
-	module use /opt/apps/easybuild/modules/numlib
-	module use /opt/apps/easybuild/modules/compiler
-	module use /opt/apps/easybuild/modules/system
-	module use /opt/apps/easybuild/modules/tools
-    module use /opt/apps/easybuild/modules/lang
-    module use /opt/apps/easybuild/modules/vis
-    module use /opt/apps/easybuild/modules/devel
-    module use /opt/apps/easybuild/modules/math
-    module use /opt/apps/easybuild/modules/lib
-    # module use /opt/apps/easybuild/modules/perf
-
-    #for i in `ls -1d /storage/shared/projects/sph-exa/easybuild/modules/* |grep -v all` ;do module use $i ;done
-    module use /storage/shared/projects/sph-exa/easybuild/modules/all
-    module load  EasyBuild/3.4.1
-
-    export PATH=/opt/apps/easybuild/software/VampirServer/9.3.0-iccifort-2017.1.132-GCC-6.3.0-2.27/bin:$PATH
-    export VAMPIR_LICENSE=/opt/apps/vampir/etc/vampir.license # vampirserver start smp
-
-fi
-
-# --- ELA:
-if [ "$h" == "ela" ] ;then
-        module rm ela   # /apps/ela/system/lib is too old...
-        #export ALT_LINKER=/usr/bin/ld
-        export APPS=/apps/ela
-        export PROJECT=/project/csstaff/piccinal
-fi
-
-test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
-
-
- ####   #####   ######     #    #    #    ##
-#    #  #    #  #          #    ##   #   #  #
-#       #    #  #####      #    # #  #  #    #
-#  ###  #####   #          #    #  # #  ######
-#    #  #   #   #          #    #   ##  #    #
- ####   #    #  ######     #    #    #  #    #
-# --- greina: ~/.profile -> jgphpc.git/bash/bashrc
-if [ "$h" == "greina-head" ] || [ "$h" == "node" ] || [ "$h" == "greina" ]; then
-        # date --rfc-3339=ns > ~/eff_bash_debug_greina1
-
-##         source /cm/shared/apps/easybuild/setup.sh &> /dev/null
-##         module rm EasyBuild/2.7.0
-##         module use /users/piccinal/EB/devjg/efface/modules
-##         module load EasyBuild-develop
-## 
-##         # --------------------------
-##         # check EBJG:
-##         echo $MODULEPATH | grep -q '/cm/shared/apps/easybuild/modules/all'
-##         rc=$?
-##         # date --rfc-3339=ns > ~/eff_bash_debug_greina2
-##         if [ "$rc" != "0" ] ; then
-##                 export MODULEPATH=/cm/shared/apps/easybuild/modules/all:$PATH
-##                 # echo "rc1=$rc"
-##                 # date --rfc-3339=ns > ~/eff_bash_debug_greina3a
-##         # else
-##         #         echo "rc2=$rc"
-##         #         date --rfc-3339=ns > ~/eff_bash_debug_greina3b
-##         fi
-        module use /cm/shared/apps/easybuild/modules/all
-        module load slurm/15.08.6
-        module load git/2.11.0
-        module load Vim/8.0
-        # module load ctags/5.8    
-        # module load CUDA/7.5.18
-        module use /cm/shared/apps/UES/modulefiles
-fi
-
-#####    #   #   #####  #    #   ####   #    #
-#    #    # #      #    #    #  #    #  ##   #
-#    #     #       #    ######  #    #  # #  #
-#####      #       #    #    #  #    #  #  # #
-#          #       #    #    #  #    #  #   ##
-#          #       #    #    #   ####   #    #
-#module load cray-python/17.09.1
-#module rm xalt/daint-2016.11
-#export LD_LIBRARY_PATH=/opt/python/17.09.1/lib:$LD_LIBRARY_PATH
+# --- python:
+# {{{
 hpyt=`uname -n |tr -d [0-9]g |cut -c1-3`
 if [ -z $hpyt ] ;then 
     echo ".bashrc: unknown hpyt=$hpyt" 
-elif [ "$hpyt" = "jp-" ] ;then
-    echo > /dev/null
+# elif [ "$hpyt" = "jp-" ] ;then
+#     echo > /dev/null
 else
-
-    # .python-eggs
     for ddd in local config pip cache;do
         rm -fr $HOME/.$ddd
         mkdir -p $HOME/efface/$hpyt/$ddd
         ln -fs $HOME/efface/$hpyt/$ddd $HOME/.$ddd
     done
-### PYTHONUSERBASE
+    export PATH=$HOME/efface/$hpyt/local/bin:$PATH
 fi
-export PATH=$HOME/.local/bin:$PATH
+# }}}
 
+# --- easybuild:
+# {{{
+# if [ -f /etc/os-release ] ;then
+#     osid=`grep ^ID= /etc/os-release |cut -d\" -f2`
+#     osv=`grep ^CPE_NAME= /etc/os-release |cut -d\" -f2 |cut -d: -f5`
+# 
+# elif [ -f /etc/system-release-cpe ] ;then
+#     osid=`cut -d: -f3 /etc/system-release-cpe`
+#     osv=`cut -d: -f5 /etc/system-release-cpe|cut -c1`
+# 
+# elif [ `uname -s` == "Darwin" ] ;then
+#     # added by Anaconda3 4.4.0 installer
+#     export PATH="/usr/local/Cellar/ANACONDA3/bin:$PATH"
+# 
+# fi
+# # echo $osid / $osv
+# 
+# if [ "$osid" = "sles" ] ;then
+# 
+#     if [ "$osv" = "11" ] ;then
+#         export EASYBUILD_PREFIX=~/easybuild/sles11
+#         module use $EASYBUILD_PREFIX/modules/all
+#         module load Vim/8.0
+#         module load git/2.14.1
+#     else
+#         export EASYBUILD_PREFIX=~/easybuild/sles12
+#         module use $EASYBUILD_PREFIX/modules/all
+#         #module load Vim/8.0
+#         #module load git/2.14.1
+# 		#module load Ruby
+# 		#module load htop
+# 		#module load hwloc
+# 		#module load likwid
+# 		#module load lynx
+# 		#module load tmux
+# 		#module load vampir
+#     fi
+# 
+# elif [ "$osid" = "redhat" ] || [ "$osid" = "rhel" ] ;then
+#     if [ "$osv" = "6" ] ;then
+#         export EASYBUILD_PREFIX=~/easybuild/rh6
+#         module use $EASYBUILD_PREFIX/modules/all
+#         module load vim/8.0 # extrae/3.5.2-gmvapich2-15.11
+#     else
+#         export EASYBUILD_PREFIX=~/easybuild/rh7
+#         #TODO: module use $EASYBUILD_PREFIX/modules/all
+#         #TODO: module load git/2.17.1 ncurses/6.1 Vim/8.1 #ctags/5.8 vim/8.0
+#     fi
+# 
+# fi
+# }}}
+
+# --- ddt:
+# {{{
 #####   #####    #####
 #    #  #    #     #
 #    #  #    #     #
@@ -283,15 +119,73 @@ export PATH=$HOME/.local/bin:$PATH
 ####   if [ `uname -s` == 'Darwin' ] ;then
 ####       export PATH=/Users/piccinal/miniconda3/bin:$PATH
 ####   fi
+# }}}
 
+# --- detect_os:
+# {{{ 
+# --- hostname:
+# # h=${HOSTNAME//[0-9]/}
+# h=`uname -n |tr -d [0-9]`
+#
+# if [ -f /etc/os-release ] ;then
+#     grep "CPE_NAME=" /etc/os-release |grep -q 11 ;rc11=$?  # --- suse/11
+#     grep "CPE_NAME=" /etc/os-release |grep -q 12 ;rc12=$?  # --- suse/12
+#     # echo A / $rc11 / $rc12 /
+# fi
+# 
+# if [ -f /etc/issue ] ;then
+#     grep -qi "Red Hat" /etc/issue;rc=$?
+#     if [ "$rc" = "0" ]
+#         module use /apps/common/UES/RHAT6/easybuild/modules/all
+#         module load Vim
+#     fi
+# fi
+#
+# if [ `uname -s` != "Darwin" ] ;then
+# fi
+# }}}
 
- ####   #####   #    #   #   #  #    #  #    #
-#       #    #  #    #    # #   ##   #   #  #
- ####   #    #  ######     #    # #  #    ##
-     #  #####   #    #     #    #  # #    ##
-#    #  #       #    #     #    #   ##   #  #
- ####   #       #    #     #    #    #  #    #
+# --- basel:
+# {{{
+# if [ "$h" == "dmi-cl-login.dmi.p.unibas.ch" ] ;then
+#     module purge
+#     export MODULEPATH=
+#     module use   /storage/shared/projects/sph-exa/easybuild/modules/all
+#     #module load git likwid Vim CMake
+#     #module load EasyBuild/3.3.1
+#     #module use /users/staff/dmi-dmi/piccinal/.local/easybuild/modules/all
+# 	module use /opt/apps/easybuild/modules/toolchain
+# 	module use /opt/apps/easybuild/modules/mpi
+# 	module use /opt/apps/easybuild/modules/numlib
+# 	module use /opt/apps/easybuild/modules/compiler
+# 	module use /opt/apps/easybuild/modules/system
+# 	module use /opt/apps/easybuild/modules/tools
+#     module use /opt/apps/easybuild/modules/lang
+#     module use /opt/apps/easybuild/modules/vis
+#     module use /opt/apps/easybuild/modules/devel
+#     module use /opt/apps/easybuild/modules/math
+#     module use /opt/apps/easybuild/modules/lib
+#     # module use /opt/apps/easybuild/modules/perf
+# 
+#     #for i in `ls -1d /storage/shared/projects/sph-exa/easybuild/modules/* |grep -v all` ;do module use $i ;done
+#     module use /storage/shared/projects/sph-exa/easybuild/modules/all
+#     module load  EasyBuild/3.4.1
+# 
+#     export PATH=/opt/apps/easybuild/software/VampirServer/9.3.0-iccifort-2017.1.132-GCC-6.3.0-2.27/bin:$PATH
+#     export VAMPIR_LICENSE=/opt/apps/vampir/etc/vampir.license # vampirserver start smp
+# 
+# fi
+# 
+# # sphynx code:
 # ulimit -s 2048000
+# 
+# }}}
+
+# --- macjg:
+# {{{
+# test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+# }}}
+
 #set +x
 # echo ".bashrc END"
 # export LANG=en_US.UTF-8
