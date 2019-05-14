@@ -166,8 +166,10 @@ trap 1 2 3
 # if [ -z $SCRATCH ] ; then export SCRATCH=/scratch/piccinal ; fi
 # export SCRATCH="${SCRATCH:-${TMPDIR:?}}"
 # module aliases
-alias dg='module load daint-gpu ;source ~/eff.ebgpu'
-alias dm='module load daint-mc  ;source ~/eff.ebmc '
+alias dg='source ~/dom-gpu.sh'
+alias dm='source ~/dom-mc.sh'
+#alias dg='module load daint-gpu ;source ~/eff.ebgpu'
+#alias dm='module load daint-mc  ;source ~/eff.ebmc '
 alias me='source /opt/cray/craype/default/bin/craype-pkgconfig enable'
 alias md='source /opt/cray/craype/default/bin/craype-pkgconfig disable'
 alias maa='module avail 2>&1 |grep -i'
@@ -188,6 +190,8 @@ alias LDD='sudo -u '
 alias mn='make -n'
 alias cpp_='gcc -x c++ -E -dM /dev/null'
 alias cpp__='cpp -E -dM /dev/null'
+alias cppcheck_c='cppcheck --quiet --enable=all --inconclusive --suppress=missingIncludeSystem --language=c --std=c89 --platform=unix64'
+alias cppcheck_cpp='cppcheck --quiet --enable=all --inconclusive --suppress=missingIncludeSystem --language=c++ --std=c++14 --platform=unix64'
 alias mo='module'
 # PrgEnv
 alias pgi='module load PrgEnv-pgi'
@@ -284,7 +288,7 @@ alias ela3='ssh -Y piccinal@ela3.login.cscs.ch'
 alias  ela='ssh -Y piccinal@ela.cscs.ch'
 
 # --- greina
-alias g='ssh -Y piccinal@greina0.cscs.ch'
+# alias g='ssh -Y piccinal@greina0.cscs.ch'
 # alias gg='ssh -Y piccinal@148.187.83.10' # new greina
 
 # --- leone
@@ -407,7 +411,7 @@ alias nmm='nm --defined-only'
 alias ownc='owncloudcmd -u piccinal /home/piccinal/ownCloud/jgp/bigdft https://cloud.cscs.ch/owncloud/remote.php/webdav/jgp/bigdft'
 alias p='tput cup 0 0 ; tput ech `tput cols`'
 alias pa='echo "diff -Naur old new > my.patch"'
-alias pdflatexcscs='echo export PATH=/apps/common/UES/texlive/201703/bin/x86_64-linux:\$PATH'
+alias pdflatexcscs='echo export PATH=/apps/common/UES/texlive/2018/bin/x86_64-linux:\$PATH'
 alias pulse='pulseaudio --check ; pulseaudio --kill ;pulseaudio --start --log-target=syslog'
 alias q='grep --color=always -in'
 alias qr='grep --color=always -inr'
@@ -439,7 +443,8 @@ alias tt='tail -50'
 alias ttt='tail -f'
 alias tm='type module ; echo MODULESHOME = $MODULESHOME'
 alias u='cd ..'
-alias v='vim -X'
+alias v='vim -X --noplugin'
+alias vv='vim -X'
 alias vimdiff="vimdiff -X -c 'set diffopt+=iwhite' -c 'set wrap' -c 'wincmd w' -c 'set wrap'"
 alias pep='$HOME/.local/bin/pycodestyle --show-source '
 alias wl='wc -l'
@@ -515,7 +520,7 @@ alias gs='git status'
 alias gb='git branch'
 alias gB='git show-branch |more'
 alias gf='git fetch origin'
-alias gp='git pull origin'
+alias gp='git pull '
 alias gpm='git pull origin master'
 alias gpp='git push origin'
 alias gppm='git push origin master'
@@ -571,7 +576,7 @@ alias greset='git reset' # return to previous commit before merge
 alias wp6='svn ls https://trac.csc.fi/pracewp6/svn'
 alias wp4='echo svn ls https://trac.csc.fi/pracewp4/svn' # all ok (also banco)
 alias deisa='echo svn ls http://work.deisa.eu/svn/general/DCPE/DeisaTemplatesModules' # all ok except BANCO
-alias cscs='echo svn ls https://svn.cscs.ch/lm'
+# alias cscs='echo svn ls https://svn.cscs.ch/lm'
 alias c2sm='echo svn ls https://svn.iac.ethz.ch/external/echam-hammoz'
 # WEBSVN : https://svn.iac.ethz.ch/websvn/external/wsvn/echam-hammoz
 alias mch='echo svn ls https://cosmo.cscs.ch'

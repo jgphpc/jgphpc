@@ -6,7 +6,8 @@
 HH 	    := $(shell uname -n |cut -c1-3 )
 CC      := cc
 NVCC    := nvcc
-CFLAGS  := -g -I./include -I/apps/common/UES/sandbox/jgp/cuda.nvidia/8.0.61/samples/common/inc # -D_MPI
+CFLAGS  := -g -I./include -I/apps/common/UES/sandbox/jgp/cuda.nvidia/10.1/common/inc # -D_MPI
+# CFLAGS  := -g -I./include -I/apps/common/UES/sandbox/jgp/cuda.nvidia/8.0.61/samples/common/inc # -D_MPI
 # CUFLAGS := -G -I./include
 LDFLAGS := $(CFLAGS)
 OBJ     := mpic.o mpicu.o
@@ -27,6 +28,14 @@ endif
 ifeq ($(CRAY_ACCEL_TARGET),nvidia60)
     CUDAFLAGS += -arch=sm_60
 endif
+
+ifeq ($(CRAY_ACCEL_TARGET),nvidia70)
+	# CC = gcc
+    CUDAFLAGS += -arch=sm_70 -I/usr/local/cuda-10.1/samples/common/inc
+	LDFLAGS += -L/usr/local/cuda-10.1/lib64 -lcuda -lcudart
+	# ault:
+	# # PE_ENV=GNU CUDATOOLKIT_HOME=/usr/local/cuda-10.1 CRAY_ACCEL_TARGET=nvidia70 make
+endif	
 
 SRCc   = mpic.c
 SRCcu  = mpicu.cu
