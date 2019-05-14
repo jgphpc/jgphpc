@@ -166,8 +166,8 @@ trap 1 2 3
 # if [ -z $SCRATCH ] ; then export SCRATCH=/scratch/piccinal ; fi
 # export SCRATCH="${SCRATCH:-${TMPDIR:?}}"
 # module aliases
-alias dg='source ~/eff.ebgpu'
-alias dm='source ~/eff.ebmc '
+alias dg='source ~/dom-gpu.sh'
+alias dm='source ~/dom-mc.sh'
 #alias dg='module load daint-gpu ;source ~/eff.ebgpu'
 #alias dm='module load daint-mc  ;source ~/eff.ebmc '
 alias me='source /opt/cray/craype/default/bin/craype-pkgconfig enable'
@@ -190,6 +190,8 @@ alias LDD='sudo -u '
 alias mn='make -n'
 alias cpp_='gcc -x c++ -E -dM /dev/null'
 alias cpp__='cpp -E -dM /dev/null'
+alias cppcheck_c='cppcheck --quiet --enable=all --inconclusive --suppress=missingIncludeSystem --language=c --std=c89 --platform=unix64'
+alias cppcheck_cpp='cppcheck --quiet --enable=all --inconclusive --suppress=missingIncludeSystem --language=c++ --std=c++14 --platform=unix64'
 alias mo='module'
 # PrgEnv
 alias pgi='module load PrgEnv-pgi'
@@ -409,7 +411,7 @@ alias nmm='nm --defined-only'
 alias ownc='owncloudcmd -u piccinal /home/piccinal/ownCloud/jgp/bigdft https://cloud.cscs.ch/owncloud/remote.php/webdav/jgp/bigdft'
 alias p='tput cup 0 0 ; tput ech `tput cols`'
 alias pa='echo "diff -Naur old new > my.patch"'
-alias pdflatexcscs='echo export PATH=/apps/common/UES/texlive/201703/bin/x86_64-linux:\$PATH'
+alias pdflatexcscs='echo export PATH=/apps/common/UES/texlive/2018/bin/x86_64-linux:\$PATH'
 alias pulse='pulseaudio --check ; pulseaudio --kill ;pulseaudio --start --log-target=syslog'
 alias q='grep --color=always -in'
 alias qr='grep --color=always -inr'

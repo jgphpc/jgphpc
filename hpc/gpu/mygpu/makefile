@@ -29,6 +29,14 @@ ifeq ($(CRAY_ACCEL_TARGET),nvidia60)
     CUDAFLAGS += -arch=sm_60
 endif
 
+ifeq ($(CRAY_ACCEL_TARGET),nvidia70)
+	# CC = gcc
+    CUDAFLAGS += -arch=sm_70 -I/usr/local/cuda-10.1/samples/common/inc
+	LDFLAGS += -L/usr/local/cuda-10.1/lib64 -lcuda -lcudart
+	# ault:
+	# # PE_ENV=GNU CUDATOOLKIT_HOME=/usr/local/cuda-10.1 CRAY_ACCEL_TARGET=nvidia70 make
+endif	
+
 SRCc   = mpic.c
 SRCcu  = mpicu.cu
 OBJC  := $(SRCc:.c=.o)

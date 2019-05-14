@@ -1,2 +1,6 @@
 *.vim
 vim/bundle/*
+*.exe
+*.o
+DEL
+eff.sh
