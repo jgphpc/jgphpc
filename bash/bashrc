@@ -8,8 +8,9 @@
 ### export HOME=/tmp/JG
 # date >> ~/A
 # echo "dummy0"
+# return
 [ -z "$PS1" ] && return  # comment if using visit remote
-#echo ".bashrc START"
+# echo ".bashrc START"
 #set -x
 # echo "dummy1"
 
@@ -291,5 +292,5 @@ fi
  ####   #       #    #     #    #    #  #    #
 # ulimit -s 2048000
 #set +x
-#echo ".bashrc END"
+# echo ".bashrc END"
 # export LANG=en_US.UTF-8

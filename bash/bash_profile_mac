@@ -1,9 +1,15 @@
+# echo .bash_profile start
 # MacPorts:
 export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
+# MacBrew
+export PATH=/usr/local/opt/llvm/bin:$PATH
+# export LDFLAGS="-L/usr/local/opt/llvm/lib"
+# export CPPFLAGS="-I/usr/local/opt/llvm/include"
 
 # before sudo port install ctags : /usr/bin/ctags
 # after                          : /opt/local/bin/ctags
 
+# export LC_CTYPE=C
 source ~/.bashrc
 
 # ftp:
@@ -11,3 +17,8 @@ source ~/.bashrc
 # alias ftpmacoff='sudo -s launchctl unload -w /System/Library/LaunchDaemons/ftp.plist'
 
 export PATH="/usr/local/opt/nss/bin:$PATH"
+
+# lmod:
+source /usr/local/opt/lmod/init/profile
+source /Users/piccinal/jgphpc.git/easybuild/mac-jg.sh
+# echo .bash_profile end
