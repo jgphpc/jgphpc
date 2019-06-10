@@ -1,0 +1,15 @@
+--- osu-micro-benchmarks-5.6.1.ori/mpi/pt2pt/osu_latency.c	2019-03-16 15:51:11.000000000 +0100
++++ osu-micro-benchmarks-5.6.1/mpi/pt2pt/osu_latency.c	2019-06-10 18:11:00.000000000 +0200
+@@ -37,7 +37,11 @@
+     MPI_CHECK(MPI_Init(&argc, &argv));
+     MPI_CHECK(MPI_Comm_size(MPI_COMM_WORLD, &numprocs));
+     MPI_CHECK(MPI_Comm_rank(MPI_COMM_WORLD, &myid));
+-
++    int version, subversion;
++    MPI_CHECK(MPI_Get_version(&version, &subversion));
++    if (0 == myid)
++        printf( "###MPI-%d.%d\n", version, subversion);
++    
+     if (0 == myid) {
+         switch (po_ret) {
+             case PO_CUDA_NOT_AVAIL:
