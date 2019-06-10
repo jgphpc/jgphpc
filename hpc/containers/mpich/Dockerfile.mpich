@@ -1,0 +1,26 @@
+# docker build -f ./Dockerfile.mpich -t jgphpc/mpich_osu:3.1.4 .
+# docker run -it jgphpc/mpich:3.1.4 bash
+FROM debian:stable-slim
+
+RUN apt-get update \
+    && apt-get install -y file \
+                          g++ \
+                          gcc \
+                          gfortran \
+                          make \
+                          gdb \
+                          strace \
+                          realpath \
+                          wget \
+                          --no-install-recommends
+
+RUN cd /tmp \
+    && wget -q http://www.mpich.org/static/downloads/3.1.4/mpich-3.1.4.tar.gz \
+    && tar xf mpich-3.1.4.tar.gz \
+    && cd mpich-3.1.4 \
+    && ./configure --disable-fortran --enable-fast=all,O3 --prefix=/usr \
+    && make -j3 \
+    && make install \
+    && ldconfig \
+    && cd .. \
+    && rm -rf mpich-3.1.4.tar.gz mpich-3.1.4
