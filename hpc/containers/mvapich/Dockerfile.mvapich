@@ -1,0 +1,36 @@
+#!/bin/sh
+# docker build -f ./Dockerfile.mvapich -t jgphpc/mvapich:2.3.1 .
+# docker run -it jgphpc/mvapich:2.3.1 bash
+FROM debian:stable-slim
+
+RUN apt-get update \
+    && apt-get install -y \
+        bison \
+        file \
+        g++ \
+        gcc \
+        gfortran \
+        libibverbs-dev \
+        make \
+        perl-modules \
+        wget \
+        realpath \
+        strace \
+        --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/*
+
+#    && make check \
+RUN wget http://mvapich.cse.ohio-state.edu/download/mvapich/mv2/mvapich2-2.3.1.tar.gz \
+    && tar xf mvapich2-*.tar.gz \
+    && cd mvapich2-* \
+    && ./configure  --prefix=/usr/local --disable-mcast --disable-xrc --disable-fortran \
+    && make -j3 \
+    && make install \
+    && ldconfig \
+    && cd .. \
+    && rm -rf mvapich2-*
+
+# WORKDIR /usr/local/libexec/osu-micro-benchmarks/mpi/pt2pt
+# we need to disable Cross Memory Attach (CMA), otherwise mpiexec fails
+ENV MV2_SMP_USE_CMA=0
+# CMD ["mpiexec", "-n", "2", "-bind-to", "core", "./osu_latency"]
