@@ -1,9 +1,21 @@
 #!/bin/bash
-# docker build -f ./Dockerfile.mvapich+osu -t jgphpc/mvapich_osu:5.6.1 .
-# docker run -it jgphpc/mvapich_osu:5.6.1 bash
-# mpiexec -np 2 ./osu_latency
-# sarus pull jgphpc/mvapich_osu:5.6.1
-FROM jgphpc/mvapich:2.3.1
+#
+# VV=jgphpc/mvapich:ub1804_cuda92_mpi231_osu561
+# DD=Dockerfile.ubuntu1804lts+cuda92+mvapich231+osu561
+#
+# docker build -f ./$DD -t $VV .
+# docker push $VV
+# docker run -it $VV bash
+# docker run $VV cat /etc/os-release
+#   NAME="Ubuntu"
+#   VERSION="18.04.1 LTS (Bionic Beaver)"
+# https://hub.docker.com/r/nvidia/cuda/
+# new: https://gitlab.com/nvidia/cuda/blob/ubuntu18.04/9.2/devel/Dockerfile
+# old: https://gitlab.com/nvidia/cuda/blob/ubuntu16.04/9.2/devel/Dockerfile 
+# 
+# sarus pull jgphpc/mvapich:ub1804_cuda92_mpi231_osu561
+# srun -N2 sarus run --mpi jgphpc/mvapich:ub1804_cuda92_mpi231_osu561 /usr/local/libexec/osu-micro-benchmarks/mpi/pt2pt/./osu_latency
+FROM jgphpc/mvapich:ub1804_cuda92_mpi231
 
 RUN apt-get update \
     && apt-get install -y ca-certificates patch

@@ -1,0 +1,46 @@
+#!/bin/bash
+#
+# VV=jgphpc/mvapich:ub1804_cuda92_mpi231
+# DD=Dockerfile.ubuntu1804lts+cuda92+mvapich231
+#
+# docker build -f ./$DD -t $VV .
+# docker push $VV
+# docker run -it $VV bash
+# docker run $VV cat /etc/os-release
+#   NAME="Ubuntu"
+#   VERSION="18.04.1 LTS (Bionic Beaver)"
+# https://hub.docker.com/r/nvidia/cuda/
+# new: https://gitlab.com/nvidia/cuda/blob/ubuntu18.04/9.2/devel/Dockerfile
+# old: https://gitlab.com/nvidia/cuda/blob/ubuntu16.04/9.2/devel/Dockerfile 
+FROM nvidia/cuda:9.2-devel-ubuntu18.04
+
+RUN apt-get update \
+    && apt-get install -y \
+        bison \
+        file \
+        g++ \
+        gcc \
+        libibverbs-dev \
+        make \
+        perl-modules \
+        wget \
+        strace \
+        --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/*
+#         gfortran \
+#         realpath \
+
+RUN wget http://mvapich.cse.ohio-state.edu/download/mvapich/mv2/mvapich2-2.3.1.tar.gz \
+    && tar xf mvapich2-*.tar.gz \
+    && cd mvapich2-* \
+    && ./configure  --prefix=/usr/local --disable-mcast --disable-xrc --disable-fortran \
+    && make -j3 \
+    && make install \
+    && ldconfig \
+    && cd .. \
+    && rm -rf mvapich2-*
+
+# WORKDIR /usr/local/libexec/osu-micro-benchmarks/mpi/pt2pt
+# we need to disable Cross Memory Attach (CMA), otherwise mpiexec fails
+ENV MV2_SMP_USE_CMA=0
+# CMD ["mpiexec", "-n", "2", "-bind-to", "core", "./osu_latency"]
