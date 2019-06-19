@@ -1,0 +1,39 @@
+#!/bin/bash
+# docker build -f ./Dockerfile.ubuntu1804lts+cuda92+mpich314 -t jgphpc/cuda92_mpich:3.1.4 .
+# docker push jgphpc/cuda92_mpich:3.1.4
+# docker run -it jgphpc/cuda92_mpich:3.1.4 bash
+# docker run jgphpc/cuda92_mpich:3.1.4 cat /etc/os-release
+#   NAME="Ubuntu"
+#   VERSION="18.04.1 LTS (Bionic Beaver)"
+
+# https://hub.docker.com/r/nvidia/cuda/
+# new: https://gitlab.com/nvidia/cuda/blob/ubuntu18.04/9.2/devel/Dockerfile
+# old: https://gitlab.com/nvidia/cuda/blob/ubuntu16.04/9.2/devel/Dockerfile 
+FROM nvidia/cuda:9.2-devel-ubuntu18.04
+
+RUN apt-get update \
+    && apt-get install -y file \
+                          g++ \
+                          gcc \
+                          make \
+                          gdb \
+                          strace \
+                          wget \
+                          --no-install-recommends
+#                          gfortran \
+#                          realpath \
+
+RUN cd /tmp \
+    && wget -q http://www.mpich.org/static/downloads/3.1.4/mpich-3.1.4.tar.gz \
+    && tar xf mpich-3.1.4.tar.gz \
+    && cd mpich-3.1.4 \
+    && ./configure --disable-fortran --enable-fast=all,O3 --prefix=/usr \
+    && make -j3 \
+    && make install \
+    && ldconfig \
+    && cd .. \
+    && rm -rf mpich-3.1.4.tar.gz mpich-3.1.4
+
+# COPY all_gather.cpp /opt/mpi_gpudirect/all_gather.cpp
+# WORKDIR /opt/mpi_gpudirect
+# RUN mpicxx -g all_gather.cpp -o all_gather -I/usr/local/cuda/include -L/usr/local/cuda/lib64 -lcudart

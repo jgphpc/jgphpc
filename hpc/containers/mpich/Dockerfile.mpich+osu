@@ -1,3 +1,4 @@
+#!/bin/bash
 # docker build -f ./Dockerfile.mpich+osu -t jgphpc/mpich_osu:3.1.4 .
 # docker run -it jgphpc/mpich_osu:3.1.4 bash
 FROM jgphpc/mpich:3.1.4

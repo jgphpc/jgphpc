@@ -1,3 +1,4 @@
+#!/bin/bash
 # docker build -f ./Dockerfile.mpich -t jgphpc/mpich_osu:3.1.4 .
 # docker run -it jgphpc/mpich:3.1.4 bash
 FROM debian:stable-slim

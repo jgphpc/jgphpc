@@ -1,0 +1,22 @@
+#!/bin/bash
+# docker build -f ./Dockerfile.ubuntu1804lts+cuda92+mpich314+gpudirect -t jgphpc/cuda92_mpich_gpudirect:latest .
+# docker push jgphpc/cuda92_mpich_gpudirect:latest
+# sarus pull jgphpc/cuda92_mpich_gpudirect:latest
+# 
+# srun --pty -n1 sarus run -t jgphpc/cuda92_mpich_gpudirect:latest bash
+# srun -t1 -Ausup -Cgpu -N2 sarus run --mpi jgphpc/cuda92_mpich_gpudirect:latest bash -c 'MPICH_RDMA_ENABLED_CUDA=1 LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libcuda.so /opt/mpi_gpudirect/all_gather.exe'
+#     Success!
+
+# docker run -it jgphpc/cuda92_mpich:3.1.4 bash
+# docker run jgphpc/cuda92_mpich:3.1.4 cat /etc/os-release
+#   NAME="Ubuntu"
+#   VERSION="18.04.1 LTS (Bionic Beaver)"
+
+# https://hub.docker.com/r/nvidia/cuda/
+# new: https://gitlab.com/nvidia/cuda/blob/ubuntu18.04/9.2/devel/Dockerfile
+# old: https://gitlab.com/nvidia/cuda/blob/ubuntu16.04/9.2/devel/Dockerfile 
+FROM jgphpc/cuda92_mpich:3.1.4
+
+COPY all_gather.cpp /opt/mpi_gpudirect/all_gather.cpp
+WORKDIR /opt/mpi_gpudirect
+RUN mpicxx -g all_gather.cpp -o all_gather.exe -I/usr/local/cuda/include -L/usr/local/cuda/lib64 -lcudart
