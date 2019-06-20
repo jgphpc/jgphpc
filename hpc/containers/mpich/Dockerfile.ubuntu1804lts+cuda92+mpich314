@@ -1,14 +1,22 @@
 #!/bin/bash
-# docker build -f ./Dockerfile.ubuntu1804lts+cuda92+mpich314 -t jgphpc/cuda92_mpich:3.1.4 .
-# docker push jgphpc/cuda92_mpich:3.1.4
-# docker run -it jgphpc/cuda92_mpich:3.1.4 bash
-# docker run jgphpc/cuda92_mpich:3.1.4 cat /etc/os-release
+#
+# VV=jgphpc/mpich:ub1804_cuda92_mpi314
+# DD=Dockerfile.ubuntu1804lts+cuda92+mpich314
+#
+# docker build -f ./$DD -t $VV .
+# docker push $VV
+# docker run -it $VV bash
+# docker run $VV cat /etc/os-release
 #   NAME="Ubuntu"
 #   VERSION="18.04.1 LTS (Bionic Beaver)"
-
 # https://hub.docker.com/r/nvidia/cuda/
 # new: https://gitlab.com/nvidia/cuda/blob/ubuntu18.04/9.2/devel/Dockerfile
 # old: https://gitlab.com/nvidia/cuda/blob/ubuntu16.04/9.2/devel/Dockerfile 
+# cuda/8.0 = gcc/5.x max
+# cuda/9.x = gcc/6.x max
+# cuda/9.2 = gcc/7.x max    <-----
+# cuda/10.0 = gcc/7.x max
+# cuda/10.1 = gcc/8.x max
 FROM nvidia/cuda:9.2-devel-ubuntu18.04
 
 RUN apt-get update \
@@ -19,6 +27,7 @@ RUN apt-get update \
                           gdb \
                           strace \
                           wget \
+                          unzip \
                           --no-install-recommends
 #                          gfortran \
 #                          realpath \
@@ -34,6 +43,19 @@ RUN cd /tmp \
     && cd .. \
     && rm -rf mpich-3.1.4.tar.gz mpich-3.1.4
 
+
 # COPY all_gather.cpp /opt/mpi_gpudirect/all_gather.cpp
 # WORKDIR /opt/mpi_gpudirect
 # RUN mpicxx -g all_gather.cpp -o all_gather -I/usr/local/cuda/include -L/usr/local/cuda/lib64 -lcudart
+
+# ubuntu/18.04 bionic -> gcc/6.5, gcc/7.4 (=default), gcc/8.3 (+ clang-7)
+RUN apt install -y g++-6 g++-7 g++-8 \
+                   --no-install-recommends
+
+# ppa -> gcc/9.1
+# https://launchpad.net/~ubuntu-toolchain-r/+archive/ubuntu/test?field.series_filter=bionic
+# Fetched 16.9 MB in 3min 42s (76.0 kB/s)
+RUN apt install --no-install-recommends -y software-properties-common \
+    && add-apt-repository -y ppa:ubuntu-toolchain-r/test \
+    && apt update \
+    && apt install -y g++-9

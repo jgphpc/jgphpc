@@ -1,14 +1,17 @@
 #!/bin/bash
-# docker build -f ./Dockerfile.ubuntu1804lts+cuda92+mpich314+osu -t jgphpc/mpich:ub1804_cuda92_mpi314_osu561 .
-# docker run -it jgphpc/mpich:ub1804_cuda92_mpi314_osu561 bash
-# docker push jgphpc/mpich:ub1804_cuda92_mpi314_osu561
+#
+# VV=jgphpc/mpich:ub1804_cuda92_mpi314_osu
+# DD=Dockerfile.ubuntu1804lts+cuda92+mpich314+osu
+#
+# docker build -f ./$DD -t $VV .
+# docker push $VV
+# docker run -it $VV bash
 # ---
 # module use /apps/dom/SI/modulefiles ;mll sarus/1.0.0-rc5-daint
 # sarus pull jgphpc/mpich:ub1804_cuda92_mpi314_osu561
 # srun -Ausup -Cgpu -N2 -t2 sarus run --mpi jgphpc/mpich:ub1804_cuda92_mpi314_osu561 /usr/local/libexec/osu-micro-benchmarks/mpi/pt2pt/./osu_latency
 # srun --pty -n1 sarus run -t jgphpc/mpich:ub1804_cuda92_mpi314_osu561 bash
-
-FROM jgphpc/cuda92_mpich:3.1.4
+FROM jgphpc/mpich:ub1804_cuda92_mpi314
 
 RUN apt-get update \
     && apt-get install -y ca-certificates patch
