@@ -11,11 +11,10 @@ Goal: gather tips and tricks
 Work: `Piz Daint <http://www.cscs.ch/computers/piz_daint/index.html>`_.
 
 .. toctree::
+   :hidden:
    :maxdepth: 2
-   :caption: Contents:
 
    About me <about>
-
 
 Indices and tables
 ==================
