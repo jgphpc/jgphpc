@@ -13,6 +13,9 @@
 # sarus pull jgphpc/mpich:ub1804_cuda92_mpi314_osu561
 # srun -Ausup -Cgpu -N2 -t2 sarus run --mpi jgphpc/mpich:ub1804_cuda92_mpi314_osu561 /usr/local/libexec/osu-micro-benchmarks/mpi/pt2pt/./osu_latency
 # srun --pty -n1 sarus run -t jgphpc/mpich:ub1804_cuda92_mpi314_osu561 bash
+# ---
+# ubuntu: precise/12.04, trusty/14.04, xenial/16.04, bionic/18.04, cosmic/18.10, disco/19.04, eoan/19.10
+# debian: squeeze/6, wheezy/7, jessie/8, stretch/9
 FROM jgphpc/mpich:ub1804_cuda92_mpi314
 
 # RUN apt-get update \
@@ -23,7 +26,26 @@ RUN cd /opt \
     && unzip master.zip \
     && cd SPH-EXA_mini-app-master/src/
 
-# build with gnu/8:
+# --- build with gnu/6:
+ENV GNU_VERSION 6
+ENV EXE $GNU_VERSION.exe
+RUN cd /opt/SPH-EXA_mini-app-master/src/ \
+    && g++-$GNU_VERSION -v \
+    && echo \
+    && g++-$GNU_VERSION sqpatch.cpp -DNDEBUG -Iinclude -std=c++14 -O2 -o $EXE \
+    ;echo $? $EXE
+
+# --- build with gnu/7:
+ENV GNU_VERSION 7
+ENV EXE $GNU_VERSION.exe
+RUN cd /opt/SPH-EXA_mini-app-master/src/ \
+    && g++-$GNU_VERSION -v \
+    && echo \
+    && g++-$GNU_VERSION sqpatch.cpp -DNDEBUG -Iinclude -std=c++14 -O2 -o $EXE \
+    ;echo $? $EXE
+
+
+# --- build with gnu/8:
 ENV GNU_VERSION 8
 ENV EXE $GNU_VERSION.exe
 RUN cd /opt/SPH-EXA_mini-app-master/src/ \
@@ -32,19 +54,17 @@ RUN cd /opt/SPH-EXA_mini-app-master/src/ \
     && g++-$GNU_VERSION sqpatch.cpp -DNDEBUG -Iinclude -std=c++14 -O2 -o $EXE \
     ;echo $? $EXE
 
-##ok  # build with gnu/9:
-##ok  ENV GNU_VERSION 9
-##ok  ENV EXE $GNU_VERSION.exe
-##ok  RUN cd /opt/SPH-EXA_mini-app-master/src/ \
-##ok      && g++-$GNU_VERSION -v \
-##ok      && echo \
-##ok      && g++-$GNU_VERSION sqpatch.cpp -DNDEBUG -Iinclude -std=c++14 -O2 -o $EXE \
-##ok      ;echo $? $EXE
 
-#    && ./$EXE -s 0 -n 10
-
-# TODO: reframe here
+# --- build with gnu/9:
+ENV GNU_VERSION 9
+ENV EXE $GNU_VERSION.exe
+RUN cd /opt/SPH-EXA_mini-app-master/src/ \
+    && g++-$GNU_VERSION -v \
+    && echo \
+    && g++-$GNU_VERSION sqpatch.cpp -DNDEBUG -Iinclude -std=c++14 -O2 -o $EXE \
+    ;echo $? $EXE
 
 WORKDIR /opt/SPH-EXA_mini-app-master/src/
 CMD ["./8.exe", "-s", "0", "-n", "10"]
+# TODO: reframe here
 # CMD ["mpiexec", "-n", "2", "-bind-to", "core", "./osu_latency"]
