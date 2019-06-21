@@ -13,6 +13,10 @@
 # import os
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
+import os
+import re
+import sys
+import sphinx_rtd_theme
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
