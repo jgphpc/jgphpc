@@ -1,2 +1,4 @@
 module swap $(module list 2>&1 |grep --only-matching PrgEnv.*) PrgEnv-pgi
 http://vim.spf13.com/
+
+https://github.com/dylanaraps/pure-bash-bible

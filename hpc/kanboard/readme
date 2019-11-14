@@ -1,0 +1,21 @@
+# https://docs.google.com/spreadsheets/d/1GepYjOgcZNz83nNKolKanAEqasX1ffhaOJqNkougRC8/edit?usp=sharing
+
+
+# https://docs.kanboard.org/en/latest/api/task_procedures.html#gettask
+# https://github.com/kanboard/python-api-client
+
+kb.getAllTasks(project_id=3)
+kb.removeTask(task_id=94)
+
+
+kb.createTask(project_id=1, column_id=2, title='education: python')
+kb.createTask(project_id=1, column_id=2, title='L0_meetings')
+kb.createTask(project_id=1, column_id=2, title='L1_tickets')
+kb.createTask(project_id=1, column_id=2, title='L2_debug:')
+kb.createTask(project_id=1, column_id=2, title='L2_tools:')
+kb.createTask(project_id=1, column_id=2, title='L2_daint:')
+kb.createTask(project_id=1, column_id=2, title='RAM_containers:')
+
+kb.createTask(project_id=1, column_id=14, title='reframe: tiger')
+kb.createTask(project_id=1, column_id=14, title='benchm:')
+# kb.createTask(project_id=3, column_id=14, title='sphexa:')

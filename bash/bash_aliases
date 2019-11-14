@@ -443,8 +443,8 @@ alias ttt='tail -f'
 alias tm='type module ; echo MODULESHOME = $MODULESHOME'
 alias u='cd ..'
 alias v='nvim'
-#alias v='vim -X --noplugin'
-#alias vv='vim -X'
+alias vv='vim -X'
+#alias vv='vim -X --noplugin'
 alias vimdiff="vimdiff -X -c 'set diffopt+=iwhite' -c 'set wrap' -c 'wincmd w' -c 'set wrap'"
 alias pep='$HOME/.local/bin/pycodestyle --show-source '
 alias wl='wc -l'
@@ -519,10 +519,10 @@ alias gs='git status'
 #alias gS='git log -S '
 alias gb='git branch'
 alias gB='git show-branch |more'
-alias gf='git fetch origin'
+alias gf='git fetch'
 alias gp='git pull '
 alias gpm='git pull origin master'
-alias gpp='git push '
+alias gpp='git push'
 alias gppm='git push origin master'
 alias gl='git log'
 alias gll='git log --stat'
@@ -839,3 +839,13 @@ if [ `uname -n` = 'banco' ] ; then
     export PATH=$GOPATH:$GOPATH/bin:$PATH
 fi
 
+ #####    ####    ####   #    #  ######  #####
+ #    #  #    #  #    #  #   #   #       #    #
+ #    #  #    #  #       ####    #####   #    #
+ #    #  #    #  #       #  #    #       #####
+ #    #  #    #  #    #  #   #   #       #   #
+ #####    ####    ####   #    #  ######  #    #
+# https://gist.github.com/bastman/5b57ddb3c11942094f8d0a97d461b430
+# docker ps -a  # docker rm $(docker ps -qa --no-trunc --filter "status=exited")
+# docker images # docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
+# docker images | grep "none" # docker rmi $(docker images | grep "none" | awk '/ / { print $3 }')
