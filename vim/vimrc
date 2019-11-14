@@ -489,7 +489,7 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 " https://www.vim.org/scripts/script.php?script_id=2332
 " pep8/reframe: :SyntasticCheck <lang> / :SyntasticInfo
 " uncomment line below:
-execute pathogen#infect() 
+"execute pathogen#infect() 
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -524,9 +524,23 @@ au BufRead,BufNewFile *.eb set ft=python
 "autocmd filetype crontab setlocal nobackup nowritebackup
 " }
 
-
 " {{{ https://github.com/joonty/vdebug
 " => /users/piccinal/.vim/bundle/vdebug
 " Plugin 'joonty/vdebug'
 " }}}
 
+
+" {{{ https://github.com/ldrumm/compiler-explorer.vim
+" This is the path to the local Compiler Explorer installation required by
+" [compiler-explorer.vim](https://github.com/ldrumm/compiler-explorer.vim
+let g:ce_makefile = '/Users/piccinal/git/compiler-explorer.git/Makefile'
+" Toggle display of the compiler-explorer assembly pane with f3
+map <f3> :CEToggleAsmView<CR>
+" }}}
+
+"{{{ https://github.com/vim-scripts/gdb4vim
+let g:gdb_dbus_server_path = '/Users/piccinal/.vim/bundle/gdb4vim/dbus_gdb/gdb_dbus_server.py'
+" let g:gdb_highlight = 'term=bold ctermbg=darkblue guibg=darkblue'
+" let g:gdb_break_highlight = 'term=bold ctermbg=red guibg=red'
+" let g:gdb_var_active_highlight = 'term=bold ctermfg=green guifg=green'
+"}}}

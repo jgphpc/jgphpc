@@ -1,0 +1,11 @@
+# GDB:
+https://sourceware.org/gdb/wiki/PermissionsDarwin
+-> codesign --entitlements 0.xml -fs jg-gdb-cert $(which gdb)
+(https://stackoverflow.com/questions/18423124/please-check-gdb-is-codesigned-see-taskgated8-how-to-get-gdb-installed-w)
+https://timnash.co.uk/getting-gdb-to-semi-reliably-work-on-mojave-macos/
+
+# LLDB:
+
+https://lldb.llvm.org/use/tutorial.html
+https://lldb.llvm.org/use/map.html
+https://lldb.llvm.org/use/variable.html

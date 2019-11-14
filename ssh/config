@@ -15,10 +15,11 @@ ForwardX11 yes
 # http://user.cscs.ch/computing_resources/data_analysis_and_visualization/visualization_resources/direct_connection_from_a_remote_desktop/paraview/index.html
 
 # paraview:
-Host dom*.cscs.ch
-      ForwardAgent yes
-      Port 22
-      ProxyCommand ssh -q -Y <username>@ela.cscs.ch netcat %h %p -w 10
+#Host dom*.cscs.ch
+#      ForwardAgent yes
+#      Port 22
+#      ProxyCommand ssh -q -Y <username>@ela.cscs.ch netcat %h %p -w 10
+
 #
 # Host daint*.cscs.ch
 # ForwardAgent yes
@@ -34,9 +35,17 @@ Host dom*.cscs.ch
 # -----------------------
 
 # -----------------------
-# EASYBUILD
+# EASYBUILD:
 host github.com
 HostName github.com
-IdentityFile ~/.ssh/id_dsa
+IdentityFile ~/.ssh/id_rsa
 User git
+# -----------------------
+
+# -----------------------
+# INTEL:
+Host devcloud
+User u33528
+IdentityFile ~/.ssh/devcloud-access-key-33528.txt
+ProxyCommand ssh -T -i ~/.ssh/devcloud-access-key-33528.txt guest@devcloud.intel.com
 # -----------------------

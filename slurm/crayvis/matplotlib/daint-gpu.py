@@ -23,7 +23,7 @@ for line in file_in_xt.readlines()[1:]:
     row_j = line.split()[2].split('-')[1].split('c')[0]
     dict_row_of_nid[nidn] = int(row_j)
 
-print('Found', len(dict_cabinet_of_nid), 'compute nodes')    
+print('Found', len(dict_cabinet_of_nid), 'compute nodes')
 print('nid7293: cabinet=', dict_cabinet_of_nid[7293], 'row=',dict_row_of_nid[7293])
 
 #quit(0)
@@ -66,7 +66,7 @@ for nnn in file_in_nids:
     nidtmp = int(nidtmp)
     print(nidtmp, dict_cabinet_of_nid[nidtmp], dict_row_of_nid[nidtmp])
     ndarray_daint_gpu[dict_row_of_nid[nidtmp], dict_cabinet_of_nid[nidtmp] ] += 10
-    
+
 print(ndarray_daint_gpu)
 
 # Display matrix
