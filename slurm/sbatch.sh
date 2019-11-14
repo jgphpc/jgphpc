@@ -207,6 +207,7 @@ echo TMPDIR=\$TMPDIR
 
 # ddt --connect \\
 # /usr/bin/time -p \\
+export SLURM_NTASKS_PER_NODE=$mppnppn
 
 $preaprun srun \\
 --unbuffered \\

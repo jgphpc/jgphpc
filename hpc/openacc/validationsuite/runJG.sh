@@ -292,8 +292,12 @@ parallel_while_loop ;do
 
     #EXE=/apps/common/UES/sandbox/jgp/openacc.git/OpenACCV-V.git/Tests/PGI1810/$i
     #EXE=/apps/common/UES/sandbox/jgp/openacc.git/OpenACCV-V.git/Tests/GNU820/$i
-    EXE=/apps/common/UES/sandbox/jgp/openacc.git/OpenACCV-V.git/Tests/CCE876/$i
-    cd $DDD; srun -Cgpu -n1 -t1 $EXE &>o ; cd -
+    #EXE=/apps/common/UES/sandbox/jgp/openacc.git/OpenACCV-V.git/Tests/CCE876/$i
+
+    #EXE=/apps/common/UES/sandbox/jgp/openacc.git/OpenACCV-V.git/Tests/201910/GNU7+cuda92/$i
+    EXE=/apps/common/UES/sandbox/jgp/openacc.git/OpenACCV-V.git/Tests/201910/GNU8+cuda92/$i
+
+    cd $DDD; LD_PRELOAD=$EBROOTGCCCORE/lib64/libgomp.so.1 srun -Cgpu -n1 -t1 $EXE &>o ; cd -
     #~/sbatch.sh dom 1 $PWD/$i 1 1 1 1 1 -Cgpu "" "cd $DDD;" "" "" ""
     #~/sbatch.sh daint 1 $PWD/$i 1 1 1 1 1 "-Cgpu -pdebug" "" "cd $DDD;" "" "" "$DDD/"
 

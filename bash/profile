@@ -82,4 +82,21 @@ fi
 #         source ~/.bashrc
 # fi
 
-#echo ".profile END"
+# --- module rm xalt
+# module rm xalt
+# export XALT=OFF_PROFILE_JG
+# unset  XALT_EXECUTABLE_TRACKING
+# unset  XALT_GPU_TRACKING
+# unset  XALT_DIR
+# unset  XALT_ETC_DIR
+# unset  XALT_TRANSMISSION_STYLE
+# unset  XALT_SCALAR_SAMPLING
+# unset  ALT_LINKER
+# unset  SLURM_CSCS
+# unset  LD_PRELOAD
+# export PATH=`echo $PATH | sed "s|/apps/daint/UES/xalt/xalt2/xalt/2.7.10/bin||g"`
+# export COMPILER_PATH=`echo $PATH | sed "s|/apps/daint/UES/xalt/xalt2/xalt/2.7.10/bin||g"`
+# #prepend-path PATH /apps/daint/UES/xalt/xalt2/xalt/2.7.10/bin 1000
+# #prepend-path LD_PRELOAD /apps/daint/UES/xalt/xalt2/xalt/2.7.10/lib64/libxalt_init.so
+# #prepend-path COMPILER_PATH /apps/daint/UES/xalt/xalt2/xalt/2.7.10/bin
+# echo ".profile END"

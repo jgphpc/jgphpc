@@ -189,3 +189,4 @@ fi
 #set +x
 # echo ".bashrc END"
 # export LANG=en_US.UTF-8
+module rm xalt

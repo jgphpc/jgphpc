@@ -43,7 +43,8 @@ void print_openacc_version(void) {
         case 201111: cscs_oacc_v=10201111; break;
         case 201306: cscs_oacc_v=20201306; break;
         case 201510: cscs_oacc_v=25201510; break;
-        default:     cscs_oacc_v=_OPENMP;
+        case 201711: cscs_oacc_v=26201711; break;
+        default:     cscs_oacc_v=_OPENACC;
     }
     printf("oaccv=%d \n", cscs_oacc_v);
 #else

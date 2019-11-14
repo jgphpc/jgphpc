@@ -6,7 +6,7 @@ Host *
 # -----------------------
 
 # -----------------------
-ForwardX11 yes
+# ForwardX11 yes
 # ForwardAgent yes
 # StrictHostKeyChecking no
 # -----------------------
@@ -35,8 +35,9 @@ Host dom*.cscs.ch
 
 # -----------------------
 # EASYBUILD
+# test with ssh -T git@github.com
 host github.com
 HostName github.com
-IdentityFile ~/.ssh/id_dsa
+IdentityFile ~/.ssh/id_rsa
 User git
 # -----------------------

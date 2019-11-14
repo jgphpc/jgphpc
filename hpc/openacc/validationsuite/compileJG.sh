@@ -277,7 +277,7 @@ parallel_while_loop ;do
 
     make CC=cc $i &> o_$i
     rc=$?
-    echo $i $rc
+    echo o_$i $rc
 
 done
 

@@ -37,3 +37,9 @@ export EASYBUILD_INSTALLPATH=$III
 module use $III/modules/all
 echo $III/modules/all
 module use /apps/dom/UES/sandbox/piccinal/7.0.UP00/$ARCH/easybuild/modules/all
+
+echo 'export EASYBUILD_PREFIX=/apps/dom/UES/sandbox/piccinal/7.0.UP00/mc/easybuild'
+echo 'export EASYBUILD_INSTALLPATH=$EASYBUILD_PREFIX'
+echo 'export EASYBUILD_BUILDPATH=/tmp/eb.jg/tmp'
+echo 'export EASYBUILD_TMPDIR=/tmp/eb.jg/build/mc'
+

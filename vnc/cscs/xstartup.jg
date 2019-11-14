@@ -7,6 +7,6 @@ xsetroot -solid grey
 # xterm -geometry 80x24+10+10 -ls -title "$VNCDESKTOP Desktop" &
 xterm &
 
-icewmbg & icewm-session & 
+icewmbg & icewm-session-lite & 
 # icewm &
 # twm &

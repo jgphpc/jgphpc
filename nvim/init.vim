@@ -41,8 +41,10 @@ if dein#load_state('$HOME/.config/nvim/bundle')
   call dein#add('nvie/vim-flake8') " F7 https://github.com/nvie/vim-flake8#usage
   call dein#add('rking/ag.vim')
   " call dein#add('fholgado/minibufexpl.vim')
-  " call dein#add('sakhnik/nvim-gdb')
+  call dein#add('sakhnik/nvim-gdb')
   " call dein#add('Vimjas/vim-python-pep8-indent')
+  " call dein#add('hynek/vim-python-pep8-indent')
+  call dein#add('tell-k/vim-autopep8')
 "}}}
 
   " Required:
@@ -63,6 +65,7 @@ endif
 "}}}
 
 "{{{ --- general:
+set guicursor=      " cursor shape
 set ignorecase      " ignore case when searching
 set ruler           " show cursor line at the bottom of the terminal
 " set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids

@@ -4,7 +4,9 @@ module load daint-$ARCH
 # #module	load craype-broadwell
 # module	use /apps/dom/UES/jenkins/7.0.UP00/gpu/easybuild/modules/all
 # module	use /apps/dom/UES/jenkins/7.0.UP00/gpu/easybuild/tools/modules/all
-module load /apps/common/UES/easybuild/modules/all/EasyBuild/latest
+# module load /apps/common/UES/easybuild/modules/all/EasyBuild/latest
+module use /apps/common/UES/easybuild/modules/all
+module load EasyBuild/latest
 
 EEE=/apps/common/UES/sandbox/jgp/production.git
 export EASYBUILD_EXTERNAL_MODULES_METADATA=$EEE/easybuild/cray_external_modules_metadata.cfg
@@ -26,14 +28,22 @@ fi
 export EASYBUILD_RECURSIVE_MODULE_UNLOAD=0
 export LC_ALL=C
 
-TTT=/dev/shm/piccinal
+#ko: TTT=/dev/shm/piccinal
+TTT=/tmp/piccinal
 export EASYBUILD_BUILDPATH=$TTT/easybuild.jg/build/$ARCH
 export EASYBUILD_TMPDIR=$TTT/easybuild.jg/$ARCH/tmp
 # export XDG_RUNTIME_DIR=$SCRATCH/easybuild.jg/run/$ARCH
 
-III=/apps/dom/UES/jenkins/7.0.UP00/$ARCH/easybuild/experimental
+# III=/apps/dom/UES/jenkins/7.0.UP01/PE19.09/$ARCH/easybuild/experimental
+III=/apps/dom/UES/piccinal/7.0.UP01/$ARCH/easybuild
 export EASYBUILD_PREFIX=$III
 export EASYBUILD_INSTALLPATH=$III
 module use $III/modules/all
 echo $III/modules/all
-module use /apps/dom/UES/sandbox/piccinal/7.0.UP00/$ARCH/easybuild/modules/all
+# module use /apps/dom/UES/sandbox/piccinal/7.0.UP00/$ARCH/easybuild/modules/all
+
+#echo 'export EASYBUILD_PREFIX=/apps/dom/UES/sandbox/piccinal/7.0.UP00/gpu/easybuild'
+#echo 'export EASYBUILD_INSTALLPATH=$EASYBUILD_PREFIX'
+#echo 'export EASYBUILD_BUILDPATH=/tmp/eb.jg/tmp'
+#echo 'export EASYBUILD_TMPDIR=/tmp/eb.jg/build/gpu'
+

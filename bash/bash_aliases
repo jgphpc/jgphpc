@@ -22,7 +22,8 @@ export PS1="\[\e[0;32m\]# \u@\h\[\e[m\]:\[\e[1;32m\]\w\[\e[m\]\[\e[0;30m\]\$$__g
 alias rt='cd $SCRATCH/RT'
 alias sx='cd /apps/common/UES/sandbox/jgp'
 #alias sxx='source ~/eff.ebgpu ;cd /apps/common/UES/sandbox/jgp/perfhackaton.git/reframe/lammps/'
-alias rrr='module use /apps/common/UES/modulefiles ;module load reframe'
+#alias rrr='module use /apps/common/UES/modulefiles ;module load reframe'
+alias rrr='module load reframe'
 export LANG=C 
 export LC_ALL=C
 export LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH
@@ -300,11 +301,9 @@ alias le_='ssh -Y piccinal@leone.cscs.ch'
 # alias xc='ssh -Y piccinal@brisi02.login.cscs.ch'
 # alias xcc='ssh -Y piccinal@daint101.login.cscs.ch'
 
-# --- santis
-alias  sa='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@santis'
-alias sa0='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@santis01'
-alias sa1='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@santis101'
-alias sa_='ssh -Y piccinal@santis.cscs.ch'
+# --- sarus
+# alias sa='module use /apps/dom/SI/modulefiles ;module load sarus/1.0.0-rc5-daint'
+alias sa='module load sarus'
 
 # --- daint
 alias  da='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@daint'
@@ -443,8 +442,9 @@ alias tt='tail -50'
 alias ttt='tail -f'
 alias tm='type module ; echo MODULESHOME = $MODULESHOME'
 alias u='cd ..'
-alias v='vim -X --noplugin'
-alias vv='vim -X'
+alias v='nvim'
+#alias v='vim -X --noplugin'
+#alias vv='vim -X'
 alias vimdiff="vimdiff -X -c 'set diffopt+=iwhite' -c 'set wrap' -c 'wincmd w' -c 'set wrap'"
 alias pep='$HOME/.local/bin/pycodestyle --show-source '
 alias wl='wc -l'
@@ -522,7 +522,7 @@ alias gB='git show-branch |more'
 alias gf='git fetch origin'
 alias gp='git pull '
 alias gpm='git pull origin master'
-alias gpp='git push origin'
+alias gpp='git push '
 alias gppm='git push origin master'
 alias gl='git log'
 alias gll='git log --stat'
