@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# https://webrt.cscs.ch/Ticket/Display.html?id=37680
+# https://docs.nersc.gov/jobs/examples/#multiple-parallel-jobs-while-sharing-nodes
+
 ##SBATCH --ntasks-per-node=6      # -N
 
 #SBATCH --output=o
