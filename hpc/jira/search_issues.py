@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 
+# ok: ./search_issues.py summary lite
+# ok: ./search_issues.py desc '"_JGproduction AND (_JGreframeTODO OR _JGreframe)"' |q refra
+# ok: ./search_issues.py desc '"_JGreframe OR _JGreframeTODO"'
+
 import sys
-#import re
+import re
 #import json
 from jira import JIRA
 # from pprint import pprint
@@ -43,14 +47,23 @@ PRIVATE-473 "test ATP support"
     #### myissues.delete()
 
 #{{{ Argument list:
-    my_tag = sys.argv[1]
+    my_field = sys.argv[1]
+    my_tag = sys.argv[2]
     # print ('Argument list:', str(sys.argv))
     # print(sys.argv[0])
 #}}}
-    my_search = 'project = "My private tasks" AND status != Done AND description ~ ' + my_tag
+    if my_field in {'summary'}:
+        my_search = 'project = "My private tasks" AND status != Done AND summary ~ ' + my_tag
+    elif my_field in {'desc'}:
+        my_search = 'project = "My private tasks" AND status != Done AND description ~ ' + my_tag
+    else:
+        print('{} should be summary or desc'.format(my_field))
+        quit()
+
     my_issues = my_jira.search_issues(my_search)
     for i in my_issues:
-        print("{} {}".format(i.key, i.fields.summary))
+        my_tags = re.findall(r'^_JG.*', i.fields.description, re.MULTILINE)
+        print("{} {} {}".format(i.key, i.fields.summary, my_tags))
 #}}}
 
 exit(0)
