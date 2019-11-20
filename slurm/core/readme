@@ -1,0 +1,1 @@
+pstree -p |q a.out ; ps -mo pid,tid,%cpu,psr -p `pgrep a.out`
