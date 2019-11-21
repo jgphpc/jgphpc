@@ -109,6 +109,20 @@ let python_highlight_all = 1
 "}}}
 
 "{{{ --- :
+au BufNewFile,BufRead *.md set ft=sh
+au BufRead,BufNewFile *.m  set filetype=octave
+au BufRead,BufNewFile .oct set filetype=octave 
+au BufNewFile,BufRead *.eb set ft=sh
+au BufNewFile,BufRead *.log set ft=sh
+au BufNewFile,BufRead *.c set ft=c
+au BufNewFile,BufRead *.dox set ft=cpp.doxygen 
+au BufNewFile,BufRead *.CUF set ft=cuda
+au BufNewFile,BufRead *.cuf set ft=fortran
+au BufNewFile,BufRead *.nml set ft=fortran
+au BufNewFile,BufRead *.F03 set ft=fortran
+au BufNewFile,BufRead *.swn set ft=tcsh
+au BufRead,BufNewFile *.ncl set filetype=fortran
+au BufNewFile,BufRead *.pc set ft=sh
 "}}}
 
 "{{{ --- :
