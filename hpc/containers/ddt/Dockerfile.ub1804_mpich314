@@ -1,0 +1,74 @@
+# pollux -> ubjg
+FROM nvidia/cuda:10.1-devel
+#{{{ Ubuntu/18.04.3 gnu/7.4.0
+# https://wiki.ubuntu.com/Releases
+# https://gitlab.com/nvidia/container-images/cuda/blob/master/doc/supported-tags.md
+#
+# DD=Dockerfile.ub1804_mpich314
+# VV=jgphpc/ub1804:mpich314
+# docker build -f ./$DD -t $VV .
+# docker run --rm -it $VV bash
+# mpirun -np 2 /usr/local/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_bw
+#
+# mac: docker image save $VV -o nemo.tar # + scp
+# dom: sarus load nemo.tar nemo/ub1804
+#
+# #VV=sphexa/mpich:ub1804_cuda101_mpi314_sphexa_ci
+# #docker build -f ./$DD -t $VV --build-arg branchname=master .
+# docker push $VV
+#
+# docker run --rm $VV
+# docker run --rm $VV bash -c "./gnu7/omp.app -s 1 -n 10"
+# docker run --rm $VV bash -c "mpirun -np 2 ./gnu7/mpi+omp.app -s 1 -n 20"
+# docker run --rm -it $VV bash
+# docker run $VV cat /etc/os-release
+# FROM ethcscs/mpich:ub1804_cuda101_mpi314_osu
+# PS1="\[\033[31m\]\u:\w/$ \[\e[0;36m\]"
+# vim.tiny ~/.bashrc
+#}}}
+
+#{{{ apt:
+# Err:9 http://archive.ubuntu.com/ubuntu bionic InRelease
+#  Connection failed [IP: 91.189.88.174 80]
+# Err:10 http://security.ubuntu.com/ubuntu bionic-security InRelease
+#  Connection failed [IP: 91.189.88.174 80]
+
+# RUN apt update \
+#     && apt install --quiet -y --no-install-recommends wget make cmake gcc g++ \
+#     gfortran file unzip openssh-client nvim \
+#     && ln -fs /usr/bin/make /usr/bin/gmake
+
+#}}}
+
+#{{{ mpich/3.1.4:
+COPY ./SRC/mpich-3.1.4.tar.gz /tmp/
+RUN echo \
+    && mkdir -p /tmp/M ;cd /tmp/M \    
+    # && wget -q http://www.mpich.org/static/downloads/3.1.4/mpich-3.1.4.tar.gz \
+    # && tar xf mpich-3.1.4.tar.gz \
+    && tar xf /tmp/mpich-3.1.4.tar.gz \
+    && cd mpich-3.1.4 \
+    && ./configure --prefix=/usr --disable-fortran \
+    && make -j6 \
+    && make install \
+    && ldconfig
+#}}}
+
+#{{{ osu-micro-benchmarks:
+COPY ./SRC/osu-micro-benchmarks-5.6.2.tar.gz /tmp/
+RUN echo \
+    && mkdir -p /tmp/OSU ;cd /tmp/OSU \
+    # && wget http://mvapich.cse.ohio-state.edu/download/mvapich/osu-micro-benchmarks-5.6.2.tar.gz \
+    # && tar xf osu-micro-benchmarks-5.6.2.tar.gz \
+    && tar xf /tmp/osu-micro-benchmarks-5.6.2.tar.gz \
+    && cd osu-micro-benchmarks-5.6.2 \
+    && ./configure CC=$(which mpicc) CFLAGS=-g \
+    && make -j4 \
+    && make install
+#}}}
+
+# /usr/local/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_bw
+# srun -N1 -n2 -Cmc sarus run --mpi load/ddt/ub1804:mpich314 bash -c '/usr/local/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_bw'
+# srun -N1 -n2 -Cmc sarus run --mpi load/ddt/ub1804:mpich314 '/usr/local/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_bw'
+# singularity build 0.sif docker-archive://eff.tar # + scp
+# srun -N1 -n2 -Cmc singularity run ./0.sif `which ddt-client` --ddtsessionfile /users/piccinal/.allinea/session/dom101 /usr/local/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_bw
