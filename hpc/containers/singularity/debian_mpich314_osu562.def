@@ -1,0 +1,33 @@
+# sudo singularity build debian_mpich314_osu562.sif ./debian_mpich314_osu562.def
+# mpirun -np 2 singularity exec ./debian_mpich314_osu562.sif \
+#   /usr/local/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_bw
+bootstrap: docker
+from: debian:jessie
+
+%post
+    # Install software
+    apt-get update
+    apt-get install -y file g++ gcc gfortran make gdb strace realpath wget --no-install-recommends
+
+    # Install mpich
+    wget -q http://www.mpich.org/static/downloads/3.1.4/mpich-3.1.4.tar.gz
+    tar xf mpich-3.1.4.tar.gz
+    cd mpich-3.1.4
+    ./configure --disable-fortran --enable-fast=all,O3 --prefix=/usr
+    make -j
+    make install
+    ldconfig
+
+    # Build osu benchmarks
+    wget -q http://mvapich.cse.ohio-state.edu/download/mvapich/osu-micro-benchmarks-5.6.2.tar.gz
+    tar xf osu-micro-benchmarks-5.6.2.tar.gz
+    cd osu-micro-benchmarks-5.6.2
+    ./configure --prefix=/usr/local CC=$(which mpicc) CFLAGS=-g
+    make
+    make install
+    cd ..
+    rm -rf osu-micro-benchmarks-5.6.2
+    rm osu-micro-benchmarks-5.6.2.tar.gz
+
+%runscript
+    /usr/local/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_bw
