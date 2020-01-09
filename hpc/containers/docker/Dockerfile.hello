@@ -1,0 +1,27 @@
+FROM ethcscs/mpich:ub1804_cuda101_mpi314_osu
+# SS=hello
+# DD=Dockerfile.$SS
+# VV=jgphpc/mpich:ub1804_cuda101_mpi314_$SS
+# sudo docker images
+# sudo docker build -f ./$DD -t $VV .
+# sudo docker save --output $SS.tar $VV
+# sudo chown ubuntu:ubuntu $SS.tar
+# scp $SS.tar piccinal@ela.cscs.ch:/project/csstaff/piccinal/CRAYPE_CONTAINER/
+# sarus load /project/csstaff/piccinal/CONTAINERS/$SS.tar $VV
+# srun -Cgpu -n2 sarus run --mpi load/$VV /tmp/hello.exe
+#
+# docker push $VV
+# docker run --rm $VV
+# docker run --rm $VV bash -c "./gnu7/omp.app -s 1 -n 10"
+# docker run --rm $VV bash -c "mpirun -np 2 ./gnu7/mpi+omp.app -s 1 -n 20"
+# docker run --rm -it $VV bash
+# docker run $VV cat /etc/os-release
+
+RUN cd /tmp/ \
+    && wget https://raw.githubusercontent.com/eth-cscs/reframe/master/cscs-checks/prgenv/src/hello_world_mpi.c \
+    && mpicc -g -O0 hello_world_mpi.c -o hello.exe \
+    && ls -la ;pwd
+
+WORKDIR /tmp/
+
+CMD ["/tmp/hello.exe"]
