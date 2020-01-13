@@ -1,0 +1,58 @@
+FROM jgphpc/deb_mpich314_osu562:latest
+# ---
+# need to build where the sph dir is:
+# sudo docker build -f DOCKER/DEBIAN/Dockerfile.deb_mpich314_sphexa_ddt -t jgphpc/deb_mpich314_sphexa:ddt .
+# ---
+# sudo docker push jgphpc/deb_mpich314_sphexa:ddt
+# ---
+# sarus pull jgphpc/deb_mpich314_sphexa:ddt
+# ---
+# srun -Cgpu -t10 -n12 sarus run --mpi \
+# --mount=type=bind,source=$EBROOTDDT,destination=$EBROOTDDT \
+# --mount=type=bind,source=/usr/local/bin,destination=/usr/local/bin \
+# --mount=type=bind,source=$HOME,destination=$HOME \
+# jgphpc/deb_mpich314_sphexa:ddt $DDTC \
+# /home/bin/gnu7/mpi+omp.app -s 0 -n 100
+# DDTC="`echo $EBROOTDDT`/bin/ddt-client --ddtsessionfile /users/piccinal/.allinea/session/dom101-1"
+#
+#
+#
+# sudo docker save --output eff.tar jgphpc/mpich:ub1804_cuda101_mpi314_sphexa_reframe
+# sudo chown ubuntu:ubuntu eff.tar
+# scp eff.tar piccinal@ela.cscs.ch:/project/csstaff/piccinal/CRAYPE_CONTAINER/
+# sarus load /project/csstaff/piccinal/CRAYPE_CONTAINER/eff.tar $VV
+# srun -Cgpu -n1 sarus run --mpi load/jgphpc/mpich:ub1804_cuda101_mpi314_sphexa_reframe bash -c "/tmp/SPH-EXA_mini-app/bin/gnu7/mpi+omp+cuda.app -s 2 -n 100"
+
+# docker build -f ./$DD -t $VV --build-arg branchname=master .
+# docker push $VV
+# docker run --rm $VV
+# docker run --rm $VV bash -c "./gnu7/omp.app -s 1 -n 10"
+# docker run --rm $VV bash -c "mpirun -np 2 ./gnu7/mpi+omp.app -s 1 -n 20"
+# docker run --rm -it $VV bash
+# docker run $VV cat /etc/os-release
+
+
+# -----------------------------------------------------------------------------
+COPY SPH-EXA_mini-app.git /home/SPH-EXA_mini-app/
+
+RUN cd /home/SPH-EXA_mini-app ;ls -la ;pwd \
+# compile mpi+omp with gnu7 (-DUSE_MPI):
+    # -O2
+    && make mpi+omp CXXFLAGS="-std=c++14 -fopenmp -g -O0 -DNDEBUG -I. -Isrc" BINDIR=bin/gnu7 \
+    && mkdir -p /home/bin \
+    && cp -a bin/gnu7 /home/bin/
+
+# # --- cuda:
+# # cuda/10.1 supports gcc<9
+# # compile mpi+omp+cuda with gnu7: 
+#     && make mpi+omp+cuda CXXFLAGS="-std=c++14 -fopenmp -g -O2 -DNDEBUG -I. -Isrc" BINDIR=bin/gnu7 CXX=/usr/bin/g++-7 \
+#     NVCCFLAGS="-std=c++14 --expt-relaxed-constexpr -arch=sm_60 -rdc=true -ccbin=\${CXX}" \
+# # compile mpi+omp+cuda with gnu8: 
+#     && make mpi+omp+cuda CXXFLAGS="-std=c++14 -fopenmp -g -O2 -DNDEBUG -I. -Isrc" BINDIR=bin/gnu8 CXX=/usr/bin/g++-8 \
+#     NVCCFLAGS="-std=c++14 --expt-relaxed-constexpr -arch=sm_60 -rdc=true -ccbin=\${CXX}" \
+# # list executables:
+#     && ls -laR bin
+# 
+WORKDIR /home/bin/
+
+CMD ["/home/bin/gnu7/mpi+omp.app", "-s", "0", "-n", "10"]
