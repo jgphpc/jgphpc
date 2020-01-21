@@ -1,0 +1,6 @@
+# INSTALL:
+https://github.com/containers/buildah/blob/master/install.md#ubuntu
+https://github.com/containers/buildah/blob/master/install.md#example-from-the-fedora-containers-common-package
+
+# BUILD IMAGE:
+buildah bud -t jgphpc/eff:eff_buildah -f ./Dockerfile.eff .

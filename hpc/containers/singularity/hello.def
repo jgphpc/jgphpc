@@ -1,0 +1,39 @@
+Bootstrap: docker
+From: ethcscs/mpich:ub1804_cuda101_mpi314_osu
+# X=hello
+# sudo singularity build $X.sif $X.def
+# module load singularity/3.5.2-daint # <---------
+# srun -Cgpu -n1 singularity run ./$X.sif
+# srun --pty -Cgpu -N1 -n1 singularity shell ./ub1804_cuda101_mpich314_sphexa_reframe.sif
+
+# rm -f core.*;C=7440;CUBE=673;srun --wait 0 -u --ntasks=$C \
+# --ntasks-per-node=24 --cpus-per-task=1 --ntasks-per-core=2 --cpu_bind=verbose \
+# --hint=multithread singularity exec \
+# -B/apps/daint/UES/jenkins/7.0.UP01/gpu/easybuild/tools/software/ddt/20.0-Suse-15.0:/apps/daint/UES/jenkins/7.0.UP01/gpu/easybuild/too
+ls/software/ddt/20.0-Suse-15.0 \
+# -B/usr/local/bin:/usr/local/bin \
+# /scratch/snx3000/piccinal/RT/SINGULARITY/ub1804_cuda101_mpich314_sphexa_reframe.sif \
+# /home/SPH-EXA_mini-app.git/bin/gnu7/mpi+omp.app -s 0 -n $CUBE &> oo.$C
+
+# -----------------------------------------------------------------------------
+# srun -Cgpu -N1 singularity exec --nv ./ub1804_cuda101_mpich314_sphexa_reframe.sif nvidia-smi
+# srun -Cgpu -N1 singularity exec --nv ./ub1804_cuda101_mpich314_sphexa_reframe.sif /home/SPH-EXA_mini-app.git/bin/gnu7/mpi+omp+cuda.ap
+p -s 0 -n 100
+# srun -Cgpu -N2 -n2 singularity exec --nv ./ub1804_cuda101_mpich314_sphexa_reframe.sif /home/SPH-EXA_mini-app.git/bin/gnu7/mpi+omp+cud
+a.app -s 2 -n 100
+
+%files
+    SPH-EXA_mini-app.git /home/
+
+%post
+    cd /home
+    # serial:
+    # wget https://raw.githubusercontent.com/eth-cscs/reframe/master/cscs-checks/prgenv/src/hello_world_serial.c
+    # gcc -g -O0 hello_world_serial.c -o hello.exe
+    # mpi:
+    wget https://raw.githubusercontent.com/eth-cscs/reframe/master/cscs-checks/prgenv/src/hello_world_mpi.c
+    mpicc -g -O0 hello_world_mpi.c -o hello.exe
+    ls -la ;pwd
+
+%runscript
+    /home/hello.exe

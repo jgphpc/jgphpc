@@ -1,0 +1,45 @@
+Bootstrap: docker
+From: ethcscs/mpich:ub1804_cuda101_mpi314_osu
+# https://user.cscs.ch/tools/containers/singularity/
+# X=ub1804_cuda101_mpich314_sphexa_ddt
+# sudo singularity build $X.sif $X.def
+# module load singularity/3.5.2-daint # <---------
+# srun -Cgpu -N2 singularity run ./$X.sif
+# srun --pty -Cgpu -N1 -n1 singularity shell ./$X.sif
+
+# rm -f core.*;C=7440;CUBE=673;srun --wait 0 -u --ntasks=$C \
+# --ntasks-per-node=24 --cpus-per-task=1 --ntasks-per-core=2 --cpu_bind=verbose \
+# --hint=multithread singularity exec \
+# -B/apps/daint/UES/jenkins/7.0.UP01/gpu/easybuild/tools/software/ddt/20.0-Suse-15.0:/apps/daint/UES/jenkins/7.0.UP01/gpu/easybuild/tools/software/ddt/20.0-Suse-15.0 \
+# -B/usr/local/bin:/usr/local/bin \
+# /scratch/snx3000/piccinal/RT/SINGULARITY/$X.sif \
+# /home/SPH-EXA_mini-app.git/bin/gnu7/mpi+omp.app -s 0 -n $CUBE &> oo.$C
+
+# -----------------------------------------------------------------------------
+# srun -Cgpu -N1 singularity exec --nv ./$X.sif nvidia-smi
+# srun -Cgpu -N1 singularity exec --nv ./$X.sif /home/SPH-EXA_mini-app.git/bin/gnu7/mpi+omp+cuda.app -s 0 -n 100
+# srun -Cgpu -N2 -n2 singularity exec --nv ./$X.sif /home/SPH-EXA_mini-app.git/bin/gnu7/mpi+omp+cuda.app -s 2 -n 100
+
+%files
+    SPH-EXA_mini-app.git /home/
+
+%post
+    cd /home/SPH-EXA_mini-app.git/ ; ls -la ;pwd; mkdir -p /home/bin;
+    make mpi+omp CXXFLAGS="-std=c++14 -fopenmp -g -O2 -DNDEBUG -I. -Isrc" BINDIR=bin/gnu7 && cp -a bin/gnu7 /home/bin
+# --- cuda:
+# cuda/10.1 supports gcc<9
+
+## compile mpi+omp+cuda with gnu7: 
+    make clean
+    make mpi+omp+cuda CXXFLAGS="-std=c++14 -fopenmp -g -O2 -DNDEBUG -I. -Isrc" BINDIR=bin/gnu7 CXX=/usr/bin/g++-7 \
+    NVCCFLAGS="-std=c++14 --expt-relaxed-constexpr -arch=sm_60 -rdc=true -G -ccbin=\${CXX}" && cp -a bin/gnu7 /home/bin
+
+## compile mpi+omp+cuda with gnu8: 
+    make clean
+    make mpi+omp+cuda CXXFLAGS="-std=c++14 -fopenmp -g -O2 -DNDEBUG -I. -Isrc" BINDIR=bin/gnu8 CXX=/usr/bin/g++-8 \
+    NVCCFLAGS="-std=c++14 --expt-relaxed-constexpr -arch=sm_60 -rdc=true -G -ccbin=\${CXX}" && cp -a bin/gnu8 /home/bin
+## list executables:
+    ls -laR /home/bin/
+
+%runscript
+    /home/bin/gnu7/mpi+omp.app
