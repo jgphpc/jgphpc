@@ -1,12 +1,17 @@
 " Get neovim from https://github.com/neovim/neovim/wiki/Installing-Neovim
 "
+" ---------------------------
+" export LC_ALL=en_US.UTF-8
+" export LANG=en_US.UTF-8
+" export LANGUAGE=en_US.UTF-8
+" :checkhealth
+" ---------------------------
+"
 " Get plugin manager from https://github.com/Shougo/dein.vim#unixlinux-or-mac-os-x
 "   wget https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh
 "   . ./installer.sh ~/.config/nvim/bundle
 "   ln -s ~/jgphpc.git/nvim/init.vim ~/.config/nvim/init.vim
 "
-"
-
 "{{{dein Scripts-----------------------------
 if &compatible
   set nocompatible               " Be iMproved
@@ -24,27 +29,28 @@ if dein#load_state('$HOME/.config/nvim/bundle')
   call dein#add('$HOME/.config/nvim/bundle/repos/github.com/Shougo/dein.vim')
 
 "{{{ --- JG plugins:
+  " :CheckHealth
+  " conda install pynvim
+  "no: pip3 install --user pynvim
+  " :UpdateRemotePlugins
+  " --------------------
   " Add or remove your plugins here like this:
-  "call dein#add('Shougo/neosnippet.vim')
+  call dein#add('wsdjeg/dein-ui.vim') " UI -> :DeinUpdate
+  "call dein#add('Shougo/neosnippet.vim') " 
   "call dein#add('Shougo/neosnippet-snippets')
   " call dein#add('github_username'/'project_name')
   call dein#add('majutsushi/tagbar') " TODO: nnoremap <silent> <C-K><C-T> :TagbarToggle<CR>
-  call dein#add('Shougo/defx.nvim')
-
-  " https://github.com/Shougo/deoplete.nvim/blob/master/doc/deoplete.txt
-  call dein#add('roxma/vim-hug-neovim-rpc')
-  call dein#add('Shougo/deoplete.nvim')
+  call dein#add('Shougo/defx.nvim')  " file explorer
+  " call dein#add('roxma/vim-hug-neovim-rpc')
+  call dein#add('Shougo/deoplete.nvim') " completion
   let g:deoplete#enable_at_startup = 1
-  " pip3 install --user pynvim
-  " :UpdateRemotePlugins
-
-  call dein#add('nvie/vim-flake8') " F7 https://github.com/nvie/vim-flake8#usage
-  call dein#add('rking/ag.vim')
-  " call dein#add('fholgado/minibufexpl.vim')
-  call dein#add('sakhnik/nvim-gdb')
-  " call dein#add('Vimjas/vim-python-pep8-indent')
-  " call dein#add('hynek/vim-python-pep8-indent')
-  call dein#add('tell-k/vim-autopep8')
+  " call dein#add('nvie/vim-flake8') " F7 https://github.com/nvie/vim-flake8#usage
+  " call dein#add('rking/ag.vim') " the_silver_searcher
+  " call dein#add('fholgado/minibufexpl.vim') " MiniBufExplorer
+  " call dein#add('sakhnik/nvim-gdb')              " gdb
+  " call dein#add('Vimjas/vim-python-pep8-indent') " pep8
+  " call dein#add('hynek/vim-python-pep8-indent')  " pep8
+  " call dein#add('tell-k/vim-autopep8')           " pep8
 "}}}
 
   " Required:
