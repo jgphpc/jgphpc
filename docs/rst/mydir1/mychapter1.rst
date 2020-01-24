@@ -19,5 +19,7 @@ A typical example configuration file is :download:`conf.py </conf.py>`:
    :language: python
    :lines: 4-6
    :linenos:
+   :emphasize-lines: 1,2
+.. # means 4,5
 
 .. this is a comment: to indent/dedent, use `:dedent: -1`

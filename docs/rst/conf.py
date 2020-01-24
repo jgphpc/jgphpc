@@ -4,6 +4,8 @@ import os
 import re
 import sys
 import sphinx_rtd_theme
+sys.path.insert(0, os.path.abspath('.'))
+import reframe
 source_suffix = '.rst'
 master_doc = 'index'
 # -- Project information -----------------------------------------------------
@@ -11,7 +13,20 @@ project = 'HPCTOOLS'
 copyright = '2020, Swiss National Supercomputing Center (CSCS), All rights reserved.'
 author = 'jg'
 # -- General configuration ---------------------------------------------------
-extensions = []
+#extensions = []
+extensions = ['sphinx.ext.autodoc',
+              'sphinx.ext.autosummary',
+              'sphinx.ext.doctest',
+              'sphinx.ext.todo',
+              'sphinx.ext.coverage',
+              'sphinx.ext.imgmath',
+              'sphinx.ext.intersphinx',
+              'sphinx.ext.ifconfig',
+              'sphinx.ext.viewcode',
+              'sphinx.ext.githubpages']
+intersphinx_mapping = {
+    'python': ('http://docs.python.org/3', None),
+}
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # -- Options for HTML output -------------------------------------------------

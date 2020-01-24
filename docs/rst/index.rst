@@ -4,12 +4,24 @@
 
    mydir1/mychapter1.rst
    XXX <mydir1/mychapter1.rst>
+   Getting started <started>
    Reference Guide <reference>
+
 .. this is a comment: :hidden:   
 
 =============
 JG Cheatsheet
 =============
+
+.. code-block:: none
+
+  # with overline, for parts
+  * with overline, for chapters
+  =, for sections
+  -, for subsections
+  ^, for subsubsections
+  ", for paragraphs
+
 
 -----------------
  Subtitle: Titles
@@ -83,6 +95,10 @@ aa   bb
 .. warning:: this is a warning
 .. tip:: this is a tip
 .. note:: this is a note
+
+.. TODO: Admonitions: attention, caution, danger, error, hint, important, note,
+ tip, warning and the generic admonition.
+
 
 ---------------------
  Subtitle: Code
