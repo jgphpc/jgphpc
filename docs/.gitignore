@@ -1,2 +1,4 @@
 docs/_build/
 docs/html/
+docs/rst/.DS_Store
+docs/rst/.vscode
