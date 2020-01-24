@@ -1,4 +1,5 @@
-docs/_build/
-docs/html/
-docs/rst/.DS_Store
-docs/rst/.vscode
+*/.DS_Store
+*/.vscode
+*/_build/
+*/doctrees/
+*/html/
