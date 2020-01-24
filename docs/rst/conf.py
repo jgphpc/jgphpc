@@ -5,9 +5,11 @@ import re
 import sys
 import sphinx_rtd_theme
 sys.path.insert(0, os.path.abspath('.'))
-import reframe
+import reframechecks
+# import reframe
 source_suffix = '.rst'
 master_doc = 'index'
+autodoc_mock_imports = ['reframe']
 # -- Project information -----------------------------------------------------
 project = 'HPCTOOLS'
 copyright = '2020, Swiss National Supercomputing Center (CSCS), All rights reserved.'

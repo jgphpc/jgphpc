@@ -2,40 +2,34 @@
 Reference Guide
 ===============
 
-This page tests links.
+This page tests links, see ``started.rst``.
 
 Foo Documentation
 =================
 
-See :func:`reframe.core.foo.hello` and :func:`reframe.core.foo.Foo.bye`.
-
-Also, see :meth:`reframe.core.foo.hello` and :meth:`reframe.core.foo.Foo.bye`.
-
 automodule
 ============
 
-* reframe/core/foo.py
+* reframechecks.common.sphexa/foo.py
 
-.. .. automodule:: reframe.core.pipeline.RegressionTest
-.. automodule:: reframe.core.foo
+.. automodule:: reframechecks.common.sphexa.foo
     :show-inheritance:
 
 autoclass
 ===========
 
-* reframe/core/foo.py -> class Foo:
+* reframechecks.common.sphexa/foo.py -> class Foo:
 
-.. .. autoclass:: reframe.core.pipeline.RegressionTest
-.. autoclass:: reframe.core.foo.Foo
+.. autoclass:: reframechecks.common.sphexa.foo.Foo
     :members:
     :show-inheritance:
 
 automethod
 ============
 
-* reframe/core/foo.py -> 
+* reframechecks.common.sphexa/foo.py -> 
 
-.. automethod:: reframe.core.foo.hello
+.. automethod:: reframechecks.common.sphexa.foo.hello
 ..    :show-inheritance:
 
 autofunction
@@ -43,7 +37,10 @@ autofunction
 
 .. yes: https://thomas-cokelaer.info/tutorials/sphinx/rest_syntax.html#auto-document-your-python-code
 
-.. this is a comment:ok .. currentmodule:: reframe.core.foo
+.. this is a comment:ok .. currentmodule:: reframechecks.common.sphexa.foo
+.. .. currentmodule:: reframechecks.common.sphexa.foo
+
+.. autofunction:: seconds_neigh
 .. autofunction:: square
 .. autofunction:: hello
 
@@ -54,7 +51,7 @@ TODO
 link to parameter::
 ===================
 
-* Link to :attr:`prefix <reframe.core.pipeline.RegressionTest.prefix>` parameter
+* Link to :attr:`prefix <reframechecks.common.sphexa.pipeline.RegressionTest.prefix>` parameter
 
 Howto
 =====
@@ -64,7 +61,7 @@ Howto
    Runtime services
    ----------------
 
-   .. automodule:: reframe.core.runtime
+   .. automodule:: reframechecks.common.sphexa.runtime
       :members:
       :exclude-members: temp_runtime, switch_runtime
       :show-inheritance:
@@ -73,7 +70,7 @@ Howto
    Modules System API
    ------------------
 
-   .. autoclass:: reframe.core.modules.ModulesSystem
+   .. autoclass:: reframechecks.common.sphexa.modules.ModulesSystem
 
 -----------------
 
@@ -115,7 +112,7 @@ Howto
 
             This is set by the framework during the :func:`setup` phase.
 
-            :type: :class:`reframe.core.environments.Environment`.
+            :type: :class:`reframechecks.common.sphexa.environments.Environment`.
             '''
             return self._current_environ
 

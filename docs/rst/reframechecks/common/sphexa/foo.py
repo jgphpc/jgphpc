@@ -1,5 +1,15 @@
 """foo module."""
 
+import reframe.utility.sanity as sn
+
+@sn.sanity_function
+def seconds_neigh(self):
+    '''Reports `FindNeighbors` time in seconds using the internal timer
+    from the code
+    '''
+    regex = '^# FindNeighbors:\s+(?P<sec>.*)s'
+    return sn.round(sn.sum(sn.extractall(regex, self.stdout, 'sec', float)), 4)
+
 def square(a):
     """short description of the function square
 
