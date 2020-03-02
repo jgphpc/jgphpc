@@ -1,5 +1,8 @@
 # https://docs.google.com/spreadsheets/d/1GepYjOgcZNz83nNKolKanAEqasX1ffhaOJqNkougRC8/edit?usp=sharing
 
+import kanboard
+kb = kanboard.Client('http://localhost/Sites/kanboard/jsonrpc.php', 'admin', 'admin')
+# x=kb.getmydashboard()
 
 # https://docs.kanboard.org/en/latest/api/task_procedures.html#gettask
 # https://github.com/kanboard/python-api-client
@@ -7,15 +10,15 @@
 kb.getAllTasks(project_id=3)
 kb.removeTask(task_id=94)
 
+seq 18 22 |awk '{print "kb.removeTask(task_id="$0")"}'
 
-kb.createTask(project_id=1, column_id=2, title='education: python')
-kb.createTask(project_id=1, column_id=2, title='L0_meetings')
-kb.createTask(project_id=1, column_id=2, title='L1_tickets')
+kb.createTask(project_id=1, column_id=2, title='education:')
+kb.createTask(project_id=1, column_id=2, title='L0_meetings:')
+kb.createTask(project_id=1, column_id=2, title='L1:roster')
 kb.createTask(project_id=1, column_id=2, title='L2_debug:')
 kb.createTask(project_id=1, column_id=2, title='L2_tools:')
-kb.createTask(project_id=1, column_id=2, title='L2_daint:')
-kb.createTask(project_id=1, column_id=2, title='RAM_containers:')
+kb.createTask(project_id=1, column_id=2, title='containers:')
 
-kb.createTask(project_id=1, column_id=14, title='reframe: tiger')
-kb.createTask(project_id=1, column_id=14, title='benchm:')
+#kb.createTask(project_id=1, column_id=14, title='reframe: tiger')
+#kb.createTask(project_id=1, column_id=14, title='benchm:')
 # kb.createTask(project_id=3, column_id=14, title='sphexa:')

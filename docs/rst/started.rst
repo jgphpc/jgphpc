@@ -7,37 +7,40 @@ This page tests links to `foo.py` (reference2.rst), see `documentation <http://w
 link to module
 ================
 
-* ``.. automodule:: reframe.core.foo``
-* Link to :mod:`foo.py <reframe.core.foo>` module
-* ``:mod:`Foo <reframe.core.foo>```
+* ``.. automodule:: reframechecks.common.sphexa.foo``
+* Link to :mod:`foo.py <reframechecks.common.sphexa.foo>` module
+* Link to :mod:`foo.py/square <reframechecks.common.sphexa.foo.square>` module
+* ``:mod:`Foo <reframechecks.common.sphexa.foo>```
 
 link to class
 ===============
 
-* ``.. autoclass:: reframe.core.foo.Foo``
-* Link to :class:`Foo <reframe.core.foo.Foo>` class
-* ``:class:`Foo <reframe.core.foo.Foo>```
+* ``.. autoclass:: reframechecks.common.sphexa.foo.Foo``
+* Link to :class:`Foo <reframechecks.common.sphexa.foo.Foo>` class
+* ``:class:`Foo <reframechecks.common.sphexa.foo.Foo>```
   
 link to method
 ==============
 
-* ``.. automethod:: reframe.core.foo.hello``
+* ``.. automethod:: reframechecks.common.sphexa.foo.hello``
 
 * Inside Class works:
 
-    * Link to :meth:`reframe.core.foo.Foo.bye` method.
-    * Link to :meth:`bye <reframe.core.foo.Foo.bye>` method.
-    * ``:meth:`bye <reframe.core.foo.Foo.bye>```
+    * Link to :meth:`reframechecks.common.sphexa.foo.Foo.bye` method.
+    * Link to :meth:`bye <reframechecks.common.sphexa.foo.Foo.bye>` method.
+    * ``:meth:`bye <reframechecks.common.sphexa.foo.Foo.bye>```
 
 * Not inside Class works:
 
-    * Link to :meth:`reframe.core.foo.hello` method.
-    * Link to :meth:`hello <reframe.core.foo.hello>` method.
-    * ``:meth:`hello <reframe.core.foo.hello>```
+    * Link to :meth:`reframechecks.common.sphexa.foo.hello` method.
+    * Link to :meth:`hello <reframechecks.common.sphexa.foo.hello>` method.
+    * Link to :meth:`square<reframechecks.common.sphexa.foo.square>` method.
+    * ``:meth:`hello <reframechecks.common.sphexa.foo.hello>```
       
 link to function
 ================
 
 * ``.. autofunction:: square``
-* Link to :func:`reframe.core.foo.square` function.
-* Link to :func:`square <reframe.core.foo.square>` function.
+* Link to :func:`reframechecks.common.sphexa.foo.square` function.
+* Link to :func:`square <reframechecks.common.sphexa.foo.square>` function.
+* Link to :func:`square (ko) <foo.square>` function.

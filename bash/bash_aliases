@@ -259,6 +259,7 @@ alias elapng='scp piccinal@ela.cscs.ch:eff.png .'
 alias elajpg='scp piccinal@ela.cscs.ch:eff.jpg .'
 alias elahtm='scp piccinal@ela.cscs.ch:eff.html .'
 alias eladocx='scp piccinal@ela.cscs.ch:eff.docx .'
+alias elatxt='scp piccinal@ela.cscs.ch:eff.txt .'
 alias elaxlsx='scp piccinal@ela.cscs.ch:eff.xlsx .'
 # alias uv='ssh -Y piccinal@rothorn.cscs.ch'
 # alias al='ssh -Y piccinal@albis.cscs.ch'
@@ -283,24 +284,11 @@ alias ubjg='ssh -Y ubuntu@148.187.97.112' # openstack pollux
 # alias lcg='ssh -Y jgp@wn59.lcg.cscs.ch'
 
 # --- ela
-alias ela0='ssh -Y piccinal@ela0.login.cscs.ch'
-alias ela1='ssh -Y piccinal@ela1.login.cscs.ch'
-alias ela2='ssh -Y piccinal@ela2.login.cscs.ch'
-alias ela3='ssh -Y piccinal@ela3.login.cscs.ch'
+#alias ela0='ssh -Y piccinal@ela0.login.cscs.ch'
+#alias ela1='ssh -Y piccinal@ela1.login.cscs.ch'
+#alias ela2='ssh -Y piccinal@ela2.login.cscs.ch'
+#alias ela3='ssh -Y piccinal@ela3.login.cscs.ch'
 alias  ela='ssh -Y piccinal@ela.cscs.ch'
-
-# --- greina
-# alias g='ssh -Y piccinal@greina0.cscs.ch'
-# alias gg='ssh -Y piccinal@148.187.83.10' # new greina
-
-# --- leone
-alias le='ssh -Y piccinal@ela2.login.cscs.ch -t ssh -Y piccinal@leone'
-alias le_='ssh -Y piccinal@leone.cscs.ch'
-# alias mic='ssh -Y piccinal@dommic.cscs.ch'
-# alias ro='ssh -Y piccinal@rosa1.login.cscs.ch'
-# alias roo='ssh -Y piccinal@rosa101.login.cscs.ch'
-# alias xc='ssh -Y piccinal@brisi02.login.cscs.ch'
-# alias xcc='ssh -Y piccinal@daint101.login.cscs.ch'
 
 # --- sarus
 # alias sa='module use /apps/dom/SI/modulefiles ;module load sarus/1.0.0-rc5-daint'
@@ -333,11 +321,7 @@ alias k1='~/linux.git/bash/kesch.sh'
 alias ta='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@tave'
 alias ta_='ssh -Y piccinal@tave'
 
-# --- monch
-alias mon='ssh -Y piccinal@ela2.login.cscs.ch -t ssh -Y piccinal@monch.cscs.ch'
-alias mon_='ssh -Y piccinal@monch.cscs.ch'
-# alias to='ssh piccinal@todi.cscs.ch -Y'
-# alias sun='ssh jgp@wn59.lcg.cscs.ch'
+alias elamac='sudo sshfs -o allow_other piccinal@ela.cscs.ch:/apps/common/UES/sandbox/jgp/hpctools.git/docs/source /tmp/ELA # sudo umount /tmp/ELA'
 alias vnc='dom: vncserver -geometry 1920x1080 -xstartup ~/linux.git/vnc/cscs/xstartup.jg; client: "#donotuse:MACconnectCSCSbecauseInterruptsAfter60min; ssh -f -L 5901:dom101.cscs.ch:5901 -C ela.cscs.ch -l piccinal sleep 30 ;/Applications/*/TigerVNC*.app localhost:5901";teamviewer;collab.switch.ch'
 
 # --- ibm
@@ -398,6 +382,7 @@ alias llqq='llq -u piccinal'
 alias llqqq='watch llq -u piccinal'
 alias l='ls -X'
 alias lt='ls -lrt'
+alias lh='ls -lrhS'
 alias lstop='lstopo --of txt --no-io --no-bridges'
 alias memsgigb='grep MemFree /proc/meminfo |awk "{print (2115399824-\$2)/(1024**2)}"'
 #alias mplayer='~/jg/mplayer/mplayer -nolirc -nojoystick'
@@ -846,3 +831,7 @@ fi
 # docker ps -a  # docker rm $(docker ps -qa --no-trunc --filter "status=exited")
 # docker images # docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
 # docker images | grep "none" # docker rmi $(docker images | grep "none" | awk '/ / { print $3 }')
+# # --- image2dockerfile:
+alias dfimage='docker run -v /var/run/docker.sock:/var/run/docker.sock --rm chenzj/dfimage'
+# mytag='ethcscs/mpich:ub1804_cuda101_mpi314_sphexa' ;myid=`docker images $mytag -q` ;dfimage $myid
+alias dockerbash='echo docker run --rm -it'
