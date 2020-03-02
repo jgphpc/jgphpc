@@ -9,6 +9,7 @@ link to module
 
 * ``.. automodule:: reframechecks.common.sphexa.foo``
 * Link to :mod:`foo.py <reframechecks.common.sphexa.foo>` module
+* Link to :mod:`foo.py/square <reframechecks.common.sphexa.foo.square>` module
 * ``:mod:`Foo <reframechecks.common.sphexa.foo>```
 
 link to class
@@ -42,3 +43,4 @@ link to function
 * ``.. autofunction:: square``
 * Link to :func:`reframechecks.common.sphexa.foo.square` function.
 * Link to :func:`square <reframechecks.common.sphexa.foo.square>` function.
+* Link to :func:`square (ko) <foo.square>` function.

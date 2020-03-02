@@ -23,3 +23,9 @@ alias sx='cd /Users/piccinal/git/production.git/easybuild/easyconfigs'
 alias eb_='source /usr/local/opt/lmod/init/profile; export PATH=/Users/piccinal/bin:$PATH ;source /Users/piccinal/jgphpc.git/easybuild/mac-jg.sh'
 # echo .bash_profile end
 export PATH="/usr/local/opt/mysql-client/bin:$PATH"
+
+if [ `uname -p` == 'i386' ] ;then
+    # echo macjg
+    source /usr/local/opt/modules/init/bash
+    export PATH=/Applications/CSCS/miniconda3/bin:$PATH
+fi

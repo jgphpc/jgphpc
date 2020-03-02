@@ -22,6 +22,29 @@ JG Cheatsheet
   ^, for subsubsections
   ", for paragraphs
 
+============
+Part title..
+============
+
+***************
+Chapter title..
+***************
+
+Section title..
+===============
+
+Subsection title..
+------------------
+
+Subsubsection title..
+^^^^^^^^^^^^^^^^^^^^^
+
+Paragrapth title..
+""""""""""""""""""
+
+Paragrapth title..
+******************
+
 
 -----------------
  Subtitle: Titles
