@@ -11,7 +11,7 @@
 export is_bash_aliases_set=1
 __git_branch='`git branch 2> /dev/null |grep ^* |cut -d\* -f2 |tr -d " "`'
 # export PS1="\[\e[0;32m\] \u@\h\[\e[m\]:\[\e[1;32m\]\w\[\e[m\]\[\e[1;32m\]\$$__git_branch \[\e[m\]\[\e[1;37m\]"
-export PS1="\[\e[0;32m\]# \u@\h\[\e[m\]:\[\e[1;32m\]\w\[\e[m\]\[\e[0;30m\]\$$__git_branch \[\e[m\]\[\e[1;37m\]\n"
+export PS1="\[\e[0;32m\]# \u@\h\[\e[m\]|\[\e[1;32m\]\w\[\e[m\]\[\e[0;30m\]\$$__git_branch \[\e[m\]\[\e[1;37m\]\n"
 # PS1='\[\e[0;32m\] \h\[\e[m\]: '
 # export PS1='\[\e[0;32m\]\t \u@\h\[\e[m\]:\[\e[1;32m\]\w\[\e[m\] \[\e[1;32m\]\$ \[\e[m\]\[\e[1;37m\]'
 # echo PS1='\[\e[0;32m\]\t \u@\h\[\e[m\]:\[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$ \[\e[m\]\[\e[1;37m\]'
@@ -275,6 +275,7 @@ alias dom='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@dom'
 
 # --- basel
 alias ba='ssh -Y piccinal@dmi-cl-login.dmi.unibas.ch'
+alias minihpc='ssh -Y piccinal@dmi-cl-login.dmi.unibas.ch'
 alias fish='ssh -Y piccinal@maia.urz.unibas.ch'
 
 # --- openstack
@@ -738,7 +739,8 @@ if [ `uname` = "Darwin" ] ; then
         export LSCOLORS=Gxfxbxdxcxegedabagacad
 	alias ll='ls -l'
 	alias l='ls '
-	PS1="\[\e[0;32m\]\t \u@mac\[\e[m\]:\[\e[1;32m\]\w\[\e[m\] \[\e[1;32m\]\$ \[\e[m\]\[\e[1;37m\]"
+    alias o='open'
+	PS1="\[\e[0;32m\]\t \u@mac\[\e[m\]|\[\e[1;32m\]\w\[\e[m\] \[\e[1;32m\]\$ \[\e[m\]\[\e[1;37m\]"
         # ps1_check_rc="\$(if [[ \$? == 0   ]]; then echo \" \[\033[0;32m\]\342\234\223\"; else echo \" \[\033[01;31m\]\342\234\227\"; fi)"
 	
         # MAC PORTS
