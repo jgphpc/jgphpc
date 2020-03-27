@@ -190,3 +190,6 @@ fi
 # echo ".bashrc END"
 # export LANG=en_US.UTF-8
 module rm xalt
+
+# --- https://github.com/junegunn/fzf#usage
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
