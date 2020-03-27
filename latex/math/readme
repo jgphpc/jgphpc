@@ -1,0 +1,13 @@
+#!/bin/bash
+# https://github.com/allenwoods/ladot2eps
+# math graph: .dot -> .tex -> .ps -> .pdf
+
+wget -O ladot.pl    https://raw.githubusercontent.com/allenwoods/ladot2eps/master/ladot/ladot
+wget -O dot2dvi.tex https://raw.githubusercontent.com/allenwoods/ladot2eps/master/ladot/dot2dvi.tex
+
+in=graph.ladot
+perl ladot.pl $in   # -> $in.tex + $in.ps
+latex dot2dvi.tex   # -> dot2dvi.dvi
+dvips dot2dvi.dvi   # -> dot2dvi.ps
+ps2pdf dot2dvi.ps   # -> dot2dvi.pdf  <---
+# ps2eps -f -B dot2dvi.ps # -> dot2dvi.eps
