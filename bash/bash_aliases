@@ -11,7 +11,7 @@
 export is_bash_aliases_set=1
 __git_branch='`git branch 2> /dev/null |grep ^* |cut -d\* -f2 |tr -d " "`'
 # export PS1="\[\e[0;32m\] \u@\h\[\e[m\]:\[\e[1;32m\]\w\[\e[m\]\[\e[1;32m\]\$$__git_branch \[\e[m\]\[\e[1;37m\]"
-export PS1="\[\e[0;32m\]# \u@\h\[\e[m\]:\[\e[1;32m\]\w\[\e[m\]\[\e[0;30m\]\$$__git_branch \[\e[m\]\[\e[1;37m\]\n"
+export PS1="\[\e[0;32m\]# \u@\h\[\e[m\]|\[\e[1;32m\]\w\[\e[m\]\[\e[0;30m\]\$$__git_branch \[\e[m\]\[\e[1;37m\]\n"
 # PS1='\[\e[0;32m\] \h\[\e[m\]: '
 # export PS1='\[\e[0;32m\]\t \u@\h\[\e[m\]:\[\e[1;32m\]\w\[\e[m\] \[\e[1;32m\]\$ \[\e[m\]\[\e[1;37m\]'
 # echo PS1='\[\e[0;32m\]\t \u@\h\[\e[m\]:\[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$ \[\e[m\]\[\e[1;37m\]'

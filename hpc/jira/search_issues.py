@@ -56,6 +56,8 @@ PRIVATE-473 "test ATP support"
         my_search = 'project = "My private tasks" AND status != Done AND summary ~ ' + my_tag
     elif my_field in {'desc'}:
         my_search = 'project = "My private tasks" AND status != Done AND description ~ ' + my_tag
+    elif my_field in {'key'}:
+        my_search = 'key = %s' % my_tag
     else:
         print('{} should be summary or desc'.format(my_field))
         quit()
