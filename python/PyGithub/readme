@@ -1,0 +1,27 @@
+#!/bin/env python
+# https://github.com/PyGithub/PyGithub
+# https://pygithub.readthedocs.io/en/latest/examples.html
+from github import Github
+g = Github('...')
+user = g.get_user()
+user.login
+user.company
+f = user.get_followers()
+f.totalCount
+repo = g.get_repo('eth-cscs/reframe')
+repos.get_topics()
+repo.stargazers_count
+
+open_issues = repo.get_issues(state='open')
+for issue in open_issues:
+    print(issue)
+x = repo.get_top_paths()
+for i in x:
+    print(i)
+repo.get_clones_traffic()
+repo.get_branches()
+repo.get_pull(1230)
+x = repo.get_pulls(state='open', sort='created', base='master')
+for pr in x:
+    print(pr.number, pr.title)
+etc...
