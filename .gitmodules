@@ -1,0 +1,6 @@
+[submodule "hpc/debug/gdbinit/Gdbinit.git"]
+	path = hpc/debug/gdbinit/Gdbinit.git
+	url = https://github.com/gdbinit/Gdbinit.git
+[submodule "hpc/debug/gdbinit/gdb-dashboard.git"]
+	path = hpc/debug/gdbinit/gdb-dashboard.git
+	url = https://github.com/cyrus-and/gdb-dashboard.git

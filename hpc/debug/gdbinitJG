@@ -1,0 +1,90 @@
+# {{{ STEP1 --- python/libstdcxx/v6/printers.py
+# To avoid: ModuleNotFoundError: No module named 'libstdcxx':
+# > ls /opt/gcc/*/snos/share/gcc-*/python/libstdcxx/v*/printers.py
+#                                         ---------
+# OR export PYTHONPATH=/opt/gcc/9.2.0/snos/share/gcc-9.2.0/python:$PYTHONPATH
+python
+import sys 
+sys.path.insert(0, '/opt/gcc/6.1.0/snos/share/gcc-6.1.0/python')
+sys.path.insert(0, '/opt/gcc/7.3.0/snos/share/gcc-7.3.0/python')
+sys.path.insert(0, '/opt/gcc/8.3.0/snos/share/gcc-8.3.0/python')
+sys.path.insert(0, '/opt/gcc/9.2.0/snos/share/gcc-9.2.0/python')
+# from libstdcxx.v6.printers import register_libstdcxx_printers
+# register_libstdcxx_printers (None)
+end
+# }}}
+
+# {{{ STEP2 --- libstdc++.so*-gdb.py
+# To avoid: auto-loading has been declined:
+# > locate libstdc++.so |grep -v /var |grep gcc/
+add-auto-load-safe-path /opt/gcc/6.1.0/snos/lib64/libstdc++.so.6.0.22-gdb.py
+add-auto-load-safe-path /opt/gcc/7.3.0/snos/lib64/libstdc++.so.6.0.24-gdb.py
+add-auto-load-safe-path /opt/gcc/8.3.0/snos/lib64/libstdc++.so.6.0.25-gdb.py
+add-auto-load-safe-path /opt/gcc/9.2.0/snos/lib64/libstdc++.so.6.0.27-gdb.py
+# SLES15: gcc/7.5.0
+add-auto-load-safe-path /usr/share/gdb/auto-load/usr/lib64/libstdc++.so.6.0.24-gdb.py
+# doc: https://sourceware.org/gdb/current/onlinedocs/gdb/Auto_002dloading-safe-path.html#Auto_002dloading-safe-path
+## (gdb) show auto-load safe-path
+## List of directories from which it is safe to auto-load files is $debugdir:$datadir/auto-load:/opt/gcc/9.2.0/snos/lib64/libstdc++.so.6.0.27-gdb.py.
+# }}}
+
+# {{{ STEP3 --- stl-views
+## TODO: test pvector clist 0
+source /users/piccinal/jgphpc.git/hpc/debug/gdbinit/stl-views/stl-views-1.0.3.gdb
+# }}}
+
+# {{{ --- macJG:
+# set startup-with-shell off
+# sys.path.insert(0, '/usr/local/Cellar/gdb/HEAD-8077c50/share/gdb/python')
+# }}}
+
+# {{{ --- show / info
+## (gdb) show print pretty
+## Pretty formatting of structures is off.
+## (gdb) set print pretty on
+## (gdb) show print pretty
+## Pretty formatting of structures is on.
+# --- python version:
+## (gdb) python
+## >import sys
+## >print(sys.version)
+## >print(os.getenv('PE_ENV'))
+## >print(os.getenv('GCC_VERSION'))
+## CRAY
+## >end
+## 3.6.10 (default, Dec 19 2019, 15:48:40) [GCC]
+# (gdb) info pretty-printer
+# global pretty-printers:
+#   builtin
+#     mpx_bound128
+# objfile /opt/gcc/8.3.0/snos/lib64/libstdc++.so.6 pretty-printers:
+#   libstdc++-v6
+#     __gnu_cxx::_Slist_iterator
+#     __gnu_cxx::__8::_Slist_iterator
+#     __gnu_cxx::__8::__normal_iterator
+#     __gnu_cxx::__8::slist
+#     __gnu_cxx::__normal_iterator
+#     __gnu_cxx::slist
+#     __gnu_debug::_Safe_iterator
+#     std::_Deque_const_iterator
+#     std::_Deque_iterator
+#     etc...
+# }}}
+
+# {{{ --- TODO:
+# DOC: https://web.stanford.edu/class/archive/cs/cs107/cs107.1194/resources/gdb -> 'warning about auto-loading being declined'
+# TODO: https://web.stanford.edu/class/archive/cs/cs107/cs107.1194/resources/gdb_coredump2.pdf -> good faq
+# TODO: # https://github.com/eth-cscs/maxentropy/blob/master/c++/eigen/debug/gdb/printers.py#L21
+
+# TODO: empty ~/.gdbinit:
+## (gdb) p clist
+## $1 = {<std::_Vector_base<int, std::allocator<int> >> = {
+##     _M_impl = {<std::allocator<int>> = {<__gnu_cxx::new_allocator<int>> = {<No data fields>}, <No data fields>}, _M_start = 0x615e70, _M_finish = 0x615e80, _M_end_of_storage = 0x615e80}}, <No data fields>}
+## (gdb) p clist[2]
+## $2 = (__gnu_cxx::__alloc_traits<std::allocator<int>, int>::value_type &) @0x615e78: 2
+## (gdb) p clist[1]
+## $3 = (__gnu_cxx::__alloc_traits<std::allocator<int>, int>::value_type &) @0x615e74: 1
+## (gdb) p clist[0]
+## $4 = (__gnu_cxx::__alloc_traits<std::allocator<int>, int>::value_type &) @0x615e70: 0
+# }}}
+

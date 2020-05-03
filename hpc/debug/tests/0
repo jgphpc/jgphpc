@@ -1,0 +1,2 @@
+g++ -g ../std_vector.cpp -o _$GCC_VERSION.exe
+g++ -g ../myhello.c -o _$GCC_VERSION.exe

@@ -1,0 +1,7 @@
+# --- stl-views-1.0.3.gdb:
+wget 'https://sourceware.org/gdb/wiki/STLSupport?action=AttachFile&do=get&target=stl-views-1.0.3.gdb' -O stl-views-1.0.3.gdb
+# --- Gdbinit.git:
+git submodule add https://github.com/gdbinit/Gdbinit.git Gdbinit.git
+# --- gdb-dashboard.git:
+git submodule add https://github.com/cyrus-and/gdb-dashboard.git gdb-dashboard.git
+# doc: https://git-scm.com/book/fr/v2/Utilitaires-Git-Sous-modules

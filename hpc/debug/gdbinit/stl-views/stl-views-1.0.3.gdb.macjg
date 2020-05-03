@@ -51,13 +51,13 @@ define pvector
 	if $argc == 0
 		help pvector
 	else
-        # set $size = $arg0._M_impl._M_finish - $arg0._M_impl._M_start
-        # set $capacity = $arg0._M_impl._M_end_of_storage - $arg0._M_impl._M_start
-        # set $size_max = $size - 1
-        # JG:
-    	set $size = $arg0.__end_ - $arg0.__begin_
-		set $capacity = $arg0.__end_ - $arg0.__begin_
-		set $size_max = $size - 1
+        set $size = $arg0._M_impl._M_finish - $arg0._M_impl._M_start
+        set $capacity = $arg0._M_impl._M_end_of_storage - $arg0._M_impl._M_start
+        set $size_max = $size - 1
+        # JG:mac
+    	#jg set $size = $arg0.__end_ - $arg0.__begin_
+		#jg set $capacity = $arg0.__end_ - $arg0.__begin_
+		#jg set $size_max = $size - 1
 	end
 
 	if $argc == 1
