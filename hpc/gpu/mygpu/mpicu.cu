@@ -48,15 +48,53 @@ void get_more_gpu_info(int dev)
     *_ConvertSMVer2Cores(deviceProp.major, deviceProp.minor)
     *deviceProp.multiProcessorCount);
 
-  printf("  Maximum number of threads per multiprocessor:  %d\n", 
-    deviceProp.maxThreadsPerMultiProcessor);
+//  printf("  Maximum number of threads per multiprocessor:  %d\n", 
+//    deviceProp.maxThreadsPerMultiProcessor);
 
   printf("  Peak number of threads:                        %d threads\n", 
     deviceProp.multiProcessorCount 
-    *deviceProp.maxThreadsPerMultiProcessor );
+    * deviceProp.maxThreadsPerMultiProcessor );
 
   printf("  Maximum number of threads per block:           %d\n", 
     deviceProp.maxThreadsPerBlock);
+
+  // --- deviceQuery.cpp ---
+  // https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__DEVICE.html
+  printf("\nDevice %d: \"%s\"\n", dev, deviceProp.name);
+  printf("  Warp size: %d\n", deviceProp.warpSize);    
+  printf("  Maximum number of threads per multiprocessor:  %d\n",
+          deviceProp.maxThreadsPerMultiProcessor);
+  printf("  Maximum number of threads per block:           %d\n",
+          deviceProp.maxThreadsPerBlock);
+  printf("  Max dimension size of a thread block (x,y,z): (%d, %d, %d)\n",
+          deviceProp.maxThreadsDim[0], deviceProp.maxThreadsDim[1],
+          deviceProp.maxThreadsDim[2]);
+  printf("  Max dimension size of a grid size    (x,y,z): (%d, %d, %d)\n",
+          deviceProp.maxGridSize[0], deviceProp.maxGridSize[1],
+          deviceProp.maxGridSize[2]);
+  printf("  Device has ECC support:                        %s\n",
+          deviceProp.ECCEnabled ? "Enabled" : "Disabled");
+  printf("  multiProcessorCount:                           %d\n",
+          deviceProp.multiProcessorCount);
+
+  // summary table
+  printf("%10s| %7s | %7s | %7s | %7s |\n", " ", "thread", "warp", "sm", "device");
+  printf("threads   | %7d | %7d | %7d | %7d |\n", 
+          1, deviceProp.warpSize, deviceProp.maxThreadsPerMultiProcessor, 
+          deviceProp.multiProcessorCount * deviceProp.maxThreadsPerMultiProcessor);
+  printf("warps     | %7s | %7d | %7d | %7d |\n", "x", 1,
+          deviceProp.maxThreadsPerMultiProcessor / deviceProp.warpSize,
+          (deviceProp.multiProcessorCount * deviceProp.maxThreadsPerMultiProcessor) / deviceProp.warpSize);
+  printf("sms       | %7s | %7s | %7d | %7d |\n", "x", "x", 1, deviceProp.multiProcessorCount);
+  printf("%-.10s| %7s | %7s | %7s | %7d |\n", deviceProp.name, "x", "x", "x", 1);
+
+/*
+          |  thread |    warp |      sm |  device |
+threads   |       1 |      32 |    2048 |  114688 |
+warps     |       x |       1 |      64 |    3584 |
+sms       |       x |       x |       1 |      56 |
+Tesla P100|       x |       x |       x |       1 |
+*/
 
 }
 

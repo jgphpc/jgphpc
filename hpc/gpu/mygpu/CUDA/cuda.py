@@ -56,6 +56,7 @@ class CudaVersion(rfm.CompileOnlyRegressionTest):
     cuda/10.0 < gcc/8   Y       Y       Y       Y       -       -
 
     cuda/10.1 < gcc/9   Y       Y       Y       Y       Y       -
+    cuda/10.2 < gcc/9   Y       Y       Y       Y       Y       -
     -----------------
 [       OK ] cuda_8.0_daint_gcc4.9.3 on daint:gpu using PrgEnv-gnu
 [       OK ] cuda_8.0_daint_gcc5.3.0 on daint:gpu using PrgEnv-gnu
