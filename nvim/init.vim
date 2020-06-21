@@ -10,6 +10,7 @@
 " Get plugin manager from https://github.com/Shougo/dein.vim#unixlinux-or-mac-os-x
 "   wget https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh
 "   . ./installer.sh ~/.config/nvim/bundle
+"   python3 -m pip install --user --upgrade pynvim
 "   ln -s ~/jgphpc.git/nvim/init.vim ~/.config/nvim/init.vim
 " => copy the output here (dein Scripts---):
 

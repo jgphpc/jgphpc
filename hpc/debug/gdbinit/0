@@ -1,4 +1,5 @@
 # --- stl-views-1.0.3.gdb:
+# http://sourceware.org/gdb/wiki/STLSupport
 wget 'https://sourceware.org/gdb/wiki/STLSupport?action=AttachFile&do=get&target=stl-views-1.0.3.gdb' -O stl-views-1.0.3.gdb
 # --- Gdbinit.git:
 git submodule add https://github.com/gdbinit/Gdbinit.git Gdbinit.git

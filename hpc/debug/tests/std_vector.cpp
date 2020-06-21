@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
  
+template class std::vector<int>;
 int main()
 {
     const int n = 4;
@@ -9,6 +10,7 @@ int main()
     std::cout << "g++/" << __GNUC__ << "." << __GNUC_MINOR__ << "\n";
 #endif
 #endif
+
     std::vector<int> clist;
     // comment out to create corefile:
     clist.resize(n);

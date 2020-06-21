@@ -9,6 +9,7 @@ sys.path.insert(0, '/opt/gcc/6.1.0/snos/share/gcc-6.1.0/python')
 sys.path.insert(0, '/opt/gcc/7.3.0/snos/share/gcc-7.3.0/python')
 sys.path.insert(0, '/opt/gcc/8.3.0/snos/share/gcc-8.3.0/python')
 sys.path.insert(0, '/opt/gcc/9.2.0/snos/share/gcc-9.2.0/python')
+sys.path.insert(0, '/opt/gcc/9.3.0/snos/share/gcc-9.3.0/python')
 # from libstdcxx.v6.printers import register_libstdcxx_printers
 # register_libstdcxx_printers (None)
 end
@@ -21,16 +22,31 @@ add-auto-load-safe-path /opt/gcc/6.1.0/snos/lib64/libstdc++.so.6.0.22-gdb.py
 add-auto-load-safe-path /opt/gcc/7.3.0/snos/lib64/libstdc++.so.6.0.24-gdb.py
 add-auto-load-safe-path /opt/gcc/8.3.0/snos/lib64/libstdc++.so.6.0.25-gdb.py
 add-auto-load-safe-path /opt/gcc/9.2.0/snos/lib64/libstdc++.so.6.0.27-gdb.py
+add-auto-load-safe-path /opt/gcc/9.3.0/snos/lib64/libstdc++.so.6.0.28-gdb.py
 # SLES15: gcc/7.5.0
 add-auto-load-safe-path /usr/share/gdb/auto-load/usr/lib64/libstdc++.so.6.0.24-gdb.py
 # doc: https://sourceware.org/gdb/current/onlinedocs/gdb/Auto_002dloading-safe-path.html#Auto_002dloading-safe-path
 ## (gdb) show auto-load safe-path
 ## List of directories from which it is safe to auto-load files is $debugdir:$datadir/auto-load:/opt/gcc/9.2.0/snos/lib64/libstdc++.so.6.0.27-gdb.py.
+# test in gdb with --> print clist[1] / print clist
 # }}}
 
 # {{{ STEP3 --- stl-views
-## TODO: test pvector clist 0
+# http://sourceware.org/gdb/wiki/STLSupport
+# read /users/piccinal/jgphpc.git/hpc/debug/gdbinit/0
+## gdb> pvector clist 0
 source /users/piccinal/jgphpc.git/hpc/debug/gdbinit/stl-views/stl-views-1.0.3.gdb
+# }}}
+
+# {{{ --- https://stackoverflow.com/questions/209534/how-to-highlight-and-color-gdb-output-during-interactive-debugging
+# --- ko ?:
+# source /users/piccinal/jgphpc.git/hpc/debug/gdbinit/Gdbinit.git/gdbinit
+
+# OK:
+# source /users/piccinal/jgphpc.git/hpc/debug/gdbinit/gdb-dashboard.git/.gdbinit
+# https://github.com/cyrus-and/gdb-dashboard/wiki/Use-other-GDB-front-ends
+# dashboard -enabled off
+# gdb> help dashboard
 # }}}
 
 # {{{ --- macJG:
