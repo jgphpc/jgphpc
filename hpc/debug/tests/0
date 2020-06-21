@@ -1,2 +1,5 @@
 g++ -g ../std_vector.cpp -o _$GCC_VERSION.exe
 g++ -g ../myhello.c -o _$GCC_VERSION.exe
+
+mll clang+llvm/10.0.0-x86_64-linux-sles11.3 gdb
+clang++ -O0 -g -ggdb -gdwarf ../std_vector.cpp -o clang.exe

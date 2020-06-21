@@ -381,8 +381,8 @@ alias lic='export LM_LICENSE_FILE=/users/piccinal/license.dat'
 alias ll='ls -lX'
 alias llqq='llq -u piccinal'
 alias llqqq='watch llq -u piccinal'
-alias l='ls -X'
-alias lt='ls -lrt'
+#alias l='ls -X'
+alias l='ls -lrt'
 alias lh='ls -lrhS'
 alias lstop='lstopo --of txt --no-io --no-bridges'
 alias memsgigb='grep MemFree /proc/meminfo |awk "{print (2115399824-\$2)/(1024**2)}"'
@@ -469,11 +469,12 @@ alias sacct='SLURM_TIME_FORMAT=%Y/%m/%d-%H:%M:%S sacct --noconvert'
 #alias s='squeue -p day,usup'
 alias S='sinfo -sa ;echo; sinfo -a'
 alias SS='sinfo -o "%9P %.5a %.10l %.6D %.6t %N %f"'
+#TODO: squeue -p gpu --states=R
 #TODO:  sinfo -Nle -o "%.20n %.15C %.8O %.7t" | uniq
 alias sqq='~/KEEP/squeue.sh'
 alias sqjg='~/KEEP/squeuejg.sh'
 alias sq='squeue -a -u $USER'
-alias s='squeue -a'
+alias s='squeue -a |egrep -v "lhcbplt|atlasprd|cmssgm"'
 alias scancelu='echo "scancel `squeue -a -u $USER -ho %A`"'
 alias scanceluu='scancel -u $USER'
 # sacctmgr show association user=piccinal
@@ -808,6 +809,7 @@ fi
 #          #       #    #    #  #    #  #   ##
 #          #       #    #    #   ####   #    #
 alias ipython='LC_ALL="fr_FR.UTF-8" ipython'
+alias venv='echo "module load cray-python ;python3 -m venv --system-site-packages myvenv ;source myvenv/bin/activate; deactivate"'
 
 # echo ".bash_aliases END"
 

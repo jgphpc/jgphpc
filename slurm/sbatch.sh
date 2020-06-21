@@ -135,6 +135,7 @@ out=eff_runme.slurm.$cluster
 if [ $cluster = "tiger" ] || \
    [ $cluster = "dmi" ] || \
    [ $cluster = "edison" ] || \
+   [ $cluster = "tave" ] || \
    [ $cluster = "daint" ] || \
    [ $cluster = "dom" ] ; then
 

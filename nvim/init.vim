@@ -10,6 +10,7 @@
 " Get plugin manager from https://github.com/Shougo/dein.vim#unixlinux-or-mac-os-x
 "   wget https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh
 "   . ./installer.sh ~/.config/nvim/bundle
+"   python3 -m pip install --user --upgrade pynvim
 "   ln -s ~/jgphpc.git/nvim/init.vim ~/.config/nvim/init.vim
 "
 "{{{dein Scripts-----------------------------
@@ -129,6 +130,9 @@ au BufNewFile,BufRead *.F03 set ft=fortran
 au BufNewFile,BufRead *.swn set ft=tcsh
 au BufRead,BufNewFile *.ncl set filetype=fortran
 au BufNewFile,BufRead *.pc set ft=sh
+" Singularity: read https://github.com/singularityhub/singularity.lang/blob/master/vim/Makefile
+" --> ~/bin/nvim-linux64/share/nvim/runtime/syntax/singularity.vim
+au BufNewFile,BufRead Singularity,Singularity.*,*.def set filetype=singularity
 "}}}
 
 "{{{ --- :
