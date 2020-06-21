@@ -171,8 +171,8 @@ alias dg='source ~/dom-gpu.sh'
 alias dm='source ~/dom-mc.sh'
 #alias dg='module load daint-gpu ;source ~/eff.ebgpu'
 #alias dm='module load daint-mc  ;source ~/eff.ebmc '
-alias me='source /opt/cray/craype/default/bin/craype-pkgconfig enable'
-alias md='source /opt/cray/craype/default/bin/craype-pkgconfig disable'
+#alias me='source /opt/cray/craype/default/bin/craype-pkgconfig enable'
+#alias md='source /opt/cray/craype/default/bin/craype-pkgconfig disable'
 alias maa='module avail 2>&1 |grep -i'
 alias ma='module avail 2>&1'
 alias ml='module list 2>&1'
@@ -267,8 +267,11 @@ alias elaxlsx='scp piccinal@ela.cscs.ch:eff.xlsx .'
 # alias cirra='ssh -Y piccinal@ela2.login.cscs.ch -t ssh -Y cirra'
 # alias cirra_='ssh -Y cirra'
 # alias dom='ssh -Y piccinal@dom.cscs.ch'
+# LIKWID:
+alias me='ssh -x m85q0024@cshpc.rrze.fau.de'
 # --- dom
-alias dom='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@dom'
+alias dom='ssh -Y piccinal@dom'
+# alias dom_='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@dom'
 #alias dom='ssh -Y piccinal@ela.cscs.ch -t ssh -x piccinal@dom'
 # alias euler='ssh -Y jeanpi@euler.ethz.ch'
 # alias nv='ssh -Y piccinal@domnv.cscs.ch'
@@ -296,13 +299,13 @@ alias  ela='ssh -Y piccinal@ela.cscs.ch'
 alias sa='module load sarus'
 
 # --- daint
-alias  da='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@daint'
+alias  da_='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@daint'
 # alias da0='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@daint01'
 # alias da1='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@daint101'
-alias da_='ssh -Y piccinal@daint.cscs.ch'
-alias da1='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@daint101'
-alias da2='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@daint102'
-alias da3='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@daint103'
+alias da='ssh -Y piccinal@daint.cscs.ch'
+#alias da1='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@daint101'
+#alias da2='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@daint102'
+#alias da3='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@daint103'
 
 # --- kescha
 # alias rt4-cscs='ssh -Y piccinal@tpc02'
@@ -319,11 +322,11 @@ alias k1='~/linux.git/bash/kesch.sh'
 # alias mac='ssh piccinal@pazzallo.staff.cscs.ch'
 
 # --- tave
-alias ta='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@tave'
-alias ta_='ssh -Y piccinal@tave'
+alias ta_='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@tave'
+alias ta='ssh -Y piccinal@tave'
 
 alias elamac='sudo sshfs -o allow_other piccinal@ela.cscs.ch:/apps/common/UES/sandbox/jgp/hpctools.git/docs/source /tmp/ELA # sudo umount /tmp/ELA'
-alias vnc='dom: vncserver -geometry 1920x1080 -xstartup ~/linux.git/vnc/cscs/xstartup.jg; client: "#donotuse:MACconnectCSCSbecauseInterruptsAfter60min; ssh -f -L 5901:dom101.cscs.ch:5901 -C ela.cscs.ch -l piccinal sleep 30 ;/Applications/*/TigerVNC*.app localhost:5901";teamviewer;collab.switch.ch'
+alias vnc='vncserver -geometry 1920x1080 -xstartup ~/linux.git/vnc/cscs/xstartup.jg; # client: "#donotuse:MACconnectCSCSbecauseInterruptsAfter60min; ssh -l piccinal -f -C -L 5901:dom101:5901 dom101.cscs.ch sleep 30 ; ssh -f -L 5901:dom101.cscs.ch:5901 -C ela.cscs.ch -l piccinal sleep 30 ;/Applications/*/TigerVNC*.app localhost:5901";teamviewer;collab.switch.ch'
 
 # --- ibm
 alias p1='ssh -Y piccinal@openpower01.cscs.ch'
@@ -496,7 +499,21 @@ export SQUEUE_ALL='yes'
 export GIT_PS1_SHOWDIRTYSTATE=1  # add * if the branchname has changed
 export EDITOR=vim
 export GIT_EDITOR=vim
-#
+# ------------------------------------- GOURCE.git
+# brew install gource # OR:
+# wget https://libsdl.org/release/SDL2-2.0.12.tar.gz;./autogen.sh;configure;->lib/pkgconfig
+# wget https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.5.tar.gz;configure;->lib/pkgconfig
+# wget https://sourceforge.net/projects/glew/files/glew/2.1.0/glew-2.1.0.tgz;make GLEW_PREFIX=$PWD/JG GLEW_DEST=$PWD/JG;->lib/pkgconfig
+# wget https://github.com/g-truc/glm/archive/0.9.9.7.tar.gz;#cmake -DCMAKE_INSTALL_PREFIX=$PWD/JG ..;
+# git clone https://github.com/acaudwell/Gource.git;module load daint-gpu EasyBuild-custom/cscs;module load Boost/1.70.0-CrayGNU-19.10;export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/scratch/snx3000tds/piccinal/RT/DELETE/GOURCE/SDL2-2.0.12/JG/lib:/scratch/snx3000tds/piccinal/RT/DELETE/GOURCE/glew-2.1.0/JG/lib64:/scratch/snx3000tds/piccinal/RT/DELETE/GOURCE/SDL2_image-2.0.5/JG/lib;./configure --prefix=$PWD/JG --with-boost=$EBROOTBOOST CPPFLAGS=-I../glm-0.9.9.7;gource -h
+# ------------------------------------- TIG.git
+# https://github.com/jonas/tig -> brew install tig
+# https://github.com/github/hub
+# ------------------------------------- git-imerge.git
+# https://github.com/mhagger/git-imerge -> brew install git-imerge
+# ------------------------------------- large files
+# https://github.com/git-lfs
+# https://github.com/jedbrown/git-fat
 alias ga='git add'  # -p
 alias gs='git status'
 #alias gS='git log -S '
