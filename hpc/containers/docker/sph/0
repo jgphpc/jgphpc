@@ -1,0 +1,36 @@
+salloc -Cgpu,contbuild -N1 -Ausup
+RR="--root=/scratch/local/$USER/buildah_root --runroot=/scratch/local/$USER/buildah_runroot --storage-driver=vfs"
+
+# build IMAGE1:
+srun buildah pull $RR docker-archive:/scratch/snx3000tds/piccinal/CONTAINERS/sph/ub1804_cuda102_mpich314_gnu8.tar
+srun buildah images $RR
+srun buildah tag $RR 1543ef60da17 ub1804_cuda102_mpich314_gnu8:latest
+# srun buildah images $RR
+# srun buildah rmi $RR 9a6b9b0dacb8
+
+# build IMAGE2:
+# git clone https://github.com/unibas-dmi-hpc/SPH-EXA_mini-app.git SPH-EXA_mini-app.git
+# srun buildah bud $RR --tag=ub1804_cuda102_mpich314_gnu8:sph -f \
+srun buildah bud $RR -f ub1804_cuda102_mpich314_gnu8+sph.dockerfile .
+srun buildah images $RR
+srun buildah tag $RR 2e5eb1fcf4c1 ub1804_cuda102_mpich314_gnu8:sph
+
+# build IMAGE2 -> LOCALIMAGE:
+srun buildah images $RR
+srun buildah push $RR ub1804_cuda102_mpich314_gnu8:sph docker-archive:/scratch/local/$USER/buildah_runroot/eff.tar
+srun cp /scratch/local/$USER/buildah_runroot/eff.tar ub1804_cuda102_mpich314_gnu8+sph.tar
+mv ub1804_cuda102_mpich314_gnu8+sph.tar $SCRATCH/CONTAINERS/sph/
+
+# SARUS:
+# sarus rmi load/library/mpich_osu:dom:gpu
+
+sarus load $SCRATCH/CONTAINERS/sph/ub1804_cuda102_mpich314_gnu8+sph.tar \
+ub1804_cuda102_mpich314_gnu8:sph
+
+sarus images
+
+srun -Cgpu -Ausup -t1 -n2 sarus run --mpi load/library/ub1804_cuda102_mpich314_gnu8:sph bash -c \
+'/home/bin/gnu8/mpi+omp.app -s 0 -n 20'
+# cp $SCRATCH/CONTAINERS/sph/ub1804_cuda102_mpich314_gnu8+sph.tar /project/csstaff/piccinal/CONTAINERS/sph/
+
+sarus rmi load/library/mpich_osu:dom:gpu
