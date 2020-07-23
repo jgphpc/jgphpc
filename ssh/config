@@ -25,16 +25,13 @@ ProxyJump ela.cscs.ch
 # }}}
 
 #{{{ DAINT:
-Host daint*
-ForwardAgent yes
-Port 22
-Hostname daint.cscs.ch
-ProxyCommand ssh piccinal@ela.cscs.ch netcat %h %p
-
-# Host daint
-# HostName daint.cscs.ch
+# ForwardAgent yes
+# Port 22
+# ProxyCommand ssh piccinal@ela.cscs.ch netcat %h %p
 # User piccinal
-# ProxyCommand ssh -q -Y piccinal@ela.cscs.ch -W %h:%p
+Host daint*
+    HostName daint.cscs.ch
+    ProxyJump piccinal@ela.cscs.ch
 #}}}
 
 #{{{ paraview:
