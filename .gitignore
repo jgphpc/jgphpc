@@ -3,4 +3,14 @@ vim/bundle/*
 *.exe
 *.o
 DEL
-eff.sh
+DELETE
+eff.*
+__pycache__
+.DS_Store
+.netrwhist
+vim/doc
+vim/pack
+vim/plugged
+vim/plugin
+vim/spell
+.ipynb_checkpoints
