@@ -1,4 +1,4 @@
-# echo .bash_profile start
+## echo .bash_profile start
 # MacPorts:
 export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
 # MacBrew
@@ -21,11 +21,15 @@ export PATH="/usr/local/opt/nss/bin:$PATH"
 # easybuild+lmod:
 alias sx='cd /Users/piccinal/git/production.git/easybuild/easyconfigs'
 alias eb_='source /usr/local/opt/lmod/init/profile; export PATH=/Users/piccinal/bin:$PATH ;source /Users/piccinal/jgphpc.git/easybuild/mac-jg.sh'
-# echo .bash_profile end
 export PATH="/usr/local/opt/mysql-client/bin:$PATH"
 
-if [ `uname -p` == 'i386' ] ;then
+if [ "`uname -s`" == "Darwin" ] ;then
     # echo macjg
-    source /usr/local/opt/modules/init/bash
+    #~ko source /usr/local/opt/modules/init/bash
+    #~ko source /Users/piccinal/git/EB/spack.git/opt/spack/darwin-catalina-x86_64/clang-11.0.3-apple/environment-modules-4.5.0-gxhm7oddr7rmyyc6zfud6atczhklk5gp/init/bash
+    source /usr/local/opt/lmod/init/profile
+    . /Users/piccinal/git/EB/spack.git/share/spack/setup-env.sh
     export PATH=/Applications/CSCS/miniconda3/bin:$PATH
+    export PATH=/usr/local/sbin:$PATH
 fi
+## echo .bash_profile end

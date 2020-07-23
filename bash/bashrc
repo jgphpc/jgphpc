@@ -1,12 +1,14 @@
 [ -z "$PS1" ] && return  # comment if using visit remote
-
+## echo ".bashrc START"
 # --- bash_aliases:
 # {{{
 # debug: date --rfc-3339=ns > eff_bash_debug_profile
 myfile="$HOME/jgphpc.git/bash/bash_aliases"
+# echo ".bash_alias START"
 if [ -s "$myfile" ] ; then
     source $myfile
 fi
+# echo ".bash_alias END"
 # }}}
 
 # --- secret:
@@ -20,11 +22,12 @@ fi
 # --- modules:
 # {{{
 # export MODULEPATH=$HOME/jgphpc.git/modulefiles:$MODULEPATH
-if [ -d $MODULEPATH ] ;then
-    module unuse /apps/escha/modulefiles
-    module unuse /apps/common/UES/modulefiles
-    module rm xalt
-fi
+### if [ -x `which modulecmd` ] ;then 
+### #if [ -d $MODULEPATH ] ;then
+###     module unuse /apps/escha/modulefiles
+###     module unuse /apps/common/UES/modulefiles
+###     module rm xalt
+### fi
 # }}}
 
 # --- python:
@@ -183,13 +186,21 @@ fi
 
 # --- macjg:
 # {{{
+os=`uname -s`
+if [ "$os" = "Darwin" ] ;then
 # test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+    alias git=/usr/local/bin/git
+    alias el='ssh -Y jpiccinali@elf.cray.com'
+    # set +x
+    # export LANG=en_US.UTF-8
+    # ---> ~/.bash_profile
+    # if [ -x `which modulecmd` ] ;then 
+    # . /Users/piccinal/git/EB/spack.git/share/spack/setup-env.sh
+    # type module
+    # module rm xalt
+fi
 # }}}
-
-#set +x
-# echo ".bashrc END"
-# export LANG=en_US.UTF-8
-module rm xalt
 
 # --- https://github.com/junegunn/fzf#usage
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+## echo ".bashrc END"

@@ -11,3 +11,6 @@ latex dot2dvi.tex   # -> dot2dvi.dvi
 dvips dot2dvi.dvi   # -> dot2dvi.ps
 ps2pdf dot2dvi.ps   # -> dot2dvi.pdf  <---
 # ps2eps -f -B dot2dvi.ps # -> dot2dvi.eps
+
+# ------------------------------
+https://igraph.org/python/doc/tutorial/tutorial.html#starting-igraph

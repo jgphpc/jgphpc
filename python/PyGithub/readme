@@ -25,3 +25,6 @@ x = repo.get_pulls(state='open', sort='created', base='master')
 for pr in x:
     print(pr.number, pr.title)
 etc...
+
+# https://httpie.org/doc
+http -a jgphpc POST https://api.github.com/repos/jakubroztocil/httpie/issues/83/comments body='HTTPie is awesome! :heart:'

@@ -4,3 +4,8 @@ https://github.com/containers/buildah/blob/master/install.md#example-from-the-fe
 
 # BUILD IMAGE:
 buildah bud -t jgphpc/eff:eff_buildah -f ./Dockerfile.eff .
+
+sbatch /users/piccinal/jgphpc.git/hpc/containers/docker/sph/buildah.sh
+cp /project/csstaff/piccinal/CONTAINERS/sph/ub1804_cuda102_mpich314_gnu8.tar CONTAINERS/sph/
+
+

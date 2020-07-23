@@ -10,17 +10,20 @@ kb = kanboard.Client('http://localhost/Sites/kanboard/jsonrpc.php', 'admin', 'ad
 kb.getAllTasks(project_id=3)
 kb.removeTask(task_id=94)
 
-seq 18 22 |awk '{print "kb.removeTask(task_id="$0")"}'
+# delete old tasks:
+seq 10 18 |awk '{print "kb.removeTask(task_id="$0")"}'
 
-kb.createTask(project_id=1, column_id=2, title='education:')
-kb.createTask(project_id=1, column_id=2, title='L0_meetings:')
-kb.createTask(project_id=1, column_id=2, title='L1:roster')
-kb.createTask(project_id=1, column_id=2, title='L2_debug:')
-kb.createTask(project_id=1, column_id=2, title='L2_tools:')
+# start fresh:
 kb.createTask(project_id=1, column_id=2, title='L2_reframe:')
+kb.createTask(project_id=1, column_id=2, title='L1:')
 kb.createTask(project_id=1, column_id=2, title='L2_easybuild:')
-kb.createTask(project_id=1, column_id=2, title='containers:')
+kb.createTask(project_id=1, column_id=2, title='L0_meetings:')
 kb.createTask(project_id=1, column_id=2, title='pasc_sph:')
+kb.createTask(project_id=1, column_id=2, title='education:')
+kb.createTask(project_id=1, column_id=2, title='conferences:')
+kb.createTask(project_id=1, column_id=2, title='L2_tools:')
+kb.createTask(project_id=1, column_id=2, title='L2_debug:')
+kb.createTask(project_id=1, column_id=2, title='containers:')
 
 #kb.createTask(project_id=1, column_id=14, title='reframe: tiger')
 #kb.createTask(project_id=1, column_id=14, title='benchm:')

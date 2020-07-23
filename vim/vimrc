@@ -144,13 +144,6 @@ nnoremap <Space> za
 vnoremap <Space> za
 
 
-" mac keyboard: ----------------------------------------- @@@
-map <F5> <C-]>
-"map <X> <C-]>
-" for mac iterm2
-set t_Co=256
-
-
 " Fortran ----------------------------------------------------- @@@
 let fortran_free_source=1
 " au Syntax F90   source         /usr/share/vim/vim72/syntax/fortran.vim
@@ -334,7 +327,6 @@ set bs=2                        " Backspace
 "set scrolloff=3                 " Minimum lines to keep above and below cursor
 set foldenable                  " Auto fold code
 "set list
-" set listchars=tab:�~@�\ ,trail:�~@�,extends:#,nbsp:. " Highlight problematic whitespace
 
 " Formatting {
 "    set nowrap                      " Do not wrap long lines
@@ -390,8 +382,9 @@ cmap cd. lcd %:p:h
 
 " {{{ Plugins 
 
+    " expanding abbreviations:
     " https://github.com/mattn/emmet-vim {
-    Plugin 'mattn/emmet-vim'    
+    " Plugin 'mattn/emmet-vim'    
     " }
 
     " Ctags {
@@ -426,6 +419,7 @@ cmap cd. lcd %:p:h
         endif
     " }
 
+    " Git wrapper: https://github.com/tpope/vim-fugitive
     " Fugitive {
         if isdirectory(expand("~/.vim/bundle/vim-fugitive/"))
             nnoremap <silent> <leader>gs :Gstatus<CR>
@@ -443,6 +437,7 @@ cmap cd. lcd %:p:h
         endif
     "}
 
+    " for visually displaying indent levels in code: https://github.com/nathanaelkane/vim-indent-guides
     " indent_guides {
         if isdirectory(expand("~/.vim/bundle/vim-indent-guides/"))
             let g:indent_guides_start_level = 2
@@ -452,7 +447,7 @@ cmap cd. lcd %:p:h
     " }
 
     " ~/.vim/bundle/jedi-vim/doc
-    Plugin 'davidhalter/jedi-vim'
+    " Plugin 'davidhalter/jedi-vim'
 
  " }}}
 
@@ -475,6 +470,15 @@ cmap cd. lcd %:p:h
        endif
        " }}}
 
+" mac keyboard: ----------------------------------------- @@@
+map <F5> <C-]>
+"map <X> <C-]>
+" for mac iterm2
+set t_Co=256
+" remap esc
+" inoremap <Char-167> <Esc>
+" map <Char-167> <Esc>
+" map! <Char-167> <Esc>
 " }}}
 
 " http://spf13.com ===========================================================
@@ -519,7 +523,6 @@ au BufRead,BufNewFile *.eb set ft=python
 " TODO: ~/.vim/bundle/cscope.vim/plugin/cscope.vim +
 " http://ngressier.developpez.com/articles/vim/vim-plugin-taglist/
 
-
 " crontab {
 "autocmd filetype crontab setlocal nobackup nowritebackup
 " }
@@ -544,3 +547,8 @@ let g:gdb_dbus_server_path = '/Users/piccinal/.vim/bundle/gdb4vim/dbus_gdb/gdb_d
 " let g:gdb_break_highlight = 'term=bold ctermbg=red guibg=red'
 " let g:gdb_var_active_highlight = 'term=bold ctermfg=green guifg=green'
 "}}}
+
+" NEOVIM ----------------------------------------------------- @@@
+" ~/jgphpc.git/nvim/init.vim
+" ~/efface/jma/config/nvim/bundle/.cache/init.vim/.dein
+" :DeinUpdate

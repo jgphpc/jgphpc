@@ -14,39 +14,75 @@ Host *
 # ----------------------- on your local desktop:
 # http://user.cscs.ch/computing_resources/data_analysis_and_visualization/visualization_resources/direct_connection_from_a_remote_desktop/paraview/index.html
 
-# paraview:
-#Host dom*.cscs.ch
-#      ForwardAgent yes
-#      Port 22
-#      ProxyCommand ssh -q -Y <username>@ela.cscs.ch netcat %h %p -w 10
-
-#
-# Host daint*.cscs.ch
-# ForwardAgent yes
-# Port 22
-# Hostname daint.cscs.ch
+# {{{ DOM:
+Host dom*
+ForwardAgent yes
+Port 22
+Hostname dom.cscs.ch
+ProxyJump ela.cscs.ch
 # ProxyCommand ssh piccinal@ela.cscs.ch netcat %h %p
-#
+# ProxyJump piccinal@ela.cscs.ch
+# }}}
+
+#{{{ DAINT:
+Host daint*
+ForwardAgent yes
+Port 22
+Hostname daint.cscs.ch
+ProxyCommand ssh piccinal@ela.cscs.ch netcat %h %p
+
 # Host daint
 # HostName daint.cscs.ch
 # User piccinal
 # ProxyCommand ssh -q -Y piccinal@ela.cscs.ch -W %h:%p
-#
-# -----------------------
+#}}}
 
-# -----------------------
-# EASYBUILD
+#{{{ paraview:
+#Host dom*.cscs.ch
+#      ForwardAgent yes
+#      Port 22
+#      ProxyCommand ssh -q -Y <username>@ela.cscs.ch netcat %h %p -w 10
+#}}}
+ 
+#{{{ TAVE:
+Host tave*.cscs.ch
+ForwardAgent yes
+Port 22
+Hostname tave.cscs.ch
+ProxyCommand ssh piccinal@ela.cscs.ch netcat %h %p
+#}}}
+
+#{{{ TSA:
+Host tsa*.cscs.ch
+ForwardAgent yes
+Port 22
+ProxyCommand ssh piccinal@ela.cscs.ch netcat %h %p
+#}}}
+
+#{{{ EASYBUILD
 # test with ssh -T git@github.com
-host github.com
-HostName github.com
-IdentityFile ~/.ssh/id_rsa
-User git
-# -----------------------
+# host github.com
+# HostName github.com
+# IdentityFile ~/.ssh/id_rsa
+# User git
+#}}}
 
-# -----------------------
-# INTEL:
+#{{{ INTEL: ssh devcloud
 Host devcloud
-User u33528
-IdentityFile ~/.ssh/devcloud-access-key-33528.txt
-ProxyCommand ssh -T -i ~/.ssh/devcloud-access-key-33528.txt guest@devcloud.intel.com
-# -----------------------
+User u44200
+IdentityFile ~/.ssh/devcloud-access-key-44200.txt
+ProxyCommand ssh -T -i ~/.ssh/devcloud-access-key-44200.txt guest@devcloud.intel.com
+# Host devcloud
+# User u33528
+# IdentityFile ~/.ssh/devcloud-access-key-33528.txt
+# ProxyCommand ssh -T -i ~/.ssh/devcloud-access-key-33528.txt guest@devcloud.intel.com
+#}}}
+
+# {{{ LIKWID
+## Host meggie*
+## ForwardAgent yes
+## Port 22
+## User m85q0024
+## Hostname meggie.rrze.fau.de
+## ProxyJump m85q0024@cshpc.rrze.fau.de
+# }}}
