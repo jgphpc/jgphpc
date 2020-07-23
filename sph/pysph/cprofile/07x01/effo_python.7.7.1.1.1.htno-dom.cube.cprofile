@@ -1,0 +1,105 @@
+# -----------------------------------------------
+# core file size          (blocks, -c) unlimited
+# data seg size           (kbytes, -d) unlimited
+# scheduling priority             (-e) 0
+# file size               (blocks, -f) unlimited
+# pending signals                 (-i) 255785
+# max locked memory       (kbytes, -l) unlimited
+# max memory size         (kbytes, -m) 65986560
+# open files                      (-n) 51200
+# pipe size            (512 bytes, -p) 8
+# POSIX message queues     (bytes, -q) 819200
+# real-time priority              (-r) 0
+# stack size              (kbytes, -s) unlimited
+# cpu time               (seconds, -t) unlimited
+# max user processes              (-u) 255785
+# virtual memory          (kbytes, -v) unlimited
+# file locks                      (-x) unlimited
+# -----------------------------------------------
+# -----------------------------------------------
+# SLURM_JOB_NODELIST = nid00001
+# SLURM_JOB_NUM_NODES = 1
+# SLURM_JOB_ID = 908850
+# SLURM_JOBID = 908850
+# SLURM_NTASKS = 7 / -n --ntasks
+# SLURM_NTASKS_PER_NODE = 7 / -N --ntasks-per-node
+# SLURM_CPUS_PER_TASK = 1 / -d-c --cpus-per-task
+# OMP_NUM_THREADS = 1 / -d-c 
+# SLURM_NTASKS_PER_CORE = 1 / -j1 --ntasks-per-core
+# -----------------------------------------------
+# -----------------------------------------------
+# SLURM_CPUS_ON_NODE = 12
+# SLURM_LOCALID = 0
+# SLURM_NNODES = 1
+# SLURM_NODEID = 0
+# SLURM_PROCID = 0
+# SLURM_NPROCS = 7
+# SLURM_OVERCOMMIT = 
+# nodeid:0 taskid:0 localid:0
+# 
+# -----------------------------------------------
+Thu Dec 20 19:04:56 CET 2018
+warning: no --cpu_bind=rank
++ echo CRAY_CUDA_MPS=
+CRAY_CUDA_MPS=
++ echo HUGETLB_DEFAULT_PAGE_SIZE=
+HUGETLB_DEFAULT_PAGE_SIZE=
++ echo HUGETLB_MORECORE=
+HUGETLB_MORECORE=
++ export TMPDIR=/tmp
++ TMPDIR=/tmp
++ echo TMPDIR=/tmp
+TMPDIR=/tmp
++ srun --unbuffered --ntasks=7 --ntasks-per-node=7 --cpus-per-task=1 --ntasks-per-core=1 --cpu_bind=verbose --hint=nomultithread python /users/piccinal/jgphpc.git/sph/pysph/cube_cscs.py --openmp --np 10000000 --max-steps 1000 --disable-output -d cube.1.1
+cpu-bind=MASK - nid00001, task  1  1 [20829]: mask 0x2 set
+cpu-bind=MASK - nid00001, task  2  2 [20831]: mask 0x4 set
+cpu-bind=MASK - nid00001, task  0  0 [20828]: mask 0x1 set
+cpu-bind=MASK - nid00001, task  4  4 [20835]: mask 0x10 set
+cpu-bind=MASK - nid00001, task  3  3 [20833]: mask 0x8 set
+cpu-bind=MASK - nid00001, task  5  5 [20837]: mask 0x20 set
+cpu-bind=MASK - nid00001, task  6  6 [20839]: mask 0x40 set
+MPI VERSION    : CRAY MPICH version 7.7.3 (ANL base 3.2)
+MPI BUILD INFO : Built Wed Aug 22 15:44:54 2018 (git hash b88a4a20c) MT-G
+#CSCS: rank= 0 /7 cn=nid00001 c={0}
+#CSCS: rank= 2 /7 cn=nid00001 c={2}
+#CSCS: rank= 1 /7 cn=nid00001 c={1}
+#CSCS: rank= 4 /7 cn=nid00001 c={4}
+#CSCS: rank= 5 /7 cn=nid00001 c={5}
+#CSCS: rank= 6 /7 cn=nid00001 c={6}
+#CSCS: rank= 3 /7 cn=nid00001 c={3}
+Number of particles: 10077696
+Rank 1: Generating output in /scratch/snx1600tds/piccinal/python/pysph/mpiomp/cube.1.1
+Rank 0: Generating output in /scratch/snx1600tds/piccinal/python/pysph/mpiomp/cube.1.1
+Precompiled code from: /users/piccinal/.pysph/source/py3.6-linux-x86_64/m_14167516897c79ea507b93d563191d50.pyx
+Rank 1: No of particles:
+----------------------------------------------------------------------
+  fluid: 1439676
+----------------------------------------------------------------------
+Rank 0: No of particles:
+----------------------------------------------------------------------
+  fluid: 1439640
+----------------------------------------------------------------------
+Rank 1: Setup took: 26.73045 secs
+Rank 0: Setup took: 26.88660 secs
+Rank 0: Run took: 98.67659 secs
+Rank 1: Run took: 98.83004 secs
++ set +x
+ 
+Batch Job Summary Report for Job "GNU" (908850) on dom
+-----------------------------------------------------------------------------------------------------
+             Submit            Eligible               Start                 End    Elapsed  Timelimit 
+------------------- ------------------- ------------------- ------------------- ---------- ---------- 
+2018-12-20T19:04:53 2018-12-20T19:04:53 2018-12-20T19:04:54 2018-12-20T19:07:06   00:02:12   00:10:00 
+-----------------------------------------------------------------------------------------------------
+Username    Account     Partition   NNodes   Energy
+----------  ----------  ----------  ------  --------------
+piccinal    csstaff     normal           1   19.07K joules
+ 
+This job did not utilize any GPUs
+ 
+----------------------------------------------------------
+Scratch File System        Files       Quota
+--------------------  ----------  ----------
+/scratch/snx1600tds         7378     1000000
+/scratch/snx3000tds            3     1000000
+ 

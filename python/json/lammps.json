@@ -1,0 +1,63 @@
+{
+  "_index": "reframe_3",
+  "_type": "message",
+  "_id": "f0d31193-839d-11ea-8ff8-a679b78ec7f3",
+  "_version": 1,
+  "_score": null,
+  "_source": {
+    "line": 513,
+    "gl2_remote_ip": "148.187.26.64",
+    "gl2_remote_port": 42552,
+    "check_job_completion_time": 1587452486,
+    "source": "daint101",
+    "gl2_source_input": "598979a0076ee46f069aa24a",
+    "file": "logging.py",
+    "check_info": "LAMMPSCPUCheck_small_prod on daint:mc using builtin",
+    "check_partition": "mc",
+    "osuser": "jenscscs",
+    "gl2_source_node": "f346cd26-9db6-4f20-b4a8-e76ef26c66be",
+    "logger_name": "reframe",
+    "check_jobid": 22102264,
+    "check_perf_ref": 3824,
+    "check_perf_unit": "timesteps/s",
+    "timestamp": "2020-04-21 07:01:36.166",
+    "check_stagedir": "/scratch/snx3000/jenscscs/regression/production/stage/2020-04-21_00-51-31/daint/mc/builtin/LAMMPSCPUCheck_small_prod_retry1",
+    "check_environ": "builtin",
+    "check_perf_var": "perf",
+    "level": 6,
+    "module": "logging",
+    "streams": [
+      "5a70861f47256e51e7ee7e95"
+    ],
+    "gl2_message_id": "01E6DRNJ9ABCKRH3FSBS77C3BJ",
+    "osgroup": "jenscscs",
+    "check_tags": "scs,external-resources,production",
+    "check_outputdir": "/apps/daint/UES/jenscscs/regression/production/2020-04-21_00-51-31/daint/mc/builtin/LAMMPSCPUCheck_small_prod_retry1",
+    "check_num_tasks": 216,
+    "message": "sent by jenscscs",
+    "version": "3.0-dev4 (rev: ea917eee)",
+    "check_system": "daint",
+    "check_perf_value": 4141.566,
+    "func": "log",
+    "check_name": "LAMMPSCPUCheck_small_prod",
+    "facility": "reframe",
+    "check_perf_lower_thres": -0.1,
+    "data-version": "1.0"
+  },
+  "fields": {
+    "check_job_completion_time": [
+      "1970-01-19T08:57:32.486Z"
+    ],
+    "timestamp": [
+      "2020-04-21T07:01:36.166Z"
+    ]
+  },
+  "highlight": {
+    "check_name": [
+      "@kibana-highlighted-field@LAMMPSCPUCheck_small_prod@/kibana-highlighted-field@"
+    ]
+  },
+  "sort": [
+    1587452496166
+  ]
+}

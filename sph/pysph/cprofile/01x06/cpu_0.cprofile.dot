@@ -1,0 +1,33 @@
+digraph {
+	graph [fontname=Arial, nodesep=0.125, ranksep=0.25];
+	node [fontcolor=white, fontname=Arial, height=0, shape=box, style=filled, width=0];
+	edge [fontname=Arial];
+	69 [color="#0d0f73", fontcolor="#ffffff", fontsize="10.00", label="application:863:_configure\n0.55%\n(0.25%)\n1×", tooltip="/apps/dom/UES/sandbox/piccinal/6.0.UP07/gpu/easybuild/software/PySPH/1.0a6-CrayGNU-18.12-python3/lib/python3.6/site-packages/PySPH-1.0a6-py3.6-linux-x86_64.egg/pysph/solver/application.py"];
+	390 [color="#0d1174", fontcolor="#ffffff", fontsize="10.00", label="utils:47:get_particle_array\n1.11%\n(1.11%)\n1×", tooltip="/apps/dom/UES/sandbox/piccinal/6.0.UP07/gpu/easybuild/software/PySPH/1.0a6-CrayGNU-18.12-python3/lib/python3.6/site-packages/PySPH-1.0a6-py3.6-linux-x86_64.egg/pysph/base/utils.py"];
+	394 [color="#0d1274", fontcolor="#ffffff", fontsize="10.00", label="cube_cscs:62:create_particles\n1.34%\n(0.02%)\n1×", tooltip="/users/piccinal/jgphpc.git/sph/pysph/cube_cscs.py"];
+	394 -> 971 [arrowsize="0.35", color="#0d1174", fontcolor="#0d1174", fontsize="10.00", label="1.11%\n1×", labeldistance="0.50", penwidth="0.50"];
+	679 [color="#0d1274", fontcolor="#ffffff", fontsize="10.00", label="application:800:_create_particles\n1.36%\n(0.00%)\n1×", tooltip="/apps/dom/UES/sandbox/piccinal/6.0.UP07/gpu/easybuild/software/PySPH/1.0a6-CrayGNU-18.12-python3/lib/python3.6/site-packages/PySPH-1.0a6-py3.6-linux-x86_64.egg/pysph/solver/application.py"];
+	679 -> 394 [arrowsize="0.35", color="#0d1274", fontcolor="#0d1274", fontsize="10.00", label="1.34%\n1×", labeldistance="0.50", penwidth="0.50"];
+	785 [color="#ff0000", fontcolor="#ffffff", fontsize="10.00", label="application:1373:run\n100.00%\n(0.00%)\n1×", tooltip="/apps/dom/UES/sandbox/piccinal/6.0.UP07/gpu/easybuild/software/PySPH/1.0a6-CrayGNU-18.12-python3/lib/python3.6/site-packages/PySPH-1.0a6-py3.6-linux-x86_64.egg/pysph/solver/application.py"];
+	785 -> 69 [arrowsize="0.35", color="#0d0f73", fontcolor="#0d0f73", fontsize="10.00", label="0.55%\n1×", labeldistance="0.50", penwidth="0.50"];
+	785 -> 679 [arrowsize="0.35", color="#0d1274", fontcolor="#0d1274", fontsize="10.00", label="1.36%\n1×", labeldistance="0.50", penwidth="0.50"];
+	785 -> 938 [arrowsize="0.99", color="#fc1400", fontcolor="#fc1400", fontsize="10.00", label="98.04%\n1×", labeldistance="3.92", penwidth="3.92"];
+	906 [color="#0d1274", fontcolor="#ffffff", fontsize="10.00", label="~:0:<method 'update' of 'pysph.base.nnps_base.NNPS' objects>\n1.16%\n(1.16%)\n5×", tooltip="~"];
+	938 [color="#fc1400", fontcolor="#ffffff", fontsize="10.00", label="solver:402:solve\n98.04%\n(0.00%)\n1×", tooltip="/apps/dom/UES/sandbox/piccinal/6.0.UP07/gpu/easybuild/software/PySPH/1.0a6-CrayGNU-18.12-python3/lib/python3.6/site-packages/PySPH-1.0a6-py3.6-linux-x86_64.egg/pysph/solver/solver.py"];
+	938 -> 1133 [arrowsize="0.91", color="#e4a404", fontcolor="#e4a404", fontsize="10.00", label="82.16%\n5×", labeldistance="3.29", penwidth="3.29"];
+	938 -> 1135 [arrowsize="0.40", color="#0c5a87", fontcolor="#0c5a87", fontsize="10.00", label="15.87%\n1×", labeldistance="0.63", penwidth="0.63"];
+	971 [color="#0d1174", fontcolor="#ffffff", fontsize="10.00", label="utils:152:get_particle_array_wcsph\n1.11%\n(0.00%)\n1×", tooltip="/apps/dom/UES/sandbox/piccinal/6.0.UP07/gpu/easybuild/software/PySPH/1.0a6-CrayGNU-18.12-python3/lib/python3.6/site-packages/PySPH-1.0a6-py3.6-linux-x86_64.egg/pysph/base/utils.py"];
+	971 -> 390 [arrowsize="0.35", color="#0d1174", fontcolor="#0d1174", fontsize="10.00", label="1.11%\n1×", labeldistance="0.50", penwidth="0.50"];
+	1121 [color="#e2b104", fontcolor="#ffffff", fontsize="10.00", label="integrator:217:compute_accelerations\n80.56%\n(0.00%)\n5×", tooltip="/apps/dom/UES/sandbox/piccinal/6.0.UP07/gpu/easybuild/software/PySPH/1.0a6-CrayGNU-18.12-python3/lib/python3.6/site-packages/PySPH-1.0a6-py3.6-linux-x86_64.egg/pysph/sph/integrator.py"];
+	1121 -> 906 [arrowsize="0.35", color="#0d1274", fontcolor="#0d1274", fontsize="10.00", label="1.16%\n5×", labeldistance="0.50", penwidth="0.50"];
+	1121 -> 1182 [arrowsize="0.89", color="#e0b905", fontcolor="#e0b905", fontsize="10.00", label="79.40%\n5×", labeldistance="3.18", penwidth="3.18"];
+	1133 [color="#e4a404", fontcolor="#ffffff", fontsize="10.00", label="integrator:209:step\n82.16%\n(0.00%)\n5×", tooltip="/apps/dom/UES/sandbox/piccinal/6.0.UP07/gpu/easybuild/software/PySPH/1.0a6-CrayGNU-18.12-python3/lib/python3.6/site-packages/PySPH-1.0a6-py3.6-linux-x86_64.egg/pysph/sph/integrator.py"];
+	1133 -> 1134 [arrowsize="0.91", color="#e4a404", fontcolor="#e4a404", fontsize="10.00", label="82.16%\n5×", labeldistance="3.29", penwidth="3.29"];
+	1134 [color="#e4a404", fontcolor="#ffffff", fontsize="10.00", label="~:0:<method 'step' of 'm_891d73205c12d4212e788f0e32497fce.Integrator' objects>\n82.16%\n(1.51%)\n5×", tooltip="~"];
+	1134 -> 1121 [arrowsize="0.90", color="#e2b104", fontcolor="#e2b104", fontsize="10.00", label="80.56%\n5×", labeldistance="3.22", penwidth="3.22"];
+	1135 [color="#0c5a87", fontcolor="#ffffff", fontsize="10.00", label="integrator:229:initial_acceleration\n15.87%\n(0.00%)\n1×", tooltip="/apps/dom/UES/sandbox/piccinal/6.0.UP07/gpu/easybuild/software/PySPH/1.0a6-CrayGNU-18.12-python3/lib/python3.6/site-packages/PySPH-1.0a6-py3.6-linux-x86_64.egg/pysph/sph/integrator.py"];
+	1135 -> 1182 [arrowsize="0.40", color="#0c5a87", fontcolor="#0c5a87", fontsize="10.00", label="15.87%\n1×", labeldistance="0.63", penwidth="0.63"];
+	1182 [color="#f83001", fontcolor="#ffffff", fontsize="10.00", label="acceleration_eval:223:compute\n95.27%\n(0.00%)\n6×", tooltip="/apps/dom/UES/sandbox/piccinal/6.0.UP07/gpu/easybuild/software/PySPH/1.0a6-CrayGNU-18.12-python3/lib/python3.6/site-packages/PySPH-1.0a6-py3.6-linux-x86_64.egg/pysph/sph/acceleration_eval.py"];
+	1182 -> 1330 [arrowsize="0.98", color="#f83001", fontcolor="#f83001", fontsize="10.00", label="95.27%\n6×", labeldistance="3.81", penwidth="3.81"];
+	1330 [color="#f83001", fontcolor="#ffffff", fontsize="10.00", label="~:0:<method 'compute' of 'm_891d73205c12d4212e788f0e32497fce.AccelerationEval' objects>\n95.27%\n(95.27%)\n6×", tooltip="~"];
+}

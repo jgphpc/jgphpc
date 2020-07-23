@@ -1,0 +1,75 @@
+FROM nvidia/cuda:10.1-devel
+# Ubuntu/18.04.3
+# gnu/7.4.0
+# MPICH/3.3a2
+# https://wiki.ubuntu.com/Releases
+# https://gitlab.com/nvidia/container-images/cuda/blob/master/doc/supported-tags.md
+#
+# DD=Dockerfile.ub1804_cuda101_mpich314_mpip
+# VV=ethcscs/ub1804:mpich314_mpip
+# docker build -f ./$DD -t $VV .
+# docker run --rm -it $VV bash
+# mpirun -np 2 /usr/local/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_bw
+# mac: docker image save $VV -o nemo.tar # + scp
+# dom: sarus load nemo.tar nemo/ub1804
+# docker run --rm $VV bash -c "mpirun -np 2 ./gnu7/mpi+omp.app -s 1 -n 20"
+# PS1="\[\033[31m\]\u:\w/$ \[\e[0;36m\]"
+# vim.tiny ~/.bashrc
+
+#{{{ apt:
+RUN echo \
+    && apt update --quiet \
+    && apt install --quiet -y --no-install-recommends wget make cmake m4 curl \
+    zlib1g-dev subversion gcc g++ gfortran file unzip liburi-perl \
+    openssh-client vim-tiny libunwind-dev libiberty-dev binutils-dev \
+    python3-minimal \
+    && ln -fs /usr/bin/make /usr/bin/gmake \
+    && ln -fs /usr/bin/python3 /usr/bin/python
+#}}}
+
+#{{{ mpich/3.1.4:
+COPY mpich-3.1.4.tar.gz /tmp/mpich-3.1.4.tar.gz
+RUN echo \
+    && mkdir -p /tmp/M ;cd /tmp/M \
+    && tar xf /tmp/mpich-3.1.4.tar.gz \
+    # && wget -q http://www.mpich.org/static/downloads/3.1.4/mpich-3.1.4.tar.gz \
+    # && tar xf mpich-3.1.4.tar.gz \
+    && cd mpich-3.1.4 \
+    && ./configure --prefix=/usr \
+    && make -j6 \
+    && make install \
+    && ldconfig 
+#}}}
+
+#{{{ mpiP/3.4.2:
+COPY mpiP.git /tmp/mpiP.git
+ENV LOGNAME=piccinal
+RUN echo \
+    && apt install --quiet -y --no-install-recommends python3-ipdb \
+    && mkdir -p /tmp/MPIP ;cd /tmp/MPIP \
+    && mv /tmp/mpiP.git . ;cd mpiP.git \
+    && ./configure \
+    && make install
+    # /tmp/MPIP/mpiP.git/lib/
+#}}}
+
+#{{{ osu/5.6.2:
+COPY osu-micro-benchmarks-5.6.2.tar.gz /tmp/osu-micro-benchmarks-5.6.2.tar.gz
+RUN echo \
+    && mkdir -p /tmp/OSU ;cd /tmp/OSU \
+    && tar xf /tmp/osu-micro-benchmarks-5.6.2.tar.gz \
+    && cd osu-micro-benchmarks-5.6.2 \
+    && ./configure --prefix=/usr/local CC=$(which mpicc) CFLAGS=-O3 \
+    && make -j2 \
+    && make install \
+    && cd ./mpi/pt2pt/ ;make clean \
+    && make LDFLAGS='-L/tmp/MPIP/mpiP.git/lib -Wl,--whole-archive -lmpiP -Wl,--no-whole-archive -lunwind -lbfd -liberty -ldl -lz -lpthread'
+    # mv osu_bibw osu_bw osu_latency osu_latency_mt osu_mbw_mr osu_multi_lat ORI
+    # ==> /tmp/OSU/osu-micro-benchmarks-5.6.2/mpi/pt2pt/
+    # ==> /usr/local/libexec/osu-micro-benchmarks/mpi/
+    # export MPIP=-c  # "-v -g"
+    # mpirun -np 2 /tmp/OSU/osu-micro-benchmarks-5.6.2/mpi/pt2pt/osu_latency # =mpiP
+    # mpirun -np 2 /usr/local/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_latency
+    # strings -a osu_bw |grep -m2 mpiP
+#}}} 
+

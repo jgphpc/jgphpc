@@ -1,0 +1,226 @@
+sqpatch_xsmall_mpi+omp_001mpi_001omp_30n_10steps
+- daint:gpu
+   - PrgEnv-cray
+      * num_tasks: 1
+      * Elapsed: 8.6628 s
+      * Final step: 10
+      * Total Neighbors: 6707644
+      * Avg neighbor count per particle: 248
+      * Total energy: 20814700000.0 erg
+      * Internal energy: -254600.0 erg
+   - PrgEnv-gnu
+      * num_tasks: 1
+      * Elapsed: 6.4157 s
+      * Final step: 10
+      * Total Neighbors: 6707644
+      * Avg neighbor count per particle: 248
+      * Total energy: 20814700000.0 erg
+      * Internal energy: -254600.0 erg
+   - PrgEnv-intel
+      * num_tasks: 1
+      * Elapsed: 5.2805 s
+      * Final step: 10
+      * Total Neighbors: 6707644
+      * Avg neighbor count per particle: 248
+      * Total energy: 20814700000.0 erg
+      * Internal energy: -254600.0 erg
+   - PrgEnv-pgi
+      * num_tasks: 1
+      * Elapsed: 7.3506 s
+      * Final step: 10
+      * Total Neighbors: 6707644
+      * Avg neighbor count per particle: 248
+      * Total energy: 20814700000.0 erg
+      * Internal energy: -254600.0 erg
+------------------------------------------------------------------------------
+sqpatch_xsmall_mpi+omp+target_001mpi_001omp_30n_10steps
+   - PrgEnv-cray
+      * num_tasks: 1
+      * Elapsed: 8.468 s
+      * Final step: 10
+      * Total Neighbors: 6707644
+      * Avg neighbor count per particle: 248
+      * Total energy: 20814700000.0 erg
+      * Internal energy: -254600.0 erg
+------------------------------------------------------------------------------
+sqpatch_xsmall_mpi+omp+acc_001mpi_001omp_30n_10steps
+   - PrgEnv-pgi
+      * num_tasks: 1
+      * Elapsed: 1.7159 s
+      * Final step: 10
+      * Total Neighbors: 6707644
+      * Avg neighbor count per particle: 248
+      * Total energy: 20873700000.0 erg
+      * Internal energy: -2695120.0 erg
+------------------------------------------------------------------------------
+sqpatch_xsmall_mpi+omp+cuda_001mpi_001omp_30n_10steps
+   - PrgEnv-gnu
+      * num_tasks: 1
+      * Elapsed: 1.5606 s
+      * Final step: 10
+      * Total Neighbors: 6707644
+      * Avg neighbor count per particle: 248
+      * Total energy: 20814700000.0 erg
+      * Internal energy: -254600.0 erg
+------------------------------------------------------------------------------
+sqpatch_small_mpi+omp_012mpi_001omp_30n_100steps
+   - PrgEnv-cray
+      * num_tasks: 12
+      * Elapsed: 16.7069 s
+      * Final step: 100
+      * Total Neighbors: 6748609
+      * Avg neighbor count per particle: 249
+      * Total energy: 20874500000.0 erg
+      * Internal energy: 1991160.0 erg
+   - PrgEnv-gnu
+      * num_tasks: 12
+      * Elapsed: 12.8951 s
+      * Final step: 100
+      * Total Neighbors: 6748609
+      * Avg neighbor count per particle: 249
+      * Total energy: 20874500000.0 erg
+      * Internal energy: 1991160.0 erg
+   - PrgEnv-intel
+      * num_tasks: 12
+      * Elapsed: 10.985 s
+      * Final step: 100
+      * Total Neighbors: 6748609
+      * Avg neighbor count per particle: 249
+      * Total energy: 20874500000.0 erg
+      * Internal energy: 1991160.0 erg
+   - PrgEnv-pgi
+      * num_tasks: 12
+      * Elapsed: 14.5301 s
+      * Final step: 100
+      * Total Neighbors: 6748609
+      * Avg neighbor count per particle: 249
+      * Total energy: 20874500000.0 erg
+      * Internal energy: 1991160.0 erg
+------------------------------------------------------------------------------
+sqpatch_small_mpi+omp+target_001mpi_001omp_30n_100steps
+   - PrgEnv-cray
+      * num_tasks: 1
+      * Elapsed: 80.2685 s
+      * Final step: 100
+      * Total Neighbors: 6748609
+      * Avg neighbor count per particle: 249
+      * Total energy: 20874500000.0 erg
+      * Internal energy: 1991160.0 erg
+------------------------------------------------------------------------------
+sqpatch_small_mpi+omp+acc_001mpi_001omp_30n_100steps
+   - PrgEnv-pgi
+      * num_tasks: 1
+      * Elapsed: 15.6715 s
+      * Final step: 100
+      * Total Neighbors: 6751293
+      * Avg neighbor count per particle: 250
+      * Total energy: 84474000000000.0 erg
+      * Internal energy: 4017490000000.0 erg
+------------------------------------------------------------------------------
+sqpatch_small_mpi+omp+cuda_001mpi_001omp_30n_100steps
+   - PrgEnv-gnu
+      * num_tasks: 1
+      * Elapsed: 14.5718 s
+      * Final step: 100
+      * Total Neighbors: 6753118
+      * Avg neighbor count per particle: 250
+      * Total energy: 20857000000.0 erg
+      * Internal energy: 703946.0 erg
+------------------------------------------------------------------------------
+sqpatch_medium_mpi+omp_012mpi_001omp_100n_20steps
+   - PrgEnv-cray
+      * num_tasks: 12
+      * Elapsed: 74.5093 s
+      * Final step: 20
+      * Total Neighbors: 249279719
+      * Avg neighbor count per particle: 249
+      * Total energy: 20898200000.0 erg
+      * Internal energy: -11998800.0 erg
+   - PrgEnv-gnu
+      * num_tasks: 12
+      * Elapsed: 57.3311 s
+      * Final step: 20
+      * Total Neighbors: 249279719
+      * Avg neighbor count per particle: 249
+      * Total energy: 20898200000.0 erg
+      * Internal energy: -11998800.0 erg
+   - PrgEnv-intel
+      * num_tasks: 12
+      * Elapsed: 48.6495 s
+      * Final step: 20
+      * Total Neighbors: 249279719
+      * Avg neighbor count per particle: 249
+      * Total energy: 20898200000.0 erg
+      * Internal energy: -11998800.0 erg
+   - PrgEnv-pgi
+      * num_tasks: 12
+      * Elapsed: 64.4918 s
+      * Final step: 20
+      * Total Neighbors: 249279719
+      * Avg neighbor count per particle: 249
+      * Total energy: 20898200000.0 erg
+      * Internal energy: -11998800.0 erg
+------------------------------------------------------------------------------
+sqpatch_medium_mpi+omp+target_010mpi_001omp_100n_20steps
+   - PrgEnv-cray
+      * num_tasks: 10
+      * Elapsed: 68.8644 s
+      * Final step: 20
+      * Total Neighbors: 249279719
+      * Avg neighbor count per particle: 249
+      * Total energy: 20898200000.0 erg
+      * Internal energy: -11998800.0 erg
+------------------------------------------------------------------------------
+sqpatch_medium_mpi+omp+cuda_010mpi_001omp_100n_20steps
+   - PrgEnv-gnu
+      * num_tasks: 10
+      * Elapsed: 15.8101 s
+      * Final step: 20
+      * Total Neighbors: 249279719
+      * Avg neighbor count per particle: 249
+      * Total energy: 20898200000.0 erg
+      * Internal energy: -11998800.0 erg
+------------------------------------------------------------------------------
+sqpatch_large_mpi+omp_024mpi_001omp_300n_10steps
+   - PrgEnv-cray
+      * num_tasks: 24
+      * Elapsed: 237.8756 s
+   - PrgEnv-gnu
+      * num_tasks: 24
+      * Elapsed: 403.5344 s
+      * Final step: 10
+      * Total Neighbors: 6746728736
+      * Avg neighbor count per particle: 249
+      * Total energy: 20846800000.0 erg
+      * Internal energy: -2960200.0 erg
+   - PrgEnv-intel
+      * num_tasks: 24
+      * Elapsed: 341.8425 s
+      * Final step: 10
+      * Total Neighbors: 6746728736
+      * Avg neighbor count per particle: 249
+      * Total energy: 20846800000.0 erg
+      * Internal energy: -2960200.0 erg
+   - PrgEnv-pgi
+      * num_tasks: 24
+      * Elapsed: 414.2592 s
+------------------------------------------------------------------------------
+sqpatch_large_mpi+omp+target_019mpi_001omp_300n_10steps
+   - PrgEnv-cray
+      * num_tasks: 19
+      * Elapsed: 499.9986 s
+      * Final step: 10
+      * Total Neighbors: 6746728736
+      * Avg neighbor count per particle: 249
+      * Total energy: 20846800000.0 erg
+      * Internal energy: -2960200.0 erg
+------------------------------------------------------------------------------
+sqpatch_large_mpi+omp+cuda_019mpi_001omp_300n_10steps
+   - PrgEnv-gnu
+      * num_tasks: 19
+      * Elapsed: 115.9274 s
+      * Final step: 10
+      * Total Neighbors: 6746728736
+      * Avg neighbor count per particle: 249
+      * Total energy: 20846800000.0 erg
+      * Internal energy: -2960200.0 erg

@@ -1,0 +1,36 @@
+digraph {
+	graph [fontname=Arial, nodesep=0.125, ranksep=0.25];
+	node [fontcolor=white, fontname=Arial, height=0, shape=box, style=filled, width=0];
+	edge [fontname=Arial];
+	69 [color="#0c748d", fontcolor="#ffffff", fontsize="10.00", label="application:863:_configure\n20.09%\n(0.06%)\n1×", tooltip="/apps/dom/UES/sandbox/piccinal/6.0.UP07/gpu/easybuild/software/PySPH/1.0a6-CrayGNU-18.12-python3/lib/python3.6/site-packages/PySPH-1.0a6-py3.6-linux-x86_64.egg/pysph/solver/application.py"];
+	69 -> 872 [arrowsize="0.44", color="#0c728c", fontcolor="#0c728c", fontsize="10.00", label="19.78%\n1×", labeldistance="0.79", penwidth="0.79"];
+	392 [color="#0d1174", fontcolor="#ffffff", fontsize="10.00", label="utils:47:get_particle_array\n1.05%\n(1.04%)\n1×", tooltip="/apps/dom/UES/sandbox/piccinal/6.0.UP07/gpu/easybuild/software/PySPH/1.0a6-CrayGNU-18.12-python3/lib/python3.6/site-packages/PySPH-1.0a6-py3.6-linux-x86_64.egg/pysph/base/utils.py"];
+	396 [color="#0d1274", fontcolor="#ffffff", fontsize="10.00", label="cube_cscs:62:create_particles\n1.26%\n(0.02%)\n1×", tooltip="/users/piccinal/jgphpc.git/sph/pysph/cube_cscs.py"];
+	396 -> 981 [arrowsize="0.35", color="#0d1174", fontcolor="#0d1174", fontsize="10.00", label="1.05%\n1×", labeldistance="0.50", penwidth="0.50"];
+	683 [color="#0d1274", fontcolor="#ffffff", fontsize="10.00", label="application:800:_create_particles\n1.27%\n(0.00%)\n1×", tooltip="/apps/dom/UES/sandbox/piccinal/6.0.UP07/gpu/easybuild/software/PySPH/1.0a6-CrayGNU-18.12-python3/lib/python3.6/site-packages/PySPH-1.0a6-py3.6-linux-x86_64.egg/pysph/solver/application.py"];
+	683 -> 396 [arrowsize="0.35", color="#0d1274", fontcolor="#0d1274", fontsize="10.00", label="1.26%\n1×", labeldistance="0.50", penwidth="0.50"];
+	789 [color="#ff0000", fontcolor="#ffffff", fontsize="10.00", label="application:1373:run\n100.00%\n(0.00%)\n1×", tooltip="/apps/dom/UES/sandbox/piccinal/6.0.UP07/gpu/easybuild/software/PySPH/1.0a6-CrayGNU-18.12-python3/lib/python3.6/site-packages/PySPH-1.0a6-py3.6-linux-x86_64.egg/pysph/solver/application.py"];
+	789 -> 69 [arrowsize="0.45", color="#0c748d", fontcolor="#0c748d", fontsize="10.00", label="20.09%\n1×", labeldistance="0.80", penwidth="0.80"];
+	789 -> 683 [arrowsize="0.35", color="#0d1274", fontcolor="#0d1274", fontsize="10.00", label="1.27%\n1×", labeldistance="0.50", penwidth="0.50"];
+	789 -> 947 [arrowsize="0.89", color="#dfc005", fontcolor="#dfc005", fontsize="10.00", label="78.58%\n1×", labeldistance="3.14", penwidth="3.14"];
+	872 [color="#0c728c", fontcolor="#ffffff", fontsize="10.00", label="application:1178:_setup_parallel_manager_and_initial_load_balance\n19.78%\n(1.79%)\n1×", tooltip="/apps/dom/UES/sandbox/piccinal/6.0.UP07/gpu/easybuild/software/PySPH/1.0a6-CrayGNU-18.12-python3/lib/python3.6/site-packages/PySPH-1.0a6-py3.6-linux-x86_64.egg/pysph/solver/application.py"];
+	872 -> 880 [arrowsize="0.42", color="#0c678a", fontcolor="#0c678a", fontsize="10.00", label="17.98%\n1×", labeldistance="0.72", penwidth="0.72"];
+	880 [color="#0c8691", fontcolor="#ffffff", fontsize="10.00", label="~:0:<method 'update' of 'pysph.parallel.parallel_manager.ParallelManager' objects>\n23.04%\n(22.79%)\n6×", tooltip="~"];
+	947 [color="#dfc005", fontcolor="#ffffff", fontsize="10.00", label="solver:402:solve\n78.58%\n(0.00%)\n1×", tooltip="/apps/dom/UES/sandbox/piccinal/6.0.UP07/gpu/easybuild/software/PySPH/1.0a6-CrayGNU-18.12-python3/lib/python3.6/site-packages/PySPH-1.0a6-py3.6-linux-x86_64.egg/pysph/solver/solver.py"];
+	947 -> 1146 [arrowsize="0.82", color="#90ce07", fontcolor="#90ce07", fontsize="10.00", label="67.20%\n5×", labeldistance="2.69", penwidth="2.69"];
+	947 -> 1149 [arrowsize="0.35", color="#0d4281", fontcolor="#0d4281", fontsize="10.00", label="11.38%\n1×", labeldistance="0.50", penwidth="0.50"];
+	981 [color="#0d1174", fontcolor="#ffffff", fontsize="10.00", label="utils:152:get_particle_array_wcsph\n1.05%\n(0.00%)\n1×", tooltip="/apps/dom/UES/sandbox/piccinal/6.0.UP07/gpu/easybuild/software/PySPH/1.0a6-CrayGNU-18.12-python3/lib/python3.6/site-packages/PySPH-1.0a6-py3.6-linux-x86_64.egg/pysph/base/utils.py"];
+	981 -> 392 [arrowsize="0.35", color="#0d1174", fontcolor="#0d1174", fontsize="10.00", label="1.05%\n1×", labeldistance="0.50", penwidth="0.50"];
+	1134 [color="#8dce07", fontcolor="#ffffff", fontsize="10.00", label="integrator:217:compute_accelerations\n66.85%\n(0.00%)\n5×", tooltip="/apps/dom/UES/sandbox/piccinal/6.0.UP07/gpu/easybuild/software/PySPH/1.0a6-CrayGNU-18.12-python3/lib/python3.6/site-packages/PySPH-1.0a6-py3.6-linux-x86_64.egg/pysph/sph/integrator.py"];
+	1134 -> 880 [arrowsize="0.35", color="#0d2379", fontcolor="#0d2379", fontsize="10.00", label="5.06%\n5×", labeldistance="0.50", penwidth="0.50"];
+	1134 -> 1196 [arrowsize="0.78", color="#60c608", fontcolor="#60c608", fontsize="10.00", label="61.52%\n5×", labeldistance="2.46", penwidth="2.46"];
+	1146 [color="#90ce07", fontcolor="#ffffff", fontsize="10.00", label="integrator:209:step\n67.20%\n(0.00%)\n5×", tooltip="/apps/dom/UES/sandbox/piccinal/6.0.UP07/gpu/easybuild/software/PySPH/1.0a6-CrayGNU-18.12-python3/lib/python3.6/site-packages/PySPH-1.0a6-py3.6-linux-x86_64.egg/pysph/sph/integrator.py"];
+	1146 -> 1148 [arrowsize="0.82", color="#90ce07", fontcolor="#90ce07", fontsize="10.00", label="67.20%\n5×", labeldistance="2.69", penwidth="2.69"];
+	1148 [color="#90ce07", fontcolor="#ffffff", fontsize="10.00", label="~:0:<method 'step' of 'm_14167516897c79ea507b93d563191d50.Integrator' objects>\n67.20%\n(0.33%)\n5×", tooltip="~"];
+	1148 -> 1134 [arrowsize="0.82", color="#8dce07", fontcolor="#8dce07", fontsize="10.00", label="66.85%\n5×", labeldistance="2.67", penwidth="2.67"];
+	1149 [color="#0d4281", fontcolor="#ffffff", fontsize="10.00", label="integrator:229:initial_acceleration\n11.38%\n(0.00%)\n1×", tooltip="/apps/dom/UES/sandbox/piccinal/6.0.UP07/gpu/easybuild/software/PySPH/1.0a6-CrayGNU-18.12-python3/lib/python3.6/site-packages/PySPH-1.0a6-py3.6-linux-x86_64.egg/pysph/sph/integrator.py"];
+	1149 -> 1196 [arrowsize="0.35", color="#0d4281", fontcolor="#0d4281", fontsize="10.00", label="11.38%\n1×", labeldistance="0.50", penwidth="0.50"];
+	1196 [color="#c5d606", fontcolor="#ffffff", fontsize="10.00", label="acceleration_eval:223:compute\n72.90%\n(0.00%)\n6×", tooltip="/apps/dom/UES/sandbox/piccinal/6.0.UP07/gpu/easybuild/software/PySPH/1.0a6-CrayGNU-18.12-python3/lib/python3.6/site-packages/PySPH-1.0a6-py3.6-linux-x86_64.egg/pysph/sph/acceleration_eval.py"];
+	1196 -> 1320 [arrowsize="0.85", color="#c5d606", fontcolor="#c5d606", fontsize="10.00", label="72.90%\n6×", labeldistance="2.92", penwidth="2.92"];
+	1320 [color="#c5d606", fontcolor="#ffffff", fontsize="10.00", label="~:0:<method 'compute' of 'm_14167516897c79ea507b93d563191d50.AccelerationEval' objects>\n72.90%\n(72.90%)\n6×", tooltip="~"];
+}

@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# ___CORI___
+
+squeue -p gpu --states=R
+https://docs-dev.nersc.gov/cgpu/access/
+salloc -N1 -c1 -Cgpu -G1 -t30
+salloc -N1 -c1 -Cgpu -G1 -t5 -q special -A m1759
+
+# {{{ gpu_info:
+mpirun -np 1 ./exe.cgp
+=== get_gpu_info ===
+Process 0 on nidTesla V100-SXM2-16GB out of 0 Device 0 (Tesla V100-SXM2-16GB)
+
+=== get_more_gpu_info ===
+Device 0: "Tesla V100-SXM2-16GB"
+  CUDA Driver Version / Runtime Version     10.2 / 10.2
+  CUDA Capability Major/Minor version number:    7.0
+  (80) Multiprocessors, ( 64) CUDA Cores/MP:     5120 CUDA Cores
+  GPU Max Clock rate:                            1530 MHz (1.53 GHz)
+  Theoretical peak performance per GPU:          7834 Gflop/s
+  Maximum number of threads per multiprocessor:  2048
+  Peak number of threads:                        163840 threads
+  Maximum number of threads per block:           1024
+
+=== /proc/driver/nvidia/version ===
+NVRM version: NVIDIA UNIX x86_64 Kernel Module  440.33.01  Wed Nov 13 00:00:22 UTC 2019
+# }}}
+
+# {{{ compile:
+CRAY_ACCEL_TARGET=nvidia70 CUDATOOLKIT_HOME=$CUDA_ROOT mm
+cc -g -I./include -I/usr/common/software/cuda/10.2.89/samples/common/inc -c mpic.c
+nvcc -arch=sm_70 -I/usr/local/cuda-10.1/samples/common/inc -g -I./include -I/usr/common/software/cuda/10.2.89/samples/common/inc -c mpicu.cu
+cc -g -I./include -I/usr/common/software/cuda/10.2.89/samples/common/inc -L/usr/common/software/cuda/10.2.89/lib64 -lcuda -lcudart mpicu.o mpic.o -o exe.cgp
+# }}}
+
+# {{{ debug:
+module unload PrgEnv-intel
+module load PrgEnv-gnu
+module load openmpi
+module load cudatoolkit
+module load cuda/10.2.89
+module load craype-accel-nvidia70
+export CRAYPE_LINK_TYPE=dynamic
+export OMP_NUM_THREADS=1
+rm -f *.log
+mpirun -np 1 cuda-gdb --nh --batch --command=GDB/gdb.input mpi+omp+cuda
+mpirun -np 1 cuda-gdb --nh --init-command GDB/gdbinit  mpi+omp+cuda
+mpirun -np 1 cuda-gdb --nh --init-command GDB/gdbinit --batch --command=GDB/gdb.input mpi+omp+cuda
+
+set cuda break_on_launch application
+r -s 0 -n 30
+break 27
+continue
+Breakpoint 1 at 0xf0fc60: file include/sph/cuda/cudaDensity.cu, line 27.
+# n=27000 =30^3 106blocks*256thperblock=27136threads 27136/32=848warps warpSize=32
+
+# Thread 1 "mpi+omp+cuda" hit Breakpoint 1, sphexa::sph::cuda::kernels::density<double><<<(106,1,1),(256,1,1)>>> (n=27000,
+    sincIndex=6, K=0.79043937697438049, ngmax=300, bbox=0x2aaae5d3c800, clist=0x2aaae5d3ca00, neighbors=0x2aaaf6000000,
+    neighborsCount=0x2aaae5d57000, x=0x2aaae5c00000, y=0x2aaae5c34c00, z=0x2aaae5c69800, h=0x2aaae5c9e400, m=0x2aaae5cd3000,
+    ro=0x2aaae5d07c00) at include/sph/cuda/cudaDensity.cu:27
+27	    const int nn = neighborsCount[tid];
+
+# (cuda-gdb) info cuda launch trace
+  Lvl Kernel Dev Grid Status   GridDim  BlockDim Invocation
+* #0        0   0    3 Active (489,1,1) (256,1,1) sphexa::sph::cuda::kernels::density<double>(n=125000, sincIndex=6, K=0.79043937697438049, ngmax=300, bbox=0x2aaae5de8800, clist=0x2aaabda00000, neighbors=0x2aaafc000000, neighborsCount=0x2aaabda7a200, x=0x2aaae5c00000, y=0x2aaae5cf4400, z=0x2aaae5e00000, h=0x2aaae5ef4400, m=0x2aaabd800000, ro=0x2aaabd8f4400)
+# }}}
+

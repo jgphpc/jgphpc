@@ -1,0 +1,38 @@
+docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" \
+docker.elastic.co/elasticsearch/elasticsearch:7.6.2
+# puis: 
+docker run --link 2040bf850e8f:elasticsearch -p 5601:5601 kibana:7.6.2
+# puis:
+http://localhost:5601/app/kibana#/dev_tools/grokdebugger
+# Example:
+## Sample Data
+[INFO] 2020-04-10 14:45:16+0200 - 148.187.26.68 new connection
+[DEBUG] 2020-04-10 14:45:16+0200 - 148.187.26.68 read line:GET /licence.html?mac=daint105&user=smartin&pid=20503&licence=6784&nonce=1804289383&processes=12&version=19.1&init=1 HTTP/1.0
+[DEBUG] 2020-04-10 14:45:16+0200 - Process the sign on request
+[INFO] 2020-04-10 14:45:16+0200 - Issued licence [6784] to user smartin at daint105 with pid 20503
+## Grok Pattern
+%{TIMESTAMP_ISO8601:timestamp} - %{IP:UNWANTED} read line:GET /licence.html\?mac=%{HOSTNAME:hostname}\&user=%{USER:username}\&pid=%{NUMBER:pid}\&licence=%{DATA:UNWANTED}\&nonce=%{NUMBER:UNWANTED}\&processes=%{NUMBER:processes}\&version=%{NUMBER:version}
+## result: Structured Data
+{
+  "UNWANTED": "1804289383",
+  "hostname": "daint105",
+  "processes": "12",
+  "pid": "20503",
+  "version": "19.1",
+  "timestamp": "2020-04-10 14:45:16+0200",
+  "username": "smartin"
+}
+
+## docker:
+https://hub.docker.com/_/kibana?tab=description
+https://hub.docker.com/_/elasticsearch
+https://www.elastic.co/guide/en/elasticsearch/reference/7.6/starting-elasticsearch.html
+https://www.elastic.co/guide/en/elasticsearch/reference/7.6/docker.html#_pulling_the_image
+-> https://www.elastic.co/guide/en/kibana/current/access.html
+
+## ddt license log:
+https://confluence.cscs.ch/display/GENERAL/%5BVelan%5D+Setup+Guide#id-[Velan]SetupGuide-ConfiguringFieldsExtractorforAllineaDDTLogsonGraylog
+
+## grok:
+https://www.elastic.co/guide/en/elasticsearch/reference/current/grok-processor.html#grok-basics
+https://www.elastic.co/guide/en/kibana/7.6/xpack-grokdebugger.html#xpack-grokdebugger
