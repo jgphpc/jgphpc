@@ -6,7 +6,8 @@
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
-#----------------------------------------------------------------------
+## echo "---- PS1 start"
+# {{{ PS1
 # export PS1="\[\033[01;31m\]\h:\w $ \[\033[00m\]"
 export is_bash_aliases_set=1
 __git_branch='`git branch 2> /dev/null |grep ^* |cut -d\* -f2 |tr -d " "`'
@@ -49,7 +50,21 @@ function set-titlejg() {
     TABTITLEPS1="$cstart$cred$@$cstop"
     PS1="${TABTITLEPS1}${ORIG}${TABTITLE}"
 }
-# set-titlejg "$@"
+# }}}
+
+# {{{ gnome-terminal like iterm2
+# type set-titlejg
+# use LC_TELEPHONE because of dom (M /etc/ssh/sshd_config |grep AcceptEnv)
+set-titlejg "$LC_TELEPHONE"
+if [ -n "$LC_TELEPHONE" ] ;then
+    export YY=OK
+else
+    export YY=ko
+fi
+## echo "---- PS1 end"
+# }}}
+alias z=set-titlejg
+
 
 # export PS1="\[\e[0;32m\]# \u@\h\[\e[m\]|\[\e[1;32m\]\w\[\e[m\]\[\e[0;30m\]\$$__git_branch \[\e[m\]\[\e[1;37m\]\n"
 # PS1='\[\e[0;32m\] \h\[\e[m\]: '
@@ -58,7 +73,8 @@ function set-titlejg() {
 #debug: PS4='$0:$LINENO '
 # PS4='(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]} -> $?]'
 # export PS4='(${LINENO}):'
-#----------------------------------------------------------------------
+# }}}
+
 alias rt='cd $SCRATCH/RT'
 alias sx='cd /apps/common/UES/sandbox/jgp'
 #alias sxx='source ~/eff.ebgpu ;cd /apps/common/UES/sandbox/jgp/perfhackaton.git/reframe/lammps/'
@@ -70,15 +86,14 @@ export LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH
 ulimit -c unlimited
 if [ `uname` != "Darwin" ] ; then
     ulimit -s unlimited
-    export COLUMNS=112
+    # export COLUMNS=112
 fi
-
 # alias ls='ls --color=auto'
 # complete -r ls
 # ls $SCRATCH/
-
 # date --rfc-3339=ns > eff_bash_debug_bash_aliases
 
+# {{{ color
  ####    ####   #        ####   #####
 #    #  #    #  #       #    #  #    #
 #       #    #  #       #    #  #    #
@@ -128,8 +143,9 @@ BAKCYN='\[\e[46m\]'   # Cyan
 BAKWHT='\[\e[47m\]'   # White
 TXTRST='\[\e[0m\]'    # Text Reset
 NOCOLOR='\[\033[0m\]'  # No color
+# }}}
 
-
+# {{{ visit
 # echo B
  #    #     #     ####      #     #####
  #    #     #    #          #       #
@@ -157,16 +173,15 @@ NOCOLOR='\[\033[0m\]'  # No color
 #         #module load gcc
 #         #module load visit
 # #fi
+# }}}
 
-
-
+# {{{ modulecmd
 #    #   ####   #####   #    #  #       ######   ####   #    #  #####
 ##  ##  #    #  #    #  #    #  #       #       #    #  ##  ##  #    #
 # ## #  #    #  #    #  #    #  #       #####   #       # ## #  #    #
 #    #  #    #  #    #  #    #  #       #       #       #    #  #    #
 #    #  #    #  #    #  #    #  #       #       #    #  #    #  #    #
 #    #   ####   #####    ####   ######  ######   ####   #    #  #####
-# modulecmd
 trap "" 1 2 3
 unamen=`uname -n`
 
@@ -207,6 +222,9 @@ trap 1 2 3
 # if [ -z $SCRATCH ] ; then export SCRATCH=/scratch/piccinal ; fi
 # export SCRATCH="${SCRATCH:-${TMPDIR:?}}"
 # module aliases
+# }}}
+
+# {{{ aliases
 alias dg='source ~/dom-gpu.sh'
 alias dm='source ~/dom-mc.sh'
 #alias dg='module load daint-gpu ;source ~/eff.ebgpu'
@@ -261,6 +279,7 @@ alias accc='module load craype-accel-nvidia60'
 alias acc3='module load craype-accel-nvidia35'
 # latest mfiles defaults
 alias xmg='/apps/gele/scripts/cscs/modules/load_latest_mfiles_gele.sh ; grep -v \# /tmp/.efface.latest ;grep \# /tmp/.efface.latest; echo "doit ?"; read ; source /tmp/.efface.latest ; rm -f /tmp/.efface.latest'
+# }}}
 
 #function xmm() {
 #        /apps/sandbox/scripts/modules/load_latest_mfiles_rosa.sh $1
@@ -286,6 +305,7 @@ fi
 # export MODULEPATH=$MODULEPATH:~/modulefiles/
 #----------------------------------------------------------------------
 
+# {{{ ssh
  ####    ####   #    #
 #       #       #    #
  ####    ####   ######
@@ -394,6 +414,9 @@ alias cori='ssh -Y piccinal@cori.nersc.gov'
 #alias xt5='ssh louhi.csc.fi'
 
 # echo D
+# }}}
+
+# {{{ aliases
   ##    #          #      ##     ####   ######   ####
  #  #   #          #     #  #   #       #       #
 #    #  #          #    #    #   ####   #####    ####
@@ -482,8 +505,9 @@ alias x=xtnodestat
 alias xn='xtnodestat -m'
 alias xj='xtnodestat -j'
 alias yy='yod -VN -sz 2 /users/piccinal/a.out'
-
-
+# }}}
+ 
+# {{{ slurm
 # echo E
  ####   #       #    #  #####   #    #
 #       #       #    #  #    #  ##  ##
@@ -527,8 +551,9 @@ export SINFO_FORMAT='%9P %5a %8s %.10l %.6c %.6z %.7D %10T %N'
 export SQUEUE_FORMAT='%8i %8u %7a %.14j %.9B%.3t %.10r %.12S %.12e %.10L %.5D %.10Q'
 export SQUEUE_SORT='t,-e,-p'
 export SQUEUE_ALL='yes'
+# }}}
 
-
+# {{{ git
 # echo F
  ####      #     #####
 #    #     #       #
@@ -624,11 +649,9 @@ alias mch='echo svn ls https://cosmo.cscs.ch'
 alias ss='svn status'
 alias sd='svn diff'
 alias sl='svn ls'
-# -------------------------------------------------
+# }}}
 
-
-
-
+# {{{ linux
 # echo H
 #          #    #    #  #    #  #    #
 #          #    ##   #  #    #   #  #
@@ -643,19 +666,13 @@ LS_COLORS=$LS_COLORS"*.cu=04;34:"
 LS_OPTIONS="$LS_OPTIONS --color=always"
 #cray: export XTPE_INFO_MESSAGE_OFF=off
 
-## set-titlejg(){
-##   ORIG=$PS1
-##   TITLE="\e]2;$@\a"
-##   PS1=${ORIG}${TITLE}
-## }
-alias z=set-titlejg
 
 # TERMINATOR/TMUX
 # set_terminator_title() { printf '\e]2;%s\a' "$*"; }
 # alias z='set_terminator_title'
 # ==> USE TMUX !!!
 alias T='/apps/ela/sandbox/jgp/tmux/1.9a/gnu_434/bin/tmux'
-# -------------------------------------------------
+# }}}
 
 
 # echo I
@@ -668,7 +685,6 @@ alias T='/apps/ela/sandbox/jgp/tmux/1.9a/gnu_434/bin/tmux'
 # MUTT
 export EDITOR=vim
 # SECRET
-#----------------------------------------------------------------------
 
 
 

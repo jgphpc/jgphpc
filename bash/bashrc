@@ -28,6 +28,7 @@ fi
 ###     module unuse /apps/common/UES/modulefiles
 ###     module rm xalt
 ### fi
+module rm xalt
 # }}}
 
 # --- python:
