@@ -1,0 +1,6 @@
+# gnome-terminal --tab-with-profile=ELA_V
+export LC_TELEPHONE=V
+ssh -o SendEnv=LC_TELEPHONE ela.cscs.ch
+
+# ssh -o SendEnv=LC_TELEPHONE ela.cscs.ch 'echo -e "\n\n$LC_TELEPHONE"'
+# ssh -o SendEnv=LC_TELEPHONE ela.cscs.ch 'XX=$LC_TELEPHONE; unset LC_TELEPHONE; export XX; ./VV'

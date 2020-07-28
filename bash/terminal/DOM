@@ -1,0 +1,4 @@
+gnome-terminal \
+--tab-with-profile=DOM_V \
+--tab-with-profile=DOM_R \
+--tab-with-profile=DOM_P

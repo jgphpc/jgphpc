@@ -1,0 +1,4 @@
+gnome-terminal \
+--tab-with-profile=ELA_V \
+--tab-with-profile=ELA_R \
+--tab-with-profile=ELA_P
