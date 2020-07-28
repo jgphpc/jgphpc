@@ -11,7 +11,47 @@
 export is_bash_aliases_set=1
 __git_branch='`git branch 2> /dev/null |grep ^* |cut -d\* -f2 |tr -d " "`'
 # export PS1="\[\e[0;32m\] \u@\h\[\e[m\]:\[\e[1;32m\]\w\[\e[m\]\[\e[1;32m\]\$$__git_branch \[\e[m\]\[\e[1;37m\]"
-export PS1="\[\e[0;32m\]# \u@\h\[\e[m\]|\[\e[1;32m\]\w\[\e[m\]\[\e[0;30m\]\$$__git_branch \[\e[m\]\[\e[1;37m\]\n"
+
+function set-ps1jg() {
+    local cstart="\[\e["
+    local cstop="\e[m\]"
+    local hh='#'
+    local cblack="30m" #  0;30 # black
+    local cred="31m" #  0;31 # red
+    local cgreen="32m" #  0;32 # green
+    local cbrown="33m" #  0;33 # brown
+    local cblue="34m" #  0;34 # blue
+    local cpurple="35m" #  0;35 # purple
+    local ccyan="36m" #  0;36 # cyan
+    # Note: You need to replace digit 0 with 1 to get light color version.
+    # PS1="> "
+    # P1="${cstart}${cgreen}\]# \[${cstop}"
+    unset P1
+    local P2="${cstart}${cgreen}\]$hh \u@\h\[${cstop}"
+    unset P3 P4
+    #local P3="${cstart}${cbrown}\]@\[${cstop}"
+    #local P4="${cstart}${cgreen}\]\h\[${cstop}|"
+    local P5="${cstart}${cbrown}\]|\w\[${cstop}"
+    unset P6
+    # local P6="${cstart}${cgreen}\]]\[${cstop}"
+    # local P7="${cstart}32;47m\]\\$\[${cstop} "
+    local P7="${cstart}${cblack}\]\\$\[${cstop} "
+    export PS1="$P1$P2$P3$P4$P5$P6$P7"
+}
+set-ps1jg
+
+function set-titlejg() {
+    ORIG=$PS1
+    TABTITLE="\e]2;$@\a"
+    local cstart="\[\e["
+    local cstop="\e[m\]"
+    local cred="31m" #  0;31 # red
+    TABTITLEPS1="$cstart$cred$@$cstop"
+    PS1="${TABTITLEPS1}${ORIG}${TABTITLE}"
+}
+# set-titlejg "$@"
+
+# export PS1="\[\e[0;32m\]# \u@\h\[\e[m\]|\[\e[1;32m\]\w\[\e[m\]\[\e[0;30m\]\$$__git_branch \[\e[m\]\[\e[1;37m\]\n"
 # PS1='\[\e[0;32m\] \h\[\e[m\]: '
 # export PS1='\[\e[0;32m\]\t \u@\h\[\e[m\]:\[\e[1;32m\]\w\[\e[m\] \[\e[1;32m\]\$ \[\e[m\]\[\e[1;37m\]'
 # echo PS1='\[\e[0;32m\]\t \u@\h\[\e[m\]:\[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$ \[\e[m\]\[\e[1;37m\]'
@@ -603,11 +643,11 @@ LS_COLORS=$LS_COLORS"*.cu=04;34:"
 LS_OPTIONS="$LS_OPTIONS --color=always"
 #cray: export XTPE_INFO_MESSAGE_OFF=off
 
-set-titlejg(){
-  ORIG=$PS1
-  TITLE="\e]2;$@\a"
-  PS1=${ORIG}${TITLE}
-}
+## set-titlejg(){
+##   ORIG=$PS1
+##   TITLE="\e]2;$@\a"
+##   PS1=${ORIG}${TITLE}
+## }
 alias z=set-titlejg
 
 # TERMINATOR/TMUX
