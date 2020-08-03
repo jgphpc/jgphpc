@@ -1,3 +1,4 @@
+# or call with: LC_TELEPHONE=VV dom
 gnome-terminal \
 --tab-with-profile=DOM_V \
 --tab-with-profile=DOM_R \

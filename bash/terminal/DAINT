@@ -1,0 +1,4 @@
+gnome-terminal \
+--tab-with-profile=DAINT_V \
+--tab-with-profile=DAINT_R \
+--tab-with-profile=DAINT_P

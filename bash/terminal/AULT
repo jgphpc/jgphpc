@@ -1,0 +1,5 @@
+# or call with: LC_TELEPHONE=VV ault.cscs.ch
+gnome-terminal \
+--tab-with-profile=AULT_V \
+--tab-with-profile=AULT_R \
+--tab-with-profile=AULT_P

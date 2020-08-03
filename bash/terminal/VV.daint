@@ -1,0 +1,6 @@
+# gnome-terminal --tab-with-profile=DAINT_V
+export LC_TELEPHONE=V
+ssh -o SendEnv=LC_TELEPHONE daint.cscs.ch
+
+# ssh -o SendEnv=LC_TELEPHONE daint.cscs.ch 'echo -e "\n\n$LC_TELEPHONE"'
+# ssh -o SendEnv=LC_TELEPHONE daint.cscs.ch 'XX=$LC_TELEPHONE; unset LC_TELEPHONE; export XX; ./VV'

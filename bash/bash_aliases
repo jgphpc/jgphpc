@@ -7,6 +7,61 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 ## echo "---- PS1 start"
+# {{{ color
+ ####    ####   #        ####   #####
+#    #  #    #  #       #    #  #    #
+#       #    #  #       #    #  #    #
+#       #    #  #       #    #  #####
+#    #  #    #  #       #    #  #   #
+ ####    ####   ######   ####   #    #
+# Note: You need to replace digit 0 with 1 to get light color version.
+# VERT="\\033[1;32m"
+# NORMAL="\\033[0;39m"
+# ROUGE="\\033[1;31m"
+# ROSE="\\033[1;35m"
+# BLEU="\\033[1;34m"
+# BLANC="\\033[0;02m"
+# BLANCLAIR="\\033[1;08m"
+# JAUNE="\\033[1;33m"
+# CYAN="\\033[1;36m"
+TXTBLK='\[\e[0;30m\]' # Black - Regular
+TXTRED='\[\e[0;31m\]' # Red
+TXTGRN='\[\e[0;32m\]' # Green
+TXTYLW='\[\e[0;33m\]' # Yellow
+TXTBLU='\[\e[0;34m\]' # Blue
+TXTPUR='\[\e[0;35m\]' # Purple
+TXTCYN='\[\e[0;36m\]' # Cyan
+TXTWHT='\[\e[0;37m\]' # White
+# {{{
+# BLDBLK='\[\e[1;30m\]' # Black - Bold
+# BLDRED='\[\e[1;31m\]' # Red
+# BLDGRN='\[\e[1;32m\]' # Green
+# BLDYLW='\[\e[1;33m\]' # Yellow
+# BLDBLU='\[\e[1;34m\]' # Blue
+# BLDPUR='\[\e[1;35m\]' # Purple
+# BLDCYN='\[\e[1;36m\]' # Cyan
+# BLDWHT='\[\e[1;37m\]' # White
+# UNDBLK='\[\e[4;30m\]' # Black - Underline
+# UNDRED='\[\e[4;31m\]' # Red
+# UNDGRN='\[\e[4;32m\]' # Green
+# UNDYLW='\[\e[4;33m\]' # Yellow
+# UNDBLU='\[\e[4;34m\]' # Blue
+# UNDPUR='\[\e[4;35m\]' # Purple
+# UNDCYN='\[\e[4;36m\]' # Cyan
+# UNDWHT='\[\e[4;37m\]' # White
+# BAKBLK='\[\e[40m\]'   # Black - Background
+# BAKRED='\[\e[41m\]'   # Red
+# BAKGRN='\[\e[42m\]'   # Green
+# BAKYLW='\[\e[43m\]'   # Yellow
+# BAKBLU='\[\e[44m\]'   # Blue
+# BAKPUR='\[\e[45m\]'   # Purple
+# BAKCYN='\[\e[46m\]'   # Cyan
+# BAKWHT='\[\e[47m\]'   # White
+# }}}
+TXTRST='\[\e[0m\]'    # Text Reset
+NOCOLOR='\[\033[0m\]'  # No color
+# }}}
+
 # {{{ PS1
 # export PS1="\[\033[01;31m\]\h:\w $ \[\033[00m\]"
 export is_bash_aliases_set=1
@@ -14,53 +69,35 @@ __git_branch='`git branch 2> /dev/null |grep ^* |cut -d\* -f2 |tr -d " "`'
 # export PS1="\[\e[0;32m\] \u@\h\[\e[m\]:\[\e[1;32m\]\w\[\e[m\]\[\e[1;32m\]\$$__git_branch \[\e[m\]\[\e[1;37m\]"
 
 function set-ps1jg() {
-    local cstart="\[\e["
-    local cstop="\e[m\]"
-    local hh='#'
-    local cblack="30m" #  0;30 # black
-    local cred="31m" #  0;31 # red
-    local cgreen="32m" #  0;32 # green
-    local cbrown="33m" #  0;33 # brown
-    local cblue="34m" #  0;34 # blue
-    local cpurple="35m" #  0;35 # purple
-    local ccyan="36m" #  0;36 # cyan
-    # Note: You need to replace digit 0 with 1 to get light color version.
-    # PS1="> "
-    # P1="${cstart}${cgreen}\]# \[${cstop}"
-    unset P1
-    local P2="${cstart}${cgreen}\]$hh \u@\h\[${cstop}"
-    unset P3 P4
-    #local P3="${cstart}${cbrown}\]@\[${cstop}"
-    #local P4="${cstart}${cgreen}\]\h\[${cstop}|"
-    local P5="${cstart}${cbrown}\]|\w\[${cstop}"
-    unset P6
-    # local P6="${cstart}${cgreen}\]]\[${cstop}"
-    # local P7="${cstart}32;47m\]\\$\[${cstop} "
-    local P7="${cstart}${cblack}\]\\$\[${cstop} "
-    export PS1="$P1$P2$P3$P4$P5$P6$P7"
+    hh='#'
+    # PS1="$TXTRED\u@$TXTCYN\h$NOCOLOR "
+    P1="${TXTGRN}\]$hh \u@\h"
+    P2="${TXTYLW}\]|\w"
+    P3="${TXTBLK}\$ ${NOCOLOR} \n"
+    export PS1="$P1$P2$P3"
 }
 set-ps1jg
 
 function set-titlejg() {
     ORIG=$PS1
-    TABTITLE="\e]2;$@\a"
-    local cstart="\[\e["
-    local cstop="\e[m\]"
-    local cred="31m" #  0;31 # red
-    TABTITLEPS1="$cstart$cred$@$cstop"
-    PS1="${TABTITLEPS1}${ORIG}${TABTITLE}"
+    TABTITLE="\[\e]2;$@\a\["
+    PS1="${TXTRED}${ORIG}${TABTITLE}${NOCOLOR}"
 }
+
+alias z=set-titlejg
 # }}}
 
 # {{{ gnome-terminal like iterm2
 # type set-titlejg
 # use LC_TELEPHONE because of dom (M /etc/ssh/sshd_config |grep AcceptEnv)
-set-titlejg "$LC_TELEPHONE"
-if [ -n "$LC_TELEPHONE" ] ;then
-    export YY=OK
-else
-    export YY=ko
+if [ `uname -n` != cscs ] ;then
+    set-titlejg "$LC_TELEPHONE"
 fi
+## if [ -n "$LC_TELEPHONE" ] ;then
+##     export YY=OK
+## else
+##     export YY=ko
+## fi
 ## echo "---- PS1 end"
 # }}}
 alias z=set-titlejg
@@ -93,57 +130,6 @@ fi
 # ls $SCRATCH/
 # date --rfc-3339=ns > eff_bash_debug_bash_aliases
 
-# {{{ color
- ####    ####   #        ####   #####
-#    #  #    #  #       #    #  #    #
-#       #    #  #       #    #  #    #
-#       #    #  #       #    #  #####
-#    #  #    #  #       #    #  #   #
- ####    ####   ######   ####   #    #
-# VERT="\\033[1;32m"
-# NORMAL="\\033[0;39m"
-# ROUGE="\\033[1;31m"
-# ROSE="\\033[1;35m"
-# BLEU="\\033[1;34m"
-# BLANC="\\033[0;02m"
-# BLANCLAIR="\\033[1;08m"
-# JAUNE="\\033[1;33m"
-# CYAN="\\033[1;36m"
-TXTBLK='\[\e[0;30m\]' # Black - Regular
-TXTRED='\[\e[0;31m\]' # Red
-TXTGRN='\[\e[0;32m\]' # Green
-TXTYLW='\[\e[0;33m\]' # Yellow
-TXTBLU='\[\e[0;34m\]' # Blue
-TXTPUR='\[\e[0;35m\]' # Purple
-TXTCYN='\[\e[0;36m\]' # Cyan
-TXTWHT='\[\e[0;37m\]' # White
-BLDBLK='\[\e[1;30m\]' # Black - Bold
-BLDRED='\[\e[1;31m\]' # Red
-BLDGRN='\[\e[1;32m\]' # Green
-BLDYLW='\[\e[1;33m\]' # Yellow
-BLDBLU='\[\e[1;34m\]' # Blue
-BLDPUR='\[\e[1;35m\]' # Purple
-BLDCYN='\[\e[1;36m\]' # Cyan
-BLDWHT='\[\e[1;37m\]' # White
-UNDBLK='\[\e[4;30m\]' # Black - Underline
-UNDRED='\[\e[4;31m\]' # Red
-UNDGRN='\[\e[4;32m\]' # Green
-UNDYLW='\[\e[4;33m\]' # Yellow
-UNDBLU='\[\e[4;34m\]' # Blue
-UNDPUR='\[\e[4;35m\]' # Purple
-UNDCYN='\[\e[4;36m\]' # Cyan
-UNDWHT='\[\e[4;37m\]' # White
-BAKBLK='\[\e[40m\]'   # Black - Background
-BAKRED='\[\e[41m\]'   # Red
-BAKGRN='\[\e[42m\]'   # Green
-BAKYLW='\[\e[43m\]'   # Yellow
-BAKBLU='\[\e[44m\]'   # Blue
-BAKPUR='\[\e[45m\]'   # Purple
-BAKCYN='\[\e[46m\]'   # Cyan
-BAKWHT='\[\e[47m\]'   # White
-TXTRST='\[\e[0m\]'    # Text Reset
-NOCOLOR='\[\033[0m\]'  # No color
-# }}}
 
 # {{{ visit
 # echo B
