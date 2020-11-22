@@ -193,7 +193,6 @@ def heatmap(data, row_labels, col_labels, ax=None,
     return im, cbar
 # }}}
 
-
 # {{{ def annotate_heatmap
 def annotate_heatmap(im, data=None, valfmt="{x:.2f}",
                      textcolors=("black", "white"),
@@ -257,7 +256,8 @@ def annotate_heatmap(im, data=None, valfmt="{x:.2f}",
 # {{{ main:
 # read data into mydata dict:
 mydata = {}
-in1='/private/tmp/JG/PYTHON/0.in'
+# in1='/private/tmp/JG/PYTHON/0.in'
+in1='/home/piccinal/git/jgphpc.git/python/matplotlib/0.in'
 exec(open(in1).read())
 
 columns_labels = ['Total Neighbors', 'Avg neighbor per particle',

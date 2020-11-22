@@ -1,0 +1,68 @@
+#!/bin/sh
+
+## extract audio from mp4 file
+youtube-dl -k https://vimeo.com/398838139
+ffmpeg -i in.mp4 out.mp3
+youtube-dl -F 'https://youtu.be/t_G0ia3JOVs?t=951'
+[info] Available formats for t_G0ia3JOVs:
+format code  extension  resolution note
+249          webm       audio only tiny   62k , opus @ 50k (48000Hz), 36.79MiB
+250          webm       audio only tiny   81k , opus @ 70k (48000Hz), 44.30MiB
+140          m4a        audio only tiny  136k , m4a_dash container, mp4a.40.2@128k (44100Hz), 98.29MiB
+251          webm       audio only tiny  160k , opus @160k (48000Hz), 82.05MiB
+278          webm       256x144    144p   99k , webm container, vp9, 30fps, video only, 55.03MiB
+--> youtube-dl -f 140 ...
+
+## record audio
+iShowU Audio Capture (was soundflower) 
+https://obsproject.com/forum/resources/os-x-capture-audio-with-ishowu-audio-capture.505/
+ok (06/2020)
++ pngs
+audacity: ? (https://wiki.audacityteam.org/wiki/Recording_Computer_Playback_on_Mac)
+
+
+http://manual.audacityteam.org/man/tutorial_recording_computer_playback_on_linux.html
+
+## http://audacity.sourceforge.net/help/faq_i18n?s=files&i=split&lang=en
+## How can I split a long recording into multiple files or CD tracks?
+
+Follow these steps to create a separate file for each song or segment of a long recording. This is particularly useful if you are creating a CD, since each file will appear as a separate track on the CD.
+
+Click to place the cursor at the start of the first song.
+Choose 
+Add Label at Selection
+from the Project menu (or Tracks menu in Audacity Beta). If you wish, you can type the name of the song.
+Repeat steps 1 and 2 for each song.
+When you are finished, choose
+Export Multiple 
+from the File menu. When you click the 
+Export
+button, Audacity will save each song as a separate file, using the format and location you choose.
+
+
+## Alternatively, Audacity can attempt to detect the silences between tracks then label them automatically using Analyze > Silence Finder. If you do not have Silence Finder in your version of Audacity, it can be found in the Audacity legacy 1.2.6 Plug-in Pack.
+
+See also: How do I save my recording on an audio CD?
+
+
+
+# --- HIGH-RES AUDIO QUALITY:
+/Applications/MediaHuman: converts FLAC to ALAC (= apple lossless format) => only ALAC can be read by itunes.
+
+https://archive.org/details/TheRollingStonesBeggarsBanquet  (FLAC = high-res best quality):
+mediainfo file.flac
+    # Codec ID/Info                            : Apple Lossless Audio Codec = ALAC <-------------
+    # Sampling rate                            : 48.0 KHz       <--------------- :-(
+    # Bit depth                                : 24 bits        <--------------- :-)
+Solution => choose custom (96000 Mhz) in MediaHuman audio preferences:
+    Sampling rate                            : 192 KHz <---------- :-)
+    Bit depth                                : 24 bits <---------- :-)
+VOX desktop player app. => also gives info.
+
+https://archive.org/details/09WontGetFooledAgain
+
+# bose:
+Nov 2009: in-ear = 99.95$ serial number: 044435Z82666246AE
+
+# high-fi:
+https://support.apple.com/en-us/HT202730

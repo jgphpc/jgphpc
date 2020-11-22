@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# annotate:
+
+## HOWTO1 (ok) :
+./jarnalannotate.sh ../1998-perf-analysis-open-problems-reed.pdf
+Add comments
+Save As eff.jaj (do not forget to tick WITH FILE option)
+./jarnal.sh ../eff.jaj (IT HAS ANNOTATIONS :-)
+Export as pdf
+acroread eff.pdf  (IT HAS ANNOTATIONS :-)
+
+ 258K 2010-01-20 ../1998-perf-analysis-open-problems-reed.pdf
+ 182K 2010-01-20 ../eff.jaj
+ 250K 2010-01-20 ../eff.pdf
+
+
+## HOWTO2 : 
+Save As eff.jaj (without the WITH FILE option) and edit path inside eff.jaj/jarnal.conf (=zip file)
+
+## HOWTO3:
+foxitreader
+
+## HOWTO4:
+mac -> preview

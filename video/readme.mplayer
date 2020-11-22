@@ -1,0 +1,20 @@
+ ~/mplayer  -vf expand=0:-50:0:0 -ao alsa -quiet I_Love_Shopping_2009.avi  −subdelay=-34
+y ==> adjust subs
+
+
+
+mplayer tricks
+
+mplayer is a must have media player.
+I mostly watch movies with subtitles.Now if you want
+to place the subtitles in the black bar below here is the command.
+
+    mplayer -vf expand=0:-50:0:0 movie.avi
+
+Sometimes the subtitles you download from net are not synced.You can increase/decrease subtitle delay using the x and z keys or use the -subdelay option
+
+    mplayer -subdelay -11 movie.avi
+
+Now here’s the fun part.You are tired of manually specifying the delay each time.What to do ? -dumpsrtsub comes to the rescue.Identify the correct delay(say -11 seconds) and do this
+
+    mplayer -subdelay -11 -dumpsrtsub movie.avi                         => create a sub file :-)

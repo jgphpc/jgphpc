@@ -1,0 +1,17 @@
+#!/bin/bash
+
+===> https://github.com/aadithyakv/odp2pdf.git  (unplug 2d screen)
+see banco: /apps/odp2pdf.git/
+
+
+apt-cache search screencast
+        byzanz - small screencast creator => animated gif ( install or git clone  git://git.gnome.org/byzanz byzanz.git )
+        gtk-recordmydesktop - Graphical frontend for recordMyDesktop screencast tool
+        istanbul - Desktop session recorder producing Ogg Theora video
+        kazam - screencast and screenshot application created with design in mind
+        key-mon - Utility to show live keyboard and mouse status
+        screenkey - screencast tool to display your keystrokes
+        shelr - Utility for plain text screencasting    https://github.com/shelr/shelr.tv
+        vokoscreen - easy to use screencast creator
+
+ubuntu => settings => mouse and touchpad => theme => cursor size

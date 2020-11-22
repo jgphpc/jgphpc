@@ -1,0 +1,13 @@
+La machine qui a la FreeTV lance dansune console :
+
+vlc -vvv http://mafreebox.freebox.fr/freeboxtv/playlist.m3u --sout '#transcode{vcodec=mp2v,vb=384,scale=0.5,acodec=vorbis,ab=48,channels=1}:standard{access=http,mux=ogg,url=:1234}' -I ncurses 2> /dev/null
+
+Les touches n et p permettent de zapper, à travers une connexion ssh.
+La machine qui veut regarder la télé fait :
+vlc http://@IP_DE-LAUTRE_MACHINE:1234
+
+
+mencoder $1 -vf scale=320:240,harddup -of avi -o $1'.avi' -alang fra -oac
+mp3lame -lameopts cbr:preset=96:mode=0 -srate 22050 -af
+resample=22050:0:1,channels=2,volume=6:1 -ovc lavc -lavcopts
+vcodec=mpeg4:vbitrate=1008:keyint=250:trell -ofps 25 -ffourcc DIVX

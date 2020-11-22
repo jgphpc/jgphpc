@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+
+<body>
+
+  <style>
+  rjg {color:red;}
+  /* http://www.w3schools.com/css/css_examples.asp */
+  /* http://www.w3schools.com/cssref/css_colors.asp */
+  /* http://www.colorhexa.com/ffffff */
+  /* Below are styles for the codebox (not the code itself) */
+  .cx {border:1px solid gray;background-color:rgb(51,51,51);width:70%;padding:10px;margin:10px;border-radius:5px;}
+  /* overflow:auto; */
+  /* Styles in here affect the text of the codebox */
+  .cx code {color:rgb(255,255,255);}
+  </style>
+
+  <div class="cx">
+          <code>
+          module load <rjg>perftools</rjg><br />
+          ftn -c fcode.f90 <br />
+          ftn fcode.o -o fexe <br />
+          <rjg>pat_build</rjg> -O apa ./myprogram<br />
+          /usr/bin/time -p aprun -n 128 <rjg>./myprogram+pat</rjg><br />
+          <rjg>pat_report</rjg>  ./myprogram+pat*.xf <br />
+          <rjg>app2</rjg>  ./myprogram+pat*.ap2<br />
+          <br />
+          <rjg>pat_build</rjg> -O *.apa <br />
+          /usr/bin/time -p aprun -n 128 <rjg>./myprogram+apa</rjg> <br />
+          <rjg>pat_report</rjg> ./myprogram+apa*.xf <br />
+          </code>
+  </div>
+
+
+
+</body>
+</html>
+

@@ -1,0 +1,21 @@
+en tant que root, un coup de alsaconf et c bon.
+
+Applet de volume gnome :
+OSS
+OUT : 100%		son 	- 	audio
+	pcm		on		-
+	pcm2		on		-
+IN : 100%		son 	- 	audio	
+	volume		on		off		
+	microphone	on		on		
+	cd		on		off		
+
+brec -s22050 -b16 -t 1 -w file.wav ; mplayer -ao oss file.wav : ok
+brec -s22050 -b16      -w file.wav ; mplayer -ao oss file.wav : ok
+	    
+ALSAMIXER : 100%
+	master
+	headphone
+	pcm
+	cd
+	mic

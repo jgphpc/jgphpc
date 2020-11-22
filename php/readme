@@ -1,5 +1,9 @@
 #!/bin/sh
 
+## google
+calendar -u cscshpc add "ROSTER-AS 7/28/2014"
+/users/piccinal/KEEP/scripts/googlecal.sh
+
 ## php:
 
 export CRAYPE_LINK_TYPE=dynamic ; 

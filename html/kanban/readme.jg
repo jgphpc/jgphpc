@@ -1,0 +1,49 @@
+#!/bin/sh
+
+TODO: backup /Users/piccinal/git/kanboard.git/data !!!!
+
+# macjg: mojave
+
+# sudo vim /etc/apache2/httpd.conf
+piccinal@mac:/tmp/PHP $ grep -A2 cscs /etc/apache2/httpd.conf
+# cscs:
+LoadModule php7_module libexec/apache2/libphp7.so
+#LoadModule perl_module libexec/apache2/mod_perl.so
+--
+# cscs:
+<FilesMatch \.php$>
+    SetHandler application/x-httpd-php
+--
+# cscs:
+Include /private/etc/apache2/extra/httpd-userdir.conf
+
+# cat /etc/apache2/users/piccinal.conf
+<Directory "/Users/piccinal/Sites/">
+AllowOverride All
+Options Indexes MultiViews FollowSymLinks
+Require all granted
+</Directory>
+
+# /Library
+piccinal@mac:/Library/WebServer/Documents $ ll /Library/WebServer/Documents
+lrwxr-xr-x  1 root  wheel     22 May 10 11:34 Sites -> /Users/piccinal/Sites/
+
+# $HOME
+mkdir ~/Sites
+cd ~/Sites
+git clone https://github.com/kanboard/kanboard.git kanboard.git
+# https://github.com/kanboard/kanboard/issues
+
+piccinal@mac:~/git/kanboard.git $ ls -ld ~/git/kanboard.git/data/
+drwxrwxrwx  5 piccinal  staff  160 May 10 15:34 /Users/piccinal/git/kanboard.git/data/
+
+piccinal@mac:~/git/kanboard.git $ ll ~/Sites/
+-rw-r--r--  1 piccinal  staff  20 May 10 11:35 index.php
+lrwxr-xr-x  1 piccinal  staff  33 May 10 11:37 kanboard -> /Users/piccinal/git/kanboard.git/
+
+piccinal@mac:~/Sites/kanboard $ ll data/*
+-rw-rw-rw-  1 piccinal  staff  499712 May 10 15:36 data/db.sqlite
+-rw-rw-rw-  1 piccinal  staff     160 May 10 11:23 data/web.config
+
+# Safari:
+http://localhost/Sites/kanboard    (admin/admin OR 123456)

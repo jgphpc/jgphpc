@@ -1,0 +1,4 @@
+
+# relier 2 pc avec cable eth
+res=0 ; while [ $res = 0 ] ; do ifconfig eth1 |grep 102.168; res=$? ; if [ $res != 0 ] ;then sudo ifconfig eth1 102.168.230.2 up ; echo ifconf ; res=0 ;  else echo ok $res ;sleep 30 ; fi ; done
+

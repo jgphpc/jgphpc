@@ -1,12 +1,6 @@
 #!/bin/sh
 
- #####     ##    #    #   ####    ####
- #    #   #  #   ##   #  #    #  #    #
- #####   #    #  # #  #  #       #    #
- #    #  ######  #  # #  #       #    #
- #    #  #    #  #   ##  #    #  #    #
- #####   #    #  #    #   ####    ####
-
+# {{{ banco
 # Issue1:
 /apps/paraview/ParaView-5.5.1-Qt5-MPI-Linux-64bit/bin/paraview
 Aborted (core dumped)
@@ -33,12 +27,68 @@ TODO: extract
 TODO: planesph
 
 Can also try with pvbatch
+# }}}
 
- #####    ####   #    #
- #    #  #    #  ##  ##
- #    #  #    #  # ## #
- #    #  #    #  #    #
- #    #  #    #  #    #
- #####    ####   #    #
+# {{{ mac2mac
+## server
+/Applications/paraview.app/Contents/bin/pvserver
+Waiting for client...
+Connection URL: cs://jgp-retina15.local:11111
+Accepting connection(s): jgp-retina15.local:11111
+Client connected.
 
-~/linux.git/paraview/dom
+
+## client
+open /Applications/paraview.app
+=> Tools : python shell
+sph=Sphere()
+shr=Shrink()
+rep=Show()
+Render()
+# }}}
+
+# {{{ mac2daint -------------------------
+~/linux.git/paraview/daint
+## client
+ssh piccinal@daint101 which pvserver
+        # /apps/daint/ParaView/4.3/bin/pvserver
+        # if not, check .bashrc on daint
+paraview => file : open : load servers : /Users/jg/linux.git/paraview/daint/servers.pvsc
+        => double-click on the option Reverse-Connect-Daint
+        => /users/piccinal/linux.git/paraview/daint/rc-submit-pvserver.sh
+# Original is /apps/daint/ParaView/rc-submit-pvserver.sh
+
+id       # uid=21099(piccinal)
+Insert uid number instead of the 11111 
+
+Am i connected ? 
+        # yes if csrc = "client server remote connection" = csrc://....
+        # yes if help shows 8 processes
+
+http://user.cscs.ch/computing_resources/data_analysis_and_visualization/
+        # => visualization_resources/visualization_with_paraview_and_visit/paraview_in_interactive_mode/index.html
+
+ssh -V  # macjg
+        # OpenSSH_6.7p1, OpenSSL 1.0.2a 19 Mar 2015
+ssh -V  # daint
+        # OpenSSH_5.1p1, OpenSSL 0.9.8j-fips 07 Jan 2009
+
+ssh_askpass: exec(/usr/libexec/ssh-askpass): No such file or directory
+ 
+Host key verification failed.
+ 
+Server launched aborted before attempting to connect to it. 
+ssh_askpass: exec(/usr/libexec/ssh-askpass): No such file or directory
+Host key verification failed.
+ 
+Server launched aborted before attempting to connect to it. 
+ssh_askpass: exec(/usr/libexec/ssh-askpass): No such file or directory
+ 
+Host key verification failed.
+ 
+
+# ----------------
+cd /users/piccinal/visu2015/day2/
+sbatch coloredSphere.sh
+        # /scratch/daint/piccinal/coloredSphere.0*
+# }}}

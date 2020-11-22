@@ -1,0 +1,6 @@
+http://ptaff.ca/ptaffgnu/2005-03/1112090651-x,_resolution/
+
+xrandr -q           # liste les modes possibles
+xrandr -s 800x600   # change votre bureau pour 800x600
+xrandr --help       # eh oui
+

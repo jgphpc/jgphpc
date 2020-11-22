@@ -1,0 +1,43 @@
+  538  mount -t iso9660 -o ro,loop=/dev/loop image.iso /mnt/tmp/
+  539  ll /mnt/tmp/
+  540  mount
+  541  mount|q tm
+  542  mount  -o ro,loop=/dev/loop image.iso /mnt/tmp/
+  543  rm image.iso
+  544  cd -
+  545  hdparm /dev/hdc
+  546  hdparm /dev/hda
+  547   mkisofs  -o image.iso -rJ sylvain/ previews/ photos/ 100_0804
+  548  gtar cvf photo.tar sylvain/ previews/ photos/ 100_0804/
+  549  #mv photo.tar /mnt/cdrom_a_graver/
+  550   mkisofs  -o /mnt/cdrom_a_graver/image.iso -rJ photo.tar
+mkisofs -r -T -o image.iso .
+  551  pgrep mkisofs
+  552  ln -s /mnt/cdrom_a_graver
+  553  cd cdrom_a_graver/
+  554  ll
+  555  f
+  556  mount  -o ro,loop=/dev/loop image.iso /mnt/tmp/
+  557  mount -t iso9660 -o ro,loop=/dev/loop image.iso /mnt/tmp/
+  558  ll
+  559  cd ..
+  560  ll
+  561  h
+  562  cdrecord -eject dev=0,0,0 speed=48 blank=fast
+  563  h
+
+kernel 2.6.15 + root + Cdrecord-Clone 2.01.01a03
+	cdrecord -scanbus dev=ATA:1,1,0
+	cdrecord -scanbus dev=/dev/hdd
+	1,1,0   101) 'PLEXTOR ' 'DVDR   PX-740A  ' '1.00' Removable CD-ROM
+        cdrecord -v dev=ATA:1,1,0 -speed=31 -data image.iso 
+		Track 01:  495 of  495 MB written (fifo 100%) [buf  94%]  10.0x.
+		Track 01: Total bytes read/written: 519788544/519788544 (253803 sectors).
+		Writing  time:  347.347s
+		Average write speed   9.8x.
+		Min drive buffer fill was 87%
+		Fixating...
+		Fixating time:   27.315s
+		cdrecord: fifo had 8188 puts and 8188 gets.
+		cdrecord: fifo was 0 times empty and 5546 times full, min fill was 87%.
+	----->	6min= 347sec pour 495MB <=> 0.701sec pour 1MB <=> 490sec=8min pour 700MB
