@@ -125,6 +125,7 @@ cnodes=`perl -e "use POSIX qw(ceil);printf \"%d\n\",ceil($mppwidth/$mppnppn)"`
 oexe=`basename $exe`
 out=eff_runme.slurm.$cluster
 
+# {{{ cray
  #####  ######     #    #     #
 #     # #     #   # #    #   #
 #       #     #  #   #    # #
@@ -167,9 +168,13 @@ ulimit -s unlimited
 ulimit -a |awk '{print "# "\$0}'
 $ompth
 export CRAY_OMP_CHECK_AFFINITY=TRUE
+export OMP_DISPLAY_AFFINITY=TRUE
 export MALLOC_MMAP_MAX_=0
 export MALLOC_TRIM_THRESHOLD_=536870912
 export MPICH_VERSION_DISPLAY=1
+# export MPICH_MAX_SHORT_MSG_SIZE=8000
+# export MPICH_PTL_UNEX_EVENTS=81920
+# export MPICH_UNEX_BUFFER_SIZE=150M
 echo '# -----------------------------------------------'
 
 echo '# -----------------------------------------------'
@@ -268,10 +273,9 @@ fi
 
 
 
+# }}}
 
-
-
-
+# {{{ mch
 
 #     #  #####  #     #
 ##   ## #     # #     #
@@ -373,9 +377,9 @@ export G2G=1
 EOF
 ### egrep "SLURM_NTASKS|SLURM_NTASKS_PER_NODE|SLURM_CPUS_PER_TASK" $out |grep echo
 fi
+# }}}
 
-
-
+# {{{ sgi
  #####   #####    #*#
 #     # #     #    #
 #       #          #
@@ -510,7 +514,9 @@ fi
 #sgi date +%D:%Hh%Mm%S
 #sgi EOF
 #sgi fi
+# }}}
 
+# {{{ monch
 ######    ###   #          #    ####### #     #  #####
 #     #    #    #         # #      #    #     # #     #
 #     #    #    #        #   #     #    #     # #
@@ -603,6 +609,8 @@ date +%D:%Hh%Mm%S
 EOF
 
 fi
+# }}}
+
 
 # eiger
 # srun -n1 --gres=gpu:1 --constraint=gtx285 --pty /bin/bash
