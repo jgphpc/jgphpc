@@ -1,0 +1,5 @@
+ela2:~ $ google --version
+google 0.9.13
+
+calendar -u cscshpc add "ROSTER-AS 7/28/2014"
+/users/piccinal/KEEP/scripts/googlecal.sh

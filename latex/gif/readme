@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# ffmpeg -framerate 1/3 -pattern_type glob -i '*.png' out.gif && firefox out.gif
+#~ok convert -geometry 1920x1052 -delay 300 0.png  1.png  2.png  3.png  4.png eff.gif
+
+export bb='convert -undercolor grey -font helvetica -fill blue -pointsize 36 -draw'
+export rr='convert -undercolor grey -font helvetica -fill  red -pointsize 36 -draw'
+
+in=07.png
+$bb "text 1370,360 '1/ Get the nvprof files from daint'" $in - | \
+$bb "text 1370,400 '2/ Start nvvp on your laptop:'" - - | \
+$rr "text 1370,440 '3/ nvvp -i *.nvvp'" - NEW/$in && eog NEW/$in
+

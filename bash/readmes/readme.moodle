@@ -1,0 +1,18 @@
+#!/bin/bash
+
+Moodle - Modular Object-Oriented Dynamic Learning Environment
+
+Moodle 2.7.1+ (Build: 20140807)
+
+http://localhost/~piccinal/moodle/admin/index.php
+
+cd /home/piccinal/public_html/moodle
+
+
+MYSQL: localhost / moodle / root / root
+
+https://launchpad.net/~ubuntu-security/+archive/ubuntu/ppa/+build/5326523
+
+http://docs.moodle.org/27/en/Installing_Moodle
+
+http://webcourses.inf.ethz.ch/moodle/mod/quiz/view.php?id=23

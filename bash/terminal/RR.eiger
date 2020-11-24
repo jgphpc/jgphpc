@@ -1,0 +1,5 @@
+# gnome-terminal --tab-with-profile=AULT_R
+export LC_TELEPHONE=R
+ssh -o SendEnv=LC_TELEPHONE eiger.cscs.ch
+
+# ssh -x piccinal@ela.cscs.ch -t ssh -x piccinal@ault.cscs.ch

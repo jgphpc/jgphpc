@@ -1,0 +1,21 @@
+<HTML>
+<HEAD><title>Test JG</title></HEAD>
+<BODY bgcolor=#000000 text=#FFFFFF>
+<script>
+var soluce=1;
+function change() {
+if (soluce) {
+document.getElementById("plan").src="ok.jpg";
+soluce=0;
+}else{
+document.getElementById("plan").src="ko.jpg";
+soluce=1;
+}
+}
+</script>
+<div><p>
+Placez la souris sur l'image pour voir la solution:</p></DIV>
+<img id=plan width=40% src=ko.jpg onmouseover=change() onmouseout=change()>
+
+</BODY>
+</HTML>

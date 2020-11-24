@@ -1,0 +1,27 @@
+# SOLUTION 0
+images2mpg -f VCD -o 0.mpg -i PENTASAT_20080501_*
+KO ?
+
+# SOLUTION 1
+mencoder 
+needs to resize jpg
+
+convert -verbose PENTASAT_20080501_0300.jpg /dev/null
+        PENTASAT_20080501_0300.jpg JPEG 2990x990 2990x990+0+0 DirectClass 8-bit 3.19225mb
+        PENTASAT_20080501_0300.jpg=>/dev/null JPEG 2990x990 2990x990+0+0 DirectClass 8-bit 0.670u 0:02
+2990x990 is too big !
+Source image dimensions are too high: 2990x990 (maximum is 2046x2046)
+
+convert -verbose -resize 2046x990 EFF/PENTASAT_20080501_0000.jpg 0.jpg
+convert -verbose -resize 2046x990 EFF/PENTASAT_20080501_0300.jpg 1.jpg
+convert -verbose -resize 2046x990 EFF/PENTASAT_20080501_0600.jpg 2.jpg
+
+mencoder mf://*.jpg -mf w=800:h=600:fps=2:type=jpg -ovc copy -oac copy -o sortie.avi
+~/mplayer -loop 0 sortie.avi 
+
+
+# SOLUTION 2 (jean favre)
+ export CEI_HOME=/apps/ensight/
+ export PATH=$PATH:/apps/ensight/bin
+ enve
+ (mpeg4)

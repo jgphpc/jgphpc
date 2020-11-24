@@ -6,7 +6,7 @@
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
-## echo "---- PS1 start"
+# {{{ echo "---- PS1 start"
 # {{{ color
  ####    ####   #        ####   #####
 #    #  #    #  #       #    #  #    #
@@ -113,6 +113,7 @@ alias z=set-titlejg
 # export PS4='(${LINENO}):'
 # }}}
 
+# {{{
 alias rt='cd $SCRATCH/RT'
 alias sx='cd /apps/common/UES/sandbox/jgp'
 alias sxx='cd $SCRATCH/stage/dom/gpu/PrgEnv-gnu'
@@ -131,7 +132,7 @@ fi
 # complete -r ls
 # ls $SCRATCH/
 # date --rfc-3339=ns > eff_bash_debug_bash_aliases
-
+# }}}
 
 # {{{ visit
 # echo B
@@ -271,30 +272,6 @@ alias acc3='module load craype-accel-nvidia35'
 alias xmg='/apps/gele/scripts/cscs/modules/load_latest_mfiles_gele.sh ; grep -v \# /tmp/.efface.latest ;grep \# /tmp/.efface.latest; echo "doit ?"; read ; source /tmp/.efface.latest ; rm -f /tmp/.efface.latest'
 # }}}
 
-#function xmm() {
-#        /apps/sandbox/scripts/modules/load_latest_mfiles_rosa.sh $1
-#        cat /tmp/.efface.latest.$1
-#        echo "doit ?"
-#        read
-#        source /tmp/.efface.latest.$1
-#        rm -f /tmp/.efface.latest.$1
-#}
-
-# BANCO:
-if [ `hostname -s` =  "banco" ] ; then
-        export APPS=/apps
-        # module load linux       # or banco ?
-        # MODULEPATH
-        # echo > /dev/null
-fi
-#export MODULEPATH=$MODULEPATH:/users/piccinal/modulefiles:/apps/ela/modulefiles
-# case `hostname` in
-#        palu*) echo $MODULEPATH |tr : "\n" |grep palu &> /dev/null; if [ $? -eq 1 ] ;then export MODULEPATH=$MODULEPATH:/apps/palu/modulefiles ;fi
-# esac
-#alias moo='export MODULEPATH=$MODULEPATH:/users/piccinal/modulefiles'
-# export MODULEPATH=$MODULEPATH:~/modulefiles/
-#----------------------------------------------------------------------
-
 # {{{ ssh
  ####    ####   #    #
 #       #       #    #
@@ -311,6 +288,7 @@ alias elahtm='scp piccinal@ela.cscs.ch:eff.html .'
 alias eladocx='scp piccinal@ela.cscs.ch:eff.docx .'
 alias elatxt='scp piccinal@ela.cscs.ch:eff.txt .'
 alias elaxlsx='scp piccinal@ela.cscs.ch:eff.xlsx .'
+alias mymontage='montage -tile 2x -geometry +1+1 -label %f 1.png 2.png eff.png'
 # alias uv='ssh -Y piccinal@rothorn.cscs.ch'
 # alias al='ssh -Y piccinal@albis.cscs.ch'
 # alias ca='ssh -Y piccinal@castor.cscs.ch'
@@ -376,8 +354,13 @@ alias ta_='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@tave'
 alias ta='ssh -Y piccinal@tave'
 
 alias elamac='sudo sshfs -o allow_other piccinal@ela.cscs.ch:/apps/common/UES/sandbox/jgp/hpctools.git/docs/source /tmp/ELA # sudo umount /tmp/ELA'
-alias vnc='vncserver -geometry 1920x1080 -xstartup ~/linux.git/vnc/cscs/xstartup.jg; # client: "#donotuse:MACconnectCSCSbecauseInterruptsAfter60min; ssh -l piccinal -f -C -L 5901:dom101:5901 dom101.cscs.ch sleep 30 ; ssh -f -L 5901:dom101.cscs.ch:5901 -C ela.cscs.ch -l piccinal sleep 30 ;/Applications/*/TigerVNC*.app localhost:5901";teamviewer;collab.switch.ch'
-
+alias vnc1='echo "vncserver -geometry 1920x1080 -xstartup ~/linux.git/vnc/cscs/xstartup.jg"'
+alias vnc2a='echo "ssh -J piccinal@ela.cscs.ch -L 5901:dom101.cscs.ch:5901 piccinal@dom101.cscs.ch -f sleep 30 &"'
+alias vnc2b='echo "ssh                         -L 5901:eiger.cscs.ch:5901 piccinal@eiger.cscs.ch -f sleep 30 &"'
+alias vnc3='echo "vncviewer localhost:5901" ;echo "vncviewer eiger.cscs.ch:1"'
+alias vnc4='echo "nc -v -w 1 alps01.cscs.ch 5901"'
+alias vnc='vnc1 ;vnc2a ;vnc2b ;vnc3 ;vnc4'
+# alias vnc='vncserver -geometry 1920x1080 -xstartup ~/linux.git/vnc/cscs/xstartup.jg; # client: "#donotuse:MACconnectCSCSbecauseInterruptsAfter60min; ssh -l piccinal -f -C -L 5901:dom101:5901 dom101.cscs.ch sleep 30 ; ssh -f -L 5901:dom101.cscs.ch:5901 -C ela.cscs.ch -l piccinal sleep 30 ;/Applications/*/TigerVNC*.app localhost:5901";teamviewer;collab.switch.ch'
 # --- ibm
 alias p1='ssh -Y piccinal@openpower01.cscs.ch'
 #alias bgp='ssh jzam1178@jugene.fz-juelich.de'
@@ -467,10 +450,9 @@ alias recordjg='xwininfo; recordmydesktop --windowid 0x46355aa; handbrake;opensh
 alias sk='sort -k'
 alias snk='sort -nk'
 alias terminator='~/linux.git/bash/terminator.sh'
-# --- timetrap.git
-# export PATH=/apps/ela/easybuild/software/Ruby/2.2.2/bin:$PATH     # deps for timetrap !!! (conflict with deps of cdo)
 alias to='cat *b.out'
 alias te='cat *b.err'
+# --- timetrap.git: mll Ruby/2.2.2 && gem install timetrap
 # alias t='timetrap'
 # alias tn='timetrap now'
 # alias to='timetrap out'
@@ -558,6 +540,10 @@ export SQUEUE_ALL='yes'
 export GIT_PS1_SHOWDIRTYSTATE=1  # add * if the branchname has changed
 export EDITOR=vim
 export GIT_EDITOR=vim
+# CLI command line interface: 
+# https://github.com/cli/cli/releases/download/v0.11.1/gh_0.11.1_linux_amd64.tar.gz
+alias github_cli='echo gh issue list -R eth-cscs/reframe'
+
 # ------------------------------------- GOURCE.git
 # brew install gource # OR:
 # wget https://libsdl.org/release/SDL2-2.0.12.tar.gz;./autogen.sh;configure;->lib/pkgconfig
@@ -667,7 +653,7 @@ LS_OPTIONS="$LS_OPTIONS --color=always"
 alias T='/apps/ela/sandbox/jgp/tmux/1.9a/gnu_434/bin/tmux'
 # }}}
 
-
+# {{{ emails
 # echo I
 #    #  #    #   #####   #####
 ##  ##  #    #     #       #
@@ -678,9 +664,9 @@ alias T='/apps/ela/sandbox/jgp/tmux/1.9a/gnu_434/bin/tmux'
 # MUTT
 export EDITOR=vim
 # SECRET
+# }}}
 
-
-
+# {{{ debug
 #####   ######  #####   #    #   ####
 #    #  #       #    #  #    #  #    #
 #    #  #####   #####   #    #  #
@@ -689,8 +675,9 @@ export EDITOR=vim
 #####   ######  #####    ####    ####
 alias tvmem='export PE_PRODUCT_LIST="TVMEMDEBUG:$PE_PRODUCT_LIST";echo "-g -Wl,-zmuldefs"'
 alias cleantv='ls -lrt ~/.totalview/lib_cache'
+# }}}
 
-
+# {{{ custom
 # echo J
 #    #   ####   #    #           ####   #####     ##     #   #
 ##   #  #    #  ##   #          #    #  #    #   #  #     # #
@@ -724,6 +711,36 @@ if [ `hostname -s|cut -c1-3` = "dom" ] ; then
         # export LD_LIBRARY_PATH=$I/compiler/lib/mic:$LD_LIBRARY_PATH
 fi
 
+# BANCO:
+if [ `uname -o` =  "GNU/Linux" ] ; then
+function open_files_jg {
+    # --- png:
+    file "$1" |grep -iq PNG
+    rc=$?
+    if [ "$rc" -eq 0 ] ;then
+        echo "eog $1"
+        eog "$1"
+    fi
+    # --- pdf:
+    file "$1" |grep -iq pdf
+    rc=$?
+    if [ "$rc" -eq 0 ] ;then
+        echo "evince $1"
+        evince "$1"
+    fi
+    # --- odt:
+    file -L "$1" |grep -iq "OpenDocument Text"
+    rc=$?
+    if [ "$rc" -eq 0 ] ;then
+        echo "soffice $1"
+        soffice "$1"
+    fi
+}
+alias o=open_files_jg
+fi
+# }}}
+
+# {{{ ibm
 # #####  #    #
 # #    # ##  ##
 # #####  # ## #
@@ -751,9 +768,9 @@ fi
 #         PS1="$BLDBLU[$BLDGRN\u$NOCOLOR@$BLDPUR\h$BLDBLU]-[\T]$BLDBLU-[$NOCOLOR\w$BLDBLU]\`if [[ \$? -eq 0 ]]; then echo \"$BLDGRN:-)\"; else echo \"$BLDRED:-(\"; fi\`$NOCOLOR "
 #         PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"';
 # fi
+# }}}
 
-
-
+# {{{ perso
 #####   ######  #####    ####    ####
 #    #  #       #    #  #       #    #
 #    #  #####   #    #   ####   #    #
@@ -780,7 +797,9 @@ fi
 # http://flux.radio.free.fr/
 # alias mcd='\mplayer -af volume=-3 -cache 5000 -ao alsa -cdrom-device /dev/sr0 cdda:// # -cdda speed=2'
 # -------------------------------------------------
+# }}}
 
+# {{{ mac
 # echo K
 #    #    ##     ####
 ##  ##   #  #   #    #
@@ -815,6 +834,8 @@ if [ `uname` = "Darwin" ] ; then
         #module load linux/jg
 	# before sudo port install ctags : /usr/bin/ctags
 	# after                          : /opt/local/bin/ctags
+    # ctags --langmap=c++:+.cu *
+    # ctags -R --fields=+l --languages=python --python-kinds=-iv  *
 # === MAC NVIDIA/CUDA ===
 # http://docs.nvidia.com/cuda/cuda-getting-started-guide-for-mac-os-x/index.html
 #export PATH=/Developer/NVIDIA/CUDA-5.0/bin:$PATH
@@ -867,7 +888,9 @@ fi
 # iterm2
 # http://xanana.ucsc.edu/xtal/iterm_tab_customization.html
 # dos2unix: perl -pi -e 's/\r\n?/\n/g' myfile
+# }}}
 
+# {{{ python
 #####    #   #   #####  #    #   ####   #    #
 #    #    # #      #    #    #  #    #  ##   #
 #    #     #       #    ######  #    #  # #  #
@@ -878,7 +901,9 @@ alias ipython='LC_ALL="fr_FR.UTF-8" ipython'
 alias venv='echo "module load cray-python ;python3 -m venv --system-site-packages myvenv ;source myvenv/bin/activate; deactivate"'
 
 # echo ".bash_aliases END"
+# }}}
 
+# {{{ google
  ####    ####    ####    ####   #       ######
 #    #  #    #  #    #  #    #  #       #
 #       #    #  #    #  #       #       #####
@@ -890,7 +915,9 @@ if [ `uname -n` = 'banco' ] ; then
     export GOPATH=$HOME/gopath
     export PATH=$GOPATH:$GOPATH/bin:$PATH
 fi
+# }}}
 
+# {{{ docker
  #####    ####    ####   #    #  ######  #####
  #    #  #    #  #    #  #   #   #       #    #
  #    #  #    #  #       ####    #####   #    #
@@ -905,3 +932,4 @@ fi
 alias dfimage='docker run -v /var/run/docker.sock:/var/run/docker.sock --rm chenzj/dfimage'
 # mytag='ethcscs/mpich:ub1804_cuda101_mpi314_sphexa' ;myid=`docker images $mytag -q` ;dfimage $myid
 alias dockerbash='echo docker run --rm -it'
+# }}}

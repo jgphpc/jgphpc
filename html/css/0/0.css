@@ -1,0 +1,49 @@
+/* 
+http://www.htmldog.com/guides/css/beginner/selectors/
+*/
+
+h1 {
+    color: yellow;
+    background-color: blue;
+}
+
+
+
+h2 {
+    font-size: 1.5em;
+    background-color: #ccc;
+    padding: 0px;
+    margin: 10px;
+    text-align: center;
+    width: 50%;
+    align: center;
+}
+
+
+h3 {
+    border-style: dashed;
+    border-width: 3px;
+    border-left-width: 10px;
+    border-right-width: 10px;
+    border-color: red;
+}
+
+
+p {
+    color: red;
+    font-size: 18px;
+}
+
+
+/*
+body {
+    color: #ffc;
+    background-color: #009;
+}
+*/
+
+
+a {
+    color: blue;
+}
+

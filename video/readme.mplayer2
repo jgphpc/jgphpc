@@ -1,0 +1,16 @@
+http://download.podcast.ethz.ch/media/cscs_Rosa/20090702_CSCS_03_P1_dl.m4v
+http://download.podcast.ethz.ch/media/cscs_Rosa/20090702_CSCS_04_P2_dl.m4v
+http://download.podcast.ethz.ch/media/cscs_Rosa/20090702_CSCS_05_P3_dl.m4v
+http://download.podcast.ethz.ch/media/cscs_Rosa/20090703_CSCS_08_P5_dl.m4v
+http://download.podcast.ethz.ch/media/cscs_Rosa/20090703_CSCS_09_P5_dl.m4v
+http://download.podcast.ethz.ch/media/cscs_Rosa/20090703_CSCS_10_P5_dl.m4v
+http://download.podcast.ethz.ch/media/cscs_Rosa/20090703_CSCS_11_P6_dl.m4v
+
+
+for i in *.m4v ; do echo $i ====== ; ~/mplayer -vc dummy -vo null -ao pcm:file=audio.wav $i ; mv audio.wav $i.wav ;done
+
+~/mplayer -vc dummy -vo null -ao pcm:file=audio.wav 20090703_CSCS_10_P5_dl.m4v
+        [AO PCM] Info: Faster dumping is achieved with -vc null -vo null -ao pcm:fast
+        [AO PCM] Info: To write WAVE files use -ao pcm:waveheader (default).
+
+lame -h wav mp3

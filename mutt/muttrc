@@ -1,6 +1,6 @@
 #
 # set imap_pass=
-set imap_pass=`grep MUTTPWD ./jgphpc.git/SECRET/SECRET |cut -d= -f2`
+# set imap_pass=`grep MUTTPWD ./jgphpc.git/SECRET/SECRET |cut -d " " -f2`
 
 set record = "~/.sent"
 set mailcap_path = ~/.mutt/mailcap.
@@ -196,4 +196,12 @@ set mail_check=30
 # And poll the current mailbox more often (seconds)
 set timeout=10
 
-
+# GMAIL
+# set smtp_url = "smtps://jgpiccinali@gmail.com@smtp.gmail.com:465/"
+# set smtp_pass = "<app password>"
+# set imap_user = "jgpiccinali@gmail.com"
+set imap_user = "jgpiccinali"
+# set imap_pass = "<app password>"
+set folder = "imaps://imap.gmail.com:993"
+set spoolfile = "+INBOX"
+set ssl_force_tls = yes

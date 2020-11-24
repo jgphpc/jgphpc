@@ -1,0 +1,2648 @@
+{
+  "session_info": {
+    "cmdline": "/users/piccinal/reframe.git/bin/reframe -C /users/piccinal/reframe.git/config/VK/eiger_lmod.py --skip-system-check --system eiger:mc_lowmem --keep-stage-files --prefix=/scratch/e1000/piccinal/reframe --report-file /users/piccinal/reframe/eff.json --performance-report --failure-stats -v -c scorep_sampling_profiling.py -p PrgEnv-gnu -r",
+    "config_file": "/users/piccinal/reframe.git/config/VK/eiger_lmod.py",
+    "data_version": "1.0",
+    "hostname": "uan01",
+    "prefix_output": "/scratch/e1000/piccinal/reframe/output",
+    "prefix_stage": "/scratch/e1000/piccinal/reframe/stage",
+    "user": "piccinal",
+    "version": "3.3-dev2 (rev: 3ad9e85f)",
+    "workdir": "/apps/common/UES/sandbox/jgp/hpctools.git/reframechecks/scorep",
+    "time_start": "2020-11-19T16:58:42+0100",
+    "time_end": "2020-11-19T17:11:17+0100",
+    "time_elapsed": 755.8102099895477,
+    "num_cases": 10,
+    "num_failures": 0
+  },
+  "runs": [
+    {
+      "num_cases": 10,
+      "num_failures": 0,
+      "runid": 0,
+      "testcases": [
+        {
+          "build_stderr": "rfm_sphexa_scorepS+P_sedov_128mpi_001omp_337n_0steps_5000000cycles_build.err",
+          "build_stdout": "rfm_sphexa_scorepS+P_sedov_128mpi_001omp_337n_0steps_5000000cycles_build.out",
+          "description": "Tool validation",
+          "environment": "PrgEnv-gnu",
+          "fail_reason": null,
+          "fail_phase": null,
+          "jobid": "140",
+          "job_stderr": "rfm_sphexa_scorepS+P_sedov_128mpi_001omp_337n_0steps_5000000cycles_job.err",
+          "job_stdout": "rfm_sphexa_scorepS+P_sedov_128mpi_001omp_337n_0steps_5000000cycles_job.out",
+          "name": "sphexa_scorepS+P_sedov_128mpi_001omp_337n_0steps_5000000cycles",
+          "maintainers": [
+            "JG"
+          ],
+          "nodelist": [
+            "nid001002"
+          ],
+          "outputdir": "/scratch/e1000/piccinal/reframe/output/eiger/mc_lowmem/PrgEnv-gnu/sphexa_scorepS+P_sedov_128mpi_001omp_337n_0steps_5000000cycles",
+          "perfvars": [
+            {
+              "name": "Elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 8.5476
+            },
+            {
+              "name": "_Elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 17
+            },
+            {
+              "name": "domain_distribute",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.9882
+            },
+            {
+              "name": "mpi_synchronizeHalos",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.9799
+            },
+            {
+              "name": "BuildTree",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.992
+            },
+            {
+              "name": "FindNeighbors",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.0788
+            },
+            {
+              "name": "Density",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.4434
+            },
+            {
+              "name": "EquationOfState",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0027
+            },
+            {
+              "name": "IAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.7379
+            },
+            {
+              "name": "MomentumEnergyIAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.56
+            },
+            {
+              "name": "Timestep",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.6991
+            },
+            {
+              "name": "UpdateQuantities",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0337
+            },
+            {
+              "name": "EnergyConservation",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.009
+            },
+            {
+              "name": "SmoothingLength",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0159
+            },
+            {
+              "name": "%MomentumEnergyIAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 18.25
+            },
+            {
+              "name": "%Timestep",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 8.18
+            },
+            {
+              "name": "%mpi_synchronizeHalos",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 23.16
+            },
+            {
+              "name": "%FindNeighbors",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 12.62
+            },
+            {
+              "name": "%IAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 8.63
+            },
+            {
+              "name": "scorep_elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 12.0245
+            },
+            {
+              "name": "%scorep_USR",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 38.4
+            },
+            {
+              "name": "%scorep_MPI",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 35.0
+            },
+            {
+              "name": "scorep_top1",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "",
+              "value": 13.3
+            },
+            {
+              "name": "%scorep_Energy_exclusive",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 13.319
+            },
+            {
+              "name": "%scorep_Energy_inclusive",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 13.319
+            }
+          ],
+          "result": "success",
+          "stagedir": null,
+          "scheduler": "slurm",
+          "system": "eiger:mc_lowmem",
+          "tags": [
+            "cpu",
+            "sph",
+            "hpctools"
+          ],
+          "time_compile": 15.710596084594727,
+          "time_performance": 0.09812092781066895,
+          "time_run": 110.36201930046082,
+          "time_sanity": 0.010561704635620117,
+          "time_setup": 0.034453630447387695,
+          "time_total": 126.20212721824646
+        },
+        {
+          "build_stderr": "rfm_sphexa_scorepS+P_sedov_256mpi_001omp_425n_0steps_5000000cycles_build.err",
+          "build_stdout": "rfm_sphexa_scorepS+P_sedov_256mpi_001omp_425n_0steps_5000000cycles_build.out",
+          "description": "Tool validation",
+          "environment": "PrgEnv-gnu",
+          "fail_reason": null,
+          "fail_phase": null,
+          "jobid": "141",
+          "job_stderr": "rfm_sphexa_scorepS+P_sedov_256mpi_001omp_425n_0steps_5000000cycles_job.err",
+          "job_stdout": "rfm_sphexa_scorepS+P_sedov_256mpi_001omp_425n_0steps_5000000cycles_job.out",
+          "name": "sphexa_scorepS+P_sedov_256mpi_001omp_425n_0steps_5000000cycles",
+          "maintainers": [
+            "JG"
+          ],
+          "nodelist": [
+            "nid001004",
+            "nid001003"
+          ],
+          "outputdir": "/scratch/e1000/piccinal/reframe/output/eiger/mc_lowmem/PrgEnv-gnu/sphexa_scorepS+P_sedov_256mpi_001omp_425n_0steps_5000000cycles",
+          "perfvars": [
+            {
+              "name": "Elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 7.5289
+            },
+            {
+              "name": "_Elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 18
+            },
+            {
+              "name": "domain_distribute",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.7524
+            },
+            {
+              "name": "mpi_synchronizeHalos",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.0935
+            },
+            {
+              "name": "BuildTree",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.4272
+            },
+            {
+              "name": "FindNeighbors",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.0622
+            },
+            {
+              "name": "Density",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.4418
+            },
+            {
+              "name": "EquationOfState",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0028
+            },
+            {
+              "name": "IAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.6918
+            },
+            {
+              "name": "MomentumEnergyIAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.555
+            },
+            {
+              "name": "Timestep",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.4383
+            },
+            {
+              "name": "UpdateQuantities",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0359
+            },
+            {
+              "name": "EnergyConservation",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0073
+            },
+            {
+              "name": "SmoothingLength",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0157
+            },
+            {
+              "name": "%MomentumEnergyIAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 20.65
+            },
+            {
+              "name": "%Timestep",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 19.1
+            },
+            {
+              "name": "%mpi_synchronizeHalos",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 14.52
+            },
+            {
+              "name": "%FindNeighbors",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 14.11
+            },
+            {
+              "name": "%IAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 9.19
+            },
+            {
+              "name": "scorep_elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 11.8531
+            },
+            {
+              "name": "%scorep_USR",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 36.9
+            },
+            {
+              "name": "%scorep_MPI",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 39.5
+            },
+            {
+              "name": "scorep_top1",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "",
+              "value": 13.0
+            },
+            {
+              "name": "%scorep_Energy_exclusive",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 13.041
+            },
+            {
+              "name": "%scorep_Energy_inclusive",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 13.041
+            }
+          ],
+          "result": "success",
+          "stagedir": null,
+          "scheduler": "slurm",
+          "system": "eiger:mc_lowmem",
+          "tags": [
+            "cpu",
+            "sph",
+            "hpctools"
+          ],
+          "time_compile": 9.13497543334961,
+          "time_performance": 0.10519194602966309,
+          "time_run": 100.8154571056366,
+          "time_sanity": 0.010776042938232422,
+          "time_setup": 0.03745269775390625,
+          "time_total": 110.07025241851807
+        },
+        {
+          "build_stderr": "rfm_sphexa_scorepS+P_sedov_512mpi_001omp_535n_0steps_5000000cycles_build.err",
+          "build_stdout": "rfm_sphexa_scorepS+P_sedov_512mpi_001omp_535n_0steps_5000000cycles_build.out",
+          "description": "Tool validation",
+          "environment": "PrgEnv-gnu",
+          "fail_reason": null,
+          "fail_phase": null,
+          "jobid": "142",
+          "job_stderr": "rfm_sphexa_scorepS+P_sedov_512mpi_001omp_535n_0steps_5000000cycles_job.err",
+          "job_stdout": "rfm_sphexa_scorepS+P_sedov_512mpi_001omp_535n_0steps_5000000cycles_job.out",
+          "name": "sphexa_scorepS+P_sedov_512mpi_001omp_535n_0steps_5000000cycles",
+          "maintainers": [
+            "JG"
+          ],
+          "nodelist": [
+            "nid001008",
+            "nid001006",
+            "nid001007",
+            "nid001009"
+          ],
+          "outputdir": "/scratch/e1000/piccinal/reframe/output/eiger/mc_lowmem/PrgEnv-gnu/sphexa_scorepS+P_sedov_512mpi_001omp_535n_0steps_5000000cycles",
+          "perfvars": [
+            {
+              "name": "Elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 8.522
+            },
+            {
+              "name": "_Elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 26
+            },
+            {
+              "name": "domain_distribute",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.8378
+            },
+            {
+              "name": "mpi_synchronizeHalos",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.7001
+            },
+            {
+              "name": "BuildTree",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.574
+            },
+            {
+              "name": "FindNeighbors",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.0468
+            },
+            {
+              "name": "Density",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.456
+            },
+            {
+              "name": "EquationOfState",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.003
+            },
+            {
+              "name": "IAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.6792
+            },
+            {
+              "name": "MomentumEnergyIAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.6055
+            },
+            {
+              "name": "Timestep",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.5417
+            },
+            {
+              "name": "UpdateQuantities",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.023
+            },
+            {
+              "name": "EnergyConservation",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0345
+            },
+            {
+              "name": "SmoothingLength",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0154
+            },
+            {
+              "name": "%MomentumEnergyIAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 18.84
+            },
+            {
+              "name": "%Timestep",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 18.09
+            },
+            {
+              "name": "%mpi_synchronizeHalos",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 19.95
+            },
+            {
+              "name": "%FindNeighbors",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 12.28
+            },
+            {
+              "name": "%IAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 7.97
+            },
+            {
+              "name": "scorep_elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 16.0474
+            },
+            {
+              "name": "%scorep_USR",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 28.0
+            },
+            {
+              "name": "%scorep_MPI",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 51.5
+            },
+            {
+              "name": "scorep_top1",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "",
+              "value": 9.9
+            },
+            {
+              "name": "%scorep_Energy_exclusive",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 9.923
+            },
+            {
+              "name": "%scorep_Energy_inclusive",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 9.923
+            }
+          ],
+          "result": "success",
+          "stagedir": null,
+          "scheduler": "slurm",
+          "system": "eiger:mc_lowmem",
+          "tags": [
+            "cpu",
+            "sph",
+            "hpctools"
+          ],
+          "time_compile": 9.574347257614136,
+          "time_performance": 0.165543794631958,
+          "time_run": 88.9980480670929,
+          "time_sanity": 0.01264047622680664,
+          "time_setup": 0.03529024124145508,
+          "time_total": 98.68789029121399
+        },
+        {
+          "build_stderr": "rfm_sphexa_scorepS+P_sedov_1024mpi_001omp_674n_0steps_5000000cycles_build.err",
+          "build_stdout": "rfm_sphexa_scorepS+P_sedov_1024mpi_001omp_674n_0steps_5000000cycles_build.out",
+          "description": "Tool validation",
+          "environment": "PrgEnv-gnu",
+          "fail_reason": null,
+          "fail_phase": null,
+          "jobid": "143",
+          "job_stderr": "rfm_sphexa_scorepS+P_sedov_1024mpi_001omp_674n_0steps_5000000cycles_job.err",
+          "job_stdout": "rfm_sphexa_scorepS+P_sedov_1024mpi_001omp_674n_0steps_5000000cycles_job.out",
+          "name": "sphexa_scorepS+P_sedov_1024mpi_001omp_674n_0steps_5000000cycles",
+          "maintainers": [
+            "JG"
+          ],
+          "nodelist": [
+            "nid001010",
+            "nid001017",
+            "nid001012",
+            "nid001011",
+            "nid001016",
+            "nid001015",
+            "nid001014",
+            "nid001013"
+          ],
+          "outputdir": "/scratch/e1000/piccinal/reframe/output/eiger/mc_lowmem/PrgEnv-gnu/sphexa_scorepS+P_sedov_1024mpi_001omp_674n_0steps_5000000cycles",
+          "perfvars": [
+            {
+              "name": "Elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 21.7033
+            },
+            {
+              "name": "_Elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 55
+            },
+            {
+              "name": "domain_distribute",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.3133
+            },
+            {
+              "name": "mpi_synchronizeHalos",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 9.8
+            },
+            {
+              "name": "BuildTree",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.1933
+            },
+            {
+              "name": "FindNeighbors",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.1002
+            },
+            {
+              "name": "Density",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.4515
+            },
+            {
+              "name": "EquationOfState",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0026
+            },
+            {
+              "name": "IAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.6924
+            },
+            {
+              "name": "MomentumEnergyIAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.4888
+            },
+            {
+              "name": "Timestep",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 5.5344
+            },
+            {
+              "name": "UpdateQuantities",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0217
+            },
+            {
+              "name": "EnergyConservation",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0413
+            },
+            {
+              "name": "SmoothingLength",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.016
+            },
+            {
+              "name": "%MomentumEnergyIAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 6.86
+            },
+            {
+              "name": "%Timestep",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 25.5
+            },
+            {
+              "name": "%mpi_synchronizeHalos",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 45.15
+            },
+            {
+              "name": "%FindNeighbors",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 5.07
+            },
+            {
+              "name": "%IAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 3.19
+            },
+            {
+              "name": "scorep_elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 36.4576
+            },
+            {
+              "name": "%scorep_USR",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 12.8
+            },
+            {
+              "name": "%scorep_MPI",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 76.2
+            },
+            {
+              "name": "scorep_top1",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "",
+              "value": 4.5
+            },
+            {
+              "name": "%scorep_Energy_exclusive",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 4.498
+            },
+            {
+              "name": "%scorep_Energy_inclusive",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 4.498
+            }
+          ],
+          "result": "success",
+          "stagedir": null,
+          "scheduler": "slurm",
+          "system": "eiger:mc_lowmem",
+          "tags": [
+            "cpu",
+            "sph",
+            "hpctools"
+          ],
+          "time_compile": 9.957453727722168,
+          "time_performance": 3.8937926292419434,
+          "time_run": 83.14510464668274,
+          "time_sanity": 0.03844952583312988,
+          "time_setup": 0.03744220733642578,
+          "time_total": 93.21783447265625
+        },
+        {
+          "build_stderr": "rfm_sphexa_scorepS+P_sedov_2048mpi_001omp_850n_0steps_5000000cycles_build.err",
+          "build_stdout": "rfm_sphexa_scorepS+P_sedov_2048mpi_001omp_850n_0steps_5000000cycles_build.out",
+          "description": "Tool validation",
+          "environment": "PrgEnv-gnu",
+          "fail_reason": null,
+          "fail_phase": null,
+          "jobid": "144",
+          "job_stderr": "rfm_sphexa_scorepS+P_sedov_2048mpi_001omp_850n_0steps_5000000cycles_job.err",
+          "job_stdout": "rfm_sphexa_scorepS+P_sedov_2048mpi_001omp_850n_0steps_5000000cycles_job.out",
+          "name": "sphexa_scorepS+P_sedov_2048mpi_001omp_850n_0steps_5000000cycles",
+          "maintainers": [
+            "JG"
+          ],
+          "nodelist": [
+            "nid001026",
+            "nid001032",
+            "nid001021",
+            "nid001023",
+            "nid001033",
+            "nid001019",
+            "nid001025",
+            "nid001022",
+            "nid001027",
+            "nid001020",
+            "nid001028",
+            "nid001030",
+            "nid001031",
+            "nid001024",
+            "nid001018",
+            "nid001029"
+          ],
+          "outputdir": "/scratch/e1000/piccinal/reframe/output/eiger/mc_lowmem/PrgEnv-gnu/sphexa_scorepS+P_sedov_2048mpi_001omp_850n_0steps_5000000cycles",
+          "perfvars": [
+            {
+              "name": "Elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 13.4176
+            },
+            {
+              "name": "_Elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 68
+            },
+            {
+              "name": "domain_distribute",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.0472
+            },
+            {
+              "name": "mpi_synchronizeHalos",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.0957
+            },
+            {
+              "name": "BuildTree",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.8957
+            },
+            {
+              "name": "FindNeighbors",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.1537
+            },
+            {
+              "name": "Density",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.4198
+            },
+            {
+              "name": "EquationOfState",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0029
+            },
+            {
+              "name": "IAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.6842
+            },
+            {
+              "name": "MomentumEnergyIAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.6347
+            },
+            {
+              "name": "Timestep",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 6.3843
+            },
+            {
+              "name": "UpdateQuantities",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0309
+            },
+            {
+              "name": "EnergyConservation",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0462
+            },
+            {
+              "name": "SmoothingLength",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0159
+            },
+            {
+              "name": "%MomentumEnergyIAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 12.18
+            },
+            {
+              "name": "%Timestep",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 47.58
+            },
+            {
+              "name": "%mpi_synchronizeHalos",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 8.17
+            },
+            {
+              "name": "%FindNeighbors",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 8.6
+            },
+            {
+              "name": "%IAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 5.1
+            },
+            {
+              "name": "scorep_elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 31.6797
+            },
+            {
+              "name": "%scorep_USR",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 14.8
+            },
+            {
+              "name": "%scorep_MPI",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 72.5
+            },
+            {
+              "name": "scorep_top1",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "",
+              "value": 4.8
+            },
+            {
+              "name": "%scorep_Energy_exclusive",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 4.785
+            },
+            {
+              "name": "%scorep_Energy_inclusive",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 4.785
+            }
+          ],
+          "result": "success",
+          "stagedir": null,
+          "scheduler": "slurm",
+          "system": "eiger:mc_lowmem",
+          "tags": [
+            "cpu",
+            "sph",
+            "hpctools"
+          ],
+          "time_compile": 10.655455350875854,
+          "time_performance": 0.21727633476257324,
+          "time_run": 72.0467541217804,
+          "time_sanity": 0.06575131416320801,
+          "time_setup": 0.04524374008178711,
+          "time_total": 82.83370876312256
+        },
+        {
+          "build_stderr": "rfm_sphexa_scorepS+P_sedov_4096mpi_001omp_1071n_0steps_5000000cycles_build.err",
+          "build_stdout": "rfm_sphexa_scorepS+P_sedov_4096mpi_001omp_1071n_0steps_5000000cycles_build.out",
+          "description": "Tool validation",
+          "environment": "PrgEnv-gnu",
+          "fail_reason": null,
+          "fail_phase": null,
+          "jobid": "145",
+          "job_stderr": "rfm_sphexa_scorepS+P_sedov_4096mpi_001omp_1071n_0steps_5000000cycles_job.err",
+          "job_stdout": "rfm_sphexa_scorepS+P_sedov_4096mpi_001omp_1071n_0steps_5000000cycles_job.out",
+          "name": "sphexa_scorepS+P_sedov_4096mpi_001omp_1071n_0steps_5000000cycles",
+          "maintainers": [
+            "JG"
+          ],
+          "nodelist": [
+            "nid001050",
+            "nid001044",
+            "nid001049",
+            "nid001042",
+            "nid001057",
+            "nid001061",
+            "nid001060",
+            "nid001063",
+            "nid001039",
+            "nid001065",
+            "nid001038",
+            "nid001059",
+            "nid001062",
+            "nid001054",
+            "nid001064",
+            "nid001037",
+            "nid001036",
+            "nid001035",
+            "nid001056",
+            "nid001048",
+            "nid001041",
+            "nid001043",
+            "nid001045",
+            "nid001046",
+            "nid001047",
+            "nid001052",
+            "nid001034",
+            "nid001040",
+            "nid001058",
+            "nid001053",
+            "nid001055",
+            "nid001051"
+          ],
+          "outputdir": "/scratch/e1000/piccinal/reframe/output/eiger/mc_lowmem/PrgEnv-gnu/sphexa_scorepS+P_sedov_4096mpi_001omp_1071n_0steps_5000000cycles",
+          "perfvars": [
+            {
+              "name": "Elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 10.9193
+            },
+            {
+              "name": "_Elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 136
+            },
+            {
+              "name": "domain_distribute",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 2.4806
+            },
+            {
+              "name": "mpi_synchronizeHalos",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.4979
+            },
+            {
+              "name": "BuildTree",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.9967
+            },
+            {
+              "name": "FindNeighbors",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.2229
+            },
+            {
+              "name": "Density",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.4581
+            },
+            {
+              "name": "EquationOfState",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.003
+            },
+            {
+              "name": "IAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.7902
+            },
+            {
+              "name": "MomentumEnergyIAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.7408
+            },
+            {
+              "name": "Timestep",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.6163
+            },
+            {
+              "name": "UpdateQuantities",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0109
+            },
+            {
+              "name": "EnergyConservation",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.075
+            },
+            {
+              "name": "SmoothingLength",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0162
+            },
+            {
+              "name": "%MomentumEnergyIAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 15.94
+            },
+            {
+              "name": "%Timestep",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 14.8
+            },
+            {
+              "name": "%mpi_synchronizeHalos",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 13.72
+            },
+            {
+              "name": "%FindNeighbors",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 11.2
+            },
+            {
+              "name": "%IAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 7.24
+            },
+            {
+              "name": "scorep_elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 35.3954
+            },
+            {
+              "name": "%scorep_USR",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 14.5
+            },
+            {
+              "name": "%scorep_MPI",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 69.7
+            },
+            {
+              "name": "scorep_top1",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "",
+              "value": 4.8
+            },
+            {
+              "name": "%scorep_Energy_exclusive",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 4.78
+            },
+            {
+              "name": "%scorep_Energy_inclusive",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 4.78
+            }
+          ],
+          "result": "success",
+          "stagedir": null,
+          "scheduler": "slurm",
+          "system": "eiger:mc_lowmem",
+          "tags": [
+            "cpu",
+            "sph",
+            "hpctools"
+          ],
+          "time_compile": 10.527649402618408,
+          "time_performance": 0.26636552810668945,
+          "time_run": 143.3563129901886,
+          "time_sanity": 0.07657122611999512,
+          "time_setup": 0.03590559959411621,
+          "time_total": 154.00684642791748
+        },
+        {
+          "build_stderr": "rfm_sphexa_scorepS+P_sedov_5120mpi_001omp_1153n_0steps_5000000cycles_build.err",
+          "build_stdout": "rfm_sphexa_scorepS+P_sedov_5120mpi_001omp_1153n_0steps_5000000cycles_build.out",
+          "description": "Tool validation",
+          "environment": "PrgEnv-gnu",
+          "fail_reason": null,
+          "fail_phase": null,
+          "jobid": "146",
+          "job_stderr": "rfm_sphexa_scorepS+P_sedov_5120mpi_001omp_1153n_0steps_5000000cycles_job.err",
+          "job_stdout": "rfm_sphexa_scorepS+P_sedov_5120mpi_001omp_1153n_0steps_5000000cycles_job.out",
+          "name": "sphexa_scorepS+P_sedov_5120mpi_001omp_1153n_0steps_5000000cycles",
+          "maintainers": [
+            "JG"
+          ],
+          "nodelist": [
+            "nid001071",
+            "nid001100",
+            "nid001095",
+            "nid001082",
+            "nid001087",
+            "nid001091",
+            "nid001096",
+            "nid001103",
+            "nid001085",
+            "nid001066",
+            "nid001073",
+            "nid001076",
+            "nid001094",
+            "nid001068",
+            "nid001079",
+            "nid001102",
+            "nid001101",
+            "nid001072",
+            "nid001077",
+            "nid001078",
+            "nid001080",
+            "nid001081",
+            "nid001092",
+            "nid001083",
+            "nid001089",
+            "nid001105",
+            "nid001088",
+            "nid001104",
+            "nid001086",
+            "nid001074",
+            "nid001067",
+            "nid001084",
+            "nid001090",
+            "nid001099",
+            "nid001069",
+            "nid001070",
+            "nid001093",
+            "nid001097",
+            "nid001075",
+            "nid001098"
+          ],
+          "outputdir": "/scratch/e1000/piccinal/reframe/output/eiger/mc_lowmem/PrgEnv-gnu/sphexa_scorepS+P_sedov_5120mpi_001omp_1153n_0steps_5000000cycles",
+          "perfvars": [
+            {
+              "name": "Elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 11.2996
+            },
+            {
+              "name": "_Elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 191
+            },
+            {
+              "name": "domain_distribute",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 2.94
+            },
+            {
+              "name": "mpi_synchronizeHalos",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.7663
+            },
+            {
+              "name": "BuildTree",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.1944
+            },
+            {
+              "name": "FindNeighbors",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.2645
+            },
+            {
+              "name": "Density",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.442
+            },
+            {
+              "name": "EquationOfState",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0073
+            },
+            {
+              "name": "IAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.7449
+            },
+            {
+              "name": "MomentumEnergyIAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.6478
+            },
+            {
+              "name": "Timestep",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.1708
+            },
+            {
+              "name": "UpdateQuantities",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0359
+            },
+            {
+              "name": "EnergyConservation",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0611
+            },
+            {
+              "name": "SmoothingLength",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0164
+            },
+            {
+              "name": "%MomentumEnergyIAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 14.58
+            },
+            {
+              "name": "%Timestep",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 10.36
+            },
+            {
+              "name": "%mpi_synchronizeHalos",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 15.63
+            },
+            {
+              "name": "%FindNeighbors",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 11.19
+            },
+            {
+              "name": "%IAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 6.59
+            },
+            {
+              "name": "scorep_elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 37.196
+            },
+            {
+              "name": "%scorep_USR",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 13.8
+            },
+            {
+              "name": "%scorep_MPI",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 69.2
+            },
+            {
+              "name": "scorep_top1",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "",
+              "value": 4.4
+            },
+            {
+              "name": "%scorep_Energy_exclusive",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 4.368
+            },
+            {
+              "name": "%scorep_Energy_inclusive",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 4.368
+            }
+          ],
+          "result": "success",
+          "stagedir": null,
+          "scheduler": "slurm",
+          "system": "eiger:mc_lowmem",
+          "tags": [
+            "cpu",
+            "sph",
+            "hpctools"
+          ],
+          "time_compile": 11.91321325302124,
+          "time_performance": 0.33116865158081055,
+          "time_run": 196.44252824783325,
+          "time_sanity": 0.06622529029846191,
+          "time_setup": 0.03783440589904785,
+          "time_total": 208.4821925163269
+        },
+        {
+          "build_stderr": "rfm_sphexa_scorepS+P_sedov_6144mpi_001omp_1226n_0steps_5000000cycles_build.err",
+          "build_stdout": "rfm_sphexa_scorepS+P_sedov_6144mpi_001omp_1226n_0steps_5000000cycles_build.out",
+          "description": "Tool validation",
+          "environment": "PrgEnv-gnu",
+          "fail_reason": null,
+          "fail_phase": null,
+          "jobid": "147",
+          "job_stderr": "rfm_sphexa_scorepS+P_sedov_6144mpi_001omp_1226n_0steps_5000000cycles_job.err",
+          "job_stdout": "rfm_sphexa_scorepS+P_sedov_6144mpi_001omp_1226n_0steps_5000000cycles_job.out",
+          "name": "sphexa_scorepS+P_sedov_6144mpi_001omp_1226n_0steps_5000000cycles",
+          "maintainers": [
+            "JG"
+          ],
+          "nodelist": [
+            "nid001130",
+            "nid001133",
+            "nid001142",
+            "nid001129",
+            "nid001141",
+            "nid001151",
+            "nid001124",
+            "nid001113",
+            "nid001117",
+            "nid001137",
+            "nid001135",
+            "nid001150",
+            "nid001114",
+            "nid001107",
+            "nid001121",
+            "nid001118",
+            "nid001136",
+            "nid001145",
+            "nid001116",
+            "nid001106",
+            "nid001132",
+            "nid001110",
+            "nid001149",
+            "nid001112",
+            "nid001127",
+            "nid001109",
+            "nid001140",
+            "nid001147",
+            "nid001119",
+            "nid001146",
+            "nid001111",
+            "nid001122",
+            "nid001123",
+            "nid001115",
+            "nid001126",
+            "nid001131",
+            "nid001108",
+            "nid001148",
+            "nid001153",
+            "nid001125",
+            "nid001139",
+            "nid001134",
+            "nid001143",
+            "nid001152",
+            "nid001138",
+            "nid001144",
+            "nid001120",
+            "nid001128"
+          ],
+          "outputdir": "/scratch/e1000/piccinal/reframe/output/eiger/mc_lowmem/PrgEnv-gnu/sphexa_scorepS+P_sedov_6144mpi_001omp_1226n_0steps_5000000cycles",
+          "perfvars": [
+            {
+              "name": "Elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 17.0042
+            },
+            {
+              "name": "_Elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 268
+            },
+            {
+              "name": "domain_distribute",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.3551
+            },
+            {
+              "name": "mpi_synchronizeHalos",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 3.2408
+            },
+            {
+              "name": "BuildTree",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.2307
+            },
+            {
+              "name": "FindNeighbors",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.2604
+            },
+            {
+              "name": "Density",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.4519
+            },
+            {
+              "name": "EquationOfState",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0027
+            },
+            {
+              "name": "IAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.7687
+            },
+            {
+              "name": "MomentumEnergyIAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.672
+            },
+            {
+              "name": "Timestep",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 6.8873
+            },
+            {
+              "name": "UpdateQuantities",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.089
+            },
+            {
+              "name": "EnergyConservation",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0245
+            },
+            {
+              "name": "SmoothingLength",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0161
+            },
+            {
+              "name": "%MomentumEnergyIAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 9.83
+            },
+            {
+              "name": "%Timestep",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 40.5
+            },
+            {
+              "name": "%mpi_synchronizeHalos",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 19.06
+            },
+            {
+              "name": "%FindNeighbors",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 7.41
+            },
+            {
+              "name": "%IAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 4.52
+            },
+            {
+              "name": "scorep_elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 50.8071
+            },
+            {
+              "name": "%scorep_USR",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 9.7
+            },
+            {
+              "name": "%scorep_MPI",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 76.6
+            },
+            {
+              "name": "scorep_top1",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "",
+              "value": 3.0
+            },
+            {
+              "name": "%scorep_Energy_exclusive",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 2.955
+            },
+            {
+              "name": "%scorep_Energy_inclusive",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 2.955
+            }
+          ],
+          "result": "success",
+          "stagedir": null,
+          "scheduler": "slurm",
+          "system": "eiger:mc_lowmem",
+          "tags": [
+            "cpu",
+            "sph",
+            "hpctools"
+          ],
+          "time_compile": 9.44239354133606,
+          "time_performance": 0.33399462699890137,
+          "time_run": 275.3283567428589,
+          "time_sanity": 0.042130470275878906,
+          "time_setup": 0.04598522186279297,
+          "time_total": 284.90103030204773
+        },
+        {
+          "build_stderr": "rfm_sphexa_scorepS+P_sedov_7168mpi_001omp_1290n_0steps_5000000cycles_build.err",
+          "build_stdout": "rfm_sphexa_scorepS+P_sedov_7168mpi_001omp_1290n_0steps_5000000cycles_build.out",
+          "description": "Tool validation",
+          "environment": "PrgEnv-gnu",
+          "fail_reason": null,
+          "fail_phase": null,
+          "jobid": "148",
+          "job_stderr": "rfm_sphexa_scorepS+P_sedov_7168mpi_001omp_1290n_0steps_5000000cycles_job.err",
+          "job_stdout": "rfm_sphexa_scorepS+P_sedov_7168mpi_001omp_1290n_0steps_5000000cycles_job.out",
+          "name": "sphexa_scorepS+P_sedov_7168mpi_001omp_1290n_0steps_5000000cycles",
+          "maintainers": [
+            "JG"
+          ],
+          "nodelist": [
+            "nid001166",
+            "nid001161",
+            "nid001180",
+            "nid001168",
+            "nid001183",
+            "nid001173",
+            "nid001190",
+            "nid001269",
+            "nid001261",
+            "nid001169",
+            "nid001157",
+            "nid001177",
+            "nid001262",
+            "nid001188",
+            "nid001264",
+            "nid001174",
+            "nid001176",
+            "nid001268",
+            "nid001179",
+            "nid001273",
+            "nid001185",
+            "nid001163",
+            "nid001167",
+            "nid001155",
+            "nid001266",
+            "nid001271",
+            "nid001259",
+            "nid001162",
+            "nid001267",
+            "nid001158",
+            "nid001186",
+            "nid001175",
+            "nid001260",
+            "nid001265",
+            "nid001257",
+            "nid001154",
+            "nid001189",
+            "nid001160",
+            "nid001187",
+            "nid001263",
+            "nid001156",
+            "nid001178",
+            "nid001256",
+            "nid001164",
+            "nid001182",
+            "nid001181",
+            "nid001171",
+            "nid001191",
+            "nid001270",
+            "nid001172",
+            "nid001258",
+            "nid001170",
+            "nid001165",
+            "nid001184",
+            "nid001272",
+            "nid001159"
+          ],
+          "outputdir": "/scratch/e1000/piccinal/reframe/output/eiger/mc_lowmem/PrgEnv-gnu/sphexa_scorepS+P_sedov_7168mpi_001omp_1290n_0steps_5000000cycles",
+          "perfvars": [
+            {
+              "name": "Elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 24.1562
+            },
+            {
+              "name": "_Elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 367
+            },
+            {
+              "name": "domain_distribute",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.8088
+            },
+            {
+              "name": "mpi_synchronizeHalos",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 11.1804
+            },
+            {
+              "name": "BuildTree",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.1886
+            },
+            {
+              "name": "FindNeighbors",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.2363
+            },
+            {
+              "name": "Density",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.4578
+            },
+            {
+              "name": "EquationOfState",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0026
+            },
+            {
+              "name": "IAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.6763
+            },
+            {
+              "name": "MomentumEnergyIAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.4605
+            },
+            {
+              "name": "Timestep",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 5.9286
+            },
+            {
+              "name": "UpdateQuantities",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.1274
+            },
+            {
+              "name": "EnergyConservation",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.013
+            },
+            {
+              "name": "SmoothingLength",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0162
+            },
+            {
+              "name": "%MomentumEnergyIAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 6.05
+            },
+            {
+              "name": "%Timestep",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 24.54
+            },
+            {
+              "name": "%mpi_synchronizeHalos",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 46.28
+            },
+            {
+              "name": "%FindNeighbors",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 5.12
+            },
+            {
+              "name": "%IAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 2.8
+            },
+            {
+              "name": "scorep_elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 55.0536
+            },
+            {
+              "name": "%scorep_USR",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 9.3
+            },
+            {
+              "name": "%scorep_MPI",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 76.6
+            },
+            {
+              "name": "scorep_top1",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "",
+              "value": 2.8
+            },
+            {
+              "name": "%scorep_Energy_exclusive",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 2.821
+            },
+            {
+              "name": "%scorep_Energy_inclusive",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 2.821
+            }
+          ],
+          "result": "success",
+          "stagedir": null,
+          "scheduler": "slurm",
+          "system": "eiger:mc_lowmem",
+          "tags": [
+            "cpu",
+            "sph",
+            "hpctools"
+          ],
+          "time_compile": 9.486425161361694,
+          "time_performance": 0.3564727306365967,
+          "time_run": 380.22449564933777,
+          "time_sanity": 0.06871867179870605,
+          "time_setup": 0.04475879669189453,
+          "time_total": 389.84011578559875
+        },
+        {
+          "build_stderr": "rfm_sphexa_scorepS+P_sedov_8192mpi_001omp_1349n_0steps_5000000cycles_build.err",
+          "build_stdout": "rfm_sphexa_scorepS+P_sedov_8192mpi_001omp_1349n_0steps_5000000cycles_build.out",
+          "description": "Tool validation",
+          "environment": "PrgEnv-gnu",
+          "fail_reason": null,
+          "fail_phase": null,
+          "jobid": "149",
+          "job_stderr": "rfm_sphexa_scorepS+P_sedov_8192mpi_001omp_1349n_0steps_5000000cycles_job.err",
+          "job_stdout": "rfm_sphexa_scorepS+P_sedov_8192mpi_001omp_1349n_0steps_5000000cycles_job.out",
+          "name": "sphexa_scorepS+P_sedov_8192mpi_001omp_1349n_0steps_5000000cycles",
+          "maintainers": [
+            "JG"
+          ],
+          "nodelist": [
+            "nid001315",
+            "nid001279",
+            "nid001327",
+            "nid001308",
+            "nid001293",
+            "nid001299",
+            "nid001323",
+            "nid001277",
+            "nid001290",
+            "nid001301",
+            "nid001324",
+            "nid001311",
+            "nid001317",
+            "nid001288",
+            "nid001304",
+            "nid001325",
+            "nid001283",
+            "nid001284",
+            "nid001302",
+            "nid001303",
+            "nid001326",
+            "nid001280",
+            "nid001309",
+            "nid001328",
+            "nid001329",
+            "nid001294",
+            "nid001297",
+            "nid001285",
+            "nid001295",
+            "nid001314",
+            "nid001322",
+            "nid001336",
+            "nid001330",
+            "nid001278",
+            "nid001291",
+            "nid001337",
+            "nid001275",
+            "nid001282",
+            "nid001312",
+            "nid001331",
+            "nid001335",
+            "nid001333",
+            "nid001306",
+            "nid001286",
+            "nid001292",
+            "nid001307",
+            "nid001319",
+            "nid001296",
+            "nid001316",
+            "nid001276",
+            "nid001321",
+            "nid001332",
+            "nid001287",
+            "nid001274",
+            "nid001320",
+            "nid001300",
+            "nid001305",
+            "nid001313",
+            "nid001281",
+            "nid001318",
+            "nid001298",
+            "nid001334",
+            "nid001289",
+            "nid001310"
+          ],
+          "outputdir": "/scratch/e1000/piccinal/reframe/output/eiger/mc_lowmem/PrgEnv-gnu/sphexa_scorepS+P_sedov_8192mpi_001omp_1349n_0steps_5000000cycles",
+          "perfvars": [
+            {
+              "name": "Elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 98.4125
+            },
+            {
+              "name": "_Elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 621
+            },
+            {
+              "name": "domain_distribute",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 3.3491
+            },
+            {
+              "name": "mpi_synchronizeHalos",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 54.0617
+            },
+            {
+              "name": "BuildTree",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.7811
+            },
+            {
+              "name": "FindNeighbors",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.0441
+            },
+            {
+              "name": "Density",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.4206
+            },
+            {
+              "name": "EquationOfState",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0028
+            },
+            {
+              "name": "IAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.6769
+            },
+            {
+              "name": "MomentumEnergyIAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.4632
+            },
+            {
+              "name": "Timestep",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 34.3191
+            },
+            {
+              "name": "UpdateQuantities",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.1465
+            },
+            {
+              "name": "EnergyConservation",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 1.8491
+            },
+            {
+              "name": "SmoothingLength",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 0.0156
+            },
+            {
+              "name": "%MomentumEnergyIAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 1.49
+            },
+            {
+              "name": "%Timestep",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 34.87
+            },
+            {
+              "name": "%mpi_synchronizeHalos",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 54.93
+            },
+            {
+              "name": "%FindNeighbors",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 1.06
+            },
+            {
+              "name": "%IAD",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 0.69
+            },
+            {
+              "name": "scorep_elapsed",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "s",
+              "value": 133.0708
+            },
+            {
+              "name": "%scorep_USR",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 3.8
+            },
+            {
+              "name": "%scorep_MPI",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 90.0
+            },
+            {
+              "name": "scorep_top1",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "",
+              "value": 1.1
+            },
+            {
+              "name": "%scorep_Energy_exclusive",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 1.12
+            },
+            {
+              "name": "%scorep_Energy_inclusive",
+              "reference": 0,
+              "thres_lower": null,
+              "thres_upper": null,
+              "unit": "%",
+              "value": 1.12
+            }
+          ],
+          "result": "success",
+          "stagedir": null,
+          "scheduler": "slurm",
+          "system": "eiger:mc_lowmem",
+          "tags": [
+            "cpu",
+            "sph",
+            "hpctools"
+          ],
+          "time_compile": 14.493115663528442,
+          "time_performance": 0.4020578861236572,
+          "time_run": 632.5247211456299,
+          "time_sanity": 0.08582091331481934,
+          "time_setup": 0.04053068161010742,
+          "time_total": 647.1417374610901
+        }
+      ]
+    }
+  ]
+}

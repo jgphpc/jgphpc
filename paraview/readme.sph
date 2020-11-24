@@ -1,0 +1,13 @@
+salloc
+mll turbovnc
+vncserver
+vglrun paraview
+
+gpusph: paraview
+    open PART*.vtu
+    menu view -> properties
+    plugin manager -> pointsprite_plugin -> autoload
+    create view -> 3D view -> velocity/magnitude/pointsprite/timestep=
+    button threshold -> properties -> scalars: part type -> min=0 -> rescale
+    file -> save animation
+    convert *.png movie.gif -> mplayer -loop 0 movie.gif

@@ -1,0 +1,25 @@
+https://umpbe.cscs.ch
+# TOP 10 projects (scs_cnh)
+https://kibana.cscs.ch/s/scs/goto/90273d4dc5d28295e2d80ff2c8fe197e
+# total_nodes:>1200
+https://kibana.cscs.ch/s/scs/goto/5fd42d29264eaea1e38b980a6bcb7484
+
+# Broadwell-EP (E5 v4)
+https://download.01.org/perfmon/BDX/
+
+# Intel PCM (Performance Counter Monitor)
+https://software.intel.com/en-us/articles/intel-performance-counter-monitor
+
+# memory:
+if the user only needs a single core but more than 2000mb of memory they need
+to specify how much memory they want slurm to allocate in their submission.
+
+scontrol show config | grep -i mem
+DefMemPerCPU = 2000
+MaxMemPerNode = UNLIMITED
+SelectTypeParameters = CR_CPU_MEMORY,CR_LLN
+
+Could you try to define the memory per node in the batch script?
+#SBATCH --mem=48g
+or even choose nodes with large memory:
+#SBATCH --partition=largeMem

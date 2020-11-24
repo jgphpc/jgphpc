@@ -1,0 +1,149 @@
+cdrecord est obsolete : remplacant = wodim 
+	wodim -scanbus dev=ATAPI
+	2.4.27-3-686
+	0,1,0     1) 'PLEXTOR ' 'DVDR   PX-740A  ' '1.00' Removable CD-ROM
+	wodim dev=ATAPI:0,1,0 /root/systemrescuecd-x86-0.3.3.iso
+
+
+
+11/2006 ok :
+2.4.27-2-k7 / root+ blank + cdrecord -v speed=4 dev=ATAPI:0,1,0 /tmp/1.iso
+
+cdrecord -scanbus dev=ATAPI:
+        0,1,0     1) PLEXTOR  DVDR PX-740A  1.00 Removable CD-ROM
+Linux debianjg 2.4.27-2-k7 #1 Wed Nov 30 22:12:04 JST 2005 i686 GNU/Linux
+cdrecord -eject dev=ATAPI:0,1,0 blank=fast
+cdrecord -eject dev=ATAPI:0,1,0 blank=all
+dvd+rw-format -force /dev/hdd    cdrecord ko pour dvd+rw
+gnomebaker (choisir le format DVD en bas) semble marcher (en 2.4)
+
+http://untrepid.com/acidrip/
+http://www.derekfrye.com/bitterbpp/index.html
+
+Tous deux utilisent mencoder, contrairement à dvd::rip.
+Le premier est plutôt orienté avi/divx/xvid.
+Le second est plutôt orienté mkv (c-à-d matroska, le meilleur conteneur
+actuel, qui permet de faire bien plus que l'avi, mais qui est encore
+moins standard).
+
+
+
+
+Burn a CD from the command line
+
+
+To make a CD image of a directory with Rock Ridge and Joliet file support: 
+
+mkisofs -o name_of_file.iso -J -r /home/username/name_of_directory 
+
+Then 
+
+cdrecord -v speed=8 dev=0,0,0 name_of_iso_file.iso 
+
+(Note that you need to get the info for the 'dev=' part by running 'cdrecord -scanbus') 
+
+To copy a CD to an image file you could use this: 
+
+dd if=/dev/scd0 of=/home/username/isoimage.iso 
+
+or 
+
+cat /dev/scd0 >> /home/username/isoimage.iso 
+
+
+plextor dvdr 740-A
+Ses principales vitesses de gravure sont :
+- 16 x DVD±R
+- 8x DVD+R DL
+- 4x DVD-R DL
+- 8x DVD+RW
+- 6x DVD-RW
+- 48x CD-R
+- 32x CD-RW
+
+En lecture, il lit les CD en 48x et les DVD en 16x. On pourra consulter ses caractéristiques complètes sur le site officiel. Il ne continent « que » 2Mo de mémoire cache contre 8 pour le PX-716A. Autre différence, alors que ce dernier grave les DVD-R DL en 6x, il n'atteint que 4x.
+
+pour monter une image iso sous windows : 
+	1/ monter image.iso en loop sous linux sur /home/samba
+	2/ connecter le lecteur /home/samba sous windows :-)
+  538  mount -t iso9660 -o ro,loop=/dev/loop image.iso /mnt/tmp/
+  539  ll /mnt/tmp/
+  540  mount
+  541  mount|q tm
+  542  mount  -o ro,loop=/dev/loop image.iso /mnt/tmp/
+  543  rm image.iso
+  544  cd -
+  545  hdparm /dev/hdc
+  546  hdparm /dev/hda
+  547   mkisofs  -o image.iso -rJ sylvain/ previews/ photos/ 100_0804
+  548  gtar cvf photo.tar sylvain/ previews/ photos/ 100_0804/
+  549  #mv photo.tar /mnt/cdrom_a_graver/
+  550   mkisofs  -o /mnt/cdrom_a_graver/image.iso -rJ photo.tar
+  551  pgrep mkisofs
+  552  ln -s /mnt/cdrom_a_graver
+  553  cd cdrom_a_graver/
+  554  ll
+  555  f
+  556  mount  -o ro,loop=/dev/loop image.iso /mnt/tmp/
+  557  mount -t iso9660 -o ro,loop=/dev/loop image.iso /mnt/tmp/
+  558  ll
+  559  cd ..
+  560  ll
+  561  h
+  562  cdrecord -eject dev=0,0,0 speed=48 blank=fast
+  563  h
+cdrecord -v -dao dev=1,0,0 -data image.iso (k3b is best)
+graveur dvd externe :
+gilles le plus dur a ete de trouver le bon device
+gilles pour faire le mount
+gilles les dvds doivent etre des multi-sessions non termines
+gilles mount /dev/sr/c2b0t0u0 /mnt/cdrom
+
+                      -Avant de commencer à graver ,il faut créer l'image
+                      iso du fichier à graver avec la commande mkisofs.
+                      -Maintenant que l'ISO est crée,on peut utiliser la
+                      commande cdrecord.
+                      -Effacer les données présent sur le DVD si on utilise
+                      un DVD +RW(voir l'option -blank de cdrecord dans le
+                      man)
+                      -Pour lancer la gravure,taper la commande :
+
+                      cdrecord -v -dao dev=x,x,x, -data fichier.iso
+
+                      pour les option voir 'man cdrecord'
+                      pour dev=x,x,x taper la commande 'cdrecord -scanbus'.
+
+                      cdrecord -scanbus : ici dev=4,0,0
+
+[pic]
+
+                      -On peut ajouter des options à la commande cdrecord
+                      comme la vitesse de gravure,le type de données à
+                      graver.(voir le man cdrecord)
+  538  mount -t iso9660 -o ro,loop=/dev/loop image.iso /mnt/tmp/
+  539  ll /mnt/tmp/
+  540  mount
+  541  mount|q tm
+  542  mount  -o ro,loop=/dev/loop image.iso /mnt/tmp/
+  543  rm image.iso
+  544  cd -
+  545  hdparm /dev/hdc
+  546  hdparm /dev/hda
+  547   mkisofs  -o image.iso -rJ sylvain/ previews/ photos/ 100_0804
+  548  gtar cvf photo.tar sylvain/ previews/ photos/ 100_0804/
+  549  #mv photo.tar /mnt/cdrom_a_graver/
+  550   mkisofs  -o /mnt/cdrom_a_graver/image.iso -rJ photo.tar
+mkisofs -r -T -o image.iso .
+  551  pgrep mkisofs
+  552  ln -s /mnt/cdrom_a_graver
+  553  cd cdrom_a_graver/
+  554  ll
+  555  f
+  556  mount  -o ro,loop=/dev/loop image.iso /mnt/tmp/
+  557  mount -t iso9660 -o ro,loop=/dev/loop image.iso /mnt/tmp/
+  558  ll
+  559  cd ..
+  560  ll
+  561  h
+  562  cdrecord -eject dev=0,0,0 speed=48 blank=fast
+  563  h

@@ -1,0 +1,33 @@
+Encoder de *.vob vers DivX en 3 passes
+********************************************
+
+**** Le Son *****
+cat /mnt/hda1/Downloads/*vob | mencoder -ovc frameno -o frameno.avi -oac mp3lame -lameopts abr:br=128 -alang fr -
+
+A la fin de cette passe mencoder vous informe sur le bitrate à choisir pour votre encodage sur 1 ou 2 CDs, remplacez donc la valeur vbitrate=???? dans les deux lignes de commande suivantes.
+
+**** Video 1ere Passe ****
+cat /mnt/hda1/Downloads/*vob | mencoder -oac copy -o /dev/null -ovc lavc -lavcopts vcodec=mpeg4:vbitrate=1000:vhq:vpass=1 -vop scale=640:480 -
+
+**** Video 2eme Passe ****
+cat /mnt/hda1/Downloads/*vob | mencoder -oac copy -o monfilm.avi -ovc lavc -lavcopts vcodec=mpeg4:vbitrate=1000:vhq:vpass=2 -vop scale=640:480 -
+
+**** Hack pour un bug fréquent des lecteurs windows ********
+mencoder -mc 0 source.avi -o target.avi -oac copy -ovc copy -ffourcc DIVX
+
+
+Encoder un DVD directement en Divx
+**********************************
+
+**** Le Son *****
+rm -f frameno.avi; mencoder dvd://1 -ovc frameno -o frameno.avi -oac mp3lame -lameopts abr:br=128:vol=6 -alang fr -
+
+**** Video 1ere Passe ****
+mencoder dvd://1 -oac copy -o /dev/null -ovc lavc -lavcopts vcodec=mpeg4:vbitrate=730:vhq:vpass=1:mbd=2 -vf pp=lb -
+
+**** Video 2eme Passe ****
+mencoder dvd://1 -oac copy -o monfilm.avi -ovc lavc -lavcopts vcodec=mpeg4:vbitrate=730:vhq:vpass=2:mbd=2 -vf pp=lb -
+
+
+Pour plus d'informations, voir le man page de mencoder et la documentation de mencoder sur le site de mplayer :
+http://www.mplayerhq.hu/

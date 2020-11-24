@@ -1,0 +1,81 @@
+# INSTALL
+        gtkpod (ipod)
+        audacity
+        jack_capture        
+        record sound card (using pulseaudio) : padevcontrol + parec !!! => ~/record.sh
+        sysvbanner
+        multitail
+        giac # = xcas; deb http://www-fourier.ujf-grenoble.fr/~parisse/debian/ stable main 
+        xxdiff meld
+        pitivi (video editor)
+        ack-grep
+        vlc : ? (istanbul + recorditnow + ***kazam ok mais bandes => resolution 1024x768 ok*** : desktop screen recorder
+        scrollz = irc
+        jscribble - graphical notepad for use with a pen tablet + pdf annotate
+        evince : pdf annotate (left menu down arrow + F5 + ivert colors)
+        xournal - GTK+ Application for note taking + pdf annotate
+        screenruler
+        tudu - Command line hierarchical ToDo list
+
+        foxit (pdf reader) or evince or xpdf
+
+        GNOME-TERMINAL : colortab:
+                Create the file ~/.config/gtk-3.0/gtk.css
+                Paste this as the contents using your desired color:
+                    TerminalWindow .notebook tab:active {
+                        background-color: #FF0000;
+                }
+                Close all Terminal windows and relaunch the application to see the change.
+# taille des characteres dans la console
+setfont -9
+
+# 3D Desktop
+3ddesk
+
+# typescript
+bsdutils :-) :-)
+script -t 2> timingfile ; blablabla ; exit ; scriptreplay timingfile
+( cf http://bugs.debian.org/68556 pour le script perl ) + http://0xcc.net/ttyrec/index.html.en
+Autre solution (- bien) : ttyrec ; blabla ; ttyplay ttyrecord
+Autre solution : istanbul=desktop-recorder ---> desktop-recording.ogg
+
+APT :
+unset http_proxy
+echo '  Acquire::http::Proxy "http://139.10.0.220:8080";   '  >> /etc/apt/apt.conf.d/local
+Voir les différentes versions d'un prg : apt-cache show prg
+Installer celle qu'on veut : apt-get install prg=version
+
+http://www.partimage.org
+
+http://rezound.sourceforge.net/ : sound
+
+http://hugin.sourceforge.net/download/
+
+apt search enblend # image blending tool
+* ftp://ftp.gnu.org/gnu/parallel/
+
+# relier 2 pc avec cable eth
+res=0 ; while [ $res = 0 ] ; do ifconfig eth1 |grep 102.168; res=$? ; 
+if [ $res != 0 ] ;then 
+    sudo ifconfig eth1 102.168.230.2 up ; echo ifconf ; res=0 ;  
+else
+    echo ok $res ;sleep 30 ; 
+fi ; done
+
+
+# pdf:
+http://java-notelab.sourceforge.net/
+ratpoison - Simple window manager with no fat library dependencies
+
+# wiki/markdown
+https://code.visualstudio.com/
+http://zim-wiki.org/
+
+# ooffice:
+=game()
+=Game("StarWars")
+
+Convertir en batch avec ooffice :
+	OOo_2.1.0_LinuxIntel_install_en-US.tar.gz
+	soffice "-accept=socket,host=localhost,port=2002;urp;" &
+	/opt/openoffice.org2.1/program/python  ooo2any.py --extension pdf  	--format writer_pdf_Export efface.doc

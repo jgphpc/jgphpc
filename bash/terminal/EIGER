@@ -1,0 +1,5 @@
+# or call with: LC_TELEPHONE=VV eiger.cscs.ch
+gnome-terminal \
+--tab-with-profile=EIGER_V \
+--tab-with-profile=EIGER_R \
+--tab-with-profile=EIGER_P

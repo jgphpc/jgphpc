@@ -3,6 +3,10 @@
 # https://webrt.cscs.ch/Ticket/Display.html?id=23423
 Host *
   ServerAliveInterval 60
+# ServerAliveInterval: number of seconds that the client will wait before sending
+# a null packet to the server (to keep the connection alive). Setting a value of
+# 0 (the default) will disable these features so your connection could drop if it
+# is idle for too long.
 # -----------------------
 
 # -----------------------
@@ -14,10 +18,23 @@ Host *
 # ----------------------- on your local desktop:
 # http://user.cscs.ch/computing_resources/data_analysis_and_visualization/visualization_resources/direct_connection_from_a_remote_desktop/paraview/index.html
 
+
+# {{{ AULT:
+Host ault*
+ForwardAgent yes
+Port 22
+# SendEnv LC_*
+Hostname ault.cscs.ch
+ProxyJump ela.cscs.ch
+# ProxyCommand ssh piccinal@ela.cscs.ch netcat %h %p
+# ProxyJump piccinal@ela.cscs.ch
+# }}}
+
 # {{{ DOM:
 Host dom*
 ForwardAgent yes
 Port 22
+SendEnv LC_*
 Hostname dom.cscs.ch
 ProxyJump ela.cscs.ch
 # ProxyCommand ssh piccinal@ela.cscs.ch netcat %h %p

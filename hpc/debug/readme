@@ -1,4 +1,8 @@
+https://www.google.com/bookmarks/lookup?q=label:debug&hl=fr
+https://github.com/pixel/hexedit
+
 # GDB:
+https://sourceware.org/gdb/wiki/BuildingOnDarwin
 https://sourceware.org/gdb/wiki/PermissionsDarwin
 -> codesign --entitlements 0.xml -fs jg-gdb-cert $(which gdb)
 (https://stackoverflow.com/questions/18423124/please-check-gdb-is-codesigned-see-taskgated8-how-to-get-gdb-installed-w)
