@@ -15,20 +15,58 @@
 " => copy the output here (dein Scripts---):
 
 "{{{dein Scripts-----------------------------
+
+"dein Scripts-----------------------------
 if &compatible
   set nocompatible               " Be iMproved
 endif
 
 " Required:
-set runtimepath+=$HOME/.config/nvim/bundle/repos/github.com/Shougo/dein.vim
+set runtimepath+=/users/piccinal/.cache/dein/repos/github.com/Shougo/dein.vim
 
 " Required:
-if dein#load_state('$HOME/.config/nvim/bundle')
-  call dein#begin('$HOME/.config/nvim/bundle')
+if dein#load_state('/users/piccinal/.cache/dein')
+  call dein#begin('/users/piccinal/.cache/dein')
 
   " Let dein manage dein
   " Required:
-  call dein#add('$HOME/.config/nvim/bundle/repos/github.com/Shougo/dein.vim')
+  call dein#add('/users/piccinal/.cache/dein/repos/github.com/Shougo/dein.vim')
+
+  " Add or remove your plugins here like this:
+  "call dein#add('Shougo/neosnippet.vim')
+  "call dein#add('Shougo/neosnippet-snippets')
+
+  " Required:
+  call dein#end()
+  call dein#save_state()
+endif
+
+" Required:
+filetype plugin indent on
+syntax enable
+
+" If you want to install not installed plugins on startup.
+"if dein#check_install()
+"  call dein#install()
+"endif
+
+"End dein Scripts-------------------------
+
+
+"   if &compatible
+"     set nocompatible               " Be iMproved
+"   endif
+"   
+"   " Required:
+"   set runtimepath+=$HOME/.config/nvim/bundle/repos/github.com/Shougo/dein.vim
+"   
+"   " Required:
+"   if dein#load_state('$HOME/.config/nvim/bundle')
+"     call dein#begin('$HOME/.config/nvim/bundle')
+"   
+"     " Let dein manage dein
+"     " Required:
+"     call dein#add('$HOME/.config/nvim/bundle/repos/github.com/Shougo/dein.vim')
 
 "{{{ --- JG plugins:
   " :CheckHealth

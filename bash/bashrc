@@ -100,6 +100,22 @@ fi
 # fi
 # }}}
 
+# {{{ shasta
+if [ `uname -n |cut -c1-3` == "uan" ] ;then
+	module use /apps/eiger/UES/tools/easybuild/modules/all
+	module use /users/piccinal/.local/easybuild/modules/all
+	module load EasyBuild/4.3.0
+	export EASYBUILD_INSTALLPATH=/apps/eiger/UES/tools/easybuild
+	export EASYBUILD_MODULES_TOOL=Lmod
+	export EASYBUILD_MODULE_SYNTAX=Tcl  # Lua
+	export EASYBUILD_OPTARCH=x86-rome
+	export EASYBUILD_PREFIX=/apps/eiger/UES/tools/easybuild
+	export EASYBUILD_SOURCEPATH=/apps/common/UES/easybuild/sources
+	# export EB_CUSTOM_REPOSITORY=/apps/common/UES/jenkins/production/easybuild
+    export SCRATCH=/scratch/e1000/piccinal
+fi
+# }}}
+
 # --- ddt:
 # {{{
 #####   #####    #####
@@ -205,3 +221,19 @@ fi
 # --- https://github.com/junegunn/fzf#usage
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 ## echo ".bashrc END"
+
+## # >>> conda initialize >>>
+## # !! Contents within this block are managed by 'conda init' !!
+## __conda_setup="$('/apps/common/UES/sandbox/jgp/BIN/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+## if [ $? -eq 0 ]; then
+##     eval "$__conda_setup"
+## else
+##     if [ -f "/apps/common/UES/sandbox/jgp/BIN/anaconda3/etc/profile.d/conda.sh" ]; then
+##         . "/apps/common/UES/sandbox/jgp/BIN/anaconda3/etc/profile.d/conda.sh"
+##     else
+##         export PATH="/apps/common/UES/sandbox/jgp/BIN/anaconda3/bin:$PATH"
+##     fi
+## fi
+## unset __conda_setup
+## # <<< conda initialize <<<
+
