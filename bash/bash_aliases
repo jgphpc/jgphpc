@@ -60,6 +60,7 @@ TXTWHT='\[\e[0;37m\]' # White
 # }}}
 TXTRST='\[\e[0m\]'    # Text Reset
 NOCOLOR='\[\033[0m\]'  # No color
+alias ls='ls --color=auto'
 # }}}
 
 # {{{ PS1
@@ -114,6 +115,7 @@ alias z=set-titlejg
 
 alias rt='cd $SCRATCH/RT'
 alias sx='cd /apps/common/UES/sandbox/jgp'
+alias sxx='cd $SCRATCH/stage/dom/gpu/PrgEnv-gnu'
 #alias sxx='source ~/eff.ebgpu ;cd /apps/common/UES/sandbox/jgp/perfhackaton.git/reframe/lammps/'
 #alias rrr='module use /apps/common/UES/modulefiles ;module load reframe'
 alias rrr='module load reframe'
@@ -219,10 +221,12 @@ alias dm='source ~/dom-mc.sh'
 #alias md='source /opt/cray/craype/default/bin/craype-pkgconfig disable'
 alias maa='module avail 2>&1 |grep -i'
 alias ma='module avail 2>&1'
-alias ml='module list 2>&1'
-alias mll='module load'
-alias ms='module swap'
-alias mss='module show'
+if [ -z $LMOD_VERSION ] ;then
+    alias ml='module list 2>&1'
+    alias mll='module load'
+    alias ms='module swap'
+    alias mss='module show'
+fi
 alias mh='module help'
 alias mw='module whatis'
 alias lll='module list'
@@ -413,6 +417,8 @@ alias 12='expr 12 \*'
 alias 24='expr 24 \*'
 alias 36='expr 36 \*'
 alias 72='expr 72 \*'
+alias 128='expr 128 \*'
+alias 256='expr 256 \*'
 alias ag='/apps/common/UES/sandbox/jgp/the_silver_searcher/1.0.1/gnu_434/bin/ag'
 alias bc='bc -l'
 #alias beep='echo -en "\007"'
@@ -433,7 +439,8 @@ alias lic='export LM_LICENSE_FILE=/users/piccinal/license.dat'
 alias ll='ls -lX'
 alias llqq='llq -u piccinal'
 alias llqqq='watch llq -u piccinal'
-#alias l='ls -X'
+alias lx='ls -X'
+alias ee='cd /apps/eiger/UES/sandbox/piccinal'
 alias l='ls -lrt'
 alias lh='ls -lrhS'
 alias lstop='lstopo --of txt --no-io --no-bridges'
@@ -477,8 +484,8 @@ alias tt='tail -50'
 alias ttt='tail -f'
 alias tm='type module ; echo MODULESHOME = $MODULESHOME'
 alias u='cd ..'
-alias v='nvim'
-alias vv='vim -X'
+alias vv='nvim'
+alias v='vim -X'
 #alias vv='vim -X --noplugin'
 alias vimdiff="vimdiff -X -c 'set diffopt+=iwhite' -c 'set wrap' -c 'wincmd w' -c 'set wrap'"
 alias pep='$HOME/.local/bin/pycodestyle --show-source '
@@ -509,7 +516,7 @@ if [ `hostname |tr -d "[0-9]"` =  "albis" ] ; then export APPS=/apps/albis ; fi
 if [ `hostname |tr -d "[0-9]"` =  "lema"  ] ; then export APPS=/apps/albis ; fi
 # export APRUN_XFER_LIMITS=1 # To pass the value to the compute nodes
 alias scj='scontrol show job'
-alias scju='scontrol show job |grep $USER'
+alias scju='scontrol show job |grep $USER |tr = " "'
 alias scn='scontrol show nodes'
 alias sp='scontrol show partition'
 alias sr='scontrol show reservation'
