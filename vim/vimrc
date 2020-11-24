@@ -296,6 +296,9 @@ filetype plugin on
 " Linediff: ~/.vim/bundle/linediff.vim/plugin/linediff.vim
 Plugin 'linediff.vim'
 
+" tagbar: https://github.com/preservim/tagbar
+Plugin 'preservim/tagbar'
+
 
 " http://spf13.com ===========================================================
 "statusline  if has('statusline')
@@ -490,34 +493,36 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 " }}}
 "
 
-" https://www.vim.org/scripts/script.php?script_id=2332
-" pep8/reframe: :SyntasticCheck <lang> / :SyntasticInfo
-" uncomment line below:
-"execute pathogen#infect() 
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-"  " --- python:
-" export PATH=~/.local/bin:$PATH
-let g:syntastic_python_checkers = ['pycodestyle', 'flake8']
-" let g:syntastic_python_checkers = ['flake8']
-" let g:syntastic_python_exec = '/users/piccinal/.local/bin/flake8'
-" let g:syntastic_python_checkers = ['pycodestyle']
-" let g:syntastic_python_exec = '/users/piccinal/.local/bin/pycodestyle'
-" let g:syntastic_python_checkers = ['pep8']
-" let g:syntastic_python_exec = '/users/piccinal/.local/bin/pep8'
-"  " --- c++:
-"let g:syntastic_cpp_checkers = ['cppcheck', 'gcc', 'clang_tidy']
-let g:syntastic_cpp_checkers = ['clang_tidy']
-let g:syntastic_cpp_check_header = 1
-let g:syntastic_cpp_auto_refresh_includes = 1
-let g:syntastic_cpp_clang_tidy_args = '-checks=*'
-"let g:syntastic_cpp_exec = ''
-"  let g:syntastic_debug = 1
+" {{{ syntastic
+" " https://www.vim.org/scripts/script.php?script_id=2332
+" " pep8/reframe: :SyntasticCheck <lang> / :SyntasticInfo
+" " uncomment line below:
+" "execute pathogen#infect() 
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+" " --- python:
+" " export PATH=~/.local/bin:$PATH
+" let g:syntastic_python_checkers = ['pycodestyle', 'flake8']
+" " let g:syntastic_python_checkers = ['flake8']
+" " let g:syntastic_python_exec = '/users/piccinal/.local/bin/flake8'
+" " let g:syntastic_python_checkers = ['pycodestyle']
+" " let g:syntastic_python_exec = '/users/piccinal/.local/bin/pycodestyle'
+" " let g:syntastic_python_checkers = ['pep8']
+" " let g:syntastic_python_exec = '/users/piccinal/.local/bin/pep8'
+" " --- c++:
+" "let g:syntastic_cpp_checkers = ['cppcheck', 'gcc', 'clang_tidy']
+" let g:syntastic_cpp_checkers = ['clang_tidy']
+" let g:syntastic_cpp_check_header = 1
+" let g:syntastic_cpp_auto_refresh_includes = 1
+" let g:syntastic_cpp_clang_tidy_args = '-checks=*'
+" "let g:syntastic_cpp_exec = ''
+" "  let g:syntastic_debug = 1
+" }}}
 au BufRead,BufNewFile *.eb set ft=python
 
 " TODO: ~/.vim/bundle/cscope.vim/plugin/cscope.vim +
