@@ -18,6 +18,17 @@ class GpuTest(rfm.RegressionTest):
           * cuda_capability: 6.0 (Tesla P100-PCIE-16GB)
           * peak_perf: 4761 Gflop/s
 
+~/RR --system daint:gpu -c gpu_peak.py -r -J partition=debug
+    GpuTest
+    - daint:gpu
+       - PrgEnv-gnu
+          * num_tasks: 1
+          * driver: 440.33
+          * cuda_driver_version: 10.2
+          * cuda_runtime_version: 10.2
+          * cuda_capability: 6.0 (Tesla P100-PCIE-16GB)
+          * peak_perf: 4761 Gflop/s
+
 ~/reframe.git/bin/reframe -C ~/reframe.git/config/cscs.py --system ault:intelv100 \
 --keep-stage-files -v -c gpu_peak.py -r --performance-report  # sacct is slow -> patience...
     GpuTest
@@ -122,11 +133,17 @@ class GpuTest(rfm.RegressionTest):
         cs = self.current_system.name
         cp = self.current_partition.fullname
         gpu_arch = None
-        if cs in {'dom', 'daint'}:
+        if cs in {'dom'}:
             gpu_arch = '60'
             self.modules = ['cdt-cuda/20.11', 'craype-accel-nvidia60']
             self.build_system.cppflags = [
                 '-I$CUDATOOLKIT_HOME/samples/common/inc'
+            ]
+        if cs in {'daint'}:
+            gpu_arch = '60'
+            self.modules = ['craype-accel-nvidia60']
+            self.build_system.cppflags = [
+                '-I/users/piccinal/easybuild/daint/haswell/software/cuda-samples/11.2/Common',
             ]
         elif cs in {'ault'}:
             # self.modules = ['cuda']
