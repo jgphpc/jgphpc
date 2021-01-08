@@ -102,7 +102,7 @@ class GpuTest(rfm.RegressionTest):
                 'peak_perf': (4761, -0.10, None, 'Gflop/s'),
             },
             'ault:intelv100': {
-                'peak_perf': (5500, -0.10, None, 'Gflop/s'),
+                'peak_perf': (7066, -0.10, None, 'Gflop/s'),
             },
             'ault:amda100': {
                 'peak_perf': (15000, -0.10, None, 'Gflop/s'),
@@ -139,7 +139,7 @@ class GpuTest(rfm.RegressionTest):
             self.build_system.cppflags = [
                 '-I$CUDATOOLKIT_HOME/samples/common/inc'
             ]
-        if cs in {'daint'}:
+        elif cs in {'daint'}:
             gpu_arch = '60'
             self.modules = ['craype-accel-nvidia60']
             self.build_system.cppflags = [
@@ -148,33 +148,41 @@ class GpuTest(rfm.RegressionTest):
         elif cs in {'ault'}:
             # self.modules = ['cuda']
             if cp in {'ault:amdv100', 'ault:intelv100'}:
+                gpu_arch = '70'
+                # self.modules = ['cuda-11.2.0-gcc-8.3.0-xhe7m3f', 'gcc/10.1.0']
                 self.prebuild_cmds += [
                     # 'module use /users/piccinal/git/spack.git/share/spack/modules/linux-centos7-skylake_avx512',
                     # 'module load cuda-11.2.0-gcc-8.3.0-xhe7m3f',
                     'module load gcc/10.1.0',
                 ]
-                # cuda_path = '/users/piccinal/git/spack.git/opt/spack/linux-centos7-skylake_avx512/gcc-8.3.0/cuda-11.2.0-xhe7m3frbxqrtmby3nccewsz2ch2g3gy'
                 cuda_path = '/users/piccinal/.local/easybuild/software/nvhpc/2020_2011-cuda-11.1/Linux_x86_64/20.11/compilers'
-                self.variables = {
-                    'CUDATOOLKIT_HOME': f'{cuda_path}',
-                    'PATH': f'{cuda_path}/bin:$PATH',
-                    # examples/OpenACC/SDK/include/helper_string.h
-                }
-                # self.modules = ['cuda-11.2.0-gcc-8.3.0-xhe7m3f', 'gcc/10.1.0']
-                self.build_system.cc = 'gcc'
-                self.build_system.cppflags = [
-                    '-I/users/piccinal/.local/easybuild/software/cuda-samples/11.2/Common',
-                ]
-                self.build_system.ldflags = [
+                samples_path = '-I/users/piccinal/.local/easybuild/software/cuda-samples/11.2/Common'
+                lib_rpath = [
                     '-Wl,-rpath,$CUDATOOLKIT_HOME/../cuda/11.1/targets/x86_64-linux/lib ',
                     '-Wl,-rpath,$CUDATOOLKIT_HOME/lib ',
                     '-L$CUDATOOLKIT_HOME/../cuda/11.1/targets/x86_64-linux/lib',
                     # '-L$CUDATOOLKIT_HOME/lib',
                     '-lcudart', # '-lcudanvhpc',
                 ]
-                gpu_arch = '70'
             elif cp in {'ault:amda100'}:
                 gpu_arch = '80'
+                self.prebuild_cmds += ['module load gcc/10.1.0']
+                cuda_path = '/users/piccinal/.local/easybuild/software/nvhpc/2020_2011-cuda-11.1/Linux_x86_64/20.11/compilers'
+                samples_path = '-I/users/piccinal/.local/easybuild/software/cuda-samples/11.2/Common'
+                lib_rpath = [
+                    '-Wl,-rpath,$CUDATOOLKIT_HOME/../cuda/11.1/targets/x86_64-linux/lib ',
+                    '-Wl,-rpath,$CUDATOOLKIT_HOME/lib ',
+                    '-L$CUDATOOLKIT_HOME/../cuda/11.1/targets/x86_64-linux/lib',
+                    '-lcudart',
+                ]
+
+            self.variables = {
+                'CUDATOOLKIT_HOME': f'{cuda_path}',
+                'PATH': f'{cuda_path}/bin:$PATH',
+            }
+            self.build_system.cc = 'gcc'
+            self.build_system.cppflags = [samples_path]
+            self.build_system.ldflags = lib_rpath
         elif cs in {'arola', 'tsa'}:
             gpu_arch = '70'
             self.modules = ['cuda/10.1.243']
