@@ -1,0 +1,13 @@
+.SUFFIXES: .o .c .cu
+
+exe: mpic.o mpicu.o
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $@
+
+mpic.o: mpic.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+mpicu.o: mpicu.cu
+	$(NVCC) $(CPPFLAGS) $(CXXFLAGS) -c -I$(CUDATOOLKIT_HOME)/include $< -o $@
+
+clean:
+	rm -f *.o
