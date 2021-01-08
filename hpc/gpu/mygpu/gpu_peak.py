@@ -17,6 +17,18 @@ class GpuTest(rfm.RegressionTest):
           * cuda_runtime_version: 11.0
           * cuda_capability: 6.0 (Tesla P100-PCIE-16GB)
           * peak_perf: 4761 Gflop/s
+
+~/reframe.git/bin/reframe -C ~/reframe.git/config/cscs.py --system ault:intelv100 \
+--keep-stage-files -v -c gpu_peak.py -r --performance-report  # sacct is slow -> patience...
+    GpuTest
+    - ault:intelv100
+       - PrgEnv-gnu
+          * num_tasks: 1
+          * driver: 455.32
+          * cuda_driver_version: 11.1
+          * cuda_runtime_version: 11.1
+          * cuda_capability: 7.0 (Tesla V100-PCIE-16GB)
+          * peak_perf: 7066 Gflop/s
     """
     def __init__(self):
         self.descr = 'GPU specs test'
@@ -35,7 +47,7 @@ class GpuTest(rfm.RegressionTest):
         self.num_tasks_per_node = 1
         self.num_cpus_per_task = 1
         self.num_tasks_per_core = 1
-        self.use_multithreading = False
+        # self.use_multithreading = False
         # self.exclusive = True
         # self.exclusive_access = True
         self.time_limit = '1m'
@@ -45,6 +57,7 @@ class GpuTest(rfm.RegressionTest):
         # {{{ sanity_patterns
         self.sanity_patterns = sn.all(
             [
+                sn.assert_not_found(r'MapSMtoCores.*is undefined', self.stdout),
                 sn.assert_found(r'Kernel Module', self.stdout),
                 sn.assert_found(r'CUDA Driver Version / Runtime', self.stdout),
                 sn.assert_found(r'CUDA Capability Major/Minor', self.stdout),
@@ -116,8 +129,32 @@ class GpuTest(rfm.RegressionTest):
                 '-I$CUDATOOLKIT_HOME/samples/common/inc'
             ]
         elif cs in {'ault'}:
-            self.modules = ['cuda']
+            # self.modules = ['cuda']
             if cp in {'ault:amdv100', 'ault:intelv100'}:
+                self.prebuild_cmds += [
+                    # 'module use /users/piccinal/git/spack.git/share/spack/modules/linux-centos7-skylake_avx512',
+                    # 'module load cuda-11.2.0-gcc-8.3.0-xhe7m3f',
+                    'module load gcc/10.1.0',
+                ]
+                # cuda_path = '/users/piccinal/git/spack.git/opt/spack/linux-centos7-skylake_avx512/gcc-8.3.0/cuda-11.2.0-xhe7m3frbxqrtmby3nccewsz2ch2g3gy'
+                cuda_path = '/users/piccinal/.local/easybuild/software/nvhpc/2020_2011-cuda-11.1/Linux_x86_64/20.11/compilers'
+                self.variables = {
+                    'CUDATOOLKIT_HOME': f'{cuda_path}',
+                    'PATH': f'{cuda_path}/bin:$PATH',
+                    # examples/OpenACC/SDK/include/helper_string.h
+                }
+                # self.modules = ['cuda-11.2.0-gcc-8.3.0-xhe7m3f', 'gcc/10.1.0']
+                self.build_system.cc = 'gcc'
+                self.build_system.cppflags = [
+                    '-I/users/piccinal/.local/easybuild/software/cuda-samples/11.2/Common',
+                ]
+                self.build_system.ldflags = [
+                    '-Wl,-rpath,$CUDATOOLKIT_HOME/../cuda/11.1/targets/x86_64-linux/lib ',
+                    '-Wl,-rpath,$CUDATOOLKIT_HOME/lib ',
+                    '-L$CUDATOOLKIT_HOME/../cuda/11.1/targets/x86_64-linux/lib',
+                    # '-L$CUDATOOLKIT_HOME/lib',
+                    '-lcudart', # '-lcudanvhpc',
+                ]
                 gpu_arch = '70'
             elif cp in {'ault:amda100'}:
                 gpu_arch = '80'
