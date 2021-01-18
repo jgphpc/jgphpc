@@ -17,4 +17,5 @@ echo "Recording to $WAV ..."
 echo "Close this window to stop"
 # parec: Playback/record raw or encoded audio streams on a PulseAudio sound server
 # sox: Sound eXchange, the Swiss Army knife of audio manipulation
-parec -d "$MONITOR" |sox -t raw -r 44k -sLb 16 -c 2 - "$WAV"
+#ok parec -d "$MONITOR" |sox -t raw -r 44k -sLb 16 -c 2 - "$WAV"
+parec -v -d "$MONITOR" -r $WAV

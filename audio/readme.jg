@@ -1,5 +1,12 @@
 #!/bin/sh
 
+# {{{ (audio-recorder) 2020: ok
+sudo add-apt-repository ppa:audio-recorder/ppa
+sudo apt install audio-recorder
+audio-recorder &
+# }}}
+
+# {{{ youtube
 ## extract audio from mp4 file
 youtube-dl -k https://vimeo.com/398838139
 ffmpeg -i in.mp4 out.mp3
@@ -12,21 +19,24 @@ format code  extension  resolution note
 251          webm       audio only tiny  160k , opus @160k (48000Hz), 82.05MiB
 278          webm       256x144    144p   99k , webm container, vp9, 30fps, video only, 55.03MiB
 --> youtube-dl -f 140 ...
+# }}}
 
-## record audio
+# {{{ mac
 iShowU Audio Capture (was soundflower) 
 https://obsproject.com/forum/resources/os-x-capture-audio-with-ishowu-audio-capture.505/
 ok (06/2020)
 + pngs
 audacity: ? (https://wiki.audacityteam.org/wiki/Recording_Computer_Playback_on_Mac)
+# }}}
 
-
+# {{{ audacity?
 http://manual.audacityteam.org/man/tutorial_recording_computer_playback_on_linux.html
-
 ## http://audacity.sourceforge.net/help/faq_i18n?s=files&i=split&lang=en
 ## How can I split a long recording into multiple files or CD tracks?
 
-Follow these steps to create a separate file for each song or segment of a long recording. This is particularly useful if you are creating a CD, since each file will appear as a separate track on the CD.
+Follow these steps to create a separate file for each song or segment of a long
+recording. This is particularly useful if you are creating a CD, since each
+file will appear as a separate track on the CD.
 
 Click to place the cursor at the start of the first song.
 Choose 
@@ -39,14 +49,15 @@ from the File menu. When you click the
 Export
 button, Audacity will save each song as a separate file, using the format and location you choose.
 
-
-## Alternatively, Audacity can attempt to detect the silences between tracks then label them automatically using Analyze > Silence Finder. If you do not have Silence Finder in your version of Audacity, it can be found in the Audacity legacy 1.2.6 Plug-in Pack.
+## Alternatively, Audacity can attempt to detect the silences between tracks
+## then label them automatically using Analyze > Silence Finder. If you do not
+##     have Silence Finder in your version of Audacity, it can be found in the
+##     Audacity legacy 1.2.6 Plug-in Pack.
 
 See also: How do I save my recording on an audio CD?
+# }}}
 
-
-
-# --- HIGH-RES AUDIO QUALITY:
+# {{{ HIGH-RES AUDIO QUALITY:
 /Applications/MediaHuman: converts FLAC to ALAC (= apple lossless format) => only ALAC can be read by itunes.
 
 https://archive.org/details/TheRollingStonesBeggarsBanquet  (FLAC = high-res best quality):
@@ -66,3 +77,46 @@ Nov 2009: in-ear = 99.95$ serial number: 044435Z82666246AE
 
 # high-fi:
 https://support.apple.com/en-us/HT202730
+# }}}
+
+# {{{ brec (2006)
+brec -s22050 -b16 -t 1 -w file.wav ; mplayer -ao oss file.wav : ok
+brec -s22050 -b16      -w file.wav ; mplayer -ao oss file.wav : ok
+# }}}
+
+# {{{ mixer
+# en tant que root, un coup de alsaconf et c bon.
+
+Applet de volume gnome :
+OSS
+OUT : 100%		son 	- 	audio
+	pcm		on		-
+	pcm2		on		-
+IN : 100%		son 	- 	audio	
+	volume		on		off		
+	microphone	on		on		
+	cd		on		off		
+
+alsamixer
+ALSAMIXER : 100%
+	master
+	headphone
+	pcm
+	cd
+	mic
+# }}}
+
+# {{{ hardware detection
+jg@debianjg:~$ lspci
+0000:00:07.4 Host bridge: VIA Technologies, Inc. VT82C686 [Apollo Super ACPI] (rev 40)
+0000:00:07.5 Multimedia audio controller: VIA Technologies, Inc. VT82C686 AC97 Audio Controller (rev 50)
+
+apt-get install alsa-modules-2.4.27-2-k7
+modprobe snd-via82xx
+gnome-volume-control
+# }}}
+
+# {{{ Convertisseurs :
+	http://www.tgunkel.de/software/index.en
+	http://www.tgunkel.de/software/files/wav2ogg 
+# }}}
