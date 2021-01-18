@@ -1,5 +1,110 @@
 " ---- jgp's .vimrc ----
-" Coding ----------------------------------------------- @@@
+
+" {{{ plugins (Vundle)
+" github.com/VundleVim/Vundle.vim
+set nocompatible  " be iMproved, required
+filetype off      " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+"filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+
+" tagbar: https://github.com/preservim/tagbar
+Plugin 'preservim/tagbar'
+
+" Linediff: ~/.vim/bundle/linediff.vim/plugin/linediff.vim
+Plugin 'linediff.vim'
+
+" code-format: https://black.readthedocs.io/en/stable/editor_integration.html#vim
+" :VundleUpdate
+" to upgrade Black, use the :BlackUpgrade command and restart Vim.
+"ko let g:pymode_python = 'python3'
+"ko Plugin 'psf/black'
+" --> use /users/piccinal/.vim/black/bin/black
+
+" All of your Plugins must be added before the following line
+call vundle#end()  " required
+" }}}
+" {{{ plugins (pathogen)
+" PATHOGEN for PLUGINS = https://github.com/tpope/vim-pathogen
+" execute pathogen#infect()
+" " ===> /Users/jg/.vim/bundles/
+"
+" " TCOMMENT (depends on pathogen)
+" " http://www.vim.org/scripts/script.php?script_id=1173
+" " https://github.com/tomtom/tcomment_vim
+" "       /Users/jg/.vim/bundles/tcomment_vim ->
+" /a/vim/plugins/tcomment_vim.git
+
+" Tabularize {{{
+" http://vimcasts.org/episodes/aligning-text-with-tabular-vim/
+    "if isdirectory(expand("~/.vim/bundle/tabular"))
+    if isdirectory(expand("~/.vim/bundle/Tabular"))
+        nmap <Leader>a& :Tabularize /&<CR>
+        vmap <Leader>a& :Tabularize /&<CR>
+        nmap <Leader>a= :Tabularize /^[^=]*\zs=<CR>
+        vmap <Leader>a= :Tabularize /^[^=]*\zs=<CR>
+        nmap <Leader>a=> :Tabularize /=><CR>
+        vmap <Leader>a=> :Tabularize /=><CR>
+        nmap <Leader>a: :Tabularize /:<CR>
+        vmap <Leader>a: :Tabularize /:<CR>
+        nmap <Leader>a:: :Tabularize /:\zs<CR>
+        vmap <Leader>a:: :Tabularize /:\zs<CR>
+        nmap <Leader>a, :Tabularize /,<CR>
+        vmap <Leader>a, :Tabularize /,<CR>
+        nmap <Leader>a,, :Tabularize /,\zs<CR>
+        vmap <Leader>a,, :Tabularize /,\zs<CR>
+        nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+        vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+    endif
+" }}}
+
+" {{{ Fugitive
+" Git wrapper: https://github.com/tpope/vim-fugitive
+    if isdirectory(expand("~/.vim/bundle/vim-fugitive/"))
+        nnoremap <silent> <leader>gs :Gstatus<CR>
+        nnoremap <silent> <leader>gd :Gdiff<CR>
+        nnoremap <silent> <leader>gc :Gcommit<CR>
+        nnoremap <silent> <leader>gb :Gblame<CR>
+        nnoremap <silent> <leader>gl :Glog<CR>
+        nnoremap <silent> <leader>gp :Git push<CR>
+        nnoremap <silent> <leader>gr :Gread<CR>
+        nnoremap <silent> <leader>gw :Gwrite<CR>
+        nnoremap <silent> <leader>ge :Gedit<CR>
+        " Mnemonic _i_nteractive
+        nnoremap <silent> <leader>gi :Git add -p %<CR>
+        nnoremap <silent> <leader>gg :SignifyToggle<CR>
+    endif
+" }}}
+
+" {{{ indent_guides
+" for visually displaying indent levels in code: https://github.com/nathanaelkane/vim-indent-guides
+    if isdirectory(expand("~/.vim/bundle/vim-indent-guides/"))
+        let g:indent_guides_start_level = 2
+        let g:indent_guides_guide_size = 1
+        let g:indent_guides_enable_on_vim_startup = 1
+    endif
+" }}}
+
+" ~/.vim/bundle/jedi-vim/doc
+" Plugin 'davidhalter/jedi-vim'
+" }}}
+
+" {{{ preferences
 "set cursorline                  " horizontal line shows current line
 set comments=
 colorscheme default " fix for: E411: highlight group not found: Normal
@@ -13,17 +118,16 @@ set showmode        " display current mode in the status line
 set nu
 " set showcmd       " Show partial commands in status line and
                     " Selected characters/lines in visual mode
+" }}}
 
-
-" Colors ----------------------------------------------- @@@
+" {{{ Colors
 " let mysyntaxfile = "~/.vim/mysyntax.vim"
 set hlsearch
 syntax on
-" syntax enable
 let &colorcolumn=join(range(80,80),",")
+" }}}
 
-
-" Indentation ----------------------------------------------- @@@
+" {{{ Indentation
 set expandtab       " insert spaces instead of tab
 set shiftwidth=4    " use indents of 4 spaces
 set tabstop=4    
@@ -33,45 +137,30 @@ set tabstop=4
 " "set ft=html
 " "set si
 " "gg=G<cr>
+" }}}
 
-
-
-" Taglist ----------------------------------------------- @@@
-" Ctags:
-"if ($HOSTNAME == 'banco') || ($HOSTNAME == 'dom101')
-if ($HOSTNAME == 'banco')
-if filereadable( "/usr/bin/ctags" )
-let g:showfuncctagsbin="/usr/bin/ctags"
-endif
-endif
-
+" {{{ ctags:
+" if ($HOSTNAME == 'banco') || ($HOSTNAME == 'dom101')
+" if filereadable( "/usr/bin/ctags" )
+" let g:showfuncctagsbin="/usr/bin/ctags"
+" endif
+" endif
 if ($HOSTNAME == 'dom101')
-if filereadable( '/apps/dom/UES/sandbox/piccinal/6.0.UP07/gpu/easybuild/software/ctags/5.8/bin/ctags' )
-let g:showfuncctagsbin='/apps/dom/UES/sandbox/piccinal/6.0.UP07/gpu/easybuild/software/ctags/5.8/bin/ctags'
+if filereadable( '/users/piccinal/easybuild/dom/haswell/software/ctags/5.8/bin/ctags' )
+let g:showfuncctagsbin='/users/piccinal/easybuild/dom/haswell/software/ctags/5.8/bin/ctags'
 else
 echo "ctags not found on dom101"
 endif
 endif
 
-" if $HOSTNAME == 'brisi01'
-if $APPS == '/apps/escha'
-if filereadable( "/users/piccinal/easybuild/rh7/software/ctags/5.8/bin/ctags" )
-let g:showfuncctagsbin = "/users/piccinal/easybuild/rh7/software/ctags/5.8/bin/ctags"
+set tags=./tags;/,~/.vimtags
+" Make tags placed in .git/tags file available in all levels of a repository
+let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 'g')
+if gitroot != ''
+        let &tags = &tags . ',' . gitroot . '/.git/tags'
 endif
-endif
-
-"if $HOSTNAME == 'greina-head'
-"if filereadable( "/cm/shared/apps/easybuild/software/ctags/5.8/bin/ctags" )
-"        let g:showfuncctagsbin = "/cm/shared/apps/easybuild/software/ctags/5.8/bin/ctags"
-"endif
-"endif
-
-" CUDA CTAGS
-" let Tlist_Ctags_Cmd='/opt/local/bin/ctags' 
-" ctags --langmap=c++:+.cu * : pas besoin
-
-
-" Syntax ----------------------------------------------- @@@
+" }}}
+" {{{ Syntax
 "non: augroup filetypedetect 
 
 " GITHUB.md markdown:
@@ -125,12 +214,15 @@ au BufNewFile,BufRead *.pc set ft=sh
 "au Syntax F90   source         /apps/gele/tools/vim/72/gnu_432/share/vim/vim72/syntax/fortran.vim
 "au BufNewFile,BufRead *.F90 so /apps/gele/tools/vim/72/gnu_432/share/vim/vim72/syntax/fortran.vim
 "endif
-
+au BufRead,BufNewFile *.eb set ft=python
 "non: augroup END " filetypedetect 
 
+" CUDA CTAGS
+" let Tlist_Ctags_Cmd='/opt/local/bin/ctags' 
+" ctags --langmap=c++:+.cu * : pas besoin
+" }}}
 
-
-" Folding ----------------------------------------------- @@@
+" {{{ Folding
 " folding (=hide lines), see https://www.linux.com/learn/tutorials/442438-vim-tips-folding-fun
 " type zf / zd / zE
 "au BufWinLeave * mkview
@@ -142,22 +234,9 @@ set foldcolumn=0
 "setlocal foldnestmax=1
 nnoremap <Space> za
 vnoremap <Space> za
+" }}}
 
-
-" Fortran ----------------------------------------------------- @@@
-let fortran_free_source=1
-" au Syntax F90   source         /usr/share/vim/vim72/syntax/fortran.vim
-" au BufNewFile,BufRead *.F90 so /usr/share/vim/vim72/syntax/fortran.vim
-
-
-" --------------------------------------------------------------- @@@
-" WEBRT@CSCS
-nmap x0 <ESC>:r ~/.vim/templates/rt0<CR>
-nmap x1 <ESC>:r ~/.vim/templates/rt1<CR>
-nmap x2 <ESC>:r ~/.vim/templates/rt2<CR>
-
-
-" paste buffer -------------------------------------------------- @@@
+" {{{ paste buffer
 " transfer/read and write one block of text between vim sessions
 " Usage:
 " `from' session:
@@ -194,11 +273,9 @@ nmap xR   :r /tmp/.vimxfer<CR>
 vmap <C-c> y: call system("xclip -i -selection clipboard", getreg("\""))<CR>
 " THEN CTRL-SHIFT-INSERT
 "pas besoin nmap <C-v> :call setreg("\"",system("xclip -o -selection clipboard"))<CR>p
-"
+" }}}
 
-
-
-" Python ----------------------------------------------- @@@
+" {{{ Python
 " python omnicompletion
 " :echo &omnifunc Ctrlx-Ctrlo
 " :help new-omni-completion
@@ -210,110 +287,55 @@ filetype plugin on
 "" pydoc shortcut : <Leader>pw = \pw
 let g:pydoc_cmd='pydoc'
 let python_highlight_all = 1
+" }}}
+" {{{ syntastic
+" " https://www.vim.org/scripts/script.php?script_id=2332
+" " pep8/reframe: :SyntasticCheck <lang> / :SyntasticInfo
+" " uncomment line below:
+" "execute pathogen#infect() 
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+" " --- python:
+" " export PATH=~/.local/bin:$PATH
+" let g:syntastic_python_checkers = ['pycodestyle', 'flake8']
+" " let g:syntastic_python_checkers = ['flake8']
+" " let g:syntastic_python_exec = '/users/piccinal/.local/bin/flake8'
+" " let g:syntastic_python_checkers = ['pycodestyle']
+" " let g:syntastic_python_exec = '/users/piccinal/.local/bin/pycodestyle'
+" " let g:syntastic_python_checkers = ['pep8']
+" " let g:syntastic_python_exec = '/users/piccinal/.local/bin/pep8'
+" " --- c++:
+" "let g:syntastic_cpp_checkers = ['cppcheck', 'gcc', 'clang_tidy']
+" let g:syntastic_cpp_checkers = ['clang_tidy']
+" let g:syntastic_cpp_check_header = 1
+" let g:syntastic_cpp_auto_refresh_includes = 1
+" let g:syntastic_cpp_clang_tidy_args = '-checks=*'
+" "let g:syntastic_cpp_exec = ''
+" "  let g:syntastic_debug = 1
+" }}}
 
+" {{{ Fortran
+let fortran_free_source=1
+" au Syntax F90   source         /usr/share/vim/vim72/syntax/fortran.vim
+" au BufNewFile,BufRead *.F90 so /usr/share/vim/vim72/syntax/fortran.vim
+" }}}
 
-
-
-" Git --------------------------------------------------- @@@
+" {{{ Git
 " = fugitive
+" }}}
 
+" {{{ WEBRT@CSCS
+nmap x0 <ESC>:r ~/.vim/templates/rt0<CR>
+nmap x1 <ESC>:r ~/.vim/templates/rt1<CR>
+nmap x2 <ESC>:r ~/.vim/templates/rt2<CR>
+" }}}
 
-
-" Buffer list ------------------------------------------- @@@
-" -MiniBufExplorer- Tab and Shift-Tab
-"let g:miniBufExplMapWindowNavVim = 1
-"let g:miniBufExplMapWindowNavArrows = 1
-"let g:miniBufExplMapCTabSwitchBufs = 1
-"let g:miniBufExplModSelTarget = 1
-
-
-" TERMINATOR ------------------------------- @@@
-" set title as shortcut key
-
-
-
-
-" Not used (yet) ----------------------------------------------- @@@
-":set scrollbind
-" vimdiff wrap : once lines reach the right margin they are continued on the line below
-" vimdiff -c 'windo set wrap' ../../ccc.*
-"if &diff
-"   set wrap
-"else
-"   setup for non-diff mode
-"endif
-" SCROLL*2 ------------
-"nmap <silent> <M-Down> :call ScrollOtherWindow("down")<CR>
-"nmap <silent> <M-Up> :call ScrollOtherWindow("up")<CR>
-" SCROOOOOOOOOOOOOL
-" fun! ScrollOtherWindow(dir)
-" if a:dir == "down"
-" let move = "\<C-E>"
-" elseif a:dir == "up"
-" let move = "\<C-Y>"
-" endif
-" endfunction
-
-
-" plugins ----------------------------------------------- @@@
-" PATHOGEN for PLUGINS = https://github.com/tpope/vim-pathogen
-" execute pathogen#infect()
-" " ===> /Users/jg/.vim/bundles/
-"
-" " TCOMMENT (depends on pathogen)
-" " http://www.vim.org/scripts/script.php?script_id=1173
-" " https://github.com/tomtom/tcomment_vim
-" "       /Users/jg/.vim/bundles/tcomment_vim ->
-" /a/vim/plugins/tcomment_vim.git
-
-
-
-" github.com/VundleVim/Vundle.vim ------------------------ @@@
-set nocompatible  " be iMproved, required
-filetype off      " required
-
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-"filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-
-
-" Linediff: ~/.vim/bundle/linediff.vim/plugin/linediff.vim
-Plugin 'linediff.vim'
-
-" tagbar: https://github.com/preservim/tagbar
-Plugin 'preservim/tagbar'
-
-
-" http://spf13.com ===========================================================
-"statusline  if has('statusline')
-"statusline          set laststatus=2
-"statusline          " Broken down into easily includeable segments
-"statusline          set statusline=%<%f\                     " Filename
-"statusline          set statusline+=%w%h%m%r                 " Options
-"statusline          if !exists('g:override_spf13_bundles')
-"statusline                  set statusline+=%{fugitive#statusline()} " Git Hotness
-"statusline          endif
-"statusline          set statusline+=\ [%{&ff}/%Y]            " Filetype
-"statusline          set statusline+=\ [%{getcwd()}]          " Current dir
-"statusline          set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
-"statusline  endif
-
+" {{{ various
 "set backspace=indent,eol,start  " Backspace for dummies
 set bs=2                        " Backspace
 "set linespace=0                 " No extra spaces between rows
@@ -330,8 +352,9 @@ set bs=2                        " Backspace
 "set scrolloff=3                 " Minimum lines to keep above and below cursor
 set foldenable                  " Auto fold code
 "set list
+" }}}
 
-" Formatting {
+" {{{ Formatting
 "    set nowrap                      " Do not wrap long lines
 "    set autoindent                  " Indent at the same level of the previous line
 "    set shiftwidth=4                " Use indents of 4 spaces
@@ -360,10 +383,9 @@ set foldenable                  " Auto fold code
 "    autocmd FileType haskell setlocal commentstring=--\ %s
     " Workaround broken colour highlighting in Haskell
 "    autocmd FileType haskell,rust setlocal nospell
+" }}}
 
-" }
-
-" Code folding options
+" {{{ Code folding options
 nmap <leader>f0 :set foldlevel=0<CR>
 nmap <leader>f1 :set foldlevel=1<CR>
 nmap <leader>f2 :set foldlevel=2<CR>
@@ -374,85 +396,7 @@ nmap <leader>f6 :set foldlevel=6<CR>
 nmap <leader>f7 :set foldlevel=7<CR>
 nmap <leader>f8 :set foldlevel=8<CR>
 nmap <leader>f9 :set foldlevel=9<CR>
-
-"UPPERCASE and lowsercase conversion
-"nnoremap g^ gUiW
-"nnoremap gv guiW
-
-" Change Working Directory to that of the current file
-cmap cwd lcd %:p:h
-cmap cd. lcd %:p:h
-
-" {{{ Plugins 
-
-    " expanding abbreviations:
-    " https://github.com/mattn/emmet-vim {
-    " Plugin 'mattn/emmet-vim'    
-    " }
-
-    " Ctags {
-    set tags=./tags;/,~/.vimtags
-    " Make tags placed in .git/tags file available in all levels of a repository
-    let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 'g')
-    if gitroot != ''
-            let &tags = &tags . ',' . gitroot . '/.git/tags'
-    endif
-    " }
-
-    " Tabularize {
-    " http://vimcasts.org/episodes/aligning-text-with-tabular-vim/
-        "if isdirectory(expand("~/.vim/bundle/tabular"))
-        if isdirectory(expand("~/.vim/bundle/Tabular"))
-            nmap <Leader>a& :Tabularize /&<CR>
-            vmap <Leader>a& :Tabularize /&<CR>
-            nmap <Leader>a= :Tabularize /^[^=]*\zs=<CR>
-            vmap <Leader>a= :Tabularize /^[^=]*\zs=<CR>
-            nmap <Leader>a=> :Tabularize /=><CR>
-            vmap <Leader>a=> :Tabularize /=><CR>
-            nmap <Leader>a: :Tabularize /:<CR>
-            vmap <Leader>a: :Tabularize /:<CR>
-            nmap <Leader>a:: :Tabularize /:\zs<CR>
-            vmap <Leader>a:: :Tabularize /:\zs<CR>
-            nmap <Leader>a, :Tabularize /,<CR>
-            vmap <Leader>a, :Tabularize /,<CR>
-            nmap <Leader>a,, :Tabularize /,\zs<CR>
-            vmap <Leader>a,, :Tabularize /,\zs<CR>
-            nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-            vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-        endif
-    " }
-
-    " Git wrapper: https://github.com/tpope/vim-fugitive
-    " Fugitive {
-        if isdirectory(expand("~/.vim/bundle/vim-fugitive/"))
-            nnoremap <silent> <leader>gs :Gstatus<CR>
-            nnoremap <silent> <leader>gd :Gdiff<CR>
-            nnoremap <silent> <leader>gc :Gcommit<CR>
-            nnoremap <silent> <leader>gb :Gblame<CR>
-            nnoremap <silent> <leader>gl :Glog<CR>
-            nnoremap <silent> <leader>gp :Git push<CR>
-            nnoremap <silent> <leader>gr :Gread<CR>
-            nnoremap <silent> <leader>gw :Gwrite<CR>
-            nnoremap <silent> <leader>ge :Gedit<CR>
-            " Mnemonic _i_nteractive
-            nnoremap <silent> <leader>gi :Git add -p %<CR>
-            nnoremap <silent> <leader>gg :SignifyToggle<CR>
-        endif
-    "}
-
-    " for visually displaying indent levels in code: https://github.com/nathanaelkane/vim-indent-guides
-    " indent_guides {
-        if isdirectory(expand("~/.vim/bundle/vim-indent-guides/"))
-            let g:indent_guides_start_level = 2
-            let g:indent_guides_guide_size = 1
-            let g:indent_guides_enable_on_vim_startup = 1
-        endif
-    " }
-
-    " ~/.vim/bundle/jedi-vim/doc
-    " Plugin 'davidhalter/jedi-vim'
-
- " }}}
+" }}}
 
 " {{{ Key (re)Mappings
        " {{{ redefine leader
@@ -484,76 +428,79 @@ set t_Co=256
 " map! <Char-167> <Esc>
 " }}}
 
-" http://spf13.com ===========================================================
-
 " {{{ https://github.com/ggreer/the_silver_searcher
 " /users/piccinal/.vim/bundle/ag
 let g:ag_prg="/apps/common/UES/sandbox/jgp/the_silver_searcher/gnu_485/bin/ag --vimgrep"
 let g:ackprg = 'ag --nogroup --nocolor --column'
 " }}}
-"
 
-" {{{ syntastic
-" " https://www.vim.org/scripts/script.php?script_id=2332
-" " pep8/reframe: :SyntasticCheck <lang> / :SyntasticInfo
-" " uncomment line below:
-" "execute pathogen#infect() 
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-" " --- python:
-" " export PATH=~/.local/bin:$PATH
-" let g:syntastic_python_checkers = ['pycodestyle', 'flake8']
-" " let g:syntastic_python_checkers = ['flake8']
-" " let g:syntastic_python_exec = '/users/piccinal/.local/bin/flake8'
-" " let g:syntastic_python_checkers = ['pycodestyle']
-" " let g:syntastic_python_exec = '/users/piccinal/.local/bin/pycodestyle'
-" " let g:syntastic_python_checkers = ['pep8']
-" " let g:syntastic_python_exec = '/users/piccinal/.local/bin/pep8'
-" " --- c++:
-" "let g:syntastic_cpp_checkers = ['cppcheck', 'gcc', 'clang_tidy']
-" let g:syntastic_cpp_checkers = ['clang_tidy']
-" let g:syntastic_cpp_check_header = 1
-" let g:syntastic_cpp_auto_refresh_includes = 1
-" let g:syntastic_cpp_clang_tidy_args = '-checks=*'
-" "let g:syntastic_cpp_exec = ''
-" "  let g:syntastic_debug = 1
-" }}}
-au BufRead,BufNewFile *.eb set ft=python
-
-" TODO: ~/.vim/bundle/cscope.vim/plugin/cscope.vim +
-" http://ngressier.developpez.com/articles/vim/vim-plugin-taglist/
-
-" crontab {
-"autocmd filetype crontab setlocal nobackup nowritebackup
-" }
-
-" {{{ https://github.com/joonty/vdebug
-" => /users/piccinal/.vim/bundle/vdebug
-" Plugin 'joonty/vdebug'
-" }}}
-
-
-" {{{ https://github.com/ldrumm/compiler-explorer.vim
-" This is the path to the local Compiler Explorer installation required by
-" [compiler-explorer.vim](https://github.com/ldrumm/compiler-explorer.vim
-let g:ce_makefile = '/Users/piccinal/git/compiler-explorer.git/Makefile'
-" Toggle display of the compiler-explorer assembly pane with f3
-map <f3> :CEToggleAsmView<CR>
-" }}}
-
-"{{{ https://github.com/vim-scripts/gdb4vim
+" {{{ https://github.com/vim-scripts/gdb4vim
 let g:gdb_dbus_server_path = '/Users/piccinal/.vim/bundle/gdb4vim/dbus_gdb/gdb_dbus_server.py'
 " let g:gdb_highlight = 'term=bold ctermbg=darkblue guibg=darkblue'
 " let g:gdb_break_highlight = 'term=bold ctermbg=red guibg=red'
 " let g:gdb_var_active_highlight = 'term=bold ctermfg=green guifg=green'
-"}}}
+" }}}
 
-" NEOVIM ----------------------------------------------------- @@@
+" {{{ NEOVIM
 " ~/jgphpc.git/nvim/init.vim
 " ~/efface/jma/config/nvim/bundle/.cache/init.vim/.dein
 " :DeinUpdate
+" }}}
+
+" {{{ Not used (yet)
+" {{{ http://vim.spf13.com/ is a distribution of vim plugins
+"statusline  if has('statusline')
+"statusline          set laststatus=2
+"statusline          " Broken down into easily includeable segments
+"statusline          set statusline=%<%f\                     " Filename
+"statusline          set statusline+=%w%h%m%r                 " Options
+"statusline          if !exists('g:override_spf13_bundles')
+"statusline                  set statusline+=%{fugitive#statusline()} " Git Hotness
+"statusline          endif
+"statusline          set statusline+=\ [%{&ff}/%Y]            " Filetype
+"statusline          set statusline+=\ [%{getcwd()}]          " Current dir
+"statusline          set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
+"statusline  endif
+" }}}
+
+" {{{ Buffer list
+" -MiniBufExplorer- Tab and Shift-Tab
+"let g:miniBufExplMapWindowNavVim = 1
+"let g:miniBufExplMapWindowNavArrows = 1
+"let g:miniBufExplMapCTabSwitchBufs = 1
+"let g:miniBufExplModSelTarget = 1
+" }}}
+
+":set scrollbind
+" vimdiff wrap : once lines reach the right margin they are continued on the line below
+" vimdiff -c 'windo set wrap' ../../ccc.*
+"if &diff
+"   set wrap
+"else
+"   setup for non-diff mode
+"endif
+" SCROLL*2 ------------
+"nmap <silent> <M-Down> :call ScrollOtherWindow("down")<CR>
+"nmap <silent> <M-Up> :call ScrollOtherWindow("up")<CR>
+" SCROOOOOOOOOOOOOL
+" fun! ScrollOtherWindow(dir)
+" if a:dir == "down"
+" let move = "\<C-E>"
+" elseif a:dir == "up"
+" let move = "\<C-Y>"
+" endif
+" endfunction
+"
+" UPPERCASE and lowsercase conversion
+" nnoremap g^ gUiW
+" nnoremap gv guiW
+
+" Change Working Directory to that of the current file
+" cmap cwd lcd %:p:h
+" cmap cd. lcd %:p:h
+
+" TODO: ~/.vim/bundle/cscope.vim/plugin/cscope.vim +
+" http://ngressier.developpez.com/articles/vim/vim-plugin-taglist/
+
+" crontab: autocmd filetype crontab setlocal nobackup nowritebackup
+" }}}
