@@ -1,0 +1,1342 @@
+#!/bin/sh
+
+
+roofline amd: https://bitbucket.org/dwdoerf/amd-gpu-roofline-method/src/master/
+
+# --> http://www.hlrs.de/training/2021-01-20-DL1-AMD/
+# slides jg: https://jira.cscs.ch/browse/PRIVATE-760 --> amd_training_2021.pdf
+
+# {{{ agenda
+14:15 - 14:45 Instinct and ROCm product overview
+
+    AMD Instinct GPUs
+    ROCm software overview
+    Software ecosystem supporting Instinct and ROCm
+        ML frameworks
+
+14:45 - 15:30 ROCm basics
+
+    ROCm installation
+    Basic ROCm tools
+
+15:30 - 15:35 Pause
+
+15:35 - 16:35 Machine learning with AMD GPUs
+
+    Introduction to DL/ML on ROCm
+    TensorFlow installation and testing
+    PyTorch installation and testing
+    ML with multiple GPUs
+    ResNet50
+
+16:35 - 16:45 Pause
+
+16:45 - 17:45 Additional ROCm topics
+
+    Docker
+    HPC Job Scheduler and Monitoring
+    Math Libraries
+    Communication Libraries for Multi-GPU Scale-out
+
+17:45 - 17:50 Pause
+
+17:50 - 18:20 GPU performance profiling
+# }}}
+
+Firstname Lastname (institution)
+Day 1 Workshop - Wednesday 1/20 1:30pm to 6:30pm
+https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZDE1ZTY1ZmUtZTNiZC00NmE0LWI1MmEtMTc5ZmY5ZmUxNTZl%40thread.v2/0?context=%7b%22Tid%22%3a%223dd8961f-e488-4e60-8e11-a82d994e183d%22%2c%22Oid%22%3a%2258218a4c-6f0d-4719-ae82-030dd0752639%22%7d
+
+
+
+ssh 205.234.16.68 -p 50023 -l piccinal
+ssh ts1-sjc2-13
+export GPU="--device=/dev/dri/card1 --device=/dev/dri/renderD128 "
+# You are allocated GPU card number 1  in this system
+docker run -it --dns 8.8.8.8 --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
+--device=/dev/kfd $GPU --cap-add=SYS_RAWIO --device=/dev/mem --group-add video \
+--network host hlrs-training
+
+https://www.mentor.com/embedded-software/sourcery-tools/sourcery-codebench/editions/lite-edition/
+
+# --> https://github.com/ROCm-Developer-Tools/HIP-Examples.git
+# --> https://github.com/ROCm-Developer-Tools/HIP.git
+# + see links handson!
+
+https://developer.amd.com/wp-content/resources/Vega_7nm_Shader_ISA.pdf
+https://developer.amd.com/wp-content/resources/CDNA1_Shader_ISA_14December2020.pdf
+
+# {{{ https://rocmdocs.amd.com/en/latest/Deep_learning/Deep-learning.html
+https://github.com/IntuitionMachine/SEEDBank.git
+# }}}
+
+# {{{ tools
+# https://github.com/ROCm-Developer-Tools/rocprofiler
+-> 'Chapter3.2_Copy Kernel_.pdf' -> rocprof --stats | rocprof -i metrics_copy_kernel.txt -o metrics_copy.csv
+# https://github.com/ROCm-Developer-Tools/roctracer
+# https://rocmdocs.amd.com/en/latest/ROCm_Tools/ROCTracer-API.html
+Two common modes:
+    Performance Measurement Mode to measure execution time
+    Performance Counter Mode to measure hardware performance counters
+# }}}
+
+# {{{ debug
+# 'Chapter3.3_ Debugging Page_Not_Present_Errors.pdf'
+AMD_LOG_LEVEL=4 ./exe
+# }}}
+
+# ROCm Learning Center
+https://developer.amd.com/resources/rocm-resources/rocm-learning-center/
+https://rocmdocs.amd.com/en/latest/Installation_Guide/Installation-Guide.html
+    Using ROCm with Docker https://github.com/RadeonOpenCompute/ROCm-docker
+    Using ROCm with Singularity https://sylabs.io/guides/3.5/user-guide/gpu.html
+    Using ROCm with Kubernetes https://github.com/RadeonOpenCompute/k8s-device-plugin
+# Documentation
+HIP Programming: https://rocmdocs.amd.com/en/latest/Programming_Guides/Programming-Guides.html#hip-documentation
+All supported runtime API calls and related syntax for HIP: https://rocmdocs.amd.com/en/latest/ROCm_API_References/HIP-API.html#hip-api
+A comprehensive overview of porting CUDA code to HIP: https://github.com/ROCm-Developer-Tools/HIP/blob/master/docs/markdown/hip_porting_guide.md
+ROCm libraries: https://rocmdocs.amd.com/en/latest/ROCm_Libraries/ROCm_Libraries.html
+System level debugging: https://rocmdocs.amd.com/en/latest/Other_Solutions/Other-Solutions.html
+
+# Radeon Instinct GPUs
+MI25 (Vega 10)
+MI50 & MI60 (Vega 20)
+# Libraries
+MIOpen
+MIOpenGEMM
+rocBLAS, hipBLAS
+rocSPARSE, hipSPARSE
+rocFFT
+rocRAND
+RCCL
+# Development Tools
+Assembler and Disassembler 
+roc-prof, roc-tracer
+ROCr Debug Agent Libraries
+rocm-smi
+
+# {{{ ./hipcc --version
+HIP version: 4.0.20496-4f163c68
+clang version 12.0.0 (/src/external/llvm-project/clang dac2bfceaa8d4a90257dc8a6d58f268e172ce00e)
+
+./mygpu 
+gfx906
+./mymcpu 
+vega20
+
+# }}}
+
+# {{{ ./rocminfo 
+ROCk module is loaded
+Able to open /dev/kfd read-write
+=====================    
+HSA System Attributes    
+=====================    
+Runtime Version:         1.1
+System Timestamp Freq.:  1000.000000MHz
+Sig. Max Wait Duration:  18446744073709551615 (0xFFFFFFFFFFFFFFFF) (timestamp count)
+Machine Model:           LARGE                              
+System Endianness:       LITTLE                             
+
+==========               
+HSA Agents               
+==========               
+*******                  
+Agent 1                  
+*******                  
+  Name:                    AMD EPYC 7742 64-Core Processor    
+  Uuid:                    CPU-XX                             
+  Marketing Name:          AMD EPYC 7742 64-Core Processor    
+  Vendor Name:             CPU                                
+  Feature:                 None specified                     
+  Profile:                 FULL_PROFILE                       
+  Float Round Mode:        NEAR                               
+  Max Queue Number:        0(0x0)                             
+  Queue Min Size:          0(0x0)                             
+  Queue Max Size:          0(0x0)                             
+  Queue Type:              MULTI                              
+  Node:                    0                                  
+  Device Type:             CPU                                
+  Cache Info:              
+    L1:                      32768(0x8000) KB                   
+  Chip ID:                 0(0x0)                             
+  Cacheline Size:          64(0x40)                           
+  Max Clock Freq. (MHz):   2250                               
+  BDFID:                   0                                  
+  Internal Node ID:        0                                  
+  Compute Unit:            16                                 
+  SIMDs per CU:            0                                  
+  Shader Engines:          0                                  
+  Shader Arrs. per Eng.:   0                                  
+  WatchPts on Addr. Ranges:1                                  
+  Features:                None
+  Pool Info:               
+    Pool 1                   
+      Segment:                 GLOBAL; FLAGS: KERNARG, FINE GRAINED
+      Size:                    65864868(0x3ed04a4) KB             
+      Allocatable:             TRUE                               
+      Alloc Granule:           4KB                                
+      Alloc Alignment:         4KB                                
+      Accessible by all:       TRUE                               
+    Pool 2                   
+      Segment:                 GLOBAL; FLAGS: COARSE GRAINED      
+      Size:                    65864868(0x3ed04a4) KB             
+      Allocatable:             TRUE                               
+      Alloc Granule:           4KB                                
+      Alloc Alignment:         4KB                                
+      Accessible by all:       TRUE                               
+  ISA Info:                
+    N/A                      
+*******                  
+Agent 2
+etc...
+# }}}
+
+# {{{ /opt/rocm-4.0.0/bin/rocm-smi
+# symbolic link to rocm_smi.py
+======================= ROCm System Management Interface =======================
+================================= Concise Info =================================
+GPU  Temp   AvgPwr  SCLK    MCLK     Fan   Perf  PwrCap  VRAM%  GPU%  
+0    37.0c  37.0W   930Mhz  1000Mhz  0.0%  auto  225.0W    0%   0%    
+1    38.0c  38.0W   930Mhz  1000Mhz  0.0%  auto  225.0W    0%   0%    
+2    38.0c  35.0W   930Mhz  1000Mhz  0.0%  auto  225.0W    0%   0%    
+3    35.0c  32.0W   930Mhz  1000Mhz  0.0%  auto  225.0W    0%   0%    
+4    36.0c  35.0W   930Mhz  1000Mhz  0.0%  auto  225.0W    0%   0%    
+5    37.0c  34.0W   930Mhz  1000Mhz  0.0%  auto  225.0W    0%   0%    
+6    36.0c  36.0W   930Mhz  1000Mhz  0.0%  auto  225.0W    0%   0%    
+7    37.0c  33.0W   930Mhz  1000Mhz  0.0%  auto  225.0W    0%   0%    
+# }}}
+
+# {{{ lx /opt/rocm-4.0.0/
+amdgcn  hipcub     hsa                 lib     miopengemm  rccl     rocm_smi     rocrand    roctracer
+bin     hiprand    hsa-amd-aqlprofile  llvm    oam         rocblas  rocprim      rocsparse  rvs
+hip     hipsparse  include             miopen  opencl      rocfft   rocprofiler  rocthrust  share
+
+lx /opt/rocm-4.0.0/bin/
+ca                         hipdemangleatp    prepare-builtins       rocprof                 hip_embed_pch.sh
+clang-ocl                  hipify-cmakefile  rocgdb                 rocm_smi.py             hipconvertinplace-perl.sh
+extractkernel              hipify-perl       rocm-bandwidth-test    rocm_smi_deprecated.py  hipconvertinplace.sh
+hipcc                      lpl               rocm-smi               rsmiBindings.py         hipexamine-perl.sh
+hipcc_cmake_linker_helper  mygpu             rocm_agent_enumerator  findcode.sh             hipexamine.sh
+hipconfig                  mymcpu            rocminfo               finduncodep.sh          gputable.txt
+
+lx /opt/aocl/2.2/
+amd-blis  amd-fftw  amd-libflame  amd-libm  amd-memcpy  amd-rng  amd-scalapack
+amd-securerng  amd-sparse  include  lib  amd-libs.cfg
+
+# }}}
+
+# {{{ NodeName=ts1-sjc2-13 Arch=x86_64 CoresPerSocket=16
+   CPUAlloc=128 CPUErr=0 CPUTot=128 CPULoad=0.00
+   AvailableFeatures=MI50,x86_64,amd,8xmi50
+   ActiveFeatures=MI50,x86_64,amd,8xmi50
+   Gres=(null)
+   NodeAddr=ts1-sjc2-13 NodeHostName=ts1-sjc2-13 Version=17.11
+   OS=Linux 5.4.0-58-generic #64~18.04.1-Ubuntu SMP Wed Dec 9 17:11:11 UTC 2020 
+   RealMemory=515835 AllocMem=0 FreeMem=511686 Sockets=8 Boards=1
+   State=ALLOCATED ThreadsPerCore=1 TmpDisk=899783 Weight=1 Owner=N/A MCS_label=N/A
+   Partitions=MI50 
+   BootTime=22 Dec 2020 SlurmdStartTime=22 Dec 2020
+   CfgTRES=cpu=128,mem=515835M,billing=128
+   AllocTRES=cpu=128,mem=515835M,billing=128
+   CapWatts=n/a
+   CurrentWatts=0 LowestJoules=0 ConsumedJoules=0
+   ExtSensorsJoules=n/s ExtSensorsWatts=0 ExtSensorsTemp=n/s
+# }}}
+
+# {{{ m /proc/cpuinfo 
+processor	: 0
+vendor_id	: AuthenticAMD
+cpu family	: 23
+model		: 49
+model name	: AMD EPYC 7742 64-Core Processor
+stepping	: 0
+microcode	: 0x8301034
+cpu MHz		: 2116.599
+cache size	: 512 KB
+physical id	: 0
+siblings	: 64
+core id		: 0
+cpu cores	: 64
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 16
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext
+ fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc cpuid extd_apicid aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse
+4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs
+ skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc mwaitx cpb cat_l3 cdp_l3 hw_pstate sme ssbd mba sev ibrs ibpb stibp vm
+mcall fsgsbase bmi1 avx2 smep bmi2 cqm rdt_a rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc
+ cqm_mbm_total cqm_mbm_local clzero irperf xsaveerptr wbnoinvd arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodea
+ssists pausefilter pfthreshold avic v_vmsave_vmload vgif umip rdpid overflow_recov succor smca
+bugs		: sysret_ss_attrs spectre_v1 spectre_v2 spec_store_bypass
+bogomips	: 4491.83
+TLB size	: 3072 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 43 bits physical, 48 bits virtual
+power management: ts ttp tm hwpstate cpb eff_freq_ro [13] [14]
+# }}}
+
+# {{{ lscpu 
+Architecture:        x86_64
+CPU op-mode(s):      32-bit, 64-bit
+Byte Order:          Little Endian
+CPU(s):              128
+On-line CPU(s) list: 0-127
+Thread(s) per core:  1
+Core(s) per socket:  64
+Socket(s):           2
+NUMA node(s):        8
+Vendor ID:           AuthenticAMD
+CPU family:          23
+Model:               49
+Model name:          AMD EPYC 7742 64-Core Processor
+Stepping:            0
+CPU MHz:             3383.591
+CPU max MHz:         2250.0000
+CPU min MHz:         1500.0000
+BogoMIPS:            4491.83
+Virtualization:      AMD-V
+L1d cache:           32K
+L1i cache:           32K
+L2 cache:            512K
+L3 cache:            16384K
+NUMA node0 CPU(s):   0-15
+NUMA node1 CPU(s):   16-31
+NUMA node2 CPU(s):   32-47
+NUMA node3 CPU(s):   48-63
+NUMA node4 CPU(s):   64-79
+NUMA node5 CPU(s):   80-95
+NUMA node6 CPU(s):   96-111
+NUMA node7 CPU(s):   112-127
+Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc cpuid extd_apicid aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc mwaitx cpb cat_l3 cdp_l3 hw_pstate sme ssbd mba sev ibrs ibpb stibp vmmcall fsgsbase bmi1 avx2 smep bmi2 cqm rdt_a rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local clzero irperf xsaveerptr wbnoinvd arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold avic v_vmsave_vmload vgif umip rdpid overflow_recov succor smca
+# }}}
+
+
+
+sinfo
+salloc -N 2 -p MI50 -t 01:00:00
+
+
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+ctail - watch and colorize a logfile
+# apt show byobu
+
+# {{{ hands on
+
+/********************************************************/
+/* NOTE: any line start with /* or ## are comments */
+/* each line is a new command line unless using \ */
+/********************************************************/
+
+
+/******************************/
+/* P4: Remote login and setup */
+/******************************/
+#####STEP 1. Remote LOGIN
+##use SSH public key and rlogin with PuTTY
+
+#####STEP 2 Docker setup - replace ts1-sjc2-XX, cardX & renderDXXX with the assignment in email
+ssh ts1-sjc2-XX
+export GPU="--device=/dev/dri/cardX --device=/dev/dri/renderDXXX "
+
+docker run -it --dns 8.8.8.8 --cap-add=SYS_PTRACE --security-opt \
+seccomp=unconfined --device=/dev/kfd $GPU --cap-add=SYS_RAWIO --device=/dev/mem \
+--group-add video --network host hlrs-training
+
+
+cat /etc/resolv.conf
+# root@ts1-sjc2-13:/# cat /etc/resolv.conf  
+# nameserver 8.8.8.8
+
+
+/*****************************/
+/* P6: ROCm verification */
+/* Use the pre-insalled ROCm */
+/* skip the instalation */
+/*****************************/
+/opt/rocm/bin/rocminfo
+# {{{ root@ts1-sjc2-13:/# rocminfo 
+ROCk module is loaded
+Able to open /dev/kfd read-write
+=====================    
+HSA System Attributes    
+=====================    
+Runtime Version:         1.1
+System Timestamp Freq.:  1000.000000MHz
+Sig. Max Wait Duration:  18446744073709551615 (0xFFFFFFFFFFFFFFFF) (timestamp count)
+Machine Model:           LARGE                              
+System Endianness:       LITTLE                             
+
+==========               
+HSA Agents               
+==========               
+*******                  
+Agent 1                  
+*******                  
+  Name:                    AMD EPYC 7742 64-Core Processor    
+  Uuid:                    CPU-XX                             
+  Marketing Name:          AMD EPYC 7742 64-Core Processor    
+  Vendor Name:             CPU                                
+  Feature:                 None specified                     
+  Profile:                 FULL_PROFILE                       
+  Float Round Mode:        NEAR                               
+  Max Queue Number:        0(0x0)                             
+  Queue Min Size:          0(0x0)                             
+  Queue Max Size:          0(0x0)                             
+  Queue Type:              MULTI                              
+  Node:                    0                                  
+  Device Type:             CPU                                
+  Cache Info:              
+    L1:                      32768(0x8000) KB                   
+  Chip ID:                 0(0x0)                             
+  Cacheline Size:          64(0x40)                           
+  Max Clock Freq. (MHz):   2250                               
+  BDFID:                   0                                  
+  Internal Node ID:        0                                  
+  Compute Unit:            16                                 
+  SIMDs per CU:            0                                  
+  Shader Engines:          0                                  
+  Shader Arrs. per Eng.:   0                                  
+  WatchPts on Addr. Ranges:1                                  
+  Features:                None
+  Pool Info:               
+    Pool 1                   
+      Segment:                 GLOBAL; FLAGS: KERNARG, FINE GRAINED
+      Size:                    65864868(0x3ed04a4) KB             
+      Allocatable:             TRUE                               
+      Alloc Granule:           4KB                                
+      Alloc Alignment:         4KB                                
+      Accessible by all:       TRUE                               
+    Pool 2                   
+      Segment:                 GLOBAL; FLAGS: COARSE GRAINED      
+      Size:                    65864868(0x3ed04a4) KB             
+      Allocatable:             TRUE                               
+      Alloc Granule:           4KB                                
+      Alloc Alignment:         4KB                                
+      Accessible by all:       TRUE                               
+  ISA Info:                
+    N/A                      
+*******                  
+Agent 2                  
+*******                  
+  Name:                    AMD EPYC 7742 64-Core Processor    
+  Uuid:                    CPU-XX                             
+  Marketing Name:          AMD EPYC 7742 64-Core Processor    
+  Vendor Name:             CPU                                
+  Feature:                 None specified                     
+  Profile:                 FULL_PROFILE                       
+  Float Round Mode:        NEAR                               
+  Max Queue Number:        0(0x0)                             
+  Queue Min Size:          0(0x0)                             
+  Queue Max Size:          0(0x0)                             
+  Queue Type:              MULTI                              
+  Node:                    1                                  
+  Device Type:             CPU                                
+  Cache Info:              
+    L1:                      32768(0x8000) KB                   
+  Chip ID:                 0(0x0)                             
+  Cacheline Size:          64(0x40)                           
+  Max Clock Freq. (MHz):   2250                               
+  BDFID:                   0                                  
+  Internal Node ID:        1                                  
+  Compute Unit:            16                                 
+  SIMDs per CU:            0                                  
+  Shader Engines:          0                                  
+  Shader Arrs. per Eng.:   0                                  
+  WatchPts on Addr. Ranges:1                                  
+  Features:                None
+  Pool Info:               
+    Pool 1                   
+      Segment:                 GLOBAL; FLAGS: KERNARG, FINE GRAINED
+      Size:                    66055604(0x3efedb4) KB             
+      Allocatable:             TRUE                               
+      Alloc Granule:           4KB                                
+      Alloc Alignment:         4KB                                
+      Accessible by all:       TRUE                               
+    Pool 2                   
+      Segment:                 GLOBAL; FLAGS: COARSE GRAINED      
+      Size:                    66055604(0x3efedb4) KB             
+      Allocatable:             TRUE                               
+      Alloc Granule:           4KB                                
+      Alloc Alignment:         4KB                                
+      Accessible by all:       TRUE                               
+  ISA Info:                
+    N/A                      
+*******                  
+Agent 3                  
+*******                  
+  Name:                    AMD EPYC 7742 64-Core Processor    
+  Uuid:                    CPU-XX                             
+  Marketing Name:          AMD EPYC 7742 64-Core Processor    
+  Vendor Name:             CPU                                
+  Feature:                 None specified                     
+  Profile:                 FULL_PROFILE                       
+  Float Round Mode:        NEAR                               
+  Max Queue Number:        0(0x0)                             
+  Queue Min Size:          0(0x0)                             
+  Queue Max Size:          0(0x0)                             
+  Queue Type:              MULTI                              
+  Node:                    2                                  
+  Device Type:             CPU                                
+  Cache Info:              
+    L1:                      32768(0x8000) KB                   
+  Chip ID:                 0(0x0)                             
+  Cacheline Size:          64(0x40)                           
+  Max Clock Freq. (MHz):   2250                               
+  BDFID:                   0                                  
+  Internal Node ID:        2                                  
+  Compute Unit:            16                                 
+  SIMDs per CU:            0                                  
+  Shader Engines:          0                                  
+  Shader Arrs. per Eng.:   0                                  
+  WatchPts on Addr. Ranges:1                                  
+  Features:                None
+  Pool Info:               
+    Pool 1                   
+      Segment:                 GLOBAL; FLAGS: KERNARG, FINE GRAINED
+      Size:                    66055604(0x3efedb4) KB             
+      Allocatable:             TRUE                               
+      Alloc Granule:           4KB                                
+      Alloc Alignment:         4KB                                
+      Accessible by all:       TRUE                               
+    Pool 2                   
+      Segment:                 GLOBAL; FLAGS: COARSE GRAINED      
+      Size:                    66055604(0x3efedb4) KB             
+      Allocatable:             TRUE                               
+      Alloc Granule:           4KB                                
+      Alloc Alignment:         4KB                                
+      Accessible by all:       TRUE                               
+  ISA Info:                
+    N/A                      
+*******                  
+Agent 4                  
+*******                  
+  Name:                    AMD EPYC 7742 64-Core Processor    
+  Uuid:                    CPU-XX                             
+  Marketing Name:          AMD EPYC 7742 64-Core Processor    
+  Vendor Name:             CPU                                
+  Feature:                 None specified                     
+  Profile:                 FULL_PROFILE                       
+  Float Round Mode:        NEAR                               
+  Max Queue Number:        0(0x0)                             
+  Queue Min Size:          0(0x0)                             
+  Queue Max Size:          0(0x0)                             
+  Queue Type:              MULTI                              
+  Node:                    3                                  
+  Device Type:             CPU                                
+  Cache Info:              
+    L1:                      32768(0x8000) KB                   
+  Chip ID:                 0(0x0)                             
+  Cacheline Size:          64(0x40)                           
+  Max Clock Freq. (MHz):   2250                               
+  BDFID:                   0                                  
+  Internal Node ID:        3                                  
+  Compute Unit:            16                                 
+  SIMDs per CU:            0                                  
+  Shader Engines:          0                                  
+  Shader Arrs. per Eng.:   0                                  
+  WatchPts on Addr. Ranges:1                                  
+  Features:                None
+  Pool Info:               
+    Pool 1                   
+      Segment:                 GLOBAL; FLAGS: KERNARG, FINE GRAINED
+      Size:                    66043316(0x3efbdb4) KB             
+      Allocatable:             TRUE                               
+      Alloc Granule:           4KB                                
+      Alloc Alignment:         4KB                                
+      Accessible by all:       TRUE                               
+    Pool 2                   
+      Segment:                 GLOBAL; FLAGS: COARSE GRAINED      
+      Size:                    66043316(0x3efbdb4) KB             
+      Allocatable:             TRUE                               
+      Alloc Granule:           4KB                                
+      Alloc Alignment:         4KB                                
+      Accessible by all:       TRUE                               
+  ISA Info:                
+    N/A                      
+*******                  
+Agent 5                  
+*******                  
+  Name:                    AMD EPYC 7742 64-Core Processor    
+  Uuid:                    CPU-XX                             
+  Marketing Name:          AMD EPYC 7742 64-Core Processor    
+  Vendor Name:             CPU                                
+  Feature:                 None specified                     
+  Profile:                 FULL_PROFILE                       
+  Float Round Mode:        NEAR                               
+  Max Queue Number:        0(0x0)                             
+  Queue Min Size:          0(0x0)                             
+  Queue Max Size:          0(0x0)                             
+  Queue Type:              MULTI                              
+  Node:                    4                                  
+  Device Type:             CPU                                
+  Cache Info:              
+    L1:                      32768(0x8000) KB                   
+  Chip ID:                 0(0x0)                             
+  Cacheline Size:          64(0x40)                           
+  Max Clock Freq. (MHz):   2250                               
+  BDFID:                   0                                  
+  Internal Node ID:        4                                  
+  Compute Unit:            16                                 
+  SIMDs per CU:            0                                  
+  Shader Engines:          0                                  
+  Shader Arrs. per Eng.:   0                                  
+  WatchPts on Addr. Ranges:1                                  
+  Features:                None
+  Pool Info:               
+    Pool 1                   
+      Segment:                 GLOBAL; FLAGS: KERNARG, FINE GRAINED
+      Size:                    66055604(0x3efedb4) KB             
+      Allocatable:             TRUE                               
+      Alloc Granule:           4KB                                
+      Alloc Alignment:         4KB                                
+      Accessible by all:       TRUE                               
+    Pool 2                   
+      Segment:                 GLOBAL; FLAGS: COARSE GRAINED      
+      Size:                    66055604(0x3efedb4) KB             
+      Allocatable:             TRUE                               
+      Alloc Granule:           4KB                                
+      Alloc Alignment:         4KB                                
+      Accessible by all:       TRUE                               
+  ISA Info:                
+    N/A                      
+*******                  
+Agent 6                  
+*******                  
+  Name:                    AMD EPYC 7742 64-Core Processor    
+  Uuid:                    CPU-XX                             
+  Marketing Name:          AMD EPYC 7742 64-Core Processor    
+  Vendor Name:             CPU                                
+  Feature:                 None specified                     
+  Profile:                 FULL_PROFILE                       
+  Float Round Mode:        NEAR                               
+  Max Queue Number:        0(0x0)                             
+  Queue Min Size:          0(0x0)                             
+  Queue Max Size:          0(0x0)                             
+  Queue Type:              MULTI                              
+  Node:                    5                                  
+  Device Type:             CPU                                
+  Cache Info:              
+    L1:                      32768(0x8000) KB                   
+  Chip ID:                 0(0x0)                             
+  Cacheline Size:          64(0x40)                           
+  Max Clock Freq. (MHz):   2250                               
+  BDFID:                   0                                  
+  Internal Node ID:        5                                  
+  Compute Unit:            16                                 
+  SIMDs per CU:            0                                  
+  Shader Engines:          0                                  
+  Shader Arrs. per Eng.:   0                                  
+  WatchPts on Addr. Ranges:1                                  
+  Features:                None
+  Pool Info:               
+    Pool 1                   
+      Segment:                 GLOBAL; FLAGS: KERNARG, FINE GRAINED
+      Size:                    66030812(0x3ef8cdc) KB             
+      Allocatable:             TRUE                               
+      Alloc Granule:           4KB                                
+      Alloc Alignment:         4KB                                
+      Accessible by all:       TRUE                               
+    Pool 2                   
+      Segment:                 GLOBAL; FLAGS: COARSE GRAINED      
+      Size:                    66030812(0x3ef8cdc) KB             
+      Allocatable:             TRUE                               
+      Alloc Granule:           4KB                                
+      Alloc Alignment:         4KB                                
+      Accessible by all:       TRUE                               
+  ISA Info:                
+    N/A                      
+*******                  
+Agent 7                  
+*******                  
+  Name:                    AMD EPYC 7742 64-Core Processor    
+  Uuid:                    CPU-XX                             
+  Marketing Name:          AMD EPYC 7742 64-Core Processor    
+  Vendor Name:             CPU                                
+  Feature:                 None specified                     
+  Profile:                 FULL_PROFILE                       
+  Float Round Mode:        NEAR                               
+  Max Queue Number:        0(0x0)                             
+  Queue Min Size:          0(0x0)                             
+  Queue Max Size:          0(0x0)                             
+  Queue Type:              MULTI                              
+  Node:                    6                                  
+  Device Type:             CPU                                
+  Cache Info:              
+    L1:                      32768(0x8000) KB                   
+  Chip ID:                 0(0x0)                             
+  Cacheline Size:          64(0x40)                           
+  Max Clock Freq. (MHz):   2250                               
+  BDFID:                   0                                  
+  Internal Node ID:        6                                  
+  Compute Unit:            16                                 
+  SIMDs per CU:            0                                  
+  Shader Engines:          0                                  
+  Shader Arrs. per Eng.:   0                                  
+  WatchPts on Addr. Ranges:1                                  
+  Features:                None
+  Pool Info:               
+    Pool 1                   
+      Segment:                 GLOBAL; FLAGS: KERNARG, FINE GRAINED
+      Size:                    66055604(0x3efedb4) KB             
+      Allocatable:             TRUE                               
+      Alloc Granule:           4KB                                
+      Alloc Alignment:         4KB                                
+      Accessible by all:       TRUE                               
+    Pool 2                   
+      Segment:                 GLOBAL; FLAGS: COARSE GRAINED      
+      Size:                    66055604(0x3efedb4) KB             
+      Allocatable:             TRUE                               
+      Alloc Granule:           4KB                                
+      Alloc Alignment:         4KB                                
+      Accessible by all:       TRUE                               
+  ISA Info:                
+    N/A                      
+*******                  
+Agent 8                  
+*******                  
+  Name:                    AMD EPYC 7742 64-Core Processor    
+  Uuid:                    CPU-XX                             
+  Marketing Name:          AMD EPYC 7742 64-Core Processor    
+  Vendor Name:             CPU                                
+  Feature:                 None specified                     
+  Profile:                 FULL_PROFILE                       
+  Float Round Mode:        NEAR                               
+  Max Queue Number:        0(0x0)                             
+  Queue Min Size:          0(0x0)                             
+  Queue Max Size:          0(0x0)                             
+  Queue Type:              MULTI                              
+  Node:                    7                                  
+  Device Type:             CPU                                
+  Cache Info:              
+    L1:                      32768(0x8000) KB                   
+  Chip ID:                 0(0x0)                             
+  Cacheline Size:          64(0x40)                           
+  Max Clock Freq. (MHz):   2250                               
+  BDFID:                   0                                  
+  Internal Node ID:        7                                  
+  Compute Unit:            16                                 
+  SIMDs per CU:            0                                  
+  Shader Engines:          0                                  
+  Shader Arrs. per Eng.:   0                                  
+  WatchPts on Addr. Ranges:1                                  
+  Features:                None
+  Pool Info:               
+    Pool 1                   
+      Segment:                 GLOBAL; FLAGS: KERNARG, FINE GRAINED
+      Size:                    66054036(0x3efe794) KB             
+      Allocatable:             TRUE                               
+      Alloc Granule:           4KB                                
+      Alloc Alignment:         4KB                                
+      Accessible by all:       TRUE                               
+    Pool 2                   
+      Segment:                 GLOBAL; FLAGS: COARSE GRAINED      
+      Size:                    66054036(0x3efe794) KB             
+      Allocatable:             TRUE                               
+      Alloc Granule:           4KB                                
+      Alloc Alignment:         4KB                                
+      Accessible by all:       TRUE                               
+  ISA Info:                
+    N/A                      
+*******                  
+Agent 9                  
+*******                  
+  Name:                    gfx906                             
+  Uuid:                    GPU-974e582172e62127               
+  Marketing Name:          Device 66a1                        <--------
+  Vendor Name:             AMD                                
+  Feature:                 KERNEL_DISPATCH                    
+  Profile:                 BASE_PROFILE                       
+  Float Round Mode:        NEAR                               
+  Max Queue Number:        128(0x80)                          
+  Queue Min Size:          4096(0x1000)                       
+  Queue Max Size:          131072(0x20000)                    
+  Queue Type:              MULTI                              
+  Node:                    8                                  
+  Device Type:             GPU                                
+  Cache Info:              
+    L1:                      16(0x10) KB                        
+  Chip ID:                 26273(0x66a1)                      
+  Cacheline Size:          64(0x40)                           
+  Max Clock Freq. (MHz):   1725                               
+  BDFID:                   17152                              
+  Internal Node ID:        8                                  
+  Compute Unit:            60                                 
+  SIMDs per CU:            4                                  
+  Shader Engines:          4                                  
+  Shader Arrs. per Eng.:   1                                  
+  WatchPts on Addr. Ranges:4                                  
+  Features:                KERNEL_DISPATCH 
+  Fast F16 Operation:      FALSE                              
+  Wavefront Size:          64(0x40)                           
+  Workgroup Max Size:      1024(0x400)                        
+  Workgroup Max Size per Dimension:
+    x                        1024(0x400)                        
+    y                        1024(0x400)                        
+    z                        1024(0x400)                        
+  Max Waves Per CU:        40(0x28)                           
+  Max Work-item Per CU:    2560(0xa00)                        
+  Grid Max Size:           4294967295(0xffffffff)             
+  Grid Max Size per Dimension:
+    x                        4294967295(0xffffffff)             
+    y                        4294967295(0xffffffff)             
+    z                        4294967295(0xffffffff)             
+  Max fbarriers/Workgrp:   32                                 
+  Pool Info:               
+    Pool 1                   
+      Segment:                 GLOBAL; FLAGS: COARSE GRAINED      
+      Size:                    33538048(0x1ffc000) KB             
+      Allocatable:             TRUE                               
+      Alloc Granule:           4KB                                
+      Alloc Alignment:         4KB                                
+      Accessible by all:       FALSE                              
+    Pool 2                   
+      Segment:                 GLOBAL; FLAGS: FINE GRAINED        
+      Size:                    33538048(0x1ffc000) KB             
+      Allocatable:             TRUE                               
+      Alloc Granule:           4KB                                
+      Alloc Alignment:         4KB                                
+      Accessible by all:       FALSE                              
+    Pool 3                   
+      Segment:                 GROUP                              
+      Size:                    64(0x40) KB                        
+      Allocatable:             FALSE                              
+      Alloc Granule:           0KB                                
+      Alloc Alignment:         0KB                                
+      Accessible by all:       FALSE                              
+  ISA Info:                
+    ISA 1                    
+      Name:                    amdgcn-amd-amdhsa--gfx906          
+      Machine Models:          HSA_MACHINE_MODEL_LARGE            
+      Profiles:                HSA_PROFILE_BASE                   
+      Default Rounding Mode:   NEAR                               
+      Default Rounding Mode:   NEAR                               
+      Fast f16:                TRUE                               
+      Workgroup Max Size:      1024(0x400)                        
+      Workgroup Max Size per Dimension:
+        x                        1024(0x400)                        
+        y                        1024(0x400)                        
+        z                        1024(0x400)                        
+      Grid Max Size:           4294967295(0xffffffff)             
+      Grid Max Size per Dimension:
+        x                        4294967295(0xffffffff)             
+        y                        4294967295(0xffffffff)             
+        z                        4294967295(0xffffffff)             
+      FBarrier Max Size:       32                                 
+*** Done ***             
+# }}}
+dpkg -l |grep rocm
+# {{{ root@ts1-sjc2-13:/# dpkg -l |grep rocm  
+ii  comgr                                  1.9.0.194-rocm-rel-4.0-23-0fa438b            amd64        Library to provide support functions
+ii  hsa-rocr-dev                           1.2.40000.0-rocm-rel-4.0-23-a5173c90         amd64        AMD Heterogeneous System Architecture HSA - Linux HSA Runtime for Boltzmann (ROCm) platforms
+ii  miopen-hip                             2.9.0.8250-rocm-rel-4.0-23-8a4af47d          amd64        AMD s DNN Library
+ii  miopengemm                             1.1.6.647-rocm-rel-4.0-23-b51a125            amd64        A tool for generating OpenCL matrix multiplication (GEMM) kernels
+ii  rccl                                   2.7.8.492-rocm-rel-4.0-23-e87f28e            amd64        Optimized primitives for collective multi-GPU communication
+ii  rocm-bandwidth-test                    1.4.0.23-rocm-rel-4.0-23-gaefd848            amd64        Test to measure PciE bandwidth on ROCm platforms
+ii  rocm-clang-ocl                         0.5.0.64-rocm-rel-4.0-23-50fb51a             amd64        OpenCL compilation with clang compiler.
+ii  rocm-cmake                             0.3.0.153-rocm-rel-4.0-23-1d1caa5            amd64        rocm-cmake built using CMake
+ii  rocm-dbgapi                            0.42.0.40000-23                              amd64        Library to provide AMD GPU debugger API
+ii  rocm-dev                               4.0.0.40000-23                               amd64        Radeon Open Compute (ROCm) Runtime software stack
+ii  rocm-device-libs                       1.0.0.637-rocm-rel-4.0-23-db8c0c3            amd64        Radeon Open Compute - device libraries
+ii  rocm-gdb                               10.1-rocm-rel-4.0-23                         amd64        ROCgdb
+ii  rocm-opencl                            3.6Beta-17-g875c1f8-rocm-rel-4.0-23          amd64        OpenCL: Open Computing Language on ROCclr
+ii  rocm-opencl-dev                        3.6Beta-17-g875c1f8-rocm-rel-4.0-23          amd64        OpenCL: Open Computing Language on ROCclr
+ii  rocm-smi                               1.0.0-206-rocm-rel-4.0-23-ge39c0e2           amd64        System Management Interface for ROCm
+ii  rocm-smi-lib64                         2.9.0.9-rocm-rel-4.0-23-4b49d2d              amd64        AMD System Management libraries
+ii  rocm-utils                             4.0.0.40000-23                               amd64        Radeon Open Compute (ROCm) Runtime software stack
+ii  rocminfo                               1.40000.0                                    amd64        Radeon Open Compute (ROCm) Runtime rocminfo tool
+ii  rocprim                                2.10.5.1102-rocm-rel-4.0-23-9d47868          amd64        Radeon Open Compute Parallel Primitives Library
+ii  rocrand                                2.10.6.746-rocm-rel-4.0-23-3932e69           amd64        The rocRAND library provides functions that generate pseudo-random and quasi-random numbers.
+
+# }}}
+apt show rocm-libs -a
+# {{{ root@ts1-sjc2-13:/# apt show rocm-libs -a     
+Package: rocm-libs
+Version: 4.0.0.40000-23
+Priority: optional
+Section: devel
+Maintainer: Advanced Micro Devices, Inc.
+Installed-Size: 13.3 kB
+Depends: hipblas, hipcub, hipsparse, miopen-hip, rocalution, rocblas, rocfft, rocprim, rocrand, rocsolver, rocsparse, rocthrust
+Homepage: https://github.com/RadeonOpenCompute/ROCm
+Download-Size: 826 B
+APT-Sources: http://repo.radeon.com/rocm/apt/4.0 xenial/main amd64 Packages
+Description: Radeon Open Compute (ROCm) Runtime software stack
+# }}}
+
+/************************************/
+/* P14: ROCm basic tools - rocm-smi */
+/************************************/
+rocm-smi
+## or /opt/rocm/bin/rocm-smi
+
+
+/************************************/
+/* P15: rocm bandwidth test install */
+/************************************/
+## Option1: build from source
+cd ~
+
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+origin	https://github.com/UoB-HPC/BabelStream.git (fetch)
+origin	https://github.com/paklui/HIP_Tutorial.git (push)
+origin	https://github.com/tensorflow/benchmarks.git (push)
+origin	https://github.com/ROCmSoftwarePlatform/rccl-tests.git (push)
+origin	https://github.com/ROCmSoftwarePlatform/rocBLAS.git (push)
+origin	https://github.com/ROCmSoftwarePlatform/rocFFT.git (push)
+origin	https://github.com/ROCmSoftwarePlatform/rocHPCG.git (push)
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+sudo bash
+apt-get -y update && sudo apt-get install -y libpci3 libpci-dev doxygen unzip cmake git
+git clone https://github.com/RadeonOpenCompute/rocm_bandwidth_test.git
+cd rocm_bandwidth_test;mkdir ./build;cmake ./ -B./build;make -C ./build
+apt install -y rocm-bandwidth-test
+exit
+rocm_bandwidth_test/build/rocm-bandwidth-test
+
+## Option2: use the pre-installed in /opt/rocm/bin/
+rocm-bandwidth-test
+
+
+/*************************************/
+/* P19&P21: rocblas-bench */
+/* Skip the install */
+/* use preinstalled one in ~/rocBLAS */
+/*************************************/
+## DGEMM
+~/rocBLAS/build/release/clients/staging/rocblas-bench -f gemm -r d -m 8640 -n \
+8640 -k 8640 --transposeB T --initialization trig_float -i 200 --device 0 &
+# {{{ Query device success: there are 1 devices
+-------------------------------------------------------------------------------
+Device ID 0 : Device 66a1
+with 34.3 GB memory, max. SCLK 1725 MHz, max. MCLK 0 MHz, compute capability 9.0
+maxGridDimX 2147483647, sharedMemPerBlock 65.5 KB, maxThreadsPerBlock 1024, warpSize 64
+-------------------------------------------------------------------------------
+
+rocblas-bench INFO: lda < min_lda, set lda = 8640
+rocblas-bench INFO: ldb < min_ldb, set ldb = 8640
+rocblas-bench INFO: ldc < min_ldc, set ldc = 8640
+                                           VVVVVVVVVVVVVV
+transA,transB,M,N,K,alpha,lda,ldb,beta,ldc,rocblas-Gflops,us
+N,T,8640,8640,8640,1.0000000,8640,8640,0.0000000,8640,5301.1350110,243333.7550000
+# }}}
+
+##SGEMM in P21
+~/rocBLAS/build/release/clients/staging/rocblas-bench -r f32_r -f gemm -m 8640
+-n 8640 -k 8640 --transposeB T --initialization trig_float --lda 8640 --ldb
+8640 --ldc 8640 -i 200 &
+# {{{ Query device success: there are 1 devices
+-------------------------------------------------------------------------------
+Device ID 0 : Device 66a1
+with 34.3 GB memory, max. SCLK 1725 MHz, max. MCLK 0 MHz, compute capability 9.0
+maxGridDimX 2147483647, sharedMemPerBlock 65.5 KB, maxThreadsPerBlock 1024, warpSize 64
+-------------------------------------------------------------------------------
+
+transA,transB,M,N,K,alpha,lda,ldb,beta,ldc,rocblas-Gflops,us
+N,T,8640,8640,8640,1.0000000,8640,8640,0.0000000,8640,11101.4701038,116195.8800000
+# }}}
+
+
+/*************************************/
+/* P23: RVS Install and memory check */
+/*************************************/
+# https://github.com/ROCm-Developer-Tools/ROCmValidationSuite/blob/develop/CUSTOMER.md
+
+sudo apt-get -y update && sudo apt-get install -y libpci3 libpci-dev doxygen unzip cmake git libpciaccess-dev
+sudo apt-get install rocblas rocm-smi-lib64
+sudo apt install rocm-validation-suite
+ln -s /opt/rocm-4.0.0 /opt/rocm
+ls -l /opt/
+cd /opt/rocm/rvs
+./rvs -c conf/mem.conf
+# {{{ root@ts1-sjc2-13:/opt/rocm/rvs# ./rvs -c conf/mem.conf 
+[RESULT] [2482734.417631] Action name :action_1
+[RESULT] [2482734.423137] Module name :mem
+[RESULT] [2482734.579709] [action_1] mem   The following memory tests will run
+[RESULT] [2482734.579718] =============== Test 1  [Walking 1 bit]
+
+[RESULT] [2482734.579722] =============== Test 2  [Own address test]
+
+[RESULT] [2482734.579768] =============== Test 3  [Moving inversions, ones&zeros]
+
+[RESULT] [2482734.579774] =============== Test 4  [Moving inversions, 8 bit pat]
+
+[RESULT] [2482734.579776] =============== Test 5  [Moving inversions, random pattern]
+
+[RESULT] [2482734.579780] =============== Test 6  [Block move, 64 moves]
+
+[RESULT] [2482734.579783] =============== Test 7  [Moving inversions, 32 bit pat]
+
+[RESULT] [2482734.579787] =============== Test 8  [Random number sequence]
+
+[RESULT] [2482734.579790] =============== Test 9  [Modulo 20, random pattern]
+
+[RESULT] [2482734.579794] =============== Test 10 [Bit fade test]
+
+[RESULT] [2482734.579799] =============== Test 11 [Memory stress test]
+
+[RESULT] [2482734.820646] [action_1] mem Test 1: Change one bit memory addresss  
+[RESULT] [2482734.898996] [action_1] mem Test 1 : PASS
+[RESULT] [2482734.899006] [action_1] mem Test 2: Each Memory location is filled with its own address
+[RESULT] [2482734.922293] [action_1] mem Test 2 : PASS
+[RESULT] [2482734.922298] [action_1] mem Test 3 [Moving inversions, ones&zeros] 0 and 4294967295
+
+[RESULT] [2482735.110420] [action_1] mem Test 3 : PASS 
+[RESULT] [2482735.110426] [action_1] mem Test 4 [Moving inversions, 8 bit pat]2155905152 and 2139062143
+
+[RESULT] [2482735.298153] [action_1] mem Test 4 : PASS
+[RESULT] [2482735.298158] [action_1] mem Test 5 [Moving inversions, random pattern] 
+
+[RESULT] [2482735.392350] [action_1] mem Test 5 PASS, no errors detected , iterations are zero here
+[RESULT] [2482735.392356] [action_1] mem Test 6 [Block move, 64 moves]
+[RESULT] [2482735.425351] [action_1] mem Test 6 : PASS
+[RESULT] [2482735.425355] [action_1] mem Test 7 [Moving inversions, 32 bit pat]
+[RESULT] [2482741.955458] [action_1] mem Test 7 : PASS
+[RESULT] [2482741.955477] [action_1] mem Test 8 [Random number sequence]
+[RESULT] [2482742.267522] [action_1] mem TEST 8 : PASS 
+ no errors detected, iterations are zero here
+[RESULT] [2482742.267530] [action_1] mem  Test 9 [Modulo 20, random pattern]
+[RESULT] [2482742.579917] [action_1] mem Test 9 : PASS 
+no errors detected, iterations are zero here
+[RESULT] [2482742.579925] [action_1] mem Test 10 [Bit fade test, 90 min, 2 patterns]
+[RESULT] [2482762.677820] [action_1] mem Test 10 : PASS
+[RESULT] [2482762.677827] [action_1] mem Test 11 [memory stress test]
+[RESULT] [2482781.717791] [action_1] mem Test 11: elapsedtime = 19035.152344 bandwidth = 672.446838GB/s 
+[RESULT] [2482781.719002] [action_1] mem Test 11 : PASS  
+# }}}
+# {{{ root@ts1-sjc2-13:/opt/rocm/rvs# cat conf/mem.conf 
+# GST test
+#
+# Preconditions:
+#   Set device to all. If you need to run the rvs only on a subset of GPUs, please run rvs with -g
+#   option, collect the GPUs IDs (e.g.: GPU[ 5 - 50599] -> 50599 is the GPU ID) and then specify
+#   all the GPUs IDs separated by white space (e.g.: device: 50599 3245)
+#   Set parallel execution to false
+#   Set matrix_size to 5760 (for Vega 10 cards). For Vega 20, the recommended matrix_size is 8640
+#   Set run count to 2 (each test will run twice)
+#   Set copy_matrix to false (the matrices will be copied to GPUs only once)
+#
+# Run test with:
+#   cd bin
+#   sudo ./rvs -c conf/gst_1.conf -d 3
+#
+# Expected result:
+#   The test on each GPU passes (TRUE) if the GPU achieves 5000 gflops
+#   in maximum 7 seconds and then the GPU sustains the gflops
+#   for the rest of the test duration (total duration is 18 seconds).
+#   A single Gflops violation (with a 7% tolerance) is allowed.
+#   FALSE otherwise
+
+actions:
+- name: action_1 
+  device: all
+  module: mem
+  parallel: true
+  count: 1
+  wait: 100
+  mapped_memory: false
+  mem_blocks: 128
+  num_passes: 500
+  thrds_per_blk: 64
+  stress: true
+  num_iter: 50000
+# }}}
+
+/************************************************/
+/* P27: Tensorflow Benchmark: */
+/* Skip the TF-ROCm2.4.0 install (preinstalled) */
+/* CNN-ResNet50: Option1: from Source */
+/* skip step 1 & 2 - already installed */
+/************************************************/
+
+cd ~
+python3.6 benchmarks/perfzero/lib/benchmark.py \
+--gcloud_key_file_url="" \
+--git_repos="https://github.com/tensorflow/models.git;r2.2.0" \
+--python_path=models \
+--benchmark_methods=official.benchmark.keras_imagenet_benchmark.Resnet50KerasBenchmarkSynth.benchmark_1_gpu
+# {{{ 2021-01-20 14:10:04,240 INFO: Adding path models to sys.path
+2021-01-20 14:10:04,240 INFO: Checking out repository from https://github.com/tensorflow/models.git to /root/benchmarks/perfzero/workspace/site-packages/models
+2021-01-20 14:10:05,573 INFO: Checked-out repository from https://github.com/tensorflow/models.git to /root/benchmarks/perfzero/workspace/site-packages/models
+2021-01-20 14:10:05,580 INFO: The following benchmark methods will be executed: ['official.benchmark.keras_imagenet_benchmark.Resnet50KerasBenchmarkSynth.benchmark_1_gpu']
+2021-01-20 14:10:05,580 INFO: The following benchmark methods will be executed: ['official.benchmark.keras_imagenet_benchmark.Resnet50KerasBenchmarkSynth.benchmark_1_gpu']
+Setup complete. Running 1 trials
+Running trial 1 / 1
+2021-01-20 14:10:05,584 INFO: Created directory /root/benchmarks/perfzero/workspace/output/2021-01-20-14-10-05-584126
+2021-01-20 14:10:05,584 INFO: Created directory /root/benchmarks/perfzero/workspace/output/2021-01-20-14-10-05-584126
+2021-01-20 14:10:06,748 INFO: Started process information tracker.
+2021-01-20 14:10:06,748 INFO: Started process information tracker.
+2021-01-20 14:10:06,748 INFO: Starting benchmark execution: official.benchmark.keras_imagenet_benchmark.Resnet50KerasBenchmarkSynth.benchmark_1_gpu
+2021-01-20 14:10:06,748 INFO: Starting benchmark execution: official.benchmark.keras_imagenet_benchmark.Resnet50KerasBenchmarkSynth.benchmark_1_gpu
+2021-01-20 14:10:06.798422: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-01-20 14:10:06.798640: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libamdhip64.so
+2021-01-20 14:10:06.855974: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1738] Found device 0 with properties: 
+pciBusID: 0000:43:00.0 name: Device 66a1     ROCm AMD GPU ISA: gfx906
+coreClock: 1.725GHz coreCount: 60 deviceMemorySize: 31.98GiB deviceMemoryBandwidth: 0B/s
+2021-01-20 14:10:06.858334: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library librocblas.so
+2021-01-20 14:10:06.859512: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libMIOpen.so
+2021-01-20 14:10:06.871725: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library librocfft.so
+2021-01-20 14:10:06.871958: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library librocrand.so
+2021-01-20 14:10:06.872034: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+2021-01-20 14:10:06.872375: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-01-20 14:10:06.876335: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-01-20 14:10:06.876406: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1738] Found device 0 with properties: 
+pciBusID: 0000:43:00.0 name: Device 66a1     ROCm AMD GPU ISA: gfx906
+coreClock: 1.725GHz coreCount: 60 deviceMemorySize: 31.98GiB deviceMemoryBandwidth: 0B/s
+2021-01-20 14:10:06.876422: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library librocblas.so
+2021-01-20 14:10:06.876448: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libMIOpen.so
+2021-01-20 14:10:06.876457: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library librocfft.so
+2021-01-20 14:10:06.876488: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library librocrand.so
+2021-01-20 14:10:06.876530: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1862] Adding visible gpu devices: 0
+2021-01-20 14:10:06.876626: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1261] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-01-20 14:10:06.876634: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1267]      0 
+2021-01-20 14:10:06.876639: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1280] 0:   N 
+2021-01-20 14:10:06.876765: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1406] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 30786 MB memory) -> physical GPU (device: 0, name: Device 66a1, pci bus id: 0000:43:00.0)
+/usr/local/lib/python3.6/dist-packages/tensorflow/python/keras/backend.py:434: UserWarning: `tf.keras.backend.set_learning_phase` is deprecated and will be removed after 2020-10-11. To update it, simply pass a True/False value to the `training` argument of the `__call__` method of your layer or model.
+  warnings.warn('`tf.keras.backend.set_learning_phase` is deprecated and '
+2021-01-20 14:10:07,975 INFO: Using pure synthetic data.
+2021-01-20 14:10:07,975 INFO: Using pure synthetic data.
+2021-01-20 14:10:10.297085: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+2021-01-20 14:10:10.338491: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2245915000 Hz
+2021-01-20 14:10:11.381267: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library librocblas.so
+2021-01-20 14:10:11.423148: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libMIOpen.so
+2021-01-20 14:10:24,887 INFO: TimeHistory: 16.88 seconds, 75.83 examples/second between steps 0 and 10
+2021-01-20 14:10:24,887 INFO: TimeHistory: 16.88 seconds, 75.83 examples/second between steps 0 and 10
+2021-01-20 14:10:30,039 INFO: TimeHistory: 5.15 seconds, 248.43 examples/second between steps 10 and 20
+2021-01-20 14:10:30,039 INFO: TimeHistory: 5.15 seconds, 248.43 examples/second between steps 10 and 20
+2021-01-20 14:10:35,194 INFO: TimeHistory: 5.15 seconds, 248.32 examples/second between steps 20 and 30
+2021-01-20 14:10:35,194 INFO: TimeHistory: 5.15 seconds, 248.32 examples/second between steps 20 and 30
+2021-01-20 14:10:40,353 INFO: TimeHistory: 5.16 seconds, 248.10 examples/second between steps 30 and 40
+2021-01-20 14:10:40,353 INFO: TimeHistory: 5.16 seconds, 248.10 examples/second between steps 30 and 40
+2021-01-20 14:10:45,517 INFO: TimeHistory: 5.16 seconds, 247.90 examples/second between steps 40 and 50
+2021-01-20 14:10:45,517 INFO: TimeHistory: 5.16 seconds, 247.90 examples/second between steps 40 and 50
+2021-01-20 14:10:50,688 INFO: TimeHistory: 5.17 seconds, 247.55 examples/second between steps 50 and 60
+2021-01-20 14:10:50,688 INFO: TimeHistory: 5.17 seconds, 247.55 examples/second between steps 50 and 60
+2021-01-20 14:10:55,858 INFO: TimeHistory: 5.17 seconds, 247.58 examples/second between steps 60 and 70
+2021-01-20 14:10:55,858 INFO: TimeHistory: 5.17 seconds, 247.58 examples/second between steps 60 and 70
+2021-01-20 14:11:01,033 INFO: TimeHistory: 5.17 seconds, 247.37 examples/second between steps 70 and 80
+2021-01-20 14:11:01,033 INFO: TimeHistory: 5.17 seconds, 247.37 examples/second between steps 70 and 80
+2021-01-20 14:11:06,212 INFO: TimeHistory: 5.18 seconds, 247.14 examples/second between steps 80 and 90
+2021-01-20 14:11:06,212 INFO: TimeHistory: 5.18 seconds, 247.14 examples/second between steps 80 and 90
+2021-01-20 14:11:11,393 INFO: TimeHistory: 5.18 seconds, 247.09 examples/second between steps 90 and 100
+2021-01-20 14:11:11,393 INFO: TimeHistory: 5.18 seconds, 247.09 examples/second between steps 90 and 100
+2021-01-20 14:11:16,579 INFO: TimeHistory: 5.19 seconds, 246.80 examples/second between steps 100 and 110
+2021-01-20 14:11:16,579 INFO: TimeHistory: 5.19 seconds, 246.80 examples/second between steps 100 and 110
+110/110 - 69s - loss: 6.6365
+2021-01-20 14:11:16,723 INFO: Benchmark [Resnet50KerasBenchmarkSynth.benchmark_1_gpu] iters: -1, wall_time: 69.7826, cpu_time: -1,throughput: -1, extras: {'flags': '--batch_size=128 --distribution_strategy=one_device --enable_eager --log_steps=10 --model_dir=/root/benchmarks/perfzero/workspace/output/2021-01-20-14-10-05-584126/benchmark_1_gpu --noreport_accuracy_metrics --skip_eval --train_steps=110 --use_synthetic_data'}, metrics: [{'name': 'exp_per_second', 'value': 247.6168855841833}, {'name': 'avg_exp_per_second', 'value': 205.3263585645279}, {'name': 'startup_time', 'value': 1.2082459926605225}]
+2021-01-20 14:11:16,723 INFO: Benchmark [Resnet50KerasBenchmarkSynth.benchmark_1_gpu] iters: -1, wall_time: 69.7826, cpu_time: -1,throughput: -1, extras: {'flags': '--batch_size=128 --distribution_strategy=one_device --enable_eager --log_steps=10 --model_dir=/root/benchmarks/perfzero/workspace/output/2021-01-20-14-10-05-584126/benchmark_1_gpu --noreport_accuracy_metrics --skip_eval --train_steps=110 --use_synthetic_data'}, metrics: [{'name': 'exp_per_second', 'value': 247.6168855841833}, {'name': 'avg_exp_per_second', 'value': 205.3263585645279}, {'name': 'startup_time', 'value': 1.2082459926605225}]
+2021-01-20 14:11:16,724 INFO: Stopped benchmark: official.benchmark.keras_imagenet_benchmark.Resnet50KerasBenchmarkSynth.benchmark_1_gpu
+2021-01-20 14:11:16,724 INFO: Stopped benchmark: official.benchmark.keras_imagenet_benchmark.Resnet50KerasBenchmarkSynth.benchmark_1_gpu
+2021-01-20 14:11:16,724 INFO: Stopped process information tracker.
+2021-01-20 14:11:16,724 INFO: Stopped process information tracker.
+2021-01-20 14:11:16,757 ERROR: nvidia-smi did not return as expected: /bin/sh: 1: nvidia-smi: not found
+
+2021-01-20 14:11:16,757 ERROR: nvidia-smi did not return as expected: /bin/sh: 1: nvidia-smi: not found
+
+2021-01-20 14:11:16,953 INFO: Skipped uploading benchmark result to bigquery because bigquery table name is not set.
+2021-01-20 14:11:16,953 INFO: Skipped uploading benchmark result to bigquery because bigquery table name is not set.
+2021-01-20 14:11:16,953 INFO: Benchmark execution for official.benchmark.keras_imagenet_benchmark.Resnet50KerasBenchmarkSynth.benchmark_1_gpu completed with summary:
+ {
+  "execution_id": "2021-01-20-14-10-05-584126",
+  "execution_timestamp": 1611151806.7486296,
+  "benchmark_result": {
+    "name": "official.benchmark.keras_imagenet_benchmark.Resnet50KerasBenchmarkSynth.benchmark_1_gpu",
+    "wall_time": 69.78262042999268,
+    "succeeded": true,
+    "extras": [
+      {
+        "name": "flags",
+        "value": "--batch_size=128 --distribution_strategy=one_device --enable_eager --log_steps=10 --model_dir=/root/benchmarks/perfzero/workspace/output/2021-01-20-14-10-05-584126/benchmark_1_gpu --noreport_accuracy_metrics --skip_eval --train_steps=110 --use_synthetic_data"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "exp_per_second",
+        "value": 247.6168855841833
+      },
+      {
+        "name": "avg_exp_per_second",
+        "value": 205.3263585645279
+      },
+      {
+        "name": "startup_time",
+        "value": 1.2082459926605225
+      }
+    ],
+    "trial_id": 1
+  },
+  "benchmark_info": {
+    "harness_name": "perfzero",
+    "harness_info": {
+      "url": "https://github.com/tensorflow/benchmarks.git",
+      "branch": "master",
+      "hash": "5164323d926d9e67c675ba8cc25093341920cd23"
+    },
+    "has_exception": false,
+    "flags": {
+      "use_cached_site_packages": false,
+      "git_repos": "https://github.com/tensorflow/models.git;r2.2.0",
+      "benchmark_num_trials": 1,
+      "benchmark_methods": [
+        "official.benchmark.keras_imagenet_benchmark.Resnet50KerasBenchmarkSynth.benchmark_1_gpu"
+      ],
+      "python_path": "models",
+      "workspace": "workspace",
+      "root_data_dir": "/data",
+      "gcloud_key_file_url": "",
+      "debug": false,
+      "perfzero_constructor_args": ""
+    },
+    "site_package_info": {
+      "models": {
+        "url": "https://github.com/tensorflow/models.git",
+        "branch": "r2.2.0",
+        "hash": "2b3d7046361d37edfdf69aaaadb09442b3d65b72"
+      }
+    }
+  },
+  "setup_info": {},
+  "ml_framework_info": {
+    "name": "tensorflow",
+    "version": "2.4.0",
+    "build_version": "v2.4.0-rc4-86-gd9cfe09e0d4"
+  },
+  "system_info": {
+    "cpu_model": "AMD EPYC 7742 64-Core Processor",
+    "physical_cpu_count": 128,
+    "logical_cpu_count": 128,
+    "cpu_socket_count": 2,
+    "hostname": "ts1-sjc2-13"
+  },
+  "process_info": {
+    "max_rss": 3097079808,
+    "max_vms": 70661980160,
+    "max_cpu_percent": 129.8
+  }
+}
+2021-01-20 14:11:16,953 INFO: Benchmark execution for official.benchmark.keras_imagenet_benchmark.Resnet50KerasBenchmarkSynth.benchmark_1_gpu completed with summary:
+ {
+  "execution_id": "2021-01-20-14-10-05-584126",
+  "execution_timestamp": 1611151806.7486296,
+  "benchmark_result": {
+    "name": "official.benchmark.keras_imagenet_benchmark.Resnet50KerasBenchmarkSynth.benchmark_1_gpu",
+    "wall_time": 69.78262042999268,
+    "succeeded": true,
+    "extras": [
+      {
+        "name": "flags",
+        "value": "--batch_size=128 --distribution_strategy=one_device --enable_eager --log_steps=10 --model_dir=/root/benchmarks/perfzero/workspace/output/2021-01-20-14-10-05-584126/benchmark_1_gpu --noreport_accuracy_metrics --skip_eval --train_steps=110 --use_synthetic_data"
+      }
+    ],
+    "metrics": [
+      {
+        "name": "exp_per_second",
+        "value": 247.6168855841833
+      },
+      {
+        "name": "avg_exp_per_second",
+        "value": 205.3263585645279
+      },
+      {
+        "name": "startup_time",
+        "value": 1.2082459926605225
+      }
+    ],
+    "trial_id": 1
+  },
+  "benchmark_info": {
+    "harness_name": "perfzero",
+    "harness_info": {
+      "url": "https://github.com/tensorflow/benchmarks.git",
+      "branch": "master",
+      "hash": "5164323d926d9e67c675ba8cc25093341920cd23"
+    },
+    "has_exception": false,
+    "flags": {
+      "use_cached_site_packages": false,
+      "git_repos": "https://github.com/tensorflow/models.git;r2.2.0",
+      "benchmark_num_trials": 1,
+      "benchmark_methods": [
+        "official.benchmark.keras_imagenet_benchmark.Resnet50KerasBenchmarkSynth.benchmark_1_gpu"
+      ],
+      "python_path": "models",
+      "workspace": "workspace",
+      "root_data_dir": "/data",
+      "gcloud_key_file_url": "",
+      "debug": false,
+      "perfzero_constructor_args": ""
+    },
+    "site_package_info": {
+      "models": {
+        "url": "https://github.com/tensorflow/models.git",
+        "branch": "r2.2.0",
+        "hash": "2b3d7046361d37edfdf69aaaadb09442b3d65b72"
+      }
+    }
+  },
+  "setup_info": {},
+  "ml_framework_info": {
+    "name": "tensorflow",
+    "version": "2.4.0",
+    "build_version": "v2.4.0-rc4-86-gd9cfe09e0d4"
+  },
+  "system_info": {
+    "cpu_model": "AMD EPYC 7742 64-Core Processor",
+    "physical_cpu_count": 128,
+    "logical_cpu_count": 128,
+    "cpu_socket_count": 2,
+    "hostname": "ts1-sjc2-13"
+  },
+  "process_info": {
+    "max_rss": 3097079808,
+    "max_vms": 70661980160,
+    "max_cpu_percent": 129.8
+  }
+}
+2021-01-20 14:11:16,954 INFO: Wrote summary to file /root/benchmarks/perfzero/workspace/output/2021-01-20-14-10-05-584126/perfzero_summary.json
+2021-01-20 14:11:16,954 INFO: Wrote summary to file /root/benchmarks/perfzero/workspace/output/2021-01-20-14-10-05-584126/perfzero_summary.json
+Benchmark execution time in seconds by operation:
+ {
+  "activate_gcloud_service": 0.0005214214324951172,
+  "download_data": 5.4836273193359375e-06,
+  "checkout_repository": 1.3400506973266602,
+  "trial_1": {
+    "official.benchmark.keras_imagenet_benchmark.Resnet50KerasBenchmarkSynth.benchmark_1_gpu": {
+      "class_initialization": 1.1645183563232422,
+      "method_execution": 69.97625684738159,
+      "log_upload": 0.23012542724609375
+    }
+  }
+}
+Benchmark success results:
+{
+  "trial_1": {
+    "official.benchmark.keras_imagenet_benchmark.Resnet50KerasBenchmarkSynth.benchmark_1_gpu": true
+  }
+}
+Benchmark local output directories:
+{
+  "trial_1": {
+    "official.benchmark.keras_imagenet_benchmark.Resnet50KerasBenchmarkSynth.benchmark_1_gpu": "/root/benchmarks/perfzero/workspace/output/2021-01-20-14-10-05-584126"
+  }
+}
+# }}}
+
+
+
+
+
+
+osu:
+root@login:~/mpi# /root/mpi/ompi/bin/mpirun -np 2 -mca btl ^openib -x UCX_RNDV_THRESH=2048 --mca osc ucx --mca spml ucx -x LD_LIBRARY_PATH -x UCX_LOG_LEVEL=TRACE_DATA --allow-run-as-root -mca pml ucx -x UCX_TLS=sm,self,rocm_copy,rocm_ipc,rocm_gdr osu/mpi/pt2pt/osu_latency -d rocm D D
+for "osu_latency"
+
+https://rocmdocs.amd.com/en/latest/Remote_Device_Programming/Remote-Device-Programming.html#ucx
+https://raw.githubusercontent.com/paklui/HIP_Tutorial/master/Chapter3/02_Matrix_Transpose/results.json
+# }}}

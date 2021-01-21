@@ -106,7 +106,9 @@ def roofline(filename, FLOPS, AIHBM, AIL2=None, AIL1=None, LABELS=None,
     nx = 10000
     xmin = -3
     # NAMD: xmax = 6
-    xmax = 3
+    # QE:
+    xmax = 6
+    # xmax = 3
     ymin = 1
     ymax = 200000
     ax.set_xlim(10 ** xmin, 10 ** xmax)
