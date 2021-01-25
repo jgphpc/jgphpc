@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# https://handbrake.fr/
+open source video transcoder
+
+
+
 0_vokoscreen_OK
 1_vlc_convert_reduce_size_OK
 edit_with_avidemux

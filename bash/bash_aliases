@@ -120,8 +120,8 @@ alias sxx='cd $SCRATCH/stage/dom/gpu/PrgEnv-gnu'
 #alias sxx='source ~/eff.ebgpu ;cd /apps/common/UES/sandbox/jgp/perfhackaton.git/reframe/lammps/'
 #alias rrr='module use /apps/common/UES/modulefiles ;module load reframe'
 alias rrr='module load reframe'
-export LANG=C 
-export LC_ALL=C
+# export LANG=C
+# export LC_ALL=C
 export LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH
 ulimit -c unlimited
 if [ `uname` != "Darwin" ] ; then

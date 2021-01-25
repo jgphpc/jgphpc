@@ -1,0 +1,2 @@
+export LC_TELEPHONE=V
+ssh -o SendEnv=LC_TELEPHONE tsa.cscs.ch

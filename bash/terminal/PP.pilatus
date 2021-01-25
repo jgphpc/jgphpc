@@ -1,0 +1,2 @@
+export LC_TELEPHONE=P
+ssh -o SendEnv=LC_TELEPHONE pilatus.cscs.ch

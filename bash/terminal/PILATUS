@@ -1,0 +1,5 @@
+# or call with: LC_TELEPHONE=VV pilatus.cscs.ch
+gnome-terminal \
+--tab-with-profile=pilatus_V \
+--tab-with-profile=pilatus_R \
+--tab-with-profile=pilatus_P

@@ -1,6 +1,12 @@
 /*
  * grep "unsupported GNU" /opt/nvidia/cudatoolkit*/*/include/*/host_*.h |grep -v default
 
+/opt/nvidia/cudatoolkit10.2/10.2.89_3.29-7.0.2.1_3.5__g67354b4/include/crt/host_config.h:
+#error -- unsupported GNU version! gcc versions later than 8 are not supported!
+
+grep "unsupported GNU" /usr/local/cuda-11.0/targets/x86_64-linux/include/crt/host_config.h
+#error -- unsupported GNU version! gcc versions later than 9 are not supported!
+
     -----------------   gcc/4   gcc/5   gcc/6   gcc/7   gcc/8   gcc/9
 	cuda/08.0 < gcc/6   Y       Y       -       -       -       -
 
@@ -11,6 +17,9 @@
 	cuda/10.0 < gcc/8   Y       Y       Y       Y       -       -
 
 	cuda/10.1 < gcc/9   Y       Y       Y       Y       Y       -
+	cuda/10.2 < gcc/9   Y       Y       Y       Y       Y       -
+
+	cuda/11.0 < gcc/10  Y       Y       Y       Y       Y       Y
     -----------------
 	gcc4.9.3/gnu_version.exe__GNUC__=4
 	gcc5.3.0/gnu_version.exe__GNUC__=5

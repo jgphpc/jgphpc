@@ -1,0 +1,14 @@
+PartitionName=long      Nodes=ault[01-04,11-12]
+PartitionName=intel     Nodes=ault[01-04]
+PartitionName=amd       Nodes=ault[17-19,26]
+PartitionName=intelv100 Nodes=ault[05-06,24]
+PartitionName=amdvega   Nodes=ault[07-08]
+PartitionName=amdv100   Nodes=ault[09-10]
+PartitionName=amda100   Nodes=ault25
+PartitionName=total     Nodes=ault[01-12,24-26]
+PartitionName=fpga      Nodes=ault[11-12]
+PartitionName=arm       Nodes=ault15
+PartitionName=a64fx     Nodes=ault[27-40]
+PartitionName=power     Nodes=ault13
+PartitionName=fat       Nodes=ault[21-22]
+PartitionName=testing   Nodes=ault[17-20,23]

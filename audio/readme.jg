@@ -2,7 +2,7 @@
 
 # {{{ (audio-recorder) 2020: ok
 sudo add-apt-repository ppa:audio-recorder/ppa
-sudo apt install audio-recorder
+sudo apt install audio-recorder pavucontrol
 audio-recorder &
 # }}}
 
