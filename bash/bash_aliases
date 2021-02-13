@@ -643,6 +643,7 @@ LS_COLORS=$LS_COLORS"*.f=00;31:*.F=00;31:*.c=00;34:*.o=00;33:*.a=00;35:*.F90=00;
 LS_COLORS=$LS_COLORS"*.mod=04;31:*.f90=01;31:*.f=01;31:*.F=00;31:*.c=00;34:*.o=00;33:*.a=00;35:*.F90=00;31:*.cpp=01;31:*.h=00;35:"
 LS_COLORS=$LS_COLORS"*.cu=04;34:"
 LS_OPTIONS="$LS_OPTIONS --color=always"
+# setxkbmap -option "caps:swapescape"
 #cray: export XTPE_INFO_MESSAGE_OFF=off
 
 
