@@ -713,6 +713,7 @@ if [ `hostname -s|cut -c1-3` = "dom" ] ; then
 fi
 
 # BANCO:
+if [ `uname` != "Darwin" ] ; then
 if [ `uname -o` =  "GNU/Linux" ] ; then
 function open_files_jg {
     # --- png:
@@ -738,6 +739,7 @@ function open_files_jg {
     fi
 }
 alias o=open_files_jg
+fi
 fi
 # }}}
 
@@ -821,6 +823,7 @@ if [ `uname` = "Darwin" ] ; then
         # see .Xdefaults
         export CLICOLOR=TRUE
         export LSCOLORS=Gxfxbxdxcxegedabagacad
+	unalias ls
 	alias ll='ls -l'
 	alias l='ls '
     alias o='open'
