@@ -6,9 +6,10 @@
 # 1/ create effimap:
 #   set imap_pass="..."
 #   set smtp_pass="..."
-# 2/ gpg -r jgp@cscs.ch -e effimap
+# 2/ gpg --gen-key ;gpg -r jgp@cscs.ch -e effimap
 # 3/ read it:
-source "gpg -qd /Users/lilly/jgphpc.git/mutt/SECRET/effimap.gpg |"
+source "gpg -qd $HOME/jgphpc.git/mutt/effimap.gpg |"
+
 # set imap_pass = "..."
 # set imap_pass=
 # set imap_pass=`grep MUTTPWD ./jgphpc.git/SECRET/SECRET |cut -d " " -f2`
@@ -39,8 +40,8 @@ set postponed        = "{mail.ethz.ch/ssl}Draft"
 # {{{ CACHE
 # set header_cache     = ~/.mutt/headercache
 # set message_cachedir = ~/.mutt/messagecache
-set header_cache     = /Users/lilly/JG/DELETE/mutt_cache/h
-set message_cachedir = /Users/lilly/JG/DELETE/mutt_cache/m
+set header_cache     = $HOME/mutt_cache/h
+set message_cachedir = $HOME/mutt_cache/m
 # set spoolfile=/project/csstaff/piccinal/scripts/mutt/piccinal
 # }}}
 set from             = 'jgp@cscs.ch'
@@ -50,7 +51,7 @@ mailboxes =Drafts =Sent
 unset mbox
 # }}}
 # {{{ contacts
-source ~/jgphpc.git/SECRET/mutt_contacts
+source $HOME/jgphpc.git/mutt/mutt_contacts
 # }}}
 # {{{ GMAIL
 # set folder = "imaps://imap.gmail.com:993"
