@@ -122,6 +122,8 @@ alias sxx='cd $SCRATCH/stage/dom/gpu/PrgEnv-gnu'
 #alias sxx='source ~/eff.ebgpu ;cd /apps/common/UES/sandbox/jgp/perfhackaton.git/reframe/lammps/'
 #alias rrr='module use /apps/common/UES/modulefiles ;module load reframe'
 alias rrr='module load reframe'
+alias rb='cat rfm*_build.*'
+alias rj='cat rfm*_job.*'
 
 export LANGUAGE="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
