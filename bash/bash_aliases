@@ -338,30 +338,19 @@ alias ubjg='ssh -Y ubuntu@148.187.97.112' # openstack pollux
 alias  ela='ssh -Y piccinal@ela.cscs.ch'
 
 # --- sarus
-# alias sa='module use /apps/dom/SI/modulefiles ;module load sarus/1.0.0-rc5-daint'
 alias sa='module load sarus'
 
 # --- daint
 alias  da_='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@daint'
-# alias da0='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@daint01'
-# alias da1='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@daint101'
 alias da='ssh -Y piccinal@daint.cscs.ch'
-#alias da1='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@daint101'
-#alias da2='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@daint102'
-#alias da3='ssh -Y piccinal@ela.cscs.ch -t ssh -Y piccinal@daint103'
+
+# --- eiger/pilatus
+alias pi='ssh -x piccinal@pilatus.cscs.ch'
+alias ei='ssh -x piccinal@eiger.cscs.ch'
 
 # --- kescha
-# alias rt4-cscs='ssh -Y piccinal@tpc02'
-# alias pi='ssh -Y piccinal@ela2.login.cscs.ch -t ssh -Y piccinal@pilatus.cscs.ch'
-# alias pi_='ssh -Y piccinal@pilatus.cscs.ch'
-alias e1='~/linux.git/bash/escha.sh'
-#alias e1='ssh -Yt piccinal@ela.cscs.ch ssh -Y escha-login1.cscs.ch'
-#alias e2='ssh -Yt piccinal@ela.cscs.ch ssh -Y escha-login2.cscs.ch'
-#alias e3='ssh -Yt piccinal@ela.cscs.ch ssh -Y escha-login3.cscs.ch'
-alias k1='~/linux.git/bash/kesch.sh'
-#alias k1='ssh -Yt piccinal@ela.cscs.ch ssh -Y kesch-login1.cscs.ch'
-#alias k2='ssh -Yt piccinal@ela.cscs.ch ssh -Y kesch-login2.cscs.ch'
-#alias k3='ssh -Yt piccinal@ela.cscs.ch ssh -Y kesch-login3.cscs.ch'
+# alias e1='~/linux.git/bash/escha.sh'
+# alias k1='~/linux.git/bash/kesch.sh'
 # alias mac='ssh piccinal@pazzallo.staff.cscs.ch'
 
 # --- tave
