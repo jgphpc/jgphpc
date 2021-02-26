@@ -1,0 +1,136 @@
+spack list 'py-*'
+spack install openmpi@vv:  %gcc@9.3.0
+# cppflags=..., cflags, cxxflags, fflags, ldflags, ldlibs
+# ^/hashxxxx
+
+spack find openmpi  # -l -f -d
+spack find -ldf openmpi 
+spack graph openmpi
+spack graph hdf5+hl+mpi ^mpich
+spack find ^gcc@9.3.0
+spack find cppflags=-O3
+spack find -p gcc@9.3.0 # -p=path -x -X
+spack find --loaded
+spack find --format "{name} {version} {hash:10}"
+spack find --json   # JSON filtering tools like jq
+
+spack compilers
+spack compiler add $(spack location -i gcc@9.3.0) # spack location -i m4%gcc@9.3.0
+spack compiler remove gcc@8.3.0
+spack config edit compilers
+# https://spack-tutorial.readthedocs.io/en/latest/tutorial_configuration.html
+spack external find
+# https://github.com/spack/spack-configs.git
+spack repo add $SPACK_ROOT/var/spack/repos/jg_test_timemem
+spack repo remove tutorial
+rm -rf $SPACK_ROOT/var/spack/repos/jg_test_timemem/packages/
+
+spack create https://github.com/LLNL/mpileaks/releases/download/v1.0/mpileaks-1.0.tar.gz
+spack edit mpileaks
+spack info mpileaks
+# spack-build-out.txt
+# DEBUG:
+spack cd mpileaks ;spack build-env mpileaks bash #; exit
+
+
+spack load openmpi
+spack versions openmpi
+spack find --loaded
+
+spack spec -I openmpi
+spack install hdf5~mpi           # = install without mpi
+spack install hdf5+hl+mpi ^mpich # = install with mpich
+
+spack spec timemory
+spack install --verbose timemory+mpi 
+spack install timemory +mpi +cuda +cupti cuda_arch=auto +papi +python ^/hh43tke
+SPACK_ENV_PATH=/users/piccinal/git/spack.git/lib/spack/env:/users/piccinal/git/spack.git/lib/spack/env/case-insensitive:/users/piccinal/git/spack.git/lib/spack/env/gcc make
+
+spack install timemory +mpi +cuda +cupti cuda_arch=volta \
++examples +gperftools +gotcha +mpip_library +papi +python 
+spack graph --dot timemory+mpi | dot -Tpdf > eff.pdf
+spack uninstall /hashxxxx
+# {{{ spack info timemory|grep '\[off\]'
+    allinea_map [off]              on, off Enable Allinea ARM-MAP support
+    caliper [off]                  on, off Enable Caliper support
+#    cuda [off]                     on, off Enable CUDA support
+#    cupti [off]                    on, off Enable CUPTI support
+    dyninst [off]                  on, off Build dynamic instrumentation tools
+#    examples [off]                 on, off Build/install examples
+    gotcha [off]                   on, off Enable GOTCHA support
+##    gperftools [off]               on, off Enable gperftools support
+    ipo [off]                      on, off CMake interprocedural optimization
+    kokkos_build_config [off]      on, off Build pre-configured (i.e. dedicated) kokkos-tools libraries, e.g.
+    kokkos_tools [off]             on, off Build generic kokkos-tools libraries, e.g. kp_timemory,
+##    likwid [off]                   on, off Enable LIKWID support
+    lto [off]                      on, off Build w/ link-time optimization
+    mpi [off]                      on, off Enable support for MPI aggregation
+##    mpip_library [off]             on, off Build stand-alone timemory-mpip GOTCHA library
+    nccl [off]                     on, off Enable support for wrapping NCCL functions
+##    ompt [off]                     on, off Enable OpenMP tools support
+    ompt_library [off]             on, off Build stand-alone timemory-ompt library
+    ompt_llvm [off]                on, off Enable OpenMP tools support as part of llvm build
+    ompt_standalone [off]          on, off Enable OpenMP tools support via drop-in replacement of
+#    papi [off]                     on, off Enable PAPI support
+###    python [off]                   on, off Enable Python support
+    python_deps [off]              on, off Install non-critical python dependencies (may significantly
+    static [off]                   on, off Build static libraries
+    tau [off]                      on, off Enable TAU support
+    upcxx [off]                    on, off Enable UPC++ support
+    use_arch [off]                 on, off Build all of timemory w/ cpu_target architecture flags (default:
+    vtune [off]                    on, off Enable VTune support
+# }}}
+spack install timemory +papi  
+
+
+# https://spack-tutorial.readthedocs.io/en/latest/tutorial_packaging.html#querying-spec-versions
+# if self.spec['mpi'].name == 'openmpi':
+# if '+debug' in self.spec:
+
+# use the current directory as the local source:
+cd hwloc.git ;spack dev-build hwloc@master  # --until configure --drop-in bash
+#or: spack build-env hwloc@master -- bash
+spack build-env timemory +mpi +cuda +cupti cuda_arch=auto +papi +python ^/hh43tke -- bash
+### -Wl,-L
+### vim ./source/CMakeFiles/timemory-cxx-shared.dir/link.txt
+### vim ./source/CMakeFiles/timemory-c-shared.dir/link.txt
+### vim ./source/tools/mpip/CMakeFiles/timemory-mpip.dir/link.txt
+# ~/git/timemory.git/examples/ex-minimal/JG/
+### vim CMakeFiles/ex_c_minimal_library.dir/link.txt 
+### vim CMakeFiles/ex_cxx_minimal_library.dir/link.txt 
+spack env create myspackenv
+spack env activate myspackenv
+spack env list
+spack find
+spack env status
+spack add ...
+spack install # install the added specs in the environment
+spack find
+spack config get
+spack config edit
+despacktivate   # = spack env deactivate
+spack concretize / spack spec # ?
+# When you install packages into an environment, they are linked into a single
+# prefix, or a "view". When you activate the environment with spack env activate,
+# Spack adds subdirectories from the view to PATH, LD_LIBRARY_PATH,
+# CMAKE_PREFIX_PATH and other environment variables.
+
+Features that Spack has that EB currently does not:
+1. Be able to jump into a build environment (spack build-env)
+2. Be able to build from source in the current working dir (spack dev-build)
+3. Be able to create dynamic pipelines on Gitlab (spack ci)
+4. Be able to filter error and warning from build logs (spack log-parse)
+
+spack edit --build-system cmake
+spack edit --build-system python
+
+# https://spack-tutorial.readthedocs.io/en/latest/tutorial_spack_scripting.html
+spack python
+>>> from spack.spec import Spec
+>>> s = Spec('zlib target=ivybridge')
+>>> s.concretize()
+>>> s.concrete
+>>> s.version
+>>> s.versions
+>>> s.architecture
+# spack python find_exclude.py %gcc ^mpich

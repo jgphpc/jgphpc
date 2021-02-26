@@ -31,6 +31,7 @@ https://github.com/NERSC/itt-python
 # {{{ interactive
 https://jupyter.nersc.gov/hub/login
 https://jupyter.cscs.ch/
+https://d3js.org/
 # }}}
 
 # {{{ www,sql,moodle,gui

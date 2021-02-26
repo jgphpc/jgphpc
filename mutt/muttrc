@@ -1,23 +1,72 @@
-#
+# {{{ PASSWORD
+# 0/ build with: 
+#   ./configure --enable-imap
+#   --with-ssl=openssl-1.1.1j-ygyfpe7vnnu3fraaa3akij3qmrovnrrg
+#   --enable-hcache --enable-smtp --with-gss --with-sasl    # mutt -v
+# 1/ create effimap:
+#   set imap_pass="..."
+#   set smtp_pass="..."
+# 2/ gpg --gen-key ;gpg -r jgp@cscs.ch -e effimap
+# 3/ read it:
+source "gpg -qd $HOME/jgphpc.git/mutt/effimap.gpg |"
+
+# set imap_pass = "..."
 # set imap_pass=
 # set imap_pass=`grep MUTTPWD ./jgphpc.git/SECRET/SECRET |cut -d " " -f2`
-
+# set smtp_pass=`gpg -qd /Users/lilly/jgphpc.git/mutt/SECRET/effimap.gpg`
+# source ~/.mutt/gpg.rc
+# }}}
+# {{{ ethz
 set record = "~/.sent"
-set mailcap_path = ~/.mutt/mailcap.
+# set mailcap_path = ~/.mutt/mailcap.
 auto_view text/html
-
-# Sample ~/.muttrc for SuSE Linux
-#
 my_hdr From: jgp@cscs.ch (jgp)
-# Setting
-#
+# mail.ethz.ch (imap.ethz.ch); Port 993 (SSL)
+# mail.ethz.ch (smtp.ethz.ch); 587 (TLS)
+set arrow_cursor     = yes
+set imap_user        = jeanpi
+set spoolfile        = imaps://mail.ethz.ch/INBOX
+set folder           = imaps://mail.ethz.ch/
+set smtp_url         = "smtp://jeanpi@mail.ethz.ch:587"
+set ssl_starttls     = yes
+set ssl_force_tls    = yes
+set smtp_authenticators = 'gssapi:login'
+set mail_check       = 300
+set imap_keepalive   = 600
+set folder           = "{mail.ethz.ch/ssl}"
+set spoolfile        = "{mail.ethz.ch/ssl}inbox"
+set record           = "{mail.ethz.ch/ssl}Sent"
+set postponed        = "{mail.ethz.ch/ssl}Draft"
+# {{{ CACHE
+# set header_cache     = ~/.mutt/headercache
+# set message_cachedir = ~/.mutt/messagecache
+set header_cache     = $HOME/mutt_cache/h
+set message_cachedir = $HOME/mutt_cache/m
+# set spoolfile=/project/csstaff/piccinal/scripts/mutt/piccinal
+# }}}
+set from             = 'jgp@cscs.ch'
+set realname         = 'Jg Piccinali'
+# set hostname         = inf.ethz.ch
+mailboxes =Drafts =Sent
+unset mbox
+# }}}
+# {{{ contacts
+source $HOME/jgphpc.git/mutt/mutt_contacts
+# }}}
+# {{{ GMAIL
+# set folder = "imaps://imap.gmail.com:993"
+# set spoolfile = "+INBOX"
+# set smtp_url = "smtps://jgpiccinali@gmail.com@smtp.gmail.com:465/"
+# set smtp_pass = "<app password>"
+# set imap_user = "jgpiccinali@gmail.com"
+# set imap_user = "jgpiccinali"
+# }}}
+
+# {{{ Setting
 set pager_context=4
 set pager_index_lines=10
 set pager_stop
-
-#
-# Binding
-#
+# 
 bind  pager <backspace> previous-page
 bind  pager -           previous-line
 bind  pager \eOm        previous-line
@@ -26,7 +75,6 @@ bind  pager \eOk        next-line
 bind  pager \eOM        next-line
 bind  pager \e[1~       top
 bind  pager \e[4~       bottom
-
 bind  index <backspace> previous-entry
 bind  index -           previous-entry
 bind  index \eOm        previous-entry
@@ -37,15 +85,11 @@ bind  index \e[H        first-entry
 bind  index \e[F        last-entry
 bind  index \e[1~       first-entry
 bind  index \e[4~       last-entry
-
 bind  alias   <space>   select-entry
 bind  alias   x         exit
 bind  attach  x         exit
 bind  browser x         exit
-
-#
 # Color
-#
 mono  message    bold
 color message    white          red
 color error      brightyellow   red
@@ -77,8 +121,30 @@ color body       brightcyan     default  \
   "((ftp|http|https)://|(file|mailto|news):|www\\.)[-a-z@0-9_.:]*[a-z0-9](/[^][{} \t\n\r\"<>()]*[^][{} \t\n\r\"<>().,:])?"
 color body       brightcyan     default  "[-a-z_0-9.+]+@[-a-z_0-9.]+"
 color body       red            default  "(^| )\\*[-[:alnum:]*]+\\*[,.?]?[ \n]"
-
-# -----------------------------------------------------------------
+# }}}
+# {{{ formatting
+# http://www.mutt.org/doc/manual/manual-6.html#index_format
+# http://us.generation-nt.com/answer/gentoo-user-mutt-index-format-syntax-help-202863622.html
+# Default: "%4C %Z %{%b %d} %-15.15L (%4l) %s"
+set index_format="%4C %Z %-80.80s %-15.15L %{%D}"
+# Headers to ignore
+ignore *
+unignore date from to cc subject x-mailer resent-from reply-to
+# polling frequency (seconds)
+set mail_check=30
+# And poll the current mailbox more often (seconds)
+set timeout=10
+# }}}
+# {{{ MACROS
+# source ~/.mutt/tickets-all.rc
+# source ~/.mutt/sort-threads.rc
+# macro index <F2> '<limit>Resolved:<enter>' "filter tickets cscs"
+# macro index <F3> '<limit>all<enter>' "filter tickets cscs"
+# l = filter by ticket #
+# L = no filter (all)
+# p = Resolved:
+# }}}
+# {{{ gpg
 # Command formats for gpg.
 # 
 # This version uses gpg-2comp from 
@@ -158,50 +224,4 @@ set pgp_good_sign="^gpg: Good signature from"
 
 # OK, here's a version which uses gnupg's message catalog:
 # set pgp_good_sign="`gettext -d gnupg -s 'Good signature from "' | tr -d '"'`"
-# -----------------------------------------------------------------
-# GPG
-# source ~/.mutt/gpg.rc
-# -----------------------------------------------------------------
-
-# Headers to ignore
-ignore *
-unignore date from to cc subject x-mailer resent-from reply-to
-
-
-
-# -----------------------------------------------------------------
-# CACHE
-set header_cache=/project/csstaff/piccinal/scripts/mutt/cache/headers
-# set spoolfile=/project/csstaff/piccinal/scripts/mutt/piccinal
-
-
-#
-# End
-# http://www.mutt.org/doc/manual/manual-6.html#index_format
-# http://us.generation-nt.com/answer/gentoo-user-mutt-index-format-syntax-help-202863622.html
-# Default: "%4C %Z %{%b %d} %-15.15L (%4l) %s"
-set index_format="%4C %Z %-80.80s %-15.15L %{%D}"
-source ~/jgphpc.git/SECRET/mutt_contacts
-# MACROS
-# source ~/.mutt/tickets-all.rc
-# source ~/.mutt/sort-threads.rc
-# macro index <F2> '<limit>Resolved:<enter>' "filter tickets cscs"
-# macro index <F3> '<limit>all<enter>' "filter tickets cscs"
-# l = filter by ticket #
-# L = no filter (all)
-# p = Resolved:
-
-# polling frequency (seconds)
-set mail_check=30
-# And poll the current mailbox more often (seconds)
-set timeout=10
-
-# GMAIL
-# set smtp_url = "smtps://jgpiccinali@gmail.com@smtp.gmail.com:465/"
-# set smtp_pass = "<app password>"
-# set imap_user = "jgpiccinali@gmail.com"
-set imap_user = "jgpiccinali"
-# set imap_pass = "<app password>"
-set folder = "imaps://imap.gmail.com:993"
-set spoolfile = "+INBOX"
-set ssl_force_tls = yes
+# }}}

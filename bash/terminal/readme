@@ -1,0 +1,4 @@
+ITERM2:
+https://blog.andrewray.me/how-to-create-custom-iterm2-window-arrangments/
+
+esc key: setxkbmap -option "caps:swapescape"

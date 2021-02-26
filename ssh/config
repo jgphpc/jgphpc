@@ -41,6 +41,17 @@ ProxyJump ela.cscs.ch
 # ProxyJump piccinal@ela.cscs.ch
 # }}}
 
+# {{{ EIGER:
+Host eiger*
+ForwardAgent yes
+Port 22
+SendEnv LC_*
+Hostname eiger.cscs.ch
+ProxyJump ela.cscs.ch
+# ProxyCommand ssh piccinal@ela.cscs.ch netcat %h %p
+# ProxyJump piccinal@ela.cscs.ch
+# }}}
+
 #{{{ DAINT:
 # ForwardAgent yes
 # Port 22

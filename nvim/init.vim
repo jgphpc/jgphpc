@@ -22,24 +22,24 @@ if &compatible
 endif
 
 " Required:
-set runtimepath+=/users/piccinal/.cache/dein/repos/github.com/Shougo/dein.vim
+set runtimepath+=~/.config/nvim/bundle/repos/github.com/Shougo/dein.vim
 
 " Required:
-if dein#load_state('/users/piccinal/.cache/dein')
-  call dein#begin('/users/piccinal/.cache/dein')
+if dein#load_state('~/.cache/dein')
+  call dein#begin('~/.cache/dein')
 
   " Let dein manage dein
   " Required:
-  call dein#add('/users/piccinal/.cache/dein/repos/github.com/Shougo/dein.vim')
+  call dein#add('~/.config/nvim/bundle/repos/github.com/Shougo/dein.vim')
 
   " Add or remove your plugins here like this:
   "call dein#add('Shougo/neosnippet.vim')
   "call dein#add('Shougo/neosnippet-snippets')
 
   " Required:
-  call dein#end()
-  call dein#save_state()
-endif
+"  call dein#end()
+"  call dein#save_state()
+"endif
 
 " Required:
 filetype plugin indent on
@@ -147,6 +147,7 @@ nmap <leader>f9 :set foldlevel=9<CR>
 
 "{{{ --- hpc:
 let fortran_free_source=1
+" help cscope # nvim ok
 "}}}
 
 "{{{ --- python:

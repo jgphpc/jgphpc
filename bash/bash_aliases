@@ -135,7 +135,6 @@ export LC_TELEPHONE="-"
 export LC_IDENTIFICATION="en_US.UTF-8"
 export LC_TIME="en_US.UTF-8"
 export LANG="en_US.UTF-8"
-
 ## export LANG=C 
 ## export LC_ALL=C
 export LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH
@@ -659,6 +658,7 @@ LS_COLORS=$LS_COLORS"*.f=00;31:*.F=00;31:*.c=00;34:*.o=00;33:*.a=00;35:*.F90=00;
 LS_COLORS=$LS_COLORS"*.mod=04;31:*.f90=01;31:*.f=01;31:*.F=00;31:*.c=00;34:*.o=00;33:*.a=00;35:*.F90=00;31:*.cpp=01;31:*.h=00;35:"
 LS_COLORS=$LS_COLORS"*.cu=04;34:"
 LS_OPTIONS="$LS_OPTIONS --color=always"
+# setxkbmap -option "caps:swapescape"
 #cray: export XTPE_INFO_MESSAGE_OFF=off
 
 
@@ -728,6 +728,7 @@ if [ `hostname -s|cut -c1-3` = "dom" ] ; then
 fi
 
 # BANCO:
+if [ `uname` != "Darwin" ] ; then
 if [ `uname -o` =  "GNU/Linux" ] ; then
 function open_files_jg {
     # --- png:
@@ -753,6 +754,7 @@ function open_files_jg {
     fi
 }
 alias o=open_files_jg
+fi
 fi
 # }}}
 
@@ -836,6 +838,7 @@ if [ `uname` = "Darwin" ] ; then
         # see .Xdefaults
         export CLICOLOR=TRUE
         export LSCOLORS=Gxfxbxdxcxegedabagacad
+	unalias ls
 	alias ll='ls -l'
 	alias l='ls '
     alias o='open'

@@ -1,0 +1,5 @@
+# or call with: LC_TELEPHONE=VV tsa.cscs.ch
+gnome-terminal \
+--tab-with-profile=TSA_V \
+--tab-with-profile=TSA_R \
+--tab-with-profile=TSA_P

@@ -1,0 +1,69 @@
+#!/bin/dh
+
+# https://pop-coe.eu/blog/18th-pop-webinar-pypop-an-interactive-tool-for-performance-assessment
+# https://pop-coe.eu/sites/default/files/pop_files/pop-webinar-pypop.pdf + video
+
+source /tmp/JG/EXTRAE/BASIC/pypop.git/myvenv/bin/activate
+
+EBROOTPARAVER=/home/piccinal/bin/EXTRAE/wxparaver-4.8.2-Linux_x86_64
+EBROOTDIMEMAS=/home/piccinal/bin/EXTRAE/dimemas-5.4.2-Linux_x86_64
+export PARAVER_HOME=$EBROOTPARAVER
+export DIMEMAS_HOME=$EBROOTDIMEMAS
+export PATH=$EBROOTPARAVER/bin:$EBROOTDIMEMAS/bin:$PATH
+
+ln -s ../epoch_*gz .
+ln -s ../epoch_*pcf .
+ln -s ../epoch_*row .
+
+# {{{ pypop-mpi-metrics: mll NAG-PyPOP/0.3.2-CrayGNU-20.08-python3
+# 1/ pypop-preprocess epoch_*proc.prv.gz ;\
+#    pypop-mpi-metrics *.pypopsummary
+# or
+# 1/ pypop-mpi-metrics epoch_*proc.prv.gz   # will use .pypopsummary if it exists
+#
+# ipyfilechooser missing -> use venv + update .eb
+# /scratch/snx3000tds/piccinal/stage/dom/gpu/PrgEnv-gnu/myvenv/bin/python3 \
+# ~/easybuild/dom/haswell/software/NAG-PyPOP/0.3.2-CrayGNU-20.08-python3/bin/pypop-mpi-metrics \
+# sphexa_extraelite_sedov_*/*prv
+#
+# {{{ 0%|    | 0/4 [00:00<?, ?it/s]
+/tmp/JG/EXTRAE/BASIC/pypop.git/pypop/examples/mpi/myvenv/lib/python3.8/site-packages/pypop/trace/prvtrace.py:223: UserWarning: Failed to run Dimemas: dimemas execution failed:
+Dimemas execution failed:
+-> Simulator configuration to be read dimemas_ideal.tmpconfig.cfg
+-> Loading default random values
+-> Loading default scheduler configuration
+   * Machine 0. Policy: FIFO
+   * Loading communications configuration from file /tmp/JG/EXTRAE/BASIC/pypop.git/pypop/examples/mpi/myvenv/lib/python3.8/site-packages/pypop/cfgs/ideal.collectives
+-> Loading initial memory status
+-> Loading initial semaphores status
+-> Loading default file sytem configuration
+
+0.000000000: START SIMULATION
+
+Fatal error at time 0.683936143
+bandw = 0 !
+
+Input was:
+['Dimemas', '-S 32k', '--dim', 'input.dim', '--prv-trace', 'input.sim.prv', '--config-file', 'dimemas_ideal.tmpconfig.cfg']
+See /tmp/tmpel559ome
+Continuing with reduced MPI detail.
+  warn(
+/tmp/JG/EXTRAE/BASIC/pypop.git/pypop/examples/mpi/myvenv/lib/python3.8/site-packages/pypop/notebook_interface/plotting.py:102: UserWarning: Webdriver unavailable - falling back to matplotlib interface
+  warn("Webdriver unavailable - falling back to matplotlib interface")
+/tmp/JG/EXTRAE/BASIC/pypop.git/pypop/examples/mpi/myvenv/lib/python3.8/site-packages/pypop/notebook_interface/plotting.py:102: UserWarning: Webdriver unavailable - falling back to matplotlib interface
+  warn("Webdriver unavailable - falling back to matplotlib interface")
+# }}}
+# --> outputs: metrics.csv + table.png + scaling.png
+
+# 2/ pypop-gui.ipynb: yes:pypop-gui   (no:jupyter-lab pypop-gui.ipynb)
+# tar cf ~/eff.tar *4steps/*.pypopsummary
+# --> outputs: table (with text tips) + scaling.png
+#
+# 3/ report generation: use template for writing proposal 
+# then add some text 
+# then export to pdf with: ipynb_to_report myreport.ipynb (->tex->pdf)
+# /tmp/JG/EXTRAE/BASIC/pypop.git/bin/ipynb_to_report
+# <- ./ipython_templates/pop_report.tplx
+#
+# 4/ openmp explorer demo.ipynb: import PRV; myprv = PRV('0.prv'); OMPRExpl..(myprv)
+# }}}
