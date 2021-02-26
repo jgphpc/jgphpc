@@ -7,6 +7,13 @@ enable_language(CXX C Fortran)
 # set (papi-wrap_VERSION_MINOR 0)
 # include_directories("${PROJECT_BINARY_DIR}")
 
+set(CMAKE_MODULE_PATH /timemory.git/cmake/Modules)
+set(CMAKE_FIND_DEBUG_MODE TRUE)
+# include(FindPAPI)
+# include(Findgperftools)
+include(FindPython3)
+set(CMAKE_FIND_DEBUG_MODE FALSE)
+
 # set(SPH_BUILD_NAME     "" CACHE STRING "SPHFlow_mockup configuration name")
 # set(SPH_BUILD_NAME_DIR .  CACHE STRING "SPHFlow_mockup configuration directory")
 # set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib-sph CACHE PATH "Single directory for all static libraries.")

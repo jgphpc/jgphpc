@@ -72,6 +72,13 @@ if [ "$osn" = "redhat" ] ;then
     source .bashrc
 fi
 
+apps=`echo $APPS |cut -d/ -f3`
+if [ "$apps" = "arolla" ] ;then
+    module use /users/piccinal/easybuild/tsa-ln/modules/all   
+    # module unuse /apps/arolla/UES/jenkins/RH7.7/MCH-PE20.06/generic/easybuild/modules/all
+    # module use /apps/arolla/UES/jenkins/RH7.7/MCH-PE20.08/generic/easybuild/modules/all 
+fi
+
 #if [ "$is_bash_aliases_set" != 1 ] ; then
 #    source ~/.bashrc
 #fi

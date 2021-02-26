@@ -60,7 +60,9 @@ TXTWHT='\[\e[0;37m\]' # White
 # }}}
 TXTRST='\[\e[0m\]'    # Text Reset
 NOCOLOR='\[\033[0m\]'  # No color
+if [ "`uname -s`" == "Linux" ] ;then
 alias ls='ls --color=auto'
+fi
 # }}}
 
 # {{{ PS1
@@ -120,8 +122,22 @@ alias sxx='cd $SCRATCH/stage/dom/gpu/PrgEnv-gnu'
 #alias sxx='source ~/eff.ebgpu ;cd /apps/common/UES/sandbox/jgp/perfhackaton.git/reframe/lammps/'
 #alias rrr='module use /apps/common/UES/modulefiles ;module load reframe'
 alias rrr='module load reframe'
-export LANG=C 
-export LC_ALL=C
+
+export LANGUAGE="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+export LC_MEASUREMENT="en_US.UTF-8"
+export LC_PAPER="en_US.UTF-8"
+export LC_MONETARY="en_US.UTF-8"
+export LC_NAME="en_US.UTF-8"
+export LC_ADDRESS="en_US.UTF-8"
+export LC_NUMERIC="en_US.UTF-8"
+export LC_TELEPHONE="-"
+export LC_IDENTIFICATION="en_US.UTF-8"
+export LC_TIME="en_US.UTF-8"
+export LANG="en_US.UTF-8"
+
+## export LANG=C 
+## export LC_ALL=C
 export LD_LIBRARY_PATH=.:$LD_LIBRARY_PATH
 ulimit -c unlimited
 if [ `uname` != "Darwin" ] ; then
@@ -850,7 +866,7 @@ if [ `uname` = "Darwin" ] ; then
 # export PATH=/usr/local/bin:$PATH
 
 # === MAC mfiles ===
-export MODULEPATH=$MODULEPATH:/keep/hpc/mfiles
+# export MODULEPATH=$MODULEPATH:/keep/hpc/mfiles
 # export PATH=$PATH:/usr/local/bin
 # export SCRATCH=/scratch/rothorn/$USER
 export APPS=/efface/apps

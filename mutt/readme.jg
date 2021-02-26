@@ -1,8 +1,9 @@
 #!/bin/sh
 
+mac: use https://github.com/d99kris/nmail !
+linux: use mutt (vagrant ssh debian10)
+
 http://www.mutt.org/download.html
-
-
 http://dev.mutt.org/trac/wiki
 
 hg clone http://dev.mutt.org/hg/mutt#HEAD

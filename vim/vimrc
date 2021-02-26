@@ -108,6 +108,9 @@ call vundle#end()  " required
 "set cursorline                  " horizontal line shows current line
 set comments=
 colorscheme default " fix for: E411: highlight group not found: Normal
+if &diff
+    colorscheme industry
+endif
 set background=dark " switch to color scheme for terminals with a dark background
 set ignorecase      " ignore case when searching (turn off by : set noignorecase)
 " set incsearch       " enable incremental search
@@ -145,13 +148,13 @@ set tabstop=4
 " let g:showfuncctagsbin="/usr/bin/ctags"
 " endif
 " endif
-if ($HOSTNAME == 'dom101')
-if filereadable( '/users/piccinal/easybuild/dom/haswell/software/ctags/5.8/bin/ctags' )
-let g:showfuncctagsbin='/users/piccinal/easybuild/dom/haswell/software/ctags/5.8/bin/ctags'
-else
-echo "ctags not found on dom101"
-endif
-endif
+" if ($HOSTNAME == 'dom101')
+" if filereadable( '/users/piccinal/easybuild/dom/haswell/software/ctags/5.8/bin/ctags' )
+" let g:showfuncctagsbin='/users/piccinal/easybuild/dom/haswell/software/ctags/5.8/bin/ctags'
+" else
+" echo "ctags not found on dom101"
+" endif
+" endif
 
 set tags=./tags;/,~/.vimtags
 " Make tags placed in .git/tags file available in all levels of a repository

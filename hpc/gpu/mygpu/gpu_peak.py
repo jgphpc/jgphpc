@@ -40,6 +40,17 @@ class GpuTest(rfm.RegressionTest):
           * cuda_runtime_version: 11.1
           * cuda_capability: 7.0 (Tesla V100-PCIE-16GB)
           * peak_perf: 7066 Gflop/s
+
+~/reframe.git/bin/reframe -C ~/reframe.git/config/cscs.py -c gpu_peak.py -r --performance-report --keep-stage-files
+GpuTest
+- tsa:cn
+   - PrgEnv-gnu
+      * num_tasks: 1
+      * driver: 440.33
+      * cuda_driver_version: 10.2
+      * cuda_runtime_version: 10.1
+      * cuda_capability: 7.0 (Tesla V100-SXM2-32GB)
+      * peak_perf: 7834 Gflop/s
     """
     def __init__(self):
         self.descr = 'GPU specs test'
@@ -186,6 +197,18 @@ class GpuTest(rfm.RegressionTest):
         elif cs in {'arola', 'tsa'}:
             gpu_arch = '70'
             self.modules = ['cuda/10.1.243']
+            # cuda_path = '/users/piccinal/.local/easybuild/software/nvhpc/2020_2011-cuda-11.1/Linux_x86_64/20.11/compilers'
+            samples_path = '-I/users/piccinal/efface/tsa/local/cuda-samples-11.2/Common'
+            lib_rpath = [
+                '-Wl,-rpath,$CUDATOOLKIT_HOME/../cuda/11.1/targets/x86_64-linux/lib ',
+                '-Wl,-rpath,$CUDATOOLKIT_HOME/lib ',
+                '-L$CUDATOOLKIT_HOME/../cuda/11.1/targets/x86_64-linux/lib',
+                # '-L$CUDATOOLKIT_HOME/lib',
+                '-lcudart', # '-lcudanvhpc',
+            ]
+            self.build_system.cc = 'gcc'
+            self.build_system.cppflags = [samples_path]
+            self.build_system.ldflags = lib_rpath
 
         if gpu_arch:
             self.build_system.makefile = 'makefile.cuda'

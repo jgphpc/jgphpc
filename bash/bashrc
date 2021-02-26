@@ -33,6 +33,7 @@ module rm xalt
 
 # --- python:
 # {{{
+if [ -z $SLURM_JOB_ID ] ;then
 hpyt=`uname -n |tr -d [0-9]g |cut -c1-3`
 if [ -z $hpyt ] ;then 
     echo ".bashrc: unknown hpyt=$hpyt" 
@@ -45,6 +46,7 @@ else
         ln -fs $HOME/efface/$hpyt/$ddd $HOME/.$ddd
     done
     export PATH=$HOME/efface/$hpyt/local/bin:$PATH
+fi
 fi
 # }}}
 
@@ -104,13 +106,15 @@ fi
 if [ `uname -n |cut -c1-3` == "uan" ] ;then
 	module use /apps/eiger/UES/tools/easybuild/modules/all
 	module use /users/piccinal/.local/easybuild/modules/all
-	module load EasyBuild/4.3.0
+	# module load EasyBuild/4.3.0
+    module load EasyBuild-custom/cscs
 	export EASYBUILD_INSTALLPATH=/apps/eiger/UES/tools/easybuild
 	export EASYBUILD_MODULES_TOOL=Lmod
 	export EASYBUILD_MODULE_SYNTAX=Tcl  # Lua
 	export EASYBUILD_OPTARCH=x86-rome
 	export EASYBUILD_PREFIX=/apps/eiger/UES/tools/easybuild
 	export EASYBUILD_SOURCEPATH=/apps/common/UES/easybuild/sources
+    # export EASYBUILD_INCLUDE_EASYBLOCKS=/apps/common/UES/sandbox/jgp/production.git/easybuild/easyblocks/*.py
 	# export EB_CUSTOM_REPOSITORY=/apps/common/UES/jenkins/production/easybuild
     export SCRATCH=/scratch/e1000/piccinal
 fi

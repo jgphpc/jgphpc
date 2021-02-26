@@ -137,6 +137,8 @@ if [ $cluster = "tiger" ] || \
    [ $cluster = "dmi" ] || \
    [ $cluster = "edison" ] || \
    [ $cluster = "tave" ] || \
+   [ $cluster = "eiger" ] || \
+   [ $cluster = "pilatus" ] || \
    [ $cluster = "daint" ] || \
    [ $cluster = "dom" ] ; then
 
@@ -524,7 +526,8 @@ fi
 #          #    #       #######    #    #     #       #
 #          #    #       #     #    #    #     # #     #
 #         ###   ####### #     #    #     #####   #####
-if [ $cluster = "pilatus" ] || [ $cluster = "monch" ] ; then
+#if [ $cluster = "pilatus" ] || [ $cluster = "monch" ] ; then
+if [ $cluster = "monch" ] ; then
 mempilatus=`expr $numtasks \* 4000` # MB
 cat <<EOF > $out
 #!/bin/bash
