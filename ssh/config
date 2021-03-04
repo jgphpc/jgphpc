@@ -51,6 +51,16 @@ ProxyJump ela.cscs.ch
 # ProxyCommand ssh piccinal@ela.cscs.ch netcat %h %p
 # ProxyJump piccinal@ela.cscs.ch
 # }}}
+# {{{ PILATUS:
+Host pilatus*
+ForwardAgent yes
+Port 22
+SendEnv LC_*
+Hostname pilatus.cscs.ch
+ProxyJump ela.cscs.ch
+# ProxyCommand ssh piccinal@ela.cscs.ch netcat %h %p
+# ProxyJump piccinal@ela.cscs.ch
+# }}}
 
 #{{{ DAINT:
 # ForwardAgent yes

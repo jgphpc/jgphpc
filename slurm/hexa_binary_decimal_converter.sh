@@ -1,5 +1,11 @@
 #!/bin/bash
 
+os=`uname -s`
+if [ $os == "Darwin" ] ;then
+    echo "script must be on Linux: os=$os"
+    exit 0
+fi
+
 # ---- usage
 function usage {
         cat << EOF
