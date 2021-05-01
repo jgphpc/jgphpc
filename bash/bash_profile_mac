@@ -33,3 +33,6 @@ if [ "`uname -s`" == "Darwin" ] ;then
     export PATH=/usr/local/sbin:$PATH
 fi
 ## echo .bash_profile end
+
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash" || true
+

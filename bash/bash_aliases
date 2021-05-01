@@ -6,6 +6,7 @@
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
+# echo aa
 # {{{ echo "---- PS1 start"
 # {{{ color
  ####    ####   #        ####   #####
@@ -115,6 +116,7 @@ alias z=set-titlejg
 # export PS4='(${LINENO}):'
 # }}}
 
+    # echo bb
 # {{{
 alias rt='cd $SCRATCH/RT'
 alias sx='cd /apps/common/UES/sandbox/jgp'
@@ -151,6 +153,7 @@ fi
 # date --rfc-3339=ns > eff_bash_debug_bash_aliases
 # }}}
 
+# echo cc
 # {{{ visit
 # echo B
  #    #     #     ####      #     #####
@@ -181,6 +184,7 @@ fi
 # #fi
 # }}}
 
+# echo dd
 # {{{ modulecmd
 #    #   ####   #####   #    #  #       ######   ####   #    #  #####
 ##  ##  #    #  #    #  #    #  #       #       #    #  ##  ##  #    #
@@ -230,6 +234,7 @@ trap 1 2 3
 # module aliases
 # }}}
 
+# echo ee
 # {{{ aliases
 alias dg='source ~/dom-gpu.sh'
 alias dm='source ~/dom-mc.sh'
@@ -289,6 +294,7 @@ alias acc3='module load craype-accel-nvidia35'
 alias xmg='/apps/gele/scripts/cscs/modules/load_latest_mfiles_gele.sh ; grep -v \# /tmp/.efface.latest ;grep \# /tmp/.efface.latest; echo "doit ?"; read ; source /tmp/.efface.latest ; rm -f /tmp/.efface.latest'
 # }}}
 
+# echo ff
 # {{{ ssh
  ####    ####   #    #
 #       #       #    #
@@ -395,6 +401,7 @@ alias cori='ssh -Y piccinal@cori.nersc.gov'
 # echo D
 # }}}
 
+# echo gg
 # {{{ aliases
   ##    #          #      ##     ####   ######   ####
  #  #   #          #     #  #   #       #       #
@@ -425,13 +432,13 @@ alias interaa='qsub -I -V -l mppwidth=12 -l walltime=00:05:00'
 alias k='KONSOLE=`dcopclient $KONSOLE_DCOP` ; for A in `seq 10`; do NEWSESSION=`dcop $KONSOLE konsole newSession $A` ; dcop $KONSOLE $NEWSESSION renameSession "-" ; done '
 alias la='ls -la'
 alias lic='export LM_LICENSE_FILE=/users/piccinal/license.dat'
-alias ll='ls -lX'
 alias llqq='llq -u piccinal'
 alias llqqq='watch llq -u piccinal'
+alias ll='ls -lX'
 alias lx='ls -X'
-alias ee='cd /apps/eiger/UES/sandbox/piccinal'
 alias l='ls -lrt'
 alias lh='ls -lrhS'
+alias ee='cd /apps/eiger/UES/sandbox/piccinal'
 alias lstop='lstopo --of txt --no-io --no-bridges'
 alias memsgigb='grep MemFree /proc/meminfo |awk "{print (2115399824-\$2)/(1024**2)}"'
 #alias mplayer='~/jg/mplayer/mplayer -nolirc -nojoystick'
@@ -488,6 +495,7 @@ alias xj='xtnodestat -j'
 alias yy='yod -VN -sz 2 /users/piccinal/a.out'
 # }}}
  
+# echo hh
 # {{{ slurm
 # echo E
  ####   #       #    #  #####   #    #
@@ -534,6 +542,7 @@ export SQUEUE_SORT='t,-e,-p'
 export SQUEUE_ALL='yes'
 # }}}
 
+# echo ii
 # {{{ git
 # echo F
  ####      #     #####
@@ -636,6 +645,7 @@ alias sd='svn diff'
 alias sl='svn ls'
 # }}}
 
+# echo jj
 # {{{ linux
 # echo H
 #          #    #    #  #    #  #    #
@@ -660,6 +670,7 @@ LS_OPTIONS="$LS_OPTIONS --color=always"
 alias T='/apps/ela/sandbox/jgp/tmux/1.9a/gnu_434/bin/tmux'
 # }}}
 
+# echo kk
 # {{{ emails
 # echo I
 #    #  #    #   #####   #####
@@ -673,6 +684,7 @@ export EDITOR=vim
 # SECRET
 # }}}
 
+# echo ll
 # {{{ debug
 #####   ######  #####   #    #   ####
 #    #  #       #    #  #    #  #    #
@@ -684,6 +696,7 @@ alias tvmem='export PE_PRODUCT_LIST="TVMEMDEBUG:$PE_PRODUCT_LIST";echo "-g -Wl,-
 alias cleantv='ls -lrt ~/.totalview/lib_cache'
 # }}}
 
+# echo mm
 # {{{ custom
 # echo J
 #    #   ####   #    #           ####   #####     ##     #   #
@@ -749,6 +762,7 @@ fi
 fi
 # }}}
 
+# echo nn
 # {{{ ibm
 # #####  #    #
 # #    # ##  ##
@@ -779,6 +793,7 @@ fi
 # fi
 # }}}
 
+# echo oo
 # {{{ perso
 #####   ######  #####    ####    ####
 #    #  #       #    #  #       #    #
@@ -808,6 +823,7 @@ fi
 # -------------------------------------------------
 # }}}
 
+# echo pp
 # {{{ mac
 # echo K
 #    #    ##     ####
@@ -829,17 +845,20 @@ if [ `uname` = "Darwin" ] ; then
         # see .Xdefaults
         export CLICOLOR=TRUE
         export LSCOLORS=Gxfxbxdxcxegedabagacad
-	unalias ls
+	# unalias ls
 	alias ll='ls -l'
-	alias l='ls '
+	alias lx='ls -1'
+	alias l='ls -lrt'
     alias o='open'
 	PS1="\[\e[0;32m\]\t \u@mac\[\e[m\]|\[\e[1;32m\]\w\[\e[m\] \[\e[1;32m\]\$ \[\e[m\]\[\e[1;37m\]"
+fi
+# {{{
         # ps1_check_rc="\$(if [[ \$? == 0   ]]; then echo \" \[\033[0;32m\]\342\234\223\"; else echo \" \[\033[01;31m\]\342\234\227\"; fi)"
 	
         # MAC PORTS
-        export PATH=/opt/local/bin:/opt/local/sbin:$PATH # Finished adapting your PATH environment variable for use with MacPorts.
+        # export PATH=/opt/local/bin:/opt/local/sbin:$PATH # Finished adapting your PATH environment variable for use with MacPorts.
         # MAC HOMEBREW
-        export PATH=/usr/local/bin:$PATH
+        # export PATH=/usr/local/bin:$PATH
 
         #module load linux/jg
 	# before sudo port install ctags : /usr/bin/ctags
@@ -855,16 +874,6 @@ if [ `uname` = "Darwin" ] ; then
 # === MAC XCODE ===
 # export PATH=/Applications/work/Xcode.app/Contents/Developer/usr/bin:$PATH
 
-# === OPENMPI ===
-# conflict with port : /opt/local/bin ?
-# export PATH=/usr/local/bin:$PATH
-
-# === MAC mfiles ===
-# export MODULEPATH=$MODULEPATH:/keep/hpc/mfiles
-# export PATH=$PATH:/usr/local/bin
-# export SCRATCH=/scratch/rothorn/$USER
-export APPS=/efface/apps
-
 # defaults write com.apple.Preview PVPDFDisplayMode 1
 # MAIL : Move down when an email is deleted
 # http://secrets.blacktree.com/
@@ -873,7 +882,6 @@ export APPS=/efface/apps
 #echo "end ~/.bashrcOK, see .bash_profile"
 #echo $PATH |tr : "\n"
 
-fi
 
 # Set the DISPLAY variable ONLY for OS X earlier than 10.5
 # Do not set it for 10.5, or it will create problems.
@@ -899,7 +907,9 @@ fi
 # http://xanana.ucsc.edu/xtal/iterm_tab_customization.html
 # dos2unix: perl -pi -e 's/\r\n?/\n/g' myfile
 # }}}
+# }}}
 
+# echo qq
 # {{{ python
 #####    #   #   #####  #    #   ####   #    #
 #    #    # #      #    #    #  #    #  ##   #
@@ -913,6 +923,7 @@ alias venv='echo "module load cray-python ;python3 -m venv --system-site-package
 # echo ".bash_aliases END"
 # }}}
 
+# echo rr
 # {{{ google
  ####    ####    ####    ####   #       ######
 #    #  #    #  #    #  #    #  #       #
@@ -927,6 +938,7 @@ if [ `uname -n` = 'banco' ] ; then
 fi
 # }}}
 
+# echo ss
 # {{{ docker
  #####    ####    ####   #    #  ######  #####
  #    #  #    #  #    #  #   #   #       #    #

@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# https://docs.gitlab.com/omnibus/docker/
+docker pull gitlab/gitlab-ce
+
+# mac:
+export GITLAB_HOME=/Users/piccinal/Documents/gitlab-docker-jg
+
+# $GITLAB_HOME/data	    /var/opt/gitlab	For storing application data.
+# $GITLAB_HOME/logs	    /var/log/gitlab	For storing logs.
+# $GITLAB_HOME/config	/etc/gitlab	For storing the GitLab configuration files.
+
+# --restart always \
+# --publish 443:443 --publish 80:80 --publish 22:22 \
+
+sudo docker run --detach \
+  --hostname gitlab.example.com \
+  --publish 443:443 --publish 8880:80 --publish 22:22 \
+  --name gitlab-ce-jg \
+  --volume $GITLAB_HOME/config:/etc/gitlab \
+  --volume $GITLAB_HOME/logs:/var/log/gitlab \
+  --volume $GITLAB_HOME/data:/var/opt/gitlab \
+  gitlab/gitlab-ce:latest
+
+docker logs -f gitlab-ce-jg
+# GITLAB_HOME = /Users/piccinal/Documents/gitlab-docker-jg !!!
+# localhost:8880
+
+# https://gitlab.com/gitlab-org/gitlab/-/issues/325872#workaround
+# https://forum.gitlab.com/t/upgrade-13-1-11-13-10-0-error-column-ci-builds-commands-does-not-exist/50688/3
+
+firefox 
+docker exec -it gitlab-ce-jg /bin/bash
+gitlab-rake db:migrate:down VERSION=20210218105431 RAILS_ENV=production

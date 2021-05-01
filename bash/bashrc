@@ -1,5 +1,6 @@
 [ -z "$PS1" ] && return  # comment if using visit remote
 ## echo ".bashrc START"
+# echo A
 # --- bash_aliases:
 # {{{
 # debug: date --rfc-3339=ns > eff_bash_debug_profile
@@ -11,6 +12,7 @@ fi
 # echo ".bash_alias END"
 # }}}
 
+# echo B
 # --- secret:
 # {{{
 myfile="$HOME/jgphpc.git/SECRET/SECRET"
@@ -19,6 +21,7 @@ if [ -s "$myfile" ] ; then
 fi
 # }}}
 
+# echo C
 # --- modules:
 # {{{
 # export MODULEPATH=$HOME/jgphpc.git/modulefiles:$MODULEPATH
@@ -28,9 +31,13 @@ fi
 ###     module unuse /apps/common/UES/modulefiles
 ###     module rm xalt
 ### fi
-module rm xalt
+mo_exist=`type -t module`
+if [ "$mo_exist" == "function" ] ;then
+    module rm xalt
+fi
 # }}}
 
+# echo D
 # --- python:
 # {{{
 if [ -z $SLURM_JOB_ID ] ;then
@@ -50,6 +57,7 @@ fi
 fi
 # }}}
 
+# echo E
 # --- easybuild:
 # {{{
 # if [ -f /etc/os-release ] ;then
@@ -102,24 +110,25 @@ fi
 # fi
 # }}}
 
+# echo F
 # {{{ shasta
 if [ `uname -n |cut -c1-3` == "uan" ] ;then
-	module use /apps/eiger/UES/tools/easybuild/modules/all
+	# module use /apps/eiger/UES/tools/easybuild/modules/all
 	module use /users/piccinal/.local/easybuild/modules/all
-	# module load EasyBuild/4.3.0
     module load EasyBuild-custom/cscs
-	export EASYBUILD_INSTALLPATH=/apps/eiger/UES/tools/easybuild
-	export EASYBUILD_MODULES_TOOL=Lmod
-	export EASYBUILD_MODULE_SYNTAX=Tcl  # Lua
-	export EASYBUILD_OPTARCH=x86-rome
-	export EASYBUILD_PREFIX=/apps/eiger/UES/tools/easybuild
-	export EASYBUILD_SOURCEPATH=/apps/common/UES/easybuild/sources
+	# export EASYBUILD_INSTALLPATH=/apps/eiger/UES/tools/easybuild
+	# export EASYBUILD_MODULES_TOOL=Lmod
+	# export EASYBUILD_MODULE_SYNTAX=Tcl  # Lua
+	# export EASYBUILD_OPTARCH=x86-rome
+	# export EASYBUILD_PREFIX=/apps/eiger/UES/tools/easybuild
+	# export EASYBUILD_SOURCEPATH=/apps/common/UES/easybuild/sources
     # export EASYBUILD_INCLUDE_EASYBLOCKS=/apps/common/UES/sandbox/jgp/production.git/easybuild/easyblocks/*.py
 	# export EB_CUSTOM_REPOSITORY=/apps/common/UES/jenkins/production/easybuild
     export SCRATCH=/scratch/e1000/piccinal
 fi
 # }}}
 
+# echo G
 # --- ddt:
 # {{{
 #####   #####    #####
@@ -145,6 +154,7 @@ fi
 ####   fi
 # }}}
 
+# echo H
 # --- detect_os:
 # {{{ 
 # --- hostname:
@@ -169,6 +179,7 @@ fi
 # fi
 # }}}
 
+# echo I
 # --- basel:
 # {{{
 # if [ "$h" == "dmi-cl-login.dmi.p.unibas.ch" ] ;then
@@ -205,6 +216,7 @@ fi
 # 
 # }}}
 
+# echo J
 # --- macjg:
 # {{{
 os=`uname -s`
@@ -222,6 +234,7 @@ if [ "$os" = "Darwin" ] ;then
 fi
 # }}}
 
+# echo K
 # --- https://github.com/junegunn/fzf#usage
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 ## echo ".bashrc END"
@@ -240,4 +253,3 @@ fi
 ## fi
 ## unset __conda_setup
 ## # <<< conda initialize <<<
-

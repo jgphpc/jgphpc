@@ -1,0 +1,67 @@
+#!/bin/bash
+
+
+
+# https://www.jenkins.io/doc/book/installing/docker/#setup-wizard
+docker image pull docker:dind
+docker pull jenkins/jenkins
+
+docker network create jenkins
+# ebaeea26913a1846a0fe979176cef086810b9592099e9b63b717f77d1b14b18b
+
+docker run \
+  --name jenkins-docker-jg \
+  --rm \
+  --detach \
+  --privileged \
+  --network jenkins \
+  --network-alias docker \
+  --env DOCKER_TLS_CERTDIR=/certs \
+  --volume jenkins-docker-certs:/certs/client \
+  --volume jenkins-data:/var/jenkins_home \
+  --publish 2376:2376 \
+  docker:dind
+# d091a35471766e44045056f40998b1ea2126b1fe1c2bd2461ff9eb17f8dfa5c9
+
+# docker stop jenkins-docker-jg
+
+cat 0.dockerfile
+docker build -t myjenkins-blueocean:1.1 -f 0.dockerfile .
+
+
+docker run \
+  --name jenkins-blueocean-jg \
+  --rm \
+  --detach \
+  --network jenkins \
+  --env DOCKER_HOST=tcp://docker:2376 \
+  --env DOCKER_CERT_PATH=/certs/client \
+  --env DOCKER_TLS_VERIFY=1 \
+  --publish 8080:8080 \
+  --publish 50000:50000 \
+  --volume jenkins-data:/var/jenkins_home \
+  --volume jenkins-docker-certs:/certs/client:ro \
+  myjenkins-blueocean:1.1
+# 56e5e946afab539f6698422c542001939898fa2c1f43c1bad0278106cf678e8f
+
+
+--> http://localhost:8080
+# Pour être sûr que que Jenkins soit configuré de façon sécurisée par un
+# administrateur, un mot de passe a été généré dans le fichier de logs (où le
+# trouver) ainsi que dans ce fichier sur le serveur :
+# /var/jenkins_home/secrets/initialAdminPassword
+--> read it from docker desktop or:
+> docker container list
+ CONTAINER ID   IMAGE                       PORTS                                              NAMES
+ 56e5e946afab   myjenkins-blueocean:1.1     0.0.0.0:8080->8080/tcp, 0.0.0.0:50000->50000/tcp   jenkins-blueocean-jg
+ d091a3547176   docker:dind                 2375/tcp, 0.0.0.0:2376->2376/tcp                   jenkins-docker
+
+contid=56e5e946afab ;sudo docker exec $contid cat /var/jenkins_home/secrets/initialAdminPassword
+  bc4fbb9ae520410a8fb21d25614772de
+  This password also serves as the default admininstrator account password (with username "admin")
+# Jenkins 2.277.1
+
+# Créer le 1er utilisateur Administrateur
+piccinal
+
+# done
