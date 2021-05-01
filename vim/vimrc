@@ -100,8 +100,13 @@ call vundle#end()  " required
     endif
 " }}}
 
-" ~/.vim/bundle/jedi-vim/doc
-" Plugin 'davidhalter/jedi-vim'
+" ~/.vim/bundle/jedi-vim/doc (python only, install numpydoc)
+Plugin 'davidhalter/jedi-vim'
+" :echo mapleader / :let g:jedi#show_call_signatures=2 or 0
+" ,d / ctrlT / K / ,n / ctrlSPACE / 
+
+" git clone https://github.com/vim-airline/vim-airline = infobar
+Plugin 'vim-airline/vim-airline'
 " }}}
 
 " {{{ preferences
