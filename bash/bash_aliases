@@ -334,7 +334,7 @@ alias fish='ssh -Y piccinal@maia.urz.unibas.ch'
 
 # --- openstack
 # alias vm='ssh -Y piccinal@148.187.96.150'
-alias ubjg='ssh -Y ubuntu@148.187.97.112' # openstack pollux
+alias ubjg='ssh -Y ubuntu@148.187.98.236' # openstack https://pollux.cscs.ch/dashboard/
 # alias gfo='ssh piccinal@crana.intnet.cscs.ch'
 # alias lcg='ssh -Y jgp@wn59.lcg.cscs.ch'
 
