@@ -110,7 +110,21 @@ fi
 # fi
 # }}}
 
-# echo F
+# --- detect_clustername:
+# {{{
+if [ "`uname -s`" == "Linux" ] ;then
+    which scontrol &> /dev/null
+    if [ $? == 0 ] ;then
+        clustername=`scontrol show config |grep ClusterName |awk '{print $3}'`
+        export LMOD_SYSTEM_NAME=$clustername
+        if [ -n $clustername ] ;then
+            # echo clustername=$clustername
+            module use $HOME/easybuild/$clustername/modules_jg/Core
+        fi
+    fi
+fi
+# }}}
+
 # {{{ shasta
 if [ `uname -n |cut -c1-3` == "uan" ] ;then
 	# module use /apps/eiger/UES/tools/easybuild/modules/all
@@ -253,3 +267,4 @@ fi
 ## fi
 ## unset __conda_setup
 ## # <<< conda initialize <<<
+

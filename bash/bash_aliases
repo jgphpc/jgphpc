@@ -75,7 +75,8 @@ __git_branch='`git branch 2> /dev/null |grep ^* |cut -d\* -f2 |tr -d " "`'
 function set-ps1jg() {
     hh='#'
     # PS1="$TXTRED\u@$TXTCYN\h$NOCOLOR "
-    P1="${TXTGRN}\]$hh \u@\h"
+    P1="${TXTGRN}\]$hh \u@${CLUSTER_NAME}|\h"
+    # if [ -n $CLUSTER_NAME ] ;then
     P2="${TXTYLW}\]|\w"
     P3="${TXTBLK}\$ ${NOCOLOR} \n"
     export PS1="$P1$P2$P3"
@@ -118,7 +119,7 @@ alias z=set-titlejg
 
     # echo bb
 # {{{
-alias rt='cd $SCRATCH/RT'
+alias rt='cd $SCRATCH/reframe/stage/$clustername'
 alias sx='cd /apps/common/UES/sandbox/jgp'
 alias sxx='cd $SCRATCH/stage/dom/gpu/PrgEnv-gnu'
 #alias sxx='source ~/eff.ebgpu ;cd /apps/common/UES/sandbox/jgp/perfhackaton.git/reframe/lammps/'
@@ -266,30 +267,40 @@ alias cppcheck_c='cppcheck --quiet --enable=all --inconclusive --suppress=missin
 alias cppcheck_cpp='cppcheck --quiet --enable=all --inconclusive --suppress=missingIncludeSystem --language=c++ --std=c++14 --platform=unix64'
 alias mo='module'
 # PrgEnv
-alias pgi='module load PrgEnv-pgi'
-alias gnu='module load PrgEnv-gnu'
-alias cce='module load PrgEnv-cray'
-alias cce_='module rm PrgEnv-cray;module list'
-alias int='module load PrgEnv-intel'
-# pgi
-alias pgc=' module swap PrgEnv-pgi PrgEnv-cray       ; mo list'
-alias pgg=' module swap PrgEnv-pgi PrgEnv-gnu        ; mo list'
-alias pgii='module swap PrgEnv-pgi PrgEnv-intel        ; mo list'
-# cray
-# TODO: module swap $(module list 2>&1 |grep --only-matching PrgEnv.*) PrgEnv-pgi
-alias cpg=' module swap PrgEnv-cray PrgEnv-pgi       ; mo list'
-alias cg='  module swap PrgEnv-cray PrgEnv-gnu       ; mo list'
-alias ci='  module swap PrgEnv-cray PrgEnv-intel       ; mo list'
-# gnu
-alias gpg=' module swap PrgEnv-gnu PrgEnv-pgi        ; mo list'
-alias gc='  module swap PrgEnv-gnu PrgEnv-cray       ; mo list'
-alias gi='  module swap PrgEnv-gnu PrgEnv-intel        ; mo list'
-# intel
-alias ic='  module swap PrgEnv-intel PrgEnv-cray       ; mo list'
-alias ipg=' module swap PrgEnv-intel PrgEnv-pgi        ; mo list'
-alias ig='  module swap PrgEnv-intel PrgEnv-gnu        ; mo list'
+# -n STRING: the length of STRING is nonzero
+# -z STRING: the length of STRING is zero
+# if [ -n "$LMOD_VERSION" ] ;then
+#     alias cpg='module restore PrgEnv-pgi ;module list'
+#     alias cg='module restore PrgEnv-gnu ;module list'
+#     alias cce='module restore PrgEnv-cray ;module list'
+#     alias ci='module restore PrgEnv-intel ;module list'
+#     alias ca='module restore PrgEnv-aocc ;module list'
+# else
+    alias pgi='module load PrgEnv-pgi'
+    alias gnu='module load PrgEnv-gnu'
+    alias cce='module load PrgEnv-cray'
+    alias cce_='module rm PrgEnv-cray;module list'
+    alias int='module load PrgEnv-intel'
+    # pgi
+    alias pgc=' module swap PrgEnv-pgi PrgEnv-cray       ; mo list'
+    alias pgg=' module swap PrgEnv-pgi PrgEnv-gnu        ; mo list'
+    alias pgii='module swap PrgEnv-pgi PrgEnv-intel        ; mo list'
+    # cray
+    # TODO: module swap $(module list 2>&1 |grep --only-matching PrgEnv.*) PrgEnv-pgi
+    alias cpg=' module swap PrgEnv-cray PrgEnv-pgi       ; mo list'
+    alias cg='  module swap PrgEnv-cray PrgEnv-gnu       ; mo list'
+    alias ci='  module swap PrgEnv-cray PrgEnv-intel       ; mo list'
+    # gnu
+    alias gpg=' module swap PrgEnv-gnu PrgEnv-pgi        ; mo list'
+    alias gc='  module swap PrgEnv-gnu PrgEnv-cray       ; mo list'
+    alias gi='  module swap PrgEnv-gnu PrgEnv-intel        ; mo list'
+    # intel
+    alias ic='  module swap PrgEnv-intel PrgEnv-cray       ; mo list'
+    alias ipg=' module swap PrgEnv-intel PrgEnv-pgi        ; mo list'
+    alias ig='  module swap PrgEnv-intel PrgEnv-gnu        ; mo list'
+# fi
 alias accc='module load craype-accel-nvidia60'
-alias acc3='module load craype-accel-nvidia35'
+# alias acc3='module load craype-accel-nvidia35'
 # latest mfiles defaults
 alias xmg='/apps/gele/scripts/cscs/modules/load_latest_mfiles_gele.sh ; grep -v \# /tmp/.efface.latest ;grep \# /tmp/.efface.latest; echo "doit ?"; read ; source /tmp/.efface.latest ; rm -f /tmp/.efface.latest'
 # }}}
@@ -432,13 +443,13 @@ alias interaa='qsub -I -V -l mppwidth=12 -l walltime=00:05:00'
 alias k='KONSOLE=`dcopclient $KONSOLE_DCOP` ; for A in `seq 10`; do NEWSESSION=`dcop $KONSOLE konsole newSession $A` ; dcop $KONSOLE $NEWSESSION renameSession "-" ; done '
 alias la='ls -la'
 alias lic='export LM_LICENSE_FILE=/users/piccinal/license.dat'
+alias ll='ls -lX'
 alias llqq='llq -u piccinal'
 alias llqqq='watch llq -u piccinal'
-alias ll='ls -lX'
 alias lx='ls -X'
+alias ee='cd /apps/eiger/UES/sandbox/piccinal'
 alias l='ls -lrt'
 alias lh='ls -lrhS'
-alias ee='cd /apps/eiger/UES/sandbox/piccinal'
 alias lstop='lstopo --of txt --no-io --no-bridges'
 alias memsgigb='grep MemFree /proc/meminfo |awk "{print (2115399824-\$2)/(1024**2)}"'
 #alias mplayer='~/jg/mplayer/mplayer -nolirc -nojoystick'
@@ -576,6 +587,7 @@ alias github_cli='echo gh issue list -R eth-cscs/reframe'
 # https://github.com/jedbrown/git-fat
 alias ga='git add'  # -p
 alias gs='git status'
+alias gsm='git status |more'
 #alias gS='git log -S '
 alias gb='git branch'
 alias gB='git show-branch |more'
@@ -845,14 +857,11 @@ if [ `uname` = "Darwin" ] ; then
         # see .Xdefaults
         export CLICOLOR=TRUE
         export LSCOLORS=Gxfxbxdxcxegedabagacad
-	# unalias ls
+	unalias ls
 	alias ll='ls -l'
-	alias lx='ls -1'
-	alias l='ls -lrt'
+	alias l='ls '
     alias o='open'
 	PS1="\[\e[0;32m\]\t \u@mac\[\e[m\]|\[\e[1;32m\]\w\[\e[m\] \[\e[1;32m\]\$ \[\e[m\]\[\e[1;37m\]"
-fi
-# {{{
         # ps1_check_rc="\$(if [[ \$? == 0   ]]; then echo \" \[\033[0;32m\]\342\234\223\"; else echo \" \[\033[01;31m\]\342\234\227\"; fi)"
 	
         # MAC PORTS
@@ -882,6 +891,7 @@ fi
 #echo "end ~/.bashrcOK, see .bash_profile"
 #echo $PATH |tr : "\n"
 
+fi
 
 # Set the DISPLAY variable ONLY for OS X earlier than 10.5
 # Do not set it for 10.5, or it will create problems.
@@ -906,7 +916,6 @@ fi
 # iterm2
 # http://xanana.ucsc.edu/xtal/iterm_tab_customization.html
 # dos2unix: perl -pi -e 's/\r\n?/\n/g' myfile
-# }}}
 # }}}
 
 # echo qq
