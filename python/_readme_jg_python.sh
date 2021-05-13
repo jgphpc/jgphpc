@@ -1,5 +1,8 @@
 #!/bin/sh
 
+
+jupyter nbconvert --to script lilly.ipynb
+
 # {{{ math
 # sympy:
 isympy
@@ -7,8 +10,12 @@ from sympy import Symbol, cos
 x = Symbol('x')
 e = 1/cos(x)
 print e.series(x, 0, 10)
-# }}}
 
+../hpc/math/interpolation/
+# }}}
+https://igraph.org/python/doc/tutorial/tutorial.html#starting-igraph
+
+github/gitlab/jira issues: ~/jgphpc.git/hpc/jira/
 # {{{ langs
 http://www.swig.org/exec.html
 https://pythran.readthedocs.io/en/latest/
@@ -40,4 +47,11 @@ https://ponyorm.com
 https://github.com/moodle/moodle
 https://glot.io = an open source pastebin with runnable snippets and API.
 https://pypi.org/project/PyQt5/
+# }}}
+
+# {{{ editors
+vim
+visual studio code      # +debug
+https://www.liclipse.com
+miniconda3/bin/idle3.7  # +debug
 # }}}
