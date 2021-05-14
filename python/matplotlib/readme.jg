@@ -1,0 +1,4 @@
+1/ run rfm
+2/ scp ~/.reframe/reports/run-report.json
+3/ python3 reframe37_jg.py  # matplotlib ok
+4/ save png
